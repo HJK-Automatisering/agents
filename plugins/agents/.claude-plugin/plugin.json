@@ -1,0 +1,9 @@
+{
+  "name": "agents",
+  "description": "Otte agent-roller med skarpe mandater og handoff gennem filer i docs/: kickoff, brainstorm, architect, developer, tester, security, reviewer, debugger.",
+  "version": "1.0.0-beta.1",
+  "author": {
+    "name": "HJK-Automatisering"
+  },
+  "homepage": "https://github.com/HJK-Automatisering/agents"
+}

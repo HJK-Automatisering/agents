@@ -1,0 +1,56 @@
+name: Docker
+
+# Kalder det genbrugelige workflow i Workflow-repoet. Selve bygningen,
+# tagging-reglerne og de SHA-pinnede actions bor der, så de kan bumpes ét sted.
+#
+# Skal du afvige fra standarden, så kommentér `with`-blokken ind nedenfor.
+# Ret ikke i det genbrugelige workflow for at løse et enkelt projekts behov —
+# tilføj i stedet et input der.
+
+on:
+  push:
+    branches: [ "main" ]
+    # Publish semver tags as releases.
+    tags: [ 'v*.*.*' ]
+  pull_request:
+    branches: [ "main" ]
+  # Manuel kørsel fra en vilkårlig gren. Uden denne kan tag-reglerne kun
+  # afprøves ved at pushe til main, og et PR-build pusher ikke noget image.
+  workflow_dispatch:
+
+# To hurtige pushes til main kappes ellers om at skrive :main, og den
+# langsomste build vinder. Afløs i stedet den igangværende.
+#
+# Denne hører her og ikke i det genbrugelige workflow: det er denne kørsel
+# og denne gren der skal aflyses.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    uses: HJK-Automatisering/workflow/.github/workflows/docker-publish.yaml@v1
+
+    # Skal stå her. Et genbrugeligt workflow kan ikke give sig selv flere
+    # rettigheder end kalderen har, og i organisationer hvor standarden er
+    # read-only fejler push til GHCR uden denne blok.
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    # GITHUB_TOKEN følger automatisk med. `secrets: inherit` er ikke nødvendigt
+    # og bør ikke tilføjes — det giver det kaldte workflow adgang til alt.
+
+    # with:
+    #   # Kun hvis noget faktisk kører på arm. Bygger ellers under QEMU for ingenting.
+    #   platforms: linux/amd64,linux/arm64
+    #   # Hvis Dockerfilen ikke ligger i roden.
+    #   dockerfile: ./src/Dockerfile
+    #   context: ./src
+    #   # Andet imagenavn end <org>/<repo>.
+    #   image_name: hjk-automatisering/mit-image
+    #   # ADVARSEL: build-args kan læses af alle der kan pulle imaget.
+    #   # Aldrig tokens, adgangskoder eller forbindelsesstrenge her.
+    #   extra_build_args: |
+    #     FEATURE_FLAG=true

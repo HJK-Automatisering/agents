@@ -1,0 +1,23 @@
+# Repoet indeholder kun markdown, manifester og hooks — der er intet build.
+# Så listen er kort med vilje.
+
+# Editor og OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Hemmeligheder — hører aldrig i dette repo, men reglen står her alligevel,
+# fordi en committet hemmelighed skal roteres og ikke kan slettes igen.
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+
+# Claude Code lokale indstillinger. settings.json deles; .local gør ikke.
+.claude/settings.local.json

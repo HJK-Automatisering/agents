@@ -1,0 +1,16 @@
+{
+  "description": "Genkender projekt nul og manglende .gitignore ved sessionsstart",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${CLAUDE_PLUGIN_ROOT}/hooks/detect-project-zero.ps1\""
+          }
+        ]
+      }
+    ]
+  }
+}

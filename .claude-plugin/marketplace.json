@@ -1,0 +1,19 @@
+{
+  "name": "hjk-agents",
+  "description": "Agent-roller og arbejdsmetode til HJK-Automatiserings projekter. Roller med skarpe mandater der afleverer til hinanden gennem filer.",
+  "owner": {
+    "name": "HJK-Automatisering",
+    "url": "https://github.com/HJK-Automatisering"
+  },
+  "plugins": [
+    {
+      "name": "agents",
+      "source": "./plugins/agents",
+      "description": "Otte agent-roller med skarpe mandater: kickoff, brainstorm, architect, developer, tester, security, reviewer, debugger.",
+      "version": "1.0.0-beta.1",
+      "author": {
+        "name": "HJK-Automatisering"
+      }
+    }
+  ]
+}
