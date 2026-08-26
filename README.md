@@ -23,7 +23,7 @@ Auto-update virker ikke i skrivebordsappen. Se `PLUGIN.md`.
 
 Derefter, i hvert projekt: `/agents:kickoff`
 
-## De ni roller, ti kald
+## De ni roller, elleve kald
 
 Almindelig prosa i Claude Code udløser **ingenting**. Rollerne kaldes eksplicit.
 
@@ -39,6 +39,7 @@ Almindelig prosa i Claude Code udløser **ingenting**. Rollerne kaldes eksplicit
 | `/agents:scout` | skill → agent | eget vindue | kun `docs/map.md` |
 | `/agents:status` | skill → agent | eget vindue | **nej** |
 | `/agents:workflow` | skill | din tråd | kun workflow-filer |
+| `/agents:update` | skill | din tråd | kun `AGENTS.md` |
 
 **Samtaleroller** kører i din tråd, så du kan tale med dem — ét spørgsmål ad gangen, og de venter på svaret. **Rapportroller** sendes af sted, kører isoleret med håndhævet værktøjsspærring, og kommer tilbage med en rapport.
 
@@ -54,7 +55,7 @@ En rolle starter aldrig den næste. Den foreslår kaldet; du skriver det.
 |---|---|
 | `plugins/agents/skills/` | De ti kald. Seks samtaleroller, fire dispatch-skills |
 | `plugins/agents/agents/` | De fire rapportroller. Værktøjsspærringen håndhæves her |
-| `plugins/agents/skills/kickoff/AGENTS.md` | Kontrakten. Kopieres ind i projekter af `kickoff` |
+| `plugins/agents/skills/kickoff/AGENTS.md` | Kontrakten med `kontrakt-version`. Kopieres ind af `kickoff`, opdateres af `/agents:update` |
 | `plugins/agents/skills/workflow/` | Valgfrie arbejdsgange. Kaldes eksplicit — ingen rolle foreslår dem |
 | `plugins/agents/hooks/` | SessionStart-hook der genkender projekt nul |
 | `.claude-plugin/marketplace.json` | Kataloget |

@@ -1,3 +1,7 @@
+---
+kontrakt-version: 2
+---
+
 # AGENTS.md — fælles kontrakt
 
 Denne fil arves af **alle** roller i plugin'et `agents`. Læs den før du gør noget andet.
@@ -112,28 +116,74 @@ Bed aldrig nogen om selv at rette `status` i frontmatter. Det er clerikalt arbej
 
 ## Handoff
 
-Afslut **altid** dit svar med denne blok:
+Hvert svar slutter med **denne blok**, i en kodeblok, med **alle seks felter**. Ingen undtagelser.
 
 ```
 HANDOFF
-Nummer:       NNNN
-Rolle:        <din rolle>
-Udført:       <1-3 linjer>
-Filer:        <stier du har oprettet eller ændret>
-Næste:        <se nedenfor>
-Blokeret af:  <ÅBENT-punkter eller "intet">
+Nummer:       0007
+Rolle:        architect
+Udført:       Dokument med fire opgaver, rækkefølge fastlagt.
+Filer:        docs/plans/0007-sagsliste-eksport.md
+Næste:        ny tråd → /agents:tester 0007
+Blokeret af:  intet
 ```
 
-`Næste` peger **altid på en rolle**. Bolden kan ikke stå hos mennesket her — spørgsmål stilles i chatten og besvares dér, og handoff-blokken skrives først når retningen er kendt.
+Er et felt tomt, skriver du `intet`. Du udelader det ikke.
+
+### Formen er ikke til forhandling
+
+**Blokken er en kodeblok.** Ikke et afsnit, ikke en overskrift, ikke punktopstilling. Den skal kunne genkendes på et blik nederst i svaret, hver gang, i hver rolle.
+
+**Ét `Næste`.** Én linje, ét kald. Ikke to skridt, ikke "derefter", ikke en rækkefølge. Ser du længere frem, hører det i dokumentet — ikke her.
+
+**Felterne er korte.** `Næste` er et kald plus højst en kort forklaring efter en tankestreg. Begrundelser hører i prosaen **over** blokken, hvor mennesket læser dem.
+
+**Ingen numre uden ord.** Skriver du `F1` eller `opgave 6` i prosaen over blokken, skal den følgende sætning sige hvad det er. I selve blokken står kun nummeret og kaldet.
+
+### Sådan må det ikke se ud
+
+Det her er forkert, og det er den fejl der faktisk sker:
+
+```
+Næste
+
+Ny tråd → /agents:architect — F1 skal skrives ind i planen først, fordi den
+blokerer opgave 6 og 7, og fordi den rører både produktionskode og
+grænseværditabellen. F2's afbryder hører naturligt i samme runde.
+
+Derefter ny tråd → /agents:developer for resten: F3, F4, F5, F6 og F7.
+```
+
+Fire fejl på fem linjer: det er prosa i stedet for blokken, der er to næste skridt, kaldet kan ikke kopieres fordi forklaringen står inde i det, og syv fund omtales udelukkende ved nummer så mennesket ikke kan afgøre noget uden at åbne en fil.
+
+Sådan skulle det have set ud — forklaringen først, i almindeligt dansk, og så blokken:
+
+> Sikkerhedsgennemgangen fandt syv ting. To af dem kræver at planen laves om, fordi de rører produktionskoden og ikke bare er rettelser: pagineringen kan flytte vandmærket forbi rækker vi aldrig læste, og der mangler en afbryder på sletteløbet. De fem øvrige er almindelige rettelser.
+>
+> Vi tager planændringen først, fordi de to blokerer opgave 6 og 7.
+
+```
+HANDOFF
+Nummer:       0001
+Rolle:        security
+Udført:       Gennemgang af 0001. Syv fund: to kritiske, tre middel, to noter.
+Filer:        docs/findings/0001-security.md
+Næste:        ny tråd → /agents:architect 0001
+Blokeret af:  intet
+```
+
+### `Næste` peger altid på en rolle
+
+Bolden kan ikke stå hos mennesket her — spørgsmål stilles i chatten og besvares dér, og blokken skrives først når retningen er kendt.
 
 To former:
 
 ```
-Næste:  ny tråd → /agents:tester 0007
-Næste:  her → /agents:security — gennemgå ændringen på 0007
+Næste:        ny tråd → /agents:tester 0007
+Næste:        her → /agents:security — gennemgå ændringen på 0007
 ```
 
-Kaldet skrives som det tastes i appen. Har det et argument, står det lige efter kaldet. **Aldrig** som en terminalkommando:
+Kaldet skrives som det tastes i appen. **Aldrig** som en terminalkommando:
 
 ```
 claude "/agents:architect Regellogik"     ← nej
@@ -150,7 +200,9 @@ Folk sidder i skrivebordsappen, ikke i en terminal.
 | `kickoff`, `architect`, `developer`, `tester` | `ny tråd →` | De kører i tråden, og en gammel kontekst følger med |
 | `debugger` | `ny tråd →` | Altid. Gammel fejlkontekst giver falske spor |
 
-**Du påtager dig aldrig den næste rolle selv.** Når handoff-blokken er skrevet, er dit arbejde slut — også selvom tråden sagtens kunne fortsætte, og også selvom det næste skridt er indlysende. Du foreslår kaldet. Mennesket skriver det.
+Er der intet næste skridt, skriver du `Næste: intet` og siger hvorfor i prosaen over blokken.
+
+**Du påtager dig aldrig den næste rolle selv.** Når blokken er skrevet, er dit arbejde slut — også selvom tråden sagtens kunne fortsætte, og også selvom det næste skridt er indlysende. Du foreslår kaldet. Mennesket skriver det.
 
 ## Miljø
 

@@ -82,7 +82,7 @@ Den finder selv ud af hvad der mangler: er projektet tomt, kører den hele inter
 | `/agents:scout` | **eget vindue** | Kort over en ukendt kodebase |
 | `/agents:status` | **eget vindue** | Hvor står vi, og hvad er næste skridt |
 
-Plus `/agents:workflow`, der tilføjer et fælles workflow til projektet.
+Plus to hjælpekald: `/agents:workflow` tilføjer et fælles workflow, og `/agents:update` bringer projektets kontrakt ajour.
 
 De fire rapportroller kan køre samtidig og fylder ikke din kontekst med deres filopslag.
 
@@ -165,6 +165,26 @@ Rollerne kalder fortolkeren direkte — `.venv\Scripts\python.exe -m pytest` —
 
 Ingen pakke installeres globalt. Har projektet brug for en ny afhængighed, står det i et godkendt dokument.
 
+## Kontrakten er en kopi
+
+`AGENTS.md` i dit projekt blev lagt ind dengang `kickoff` kørte. **Opdaterer du plugin'et, følger den ikke med** — rollerne læser projektets kopi, ikke plugin'ets.
+
+Derfor har den et versionsnummer i frontmatter, og derfor siger Claude Code til når den er bagud:
+
+> KONTRAKTEN ER BAGUD. Projektets AGENTS.md er version 1; plugin'et har version 2.
+
+Så kører du:
+
+```
+/agents:update
+```
+
+Den henter den nye kontrakt og **bevarer projektets egne afvigelser** — afsnittet `## Projektspecifikke afvigelser`, hvor det står hvis I bevidst gør noget anderledes end kontrakten siger.
+
+Har nogen ændret i den generelle tekst i stedet for at bruge afvigelsesafsnittet, stopper den og spørger. Den overskriver ikke i tavshed.
+
+Det er værd at kende, fordi symptomet ellers er forvirrende: rollerne opfører sig efter gamle regler, og man tror rettelserne ikke virker.
+
 ## Versionering
 
 **Alt versionsstyres**, også `AGENTS.md` og `docs/`. Kontrakten koden blev skrevet under skal rejse sammen med koden.
@@ -238,6 +258,7 @@ Oprydning og dokumentation /agents:reviewer      (eget vindue)
 Ukendt kodebase            /agents:scout         (eget vindue)
 Hvor er vi                 /agents:status        (eget vindue)
 Tilføj docker-publish      /agents:workflow
+Kontrakten er bagud        /agents:update
 
 Overblik      docs/BOARD.md
 Dokumenter    docs/plans/NNNN-slug.md

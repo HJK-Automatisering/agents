@@ -18,6 +18,7 @@ agents/
         BOARD.md
         beslutningslog.md
       architect/  developer/  tester/  debugger/
+      update/                 opdaterer projektets kontrakt
       security/  reviewer/  scout/  status/    ← tynde dispatch-skills
     agents/                   de fire rapportroller
       security.md  reviewer.md  scout.md  status.md
@@ -141,6 +142,16 @@ Springer man den første over, sker der ingenting — og der kommer ingen fejl. 
 Alternativt via Intune eller Group Policy: `HKLM\SOFTWARE\Policies\ClaudeCode`, eller filen `C:\Program Files\ClaudeCode\managed-settings.json`. Bemærk at `C:\ProgramData\ClaudeCode\managed-settings.json` er **udgået** fra v2.1.75 og stadig optræder i ældre vejledninger.
 
 Om managed settings også fjerner `install`-kommandoen er dokumentationen ikke entydig om. Regn med én kommando pr. udvikler indtil du har set andet på en rigtig maskine.
+
+## Kontrakten driver
+
+`AGENTS.md` kopieres ind i projektet af `kickoff`. Den følger **ikke** med når plugin'et opdateres, og rollerne læser projektets kopi.
+
+Derfor har kontrakten `kontrakt-version` i frontmatter. Bumper du den, når du ændrer en regel — og SessionStart-hooken sammenligner projektets tal med plugin'ets og siger til når kopien er bagud.
+
+**Bump `kontrakt-version` hver gang du ændrer en regel i kontrakten.** Glemmer du det, siger hooken ingenting, og projekterne kører videre efter de gamle regler uden at nogen ser det. Det er den fejl der er sværest at opdage, fordi rollerne opfører sig konsekvent — bare efter det forkerte.
+
+Versionstjekket ligger i hooken og ikke i rollerne, så det findes ét sted i stedet for elleve der kan drive fra hinanden.
 
 ## Fælden: dobbelte rollefiler
 
