@@ -92,6 +92,37 @@ Appen styrer sine egne opdateringer og sætter `DISABLE_AUTOUPDATER=1` for de se
 
 Lad indstillingen stå. Den skader ikke, og den virker formentlig for den rene CLI. Men **udrulningen skal planlægges som manuel.**
 
+### To Claude Code på samme maskine
+
+Det her er den fælde der kostede os en dag, og dine kolleger har den formentlig også.
+
+Skrivebordsappen har sin **egen** Claude Code og holder den opdateret selv. Den `claude` der ligger på PATH — fra WinGet — er en **anden** installation, og den opdaterer sig ikke, fordi appen sætter `DISABLE_AUTOUPDATER=1`.
+
+Målt 26. august 2026 på en maskine der havde kørt et par måneder:
+
+```
+Skrivebordsappen   2.1.246
+claude på PATH     2.1.185     ← 61 versioner bagud
+```
+
+De to deler `~/.claude/plugins`. Så appen læser og skriver samme tilstand som en to måneder gammel binær. Og det er den gamle der udfører dine `claude plugin`-kommandoer, fordi `/plugin` **ikke findes i skrivebordsappen** — hverken i en normal chat eller i en agent-session. Terminalen er den eneste vej.
+
+Det havde en konkret konsekvens: før v2.1.232 hentede Claude Code ikke marketplacet før et opslag. På 2.1.185 læste `claude plugin install` altså et cachet katalog og fandt aldrig en ny version, uden at melde fejl.
+
+**Tjek først, hver gang noget opfører sig ulogisk:**
+
+```
+claude --version
+```
+
+Er den bagud, så opgradér før du fejlsøger noget som helst andet:
+
+```
+winget upgrade --id Anthropic.ClaudeCode
+```
+
+Luk appen helt først. Og gør det til en del af udrulningen — en kollega med en gammel CLI vil opleve at kommandoerne "virker" og intet sker.
+
 ### Hvad hver bruger kører ved hver udgivelse
 
 ```
