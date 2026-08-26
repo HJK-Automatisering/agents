@@ -21,3 +21,6 @@ $RECYCLE.BIN/
 
 # Claude Code lokale indstillinger. settings.json deles; .local gør ikke.
 .claude/settings.local.json
+
+# Arbejdsdokumenter der ikke hoerer i repoet.
+EVALUERING.md
