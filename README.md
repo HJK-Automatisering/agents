@@ -12,6 +12,15 @@ claude plugin marketplace add HJK-Automatisering/agents
 claude plugin install agents@hjk-agents --scope user
 ```
 
+**Ved hver ny version skal begge køres igen** — med `update` i stedet for `add`:
+
+```
+claude plugin marketplace update hjk-agents
+claude plugin install agents@hjk-agents --scope user
+```
+
+Auto-update virker ikke i skrivebordsappen. Se `PLUGIN.md`.
+
 Derefter, i hvert projekt: `/agents:kickoff`
 
 ## De ni roller, ti kald

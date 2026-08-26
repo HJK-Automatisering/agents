@@ -86,7 +86,24 @@ Centralt, så marketplacet er registreret på forhånd — managed settings fra 
 }
 ```
 
-`autoUpdate: true` er det der giver alle dine rolleopdateringer automatisk.
+`autoUpdate: true` beder om automatiske opdateringer. **Det virker ikke i skrivebordsappen**, og det skal du regne med.
+
+Appen styrer sine egne opdateringer og sætter `DISABLE_AUTOUPDATER=1` for de sessioner den starter. Det slår også marketplace-opdateringen fra, og `FORCE_AUTOUPDATE_PLUGINS=1` dækker den ikke — afprøvet: katalogget stod stille i to døgn mens tre nye versioner blev udgivet.
+
+Lad indstillingen stå. Den skader ikke, og den virker formentlig for den rene CLI. Men **udrulningen skal planlægges som manuel.**
+
+### Hvad hver bruger kører ved hver udgivelse
+
+```
+claude plugin marketplace update hjk-agents
+claude plugin install agents@hjk-agents --scope user
+```
+
+To kommandoer, hver gang du bumper versionen. Den første henter katalogget, så klienten overhovedet ved at der findes en nyere version; den anden installerer den.
+
+Springer man den første over, sker der ingenting — og der kommer ingen fejl. Klienten ved bare ikke bedre.
+
+**Skriv begge i den mail du sender ud.** Ikke "genstart appen", ikke "den kommer af sig selv".
 
 Alternativt via Intune eller Group Policy: `HKLM\SOFTWARE\Policies\ClaudeCode`, eller filen `C:\Program Files\ClaudeCode\managed-settings.json`. Bemærk at `C:\ProgramData\ClaudeCode\managed-settings.json` er **udgået** fra v2.1.75 og stadig optræder i ældre vejledninger.
 
