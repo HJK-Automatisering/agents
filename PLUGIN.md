@@ -105,7 +105,9 @@ Skrivebordsappen   2.1.246
 claude på PATH     2.1.185     ← 61 versioner bagud
 ```
 
-De to deler `~/.claude/plugins`. Så appen læser og skriver samme tilstand som en to måneder gammel binær. Og det er den gamle der udfører dine `claude plugin`-kommandoer, fordi `/plugin` **ikke findes i skrivebordsappen** — hverken i en normal chat eller i en agent-session. Terminalen er den eneste vej.
+De to deler `~/.claude/plugins`. Så appen læser og skriver samme tilstand som en to måneder gammel binær. Skrivebordsappen har sin egen plugin-administration under **Indstillinger → Customize → Plugins**, og den bruger appens egen, aktuelle installation. Slash-kommandoen `/plugin` findes ikke i appen — men GUI'en gør, og det er den vej der bør bruges.
+
+Kører du i stedet `claude plugin ...` i en terminal, er det WinGet-udgaven der udfører det — og den kan være måneder bagud.
 
 Det havde en konkret konsekvens: før v2.1.232 hentede Claude Code ikke marketplacet før et opslag. På 2.1.185 læste `claude plugin install` altså et cachet katalog og fandt aldrig en ny version, uden at melde fejl.
 
