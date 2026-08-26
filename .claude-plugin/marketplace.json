@@ -1,6 +1,6 @@
 {
   "name": "hjk-agents",
-  "description": "Agent-roller og arbejdsmetode til HJK-Automatiserings projekter. Roller med skarpe mandater der afleverer til hinanden gennem filer.",
+  "description": "Ni roller med skarpe mandater, kaldt eksplicit: kickoff, architect, developer, tester, debugger, security, reviewer, scout, status.",
   "owner": {
     "name": "HJK-Automatisering",
     "url": "https://github.com/HJK-Automatisering"
@@ -9,8 +9,8 @@
     {
       "name": "agents",
       "source": "./plugins/agents",
-      "description": "Otte roller med skarpe mandater, kaldt eksplicit: kickoff, architect, developer, tester, debugger, security, reviewer, scout, status.",
-      "version": "1.0.0-beta.2",
+      "description": "Ni roller med skarpe mandater, kaldt eksplicit: kickoff, architect, developer, tester, debugger, security, reviewer, scout, status.",
+      "version": "1.0.0-beta.3",
       "author": {
         "name": "HJK-Automatisering"
       }
