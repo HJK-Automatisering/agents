@@ -17,7 +17,7 @@ agents/
         AGENTS.md             kontrakten, kopieres ind i projekter
         BOARD.md
         beslutningslog.md
-      brainstorm/  architect/  developer/  tester/  debugger/
+      architect/  developer/  tester/  debugger/
       security/  reviewer/  scout/  status/    ← tynde dispatch-skills
     agents/                   de fire rapportroller
       security.md  reviewer.md  scout.md  status.md

@@ -9,7 +9,7 @@
     {
       "name": "agents",
       "source": "./plugins/agents",
-      "description": "Otte agent-roller med skarpe mandater: kickoff, brainstorm, architect, developer, tester, security, reviewer, debugger.",
+      "description": "Otte roller med skarpe mandater, kaldt eksplicit: kickoff, architect, developer, tester, debugger, security, reviewer, scout, status.",
       "version": "1.0.0-beta.1",
       "author": {
         "name": "HJK-Automatisering"

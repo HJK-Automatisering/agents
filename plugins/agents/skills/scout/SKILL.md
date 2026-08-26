@@ -26,4 +26,4 @@ Den **dømmer ikke**. Ser den noget der ser forkert ud, noterer den det uden vur
 
 ## Bagefter
 
-Kortet ligger i `docs/map.md`. `Næste: menneske` — kortet er grundlag for det næste valg, ikke et forslag i sig selv.
+Kortet ligger i `docs/map.md`. Vis resuméet og sig hvad du ville tage først og hvorfor — kortet er grundlag for det næste valg, ikke et forslag i sig selv. Valget tages i samtalen, og først derefter skriver du handoff.

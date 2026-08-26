@@ -75,7 +75,9 @@ grundlag: <commit-sha eller dato>
 ## Handoff
 
 ```
-Næste:  menneske — kortet i docs/map.md er grundlag for det næste valg
+Næste:  ny tråd → /agents:architect <første emne>
 ```
 
-Skal nogen arbejde systematisk i projektet, er det typisk `ny tråd → /agents:kickoff` bagefter — den kan skrive et charter bagudrettet på grundlag af kortet.
+Er projektet slet ikke sat op — ingen kontrakt, ingen dokumenter — er det `kickoff` i stedet.
+
+Kortet er grundlag for det næste valg, ikke et forslag i sig selv. Skriv i rapporten hvad du ville tage først og hvorfor, så valget kan træffes i samtalen.

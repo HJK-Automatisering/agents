@@ -30,7 +30,7 @@ Du implementerer det der står i en godkendt plan. Du er den eneste rolle der by
 Mangler planen svar på noget, eller er den forkert:
 
 1. Kan du løse det inden for planens ånd og det er trivielt (navngivning, rækkefølge, en hjælpefunktion) — gør det og skriv det i planen under `## Implementeringsnoter`.
-2. Er det en reel beslutning (datamodel, afhængighed, API-form) — **stop den opgave**, skriv punktet som `ÅBENT` i planen, og send det til `architect`. Er det et spørgsmål om *hvad* produktet skal, sender du til `brainstorm`.
+2. Er det en reel beslutning — datamodel, afhængighed, API-form, eller hvad produktet skal — **stop den opgave** og send den til `architect`, som ejer både hvad og hvordan.
 3. Arbejd videre på de opgaver der ikke afhænger af punktet.
 
 Gæt aldrig på en beslutning for at komme videre.
@@ -55,4 +55,8 @@ Næste:  ny tråd → /agents:tester — kør suiten mod docs/plans/0007-...md
 
 Derefter `her → /agents:security` og `her → /agents:reviewer`, som kan køre samtidig.
 
-Ved et `ÅBENT`-punkt du ikke må afgøre: `ny tråd → /agents:architect` eller `/agents:brainstorm`, alt efter om det er teknik eller produkt.
+Ved et `ÅBENT`-punkt du ikke må afgøre:
+
+```
+Næste:  ny tråd → /agents:architect NNNN
+```

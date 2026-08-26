@@ -14,14 +14,13 @@ claude plugin install agents@hjk-agents --scope user
 
 Derefter, i hvert projekt: `/agents:kickoff`
 
-## De ni roller, elleve kald
+## De ni roller, ti kald
 
 Almindelig prosa i Claude Code udløser **ingenting**. Rollerne kaldes eksplicit.
 
 | Kald | Mekanisme | Kører | Må rette filer |
 |---|---|---|---|
 | `/agents:kickoff` | skill | din tråd | ja |
-| `/agents:brainstorm` | skill | din tråd | ja |
 | `/agents:architect` | skill | din tråd | ja |
 | `/agents:developer` | skill | din tråd | ja |
 | `/agents:tester` | skill | din tråd | ja |
@@ -31,6 +30,10 @@ Almindelig prosa i Claude Code udløser **ingenting**. Rollerne kaldes eksplicit
 | `/agents:scout` | skill → agent | eget vindue | kun `docs/map.md` |
 | `/agents:status` | skill → agent | eget vindue | **nej** |
 | `/agents:workflow` | skill | din tråd | kun workflow-filer |
+
+**Samtaleroller** kører i din tråd, så du kan tale med dem — ét spørgsmål ad gangen, og de venter på svaret. **Rapportroller** sendes af sted, kører isoleret med håndhævet værktøjsspærring, og kommer tilbage med en rapport.
+
+En rolle starter aldrig den næste. Den foreslår kaldet; du skriver det. Og bolden står aldrig hos dig i en handoff-blok — spørgsmål stilles og besvares i chatten.
 
 **Samtaleroller** kører i din tråd, så du kan tale med dem. **Rapportroller** sendes af sted, kører isoleret med håndhævet værktøjsspærring, og kommer tilbage med en rapport.
 

@@ -4,11 +4,11 @@ Til dig der skal bruge det. Læs den én gang, brug snydearket bagefter.
 
 ## Idéen på fem linjer
 
-Vi bruger ikke én AI-assistent til alt. Vi bruger **ni roller** og elleve kald, der hver kan én ting og har forbud mod resten.
+Vi bruger ikke én AI-assistent til alt. Vi bruger **ni roller**, der hver kan én ting og har forbud mod resten.
 
 **Almindelig prosa udløser ingenting.** Skriver du bare i Claude Code, sker der ikke noget særligt. Rollerne træder først i kraft når du kalder dem: `/agents:kickoff`, `/agents:security`.
 
-Og rollerne taler ikke sammen — de afleverer markdown i `docs/`, og næste rolle læser dem. **Tråde er engangs, filerne er hukommelsen.**
+Rollerne taler ikke sammen — de afleverer markdown i `docs/`, og næste rolle læser den. **Tråde er engangs, filerne er hukommelsen.**
 
 ## Ordene
 
@@ -19,13 +19,25 @@ Sproget kolliderer let, så hold de to fra hinanden:
 
 Og de to slags roller, som er den skelnen du bruger i praksis:
 
-**Samtalerolle** — du arbejder *sammen med* den. Den kører i din tråd, spørger, og du kan gribe ind.
-`kickoff` · `brainstorm` · `architect` · `developer` · `tester` · `debugger`
+**Samtalerolle** — du arbejder *sammen med* den. Den kører i din tråd, spørger ét spørgsmål ad gangen, og venter på svaret.
+`kickoff` · `architect` · `developer` · `tester` · `debugger`
 
 **Rapportrolle** — du sender den *af sted* og får et svar. Den kører i sit eget vindue og kan ikke rette noget.
 `security` · `reviewer` · `scout` · `status`
 
 Én sætning: **en samtalerolle taler med dig, en rapportrolle kommer tilbage med noget.**
+
+## To modtagere
+
+Det er den regel der bærer resten. Rollerne skriver to steder, og de skriver forskelligt:
+
+**Til hinanden: filerne.** Numre, stier, funktionsnavne, struktureret markdown.
+
+**Til dig: chatten.** Ét spørgsmål ad gangen, i almindeligt dansk, og så venter de. Filen er protokol over at spørgsmålet blev stillet — den er ikke måden at stille det.
+
+Derfor skal du **aldrig åbne en fil for at svare på noget.** Heller ikke for at godkende. Rollen viser hvad der skal besluttes, du svarer i chatten, og rollen skriver det ind.
+
+Og derfor slutter en rolle ikke midt i en dialog. Har den seks spørgsmål, bliver det seks runder i samme tråd — det går hurtigere end det lyder, fordi halvdelen bliver irrelevante undervejs.
 
 ## Hvorfor ikke bare én lang tråd
 
@@ -40,11 +52,11 @@ Tre grunde, i rækkefølge efter hvad de koster os:
 **Én gang på din maskine:**
 
 ```
-claude plugin marketplace add HJK-Automatisering/agents
+claude plugin marketplace update hjk-agents
 claude plugin install agents@hjk-agents --scope user
 ```
 
-`--scope user` er det vigtige — så gælder rollerne i alle dine projekter og ikke kun den mappe du står i.
+`--scope user` er det vigtige — så gælder rollerne i alle dine projekter.
 
 **Én gang pr. projekt:**
 
@@ -60,9 +72,8 @@ Den finder selv ud af hvad der mangler: er projektet tomt, kører den hele inter
 
 | Kald | Kører | Laver |
 |---|---|---|
-| `/agents:kickoff` | din tråd | Charter, fundament, `.gitignore`, `CLAUDE.md` |
-| `/agents:brainstorm` | din tråd | Spec: hvad og hvorfor |
-| `/agents:architect` | din tråd | Plan: hvordan, opdelt i opgaver |
+| `/agents:kickoff` | din tråd | Projektets dokument, `.gitignore`, `CLAUDE.md`, kontrakten |
+| `/agents:architect` | din tråd | Ét dokument pr. nummer: hvad, hvorfor og hvordan |
 | `/agents:developer` | din tråd | Koden |
 | `/agents:tester` | din tråd | Acceptkriterier og tests |
 | `/agents:debugger` | din tråd | Rettelse + årsagsanalyse |
@@ -70,15 +81,16 @@ Den finder selv ud af hvad der mangler: er projektet tomt, kører den hele inter
 | `/agents:reviewer` | **eget vindue** | Fund: oprydning og dokumentation |
 | `/agents:scout` | **eget vindue** | Kort over en ukendt kodebase |
 | `/agents:status` | **eget vindue** | Hvor står vi, og hvad er næste skridt |
-| `/agents:workflow` | din tråd | Tilføjer et fælles workflow, fx docker-publish |
 
-De fire nederste kan køre samtidig og fylder ikke din kontekst med deres filopslag.
+Plus `/agents:workflow`, der tilføjer et fælles workflow til projektet.
+
+De fire rapportroller kan køre samtidig og fylder ikke din kontekst med deres filopslag.
 
 **Kun to roller er teknisk spærret fra at redigere filer: `security` og `reviewer`.** For alle andre er "må ikke" en instruktion, ikke en lås. Sig det som det er — påstår du at noget er umuligt, og nogen ser det ske, mister hele metoden troværdighed.
 
 ## Et nyt projekt starter med en prosatekst
 
-Du behøver ikke en spec, en plan eller en idé om teknologi. Du behøver den tekst du fik opgaven i.
+Du behøver ikke en plan eller en idé om teknologi. Du behøver den tekst du fik opgaven i.
 
 ```
 /agents:kickoff
@@ -86,68 +98,88 @@ Du behøver ikke en spec, en plan eller en idé om teknologi. Du behøver den te
 Her er opgaven: <indsæt prosateksten, ufuldstændig og løs som den er>
 ```
 
-`kickoff` interviewer dig i **rul af tre til fire spørgsmål**, hvert med et foreslået svar, så du kan sige "ja" og komme videre. Den bliver ved indtil to ting holder: problemet kan beskrives uden forbehold, og den kan navngive de første tre til fem opgaver.
+`kickoff` spørger **ét spørgsmål ad gangen**, hvert med et foreslået svar, så du kan sige "ja" og komme videre. Den bliver ved indtil to ting holder: problemet kan beskrives uden forbehold, og den kan navngive de første tre til fem numre.
 
 Først derefter skriver den noget. Et afbrudt interview efterlader ingen halve filer.
 
-Prosateksten gemmes ordret i charteret. Om tre måneder kan du se hvad der faktisk blev bedt om, kontra hvad vi udledte.
+Prosateksten gemmes ordret i dokumentet. Om tre måneder kan du se hvad der faktisk blev bedt om, kontra hvad vi udledte.
+
+## Ét dokument pr. nummer
+
+`docs/plans/0007-sagsliste-eksport.md` med to halvdele:
+
+**Hvad og hvorfor** — problem, mål, ikke-mål, og *hvordan vi ser at det virker*. Kan læses alene.
+
+**Sådan bygger vi det** — moduler, datamodel, afhængigheder, opgaver i rækkefølge.
+
+`architect` skriver begge. Én godkendelse dækker dem. Og hver opgave i anden halvdel skal kunne **spores** til noget i første — kan den ikke det, hører den ikke til i nummeret. Det er den kontrol der forhindrer at et nummer vokser.
 
 ## Din rolle som menneske
 
 Du har tre opgaver. Ikke flere.
 
-**1. Du godkender — i samtalen.** Ingen rolle må sætte sit eget arbejde til `godkendt`. Men du skal aldrig åbne en fil for at godkende: rollen viser dig hvad der skal besluttes, du svarer *godkendt* eller siger hvad der skal laves om, og **rollen skriver det ind**. Det er dit eneste reelle kontrolpunkt — og det er nok, fordi alt andet er skrevet ned.
+**1. Du godkender — i samtalen.** Ingen rolle må sætte sit eget arbejde til `godkendt`. Men du skal aldrig åbne en fil for at gøre det: rollen viser hvad der skal besluttes, du svarer, og rollen skriver det ind.
 
-**2. Du skriver kaldene.** Hver rolle slutter med at foreslå det næste kald, klar til at kopiere. **Ingen rolle starter den næste selv.** Det er med vilje: det er der du fanger at noget er gået skævt, mens det stadig er billigt.
+**2. Du skriver kaldene.** Hver rolle slutter med at foreslå det næste kald, klar til at kopiere. **Ingen rolle starter den næste selv.**
 
-**3. Du afgør uenigheder.** Kører to roller i ring om samme punkt, eskalerer de til dig efter to runder — med et konkret A/B-valg.
+**3. Du merger og ruller ud.** `færdig` betyder **i drift** — ikke "tests kører". Det sidste skridt er dit, fordi det tit rører produktionsdata. `status` fortæller dig hvor langt der er.
 
 ## Handoff: læs de to nederste linjer
-
-Hver rolle slutter sådan:
 
 ```
 HANDOFF
 Nummer:       0007
 Rolle:        architect
-Udført:       Plan med fire opgaver, rækkefølge fastlagt.
+Udført:       Dokument med fire opgaver, rækkefølge fastlagt.
 Filer:        docs/plans/0007-sagsliste-eksport.md
-Næste:        ny tråd → /agents:tester — acceptkriterier ud fra planen
+Næste:        ny tråd → /agents:tester 0007
 Blokeret af:  intet
 ```
 
-`Næste` har tre former, og præfikset fortæller dig hvad du skal gøre:
+`Næste` peger **altid på en rolle**. Bolden står aldrig hos dig her — spørgsmål stilles og besvares i chatten, og blokken skrives først når retningen er kendt.
+
+Præfikset siger hvad du skal gøre:
 
 - **`ny tråd →`** — luk tråden, åbn en ny, indsæt kaldet.
 - **`her →`** — skriv kaldet i den tråd du står i. Det er en rapportrolle; den kører isoleret.
-- **`menneske`** — bolden er din. Rollen bliver i tråden og venter på dit svar; den skriver det ind når det kommer.
 
-Kaldet skrives som du taster det i appen — `/agents:brainstorm Regellogik`. Ikke pakket ind i `claude "..."`; det er terminalformen, og vi sidder i skrivebordsappen.
+Kaldet skrives som du taster det i appen — `/agents:architect Regellogik`. Ikke pakket ind i `claude "..."`; det er terminalformen, og vi sidder i skrivebordsappen.
 
 ## Hvor meget proces skal en opgave have
 
-**Nyt projekt** — `/agents:kickoff`, godkend, så `/agents:brainstorm`. Altid, uanset hvor lille projektet lyder.
+**Nyt projekt** — `/agents:kickoff`, godkend, så `/agents:architect`. Altid, uanset hvor lille projektet lyder.
 
-**Lille** — tekstændring, tydelig fejl, ét felt mere: `/agents:developer` eller `/agents:debugger`. Ingen spec, ingen plan. Én linje i `docs/decisions/log.md`.
+**Lille** — tekstændring, tydelig fejl, ét felt mere: `/agents:developer` eller `/agents:debugger`. Ingen dokument. Én linje i `docs/decisions/log.md`.
 
-**Mellem** — afgrænset feature, under en dag: `/agents:brainstorm` (kort spec) → `/agents:developer` → `/agents:reviewer`. Spring `architect` over hvis planen er indlysende.
+**Mellem** — afgrænset feature, under en dag: `/agents:architect` → `/agents:developer` → `/agents:reviewer`.
 
 **Stor** — nyt modul, ny integration, noget der rører data eller adgang: hele flowet. `security` er ikke valgfri her.
 
-Tvivl? Tag et spor op. En overflødig plan koster tyve minutter; en manglende koster en uge.
+Og uanset størrelse: **der bygges kun på ét nummer ad gangen.** Er `byg` optaget, startes der ikke et nyt. Flere numre må gerne vente på udrulning.
+
+## Miljø
+
+Er projektet i Python, arbejdes der i en `.venv`. Det er antagelsen, og `kickoff` afklarer det ved projektstart.
+
+Rollerne kalder fortolkeren direkte — `.venv\Scripts\python.exe -m pytest` — frem for at aktivere miljøet. Aktivering holder ikke fra ét kald til det næste, fordi hvert kald kører i sin egen skal.
+
+Ingen pakke installeres globalt. Har projektet brug for en ny afhængighed, står det i et godkendt dokument.
 
 ## Versionering
 
-**GitHub er til kode.** `docs/`, `AGENTS.md` og `.claude/` versionsstyres ikke — projektets `.gitignore` holder dem ude fra første commit. `docs/findings/` kan indeholde sikkerhedsfund der ikke er udbedret endnu.
+**Alt versionsstyres**, også `AGENTS.md` og `docs/`. Kontrakten koden blev skrevet under skal rejse sammen med koden.
 
-Det betyder at filerne er hukommelse mellem *tråde*, ikke mellem *maskiner*. Vi arbejder som udgangspunkt alene på et projekt; skal en anden overtage, overdrages `docs/` uden om git.
+Kun det personlige, det hemmelige og det genskabelige holdes ude: `.claude/settings.local.json`, `.env`, nøgler, `.venv/`, byggeoutput.
+
+Det forudsætter at repoet er privat. **Et repo der indeholder `docs/findings/` må ikke gøres offentligt uden gennemgang** — fund kan beskrive sårbarheder der ikke er udbedret, og historik kan ikke gøres privat bagefter.
 
 For koden:
 
-- **`.gitignore` før projektets anden fil.** En committet hemmelighed kan ikke slettes, kun roteres.
-- **`.gitattributes` med `* text=auto eol=lf`.** Windows-maskiner, Linux-containere.
-- **Én gren pr. nummer**, én commit pr. afsluttet enhed, beskeder på dansk med nummer foran.
-- **Push når koden er færdig og testet** — ikke ved hvert handoff. De fleste handoffs flytter kun markdown.
+- `.gitignore` før projektets anden fil. En committet hemmelighed kan ikke slettes, kun roteres.
+- `.gitattributes` med `* text=auto eol=lf`. Windows-maskiner, Linux-containere.
+- Én gren pr. nummer, én commit pr. afsluttet enhed, beskeder på dansk med nummer foran.
+- **Push ved hvert handoff.** Ligger arbejdet kun lokalt, findes det ikke for næste tråd.
+- **Ingen rolle ændrer et versionsnummer.** En udgivelse er din beslutning.
 
 ## Workflows
 
@@ -155,41 +187,38 @@ For koden:
 /agents:workflow
 ```
 
-Ingen roller nævner workflows af sig selv. Vil du have et, kalder du det — og det kan du gøre når som helst, også på et projekt der har kørt i et halvt år. Det er derfor det ikke ligger i `kickoff`: den kører én gang, og beslutningen om at containerisere kommer tit senere.
+Ingen roller nævner workflows af sig selv. Vil du have et, kalder du det — og det kan du gøre når som helst, også på et projekt der har kørt i et halvt år.
 
-Skillen viser hvad der findes, spørger ja eller nej pr. workflow, og kopierer filerne ind.
-
-I dag findes **`docker-publish`**: bygger og publicerer et container-image til GitHub Packages ved hvert push til `main`, signerer det med cosign, og giver dig et immutabelt `:sha-`tag at rulle tilbage til.
+I dag findes **`docker-publish`**: bygger og publicerer et container-image til GitHub Packages ved hvert push til `main`, signerer det, og giver dig et immutabelt `:sha-`tag at rulle tilbage til.
 
 Vælger du det: **din `Dockerfile` skal tage imod `APP_VERSION` og `GIT_SHA`** som `ARG` og logge dem ved opstart. Ellers virker workflowet, men logvisningen kan ikke fortælle hvilken build der kører.
-
-Alt projektet ikke opfylder i dag — manglende `Dockerfile`, indstillinger i GitHub — skriver skillen på `docs/BOARD.md`, så det ikke bliver glemt.
 
 ## Gennemspillet: en lille eksport-funktion
 
 | # | Kald | Hvad der sker |
 |---|---|---|
-| 1 | `/agents:brainstorm` | Spec, efter et par runders spørgsmål |
-| 2 | *dig* | Godkender |
-| 3 | `/agents:architect` | Plan med fire opgaver |
-| 4 | *dig* | Godkender |
-| 5 | `/agents:tester` | Acceptkriterier — inkl. "tom liste giver en tom fil, ikke en fejl" |
-| 6 | `/agents:developer` | Opgave 1-2 |
-| 7 | `/agents:developer` | Opgave 3-4 |
-| 8 | `/agents:tester` | Kører suiten. Ét fund: 10.000 rækker timer ud |
-| 9 | `/agents:developer` | Retter fundet |
-| 10 | `/agents:security` + `/agents:reviewer` | Samtidig, begge i eget vindue |
-| 11 | `/agents:developer` | Udfører fundene |
+| 1 | `/agents:architect` | Dialog, ét spørgsmål ad gangen. Ét dokument med fire opgaver |
+| 2 | *dig* | Godkender i samtalen |
+| 3 | `/agents:tester` | Acceptkriterier — inkl. "tom liste giver en tom fil, ikke en fejl" |
+| 4 | `/agents:developer` | Opgave 1-2 |
+| 5 | `/agents:developer` | Opgave 3-4 |
+| 6 | `/agents:tester` | Kører suiten. Ét fund: 10.000 rækker timer ud |
+| 7 | `/agents:developer` | Retter fundet |
+| 8 | `/agents:security` + `/agents:reviewer` | Samtidig, begge i eget vindue |
+| 9 | `/agents:developer` | Udfører fundene |
+| 10 | *dig* | Merger og ruller ud. **Nu er nummeret færdigt** |
 
-Bemærk trin 5: acceptkriterierne blev skrevet **før** koden fandtes. Det er derfor tom-liste-tilfældet blev fanget.
+Bemærk trin 3: acceptkriterierne blev skrevet **før** koden fandtes. Det er derfor tom-liste-tilfældet blev fanget.
+
+Og trin 10: uden det er nummeret ikke færdigt, uanset hvor grøn suiten er.
 
 ## Faldgruber
 
-**"Kan du lige også …"** Den mest almindelige. Du beder `developer` om at rette noget du opdagede undervejs. Så er der ændret kode som ingen plan dækker. Skriv den i loggen og tag den som sin egen opgave.
+**"Kan du lige også …"** Den mest almindelige. Du beder `developer` om at rette noget du opdagede undervejs. Så er der ændret kode som intet dokument dækker. Skriv den i loggen og tag den som sit eget nummer.
 
 **Du fortsætter i samme tråd.** `/agents:architect` er færdig, og du skriver bare videre. Nu er `architect`s kontekst med i `developer`s arbejde. Handoff siger `ny tråd →` af en grund.
 
-**Spec fuld af `ÅBENT`.** Så er det ikke en spec, det er en spørgeliste. Send den tilbage.
+**Grønt er ikke færdigt.** 33 commits og en grøn suite er ikke en leverance hvis intet er merget. `status` siger hvor langt der er til drift — spørg den.
 
 **Du godkender uden at læse.** Det eneste sted metoden kan fange en misforståelse, før den bliver kode.
 
@@ -199,8 +228,7 @@ Bemærk trin 5: acceptkriterierne blev skrevet **før** koden fandtes. Det er de
 
 ```
 Nyt eller uopsat projekt   /agents:kickoff
-Hvad skal vi bygge         /agents:brainstorm
-Hvordan bygger vi det      /agents:architect
+Hvad og hvordan            /agents:architect
 Byg det                    /agents:developer
 Acceptkriterier og tests   /agents:tester
 Noget er i stykker         /agents:debugger      (altid ny tråd)
@@ -209,14 +237,16 @@ Huller og logiske fejl     /agents:security      (eget vindue)
 Oprydning og dokumentation /agents:reviewer      (eget vindue)
 Ukendt kodebase            /agents:scout         (eget vindue)
 Hvor er vi                 /agents:status        (eget vindue)
-Tilføj docker-publish     /agents:workflow
+Tilføj docker-publish      /agents:workflow
 
 Overblik      docs/BOARD.md
+Dokumenter    docs/plans/NNNN-slug.md
 Beslutninger  docs/decisions/log.md
 Kontrakt      AGENTS.md
 
 Spærret fra at rette   security, reviewer
 Godkender              kun dig
+Merger og udruller     kun dig
 Starter næste rolle    kun dig
 ```
 

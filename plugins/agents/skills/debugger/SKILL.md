@@ -81,8 +81,4 @@ Er årsagen strukturel og kræver mere end en minimal rettelse:
 Næste:  ny tråd → /agents:architect — <hvad der skal laves om>
 ```
 
-Kunne du ikke reproducere fejlen:
-
-```
-Næste:  menneske — kan ikke reproduceres, se docs/rca/0009-...md for hvad der blev prøvet
-```
+Kunne du ikke reproducere fejlen, så sig det i samtalen — hvad du prøvede, og hvad du mangler for at komme videre. Spørg om det du mangler, ét spørgsmål ad gangen. Først når du ved om der er en vej videre, skriver du handoff.

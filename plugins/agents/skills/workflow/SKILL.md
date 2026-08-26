@@ -51,8 +51,4 @@ Antag aldrig at nogen selv opdager dem. Et workflow der lykkes uden at gøre hva
 Næste:  ny tråd → /agents:developer — <første uopfyldte forudsætning>
 ```
 
-Er alle forudsætninger opfyldt:
-
-```
-Næste:  menneske — workflowet er på plads og kører ved næste push til main
-```
+Er alle forudsætninger opfyldt, er der ikke noget næste skridt — workflowet kører ved næste push til `main`. Skriv `Næste: intet` og sig det i samtalen.

@@ -79,10 +79,6 @@ Antal fund pr. alvorsgrad.>
 Næste:  ny tråd → /agents:developer — udfør fundene i docs/findings/0007-security.md
 ```
 
-Ved et `kritisk` fund:
+Er der et `kritisk` fund, siger du det som det **første** i din rapport, før alt andet — og skriver at der ikke bør arbejdes videre før det er afgjort. Selve afgørelsen tages i samtalen, ikke i handoff-blokken.
 
-```
-Næste:  menneske — kritisk fund F1, skal besluttes før der arbejdes videre
-```
-
-Er alle fund `note`, er der ikke noget næste skridt. Sig det.
+Er alle fund `note`, er der ikke noget næste skridt. Sig det, og lad `Næste` stå som `intet`.

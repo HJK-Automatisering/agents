@@ -21,7 +21,7 @@ try {
         }
     } catch { }
 
-    $hasSpecs     = @(Get-ChildItem -Path (Join-Path $cwd 'docs\specs') -Filter '*.md' -File).Count -gt 0
+    $hasDocs      = @(Get-ChildItem -Path (Join-Path $cwd 'docs\plans') -Filter '*.md' -File).Count -gt 0
     $hasClaude    = Test-Path (Join-Path $cwd 'CLAUDE.md')
     $hasGitignore = Test-Path (Join-Path $cwd '.gitignore')
     $hasGit       = Test-Path (Join-Path $cwd '.git')
@@ -34,9 +34,9 @@ try {
 
     $context = $null
 
-    if (-not $hasSpecs -and -not $hasClaude -and $commits -eq 0) {
+    if (-not $hasDocs -and -not $hasClaude -and $commits -eq 0) {
         $context = @(
-            'PROJEKT NUL. Denne mappe har ingen specs, ingen CLAUDE.md og ingen commits.',
+            'PROJEKT NUL. Denne mappe har ingen dokumenter, ingen CLAUDE.md og ingen commits.',
             'Det er næsten altid rollen `kickoff` der skal køre her - se .claude/agents/kickoff.md.',
             '',
             'Gå ikke i gang med at skrive filer. Bekræft først med brugeren at det er et nyt',
