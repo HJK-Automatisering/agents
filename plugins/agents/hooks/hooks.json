@@ -3,11 +3,14 @@
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "*",
+        "matcher": "startup|resume|clear",
         "hooks": [
           {
             "type": "command",
-            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${CLAUDE_PLUGIN_ROOT}/hooks/detect-project-zero.ps1\""
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/detect-project-zero.cjs"],
+            "timeout": 10,
+            "statusMessage": "Tjekker projektets tilstand"
           }
         ]
       }
