@@ -208,7 +208,7 @@ For koden:
 - `.gitignore` før projektets anden fil. En committet hemmelighed kan ikke slettes, kun roteres.
 - `.gitattributes` med `* text=auto eol=lf`. Windows-maskiner, Linux-containere.
 - Én gren pr. nummer, én commit pr. afsluttet enhed, beskeder på dansk med nummer foran.
-- **Push ved hvert handoff.** Ligger arbejdet kun lokalt, findes det ikke for næste tråd.
+- **Rollerne committer. Du pusher.** Næste tråd læser arbejdstræet på din maskine og har ikke brug for et push. `status` siger hvor mange commits der ligger upushet.
 - **Ingen rolle ændrer et versionsnummer.** En udgivelse er din beslutning.
 
 ## Workflows

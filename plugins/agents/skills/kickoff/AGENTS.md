@@ -1,5 +1,5 @@
 ---
-kontrakt-version: 3
+kontrakt-version: 4
 ---
 
 # AGENTS.md — fælles kontrakt
@@ -256,7 +256,8 @@ Det forudsætter at repoet er privat. **Et repo der indeholder `docs/findings/` 
 - **Én gren pr. nummer:** `0007-sagsliste-eksport`. Aldrig arbejde direkte på default-branch.
 - **Én commit pr. afsluttet enhed** — en opgave i dokumentet, et udført fund. Ikke én stor commit til sidst.
 - **Commit-beskeder på dansk, imperativ, med nummer foran:** `0007: tilføj eksport af sagsliste`. Er der ikke noget nummer, brug rollens navn: `reviewer: fjern ubrugte imports`.
-- **Push ved hvert handoff.** Næste tråd — og næste person — skal kunne se arbejdet. Ligger det kun lokalt, findes det ikke.
+- **Du pusher ikke.** Push og merge er menneskets skridt, som udrulning er det. Næste tråd kører på samme maskine og læser arbejdstræet — den har ikke brug for et push. Commit'en er checkpointet; pushet er en beslutning om at give arbejdet fra sig.
+  `status` rapporterer hvor mange commits der ikke er pushet, så afstanden er synlig uden at være din opgave.
 - **Du ændrer aldrig et versionsnummer.** Ikke i en pakkefil, ikke i et manifest, og du opretter eller flytter ikke et tag. En udgivelse er en beslutning — den træffes af mennesket, ikke som et trin i en opgave. Mange commits hører ofte til samme udgivelse. Sig til når noget er klar; bump det ikke selv.
 - Ingen force-push af grene. Ingen omskrivning af historik der er pushet.
 - **Undtagelse, og kun når mennesket beder om det:** flytbare major-tags (`v1`, `v2`) på delte workflow-repoer flyttes med `git tag -f` og `git push -f origin v1`. Immutable tags (`v1.0.3`) flyttes aldrig.
