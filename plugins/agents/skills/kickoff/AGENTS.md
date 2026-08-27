@@ -1,5 +1,5 @@
 ---
-kontrakt-version: 4
+kontrakt-version: 5
 ---
 
 # AGENTS.md — fælles kontrakt
@@ -25,12 +25,21 @@ Alt du skriver har én af to modtagere, og de behandles forskelligt.
 
 **Til mennesket: chatten.** Ét spørgsmål ad gangen, i almindeligt dansk, og så venter du. Filen er protokol over at spørgsmålet blev stillet — den er ikke måden at stille det.
 
-Fire regler følger:
+Fem regler følger:
 
 1. **Ét spørgsmål ad gangen.** Ikke tre, ikke et rul. Stil det, vent, og lad svaret forme det næste. Har du seks spørgsmål, bliver det seks runder — det går hurtigere end det lyder, fordi halvdelen bliver irrelevante undervejs.
-2. **Hvert spørgsmål bærer din anbefaling.** Tre ting, hver gang: hvad du anbefaler, hvorfor, og **hvad der ville få dig til at anbefale noget andet.**
-   Det sidste er det vigtigste. Uden det kan mennesket kun sige ja eller nej. Med det kan de sige *"nej, fordi det andet er tilfældet"* — og så vender svaret uden en ekstra runde.
-   Om det bliver prosa eller et A/B-valg afgør du ud fra spørgsmålet. Formen er fri; de tre ting er ikke.
+2. **Hvert spørgsmål bærer din anbefaling.** Fire dele, i denne rækkefølge:
+
+   - **Anbefalingen** — én sætning, fed. Ikke mere.
+   - **For** — punkter. Aldrig prosa.
+   - **Imod** — punkter. Skal være der, også når du er sikker.
+   - **Spørgsmålet** — én linje til sidst. Besvarligt med ja, nej eller A/B.
+
+   **Ingen sætning over 25 ord i nogen af delene.** Det er den regel der bærer resten. En anbefaling kan være rigtig og alligevel ubrugelig, hvis den står i en sætning på halvfems ord.
+
+   *Imod* er den del der oftest bliver sprunget over, og den vigtigste. Uden den kan mennesket kun sige ja eller nej. Med den kan de sige *"nej, fordi det andet er tilfældet"* — og så vender svaret uden en ekstra runde. Kan du ikke finde noget der taler imod, har du ikke et spørgsmål, og så skal du ikke stille det.
+
+   Kræver indholdet mere end punkter — tre tilfælde, to variable — så lav en lille tabel. Ikke semikolonner.
 3. **Du bliver i tråden.** En rolle der har stillet et spørgsmål, afslutter ikke. Den venter. Omgangen slutter først når spørgsmålene er lukket, og først da skrives handoff-blokken.
 4. **Ingen antagelser.** Er du i tvivl, spørger du. Du må antage hvis mennesket giver dig lov — ikke fordi det ville være rimeligt at antage.
 5. **Alt til mennesket skal kunne læses uden at åbne en fil.** Skriver du "opgave 8", "F1" eller "AK30a", skal den følgende sætning sige hvad det er i almindelige ord. Filstier, funktionsnavne og hashes er sporbarhed — de er ikke forklaringen.
@@ -41,17 +50,36 @@ Rollenavne hører ikke i prosa til mennesket; det er vores interne arbejdsdeling
 
 Ikke sådan:
 
-> Skal sletteløbet køre dagligt eller ugentligt?
+> Jeg anbefaler at der altid står præcis én linje pr. gennemført ugentligt løb — er sletningen slukket, den linje der findes i dag; er den tændt og der blev fjernet noget, den linje sletteløbet selv skriver; er den tændt og der ikke var noget at fjerne, en ny linje med bestanden og de to tællinger. Det er én linje om ugen, det gør beviset til noget der er der frem for noget der mangler, og linjen kan lægges det sted der i forvejen ved om sletningen er tændt, så modulet med reglerne ikke skal røres.
 
-Det tvinger mennesket til at kende tallene for at kunne svare.
+Anbefalingen er rigtig. Den er også ulæselig. Tre tilfælde er presset ind i én sætning med semikolonner, begrundelserne står i den næste, og det der taler imod, står slet ikke.
 
 Sådan:
 
-> Jeg foreslår **dagligt**. Der kommer omkring tyve nye sager i døgnet, så ugentligt ville lade op til 140 ligge og vente på at blive ryddet — og kørslen er let, fordi den kun rører rækker der allerede er markeret.
+> **Jeg anbefaler én linje i loggen pr. gennemført ugentligt løb — altid, uanset udfald.**
 >
-> Ugentligt ville være det rigtige hvis kørslen var tung, eller hvis der var en grund til at samle sletninger i én batch. Er der det?
+> | Sletningen | Blev der fjernet noget | Linjen |
+> |---|---|---|
+> | slukket | — | den der skrives i dag |
+> | tændt | ja | den sletteløbet selv skriver |
+> | tændt | nej | en ny linje med bestanden og de to tællinger |
+>
+> **For:**
+>
+> - Én linje om ugen. Det er ikke støj.
+> - Beviset bliver noget der **er** der, i stedet for noget der mangler. En tom log kan ikke skelne "kørte og fandt intet" fra "kørte ikke".
+> - Linjen kan lægges hvor koden i forvejen ved om sletningen er tændt. Modulet med reglerne og spærrerne skal ikke røres.
+>
+> **Imod:**
+>
+> - Spec'en siger ordret at der intet skrives, når der ikke blev fjernet noget. Læser du loggen som noget der kun bærer afvigelser, bryder forslaget den læsning.
+> - Med sletningen tændt og alt normalt kommer linjen hver uge i årevis.
+>
+> Vejer indvendingen tungest, retter jeg i stedet kriteriet for det skridt. Så bliver beviset kontrollerne mod databasen plus de før- og eftertal du alligevel skriver ned.
+>
+> **Linjen ind, eller kriteriet rettet?**
 
-Anbefaling, begrundelse, og hvad der vender den. Mennesket kan svare "ja" på et sekund, eller "der er faktisk en grund" — og i begge tilfælde er samtalen videre.
+Samme indhold, samme anbefaling. Forskellen er at det kan besvares uden at læses to gange.
 
 ## Sådan starter du
 
