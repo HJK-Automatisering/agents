@@ -24,7 +24,7 @@ agents/
       security.md  reviewer.md  scout.md  status.md
     hooks/
       hooks.json              bruger ${CLAUDE_PLUGIN_ROOT}
-      detect-project-zero.ps1
+      detect-project-zero.cjs
   workflows/                  valgfrie arbejdsgange
   GUIDE.md  README.md  PLUGIN.md
 ```
