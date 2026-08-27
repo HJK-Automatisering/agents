@@ -10,7 +10,7 @@
       "name": "agents",
       "source": "./plugins/agents",
       "description": "Ni roller med skarpe mandater, kaldt eksplicit: kickoff, architect, developer, tester, debugger, security, reviewer, scout, status.",
-      "version": "1.0.0-beta.6",
+      "version": "1.0.0-beta.7",
       "author": {
         "name": "HJK-Automatisering"
       }

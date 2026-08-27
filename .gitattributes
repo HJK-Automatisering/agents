@@ -2,11 +2,10 @@
 # LF i repoet uanset hvilken platform der committer.
 * text=auto eol=lf
 
-# PowerShell-scripts køres på Windows. Git Bash og PowerShell klarer begge LF,
-# så de følger reglen ovenfor — men markér dem som tekst, så de aldrig
-# behandles som binære ved en fejl.
-*.ps1 text
 *.md  text
 *.json text
 *.yaml text
 *.yml  text
+
+# Node-hooks. LF paa alle platforme.
+*.cjs text eol=lf
