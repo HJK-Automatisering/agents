@@ -7,6 +7,18 @@ Agent-roller og arbejdsmetode til HJK-Automatiserings projekter. Distribueres so
 
 ## Installation
 
+**Node skal være installeret først.** Plugin'ets SessionStart-hook kører på Node, og Claude Codes egen indbyggede runtime er ikke tilgængelig for hooks.
+
+```
+winget install --id OpenJS.NodeJS.LTS
+```
+
+Administratorrettigheder skal være aktiveret på pc'en inden du kører den. Tjek bagefter i en ny terminal med `node --version`.
+
+Mangler Node, virker alt andet — alle kald, alle roller, kontrakten — men de tre automatiske tjek ved sessionsstart udføres ikke, og det meldes ikke. Se `GUIDE.md`.
+
+Derefter:
+
 ```
 claude plugin marketplace add HJK-Automatisering/agents
 claude plugin install agents@hjk-agents --scope user

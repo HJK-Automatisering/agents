@@ -47,6 +47,32 @@ Tre grunde, i rækkefølge efter hvad de koster os:
 2. **En model der lige har skrevet koden er dårlig til at angribe den.** Den vil have at det virker. Derfor er `tester` og `security` egne kald — ikke fordi vi mangler plads, men fordi de skal være i dårligt humør.
 3. **Konteksten bliver for stor**, og kvaliteten falder længe før den løber tør.
 
+## Forudsætning: Node
+
+Plugin'ets SessionStart-hook kører på Node. Den er det der siger til når du står i et tomt projekt, eller når projektets kontrakt er bagud i forhold til plugin'ets.
+
+**Node skal være installeret på maskinen.** Claude Code har sin egen Node-runtime bagt ind i sin binære fil, men den er ikke tilgængelig for hooks — de skal bruge systemets.
+
+```
+winget install --id OpenJS.NodeJS.LTS
+```
+
+**Administratorrettigheder skal være aktiveret på pc'en inden du kører den.** Uden dem fejler installationen midtvejs, og resultatet er en halvt installeret Node der er værre end ingen.
+
+Tjek bagefter, i en **ny** terminal:
+
+```
+node --version
+```
+
+### Hvis Node mangler
+
+Så gør hooken ingenting, og **den siger det ikke.** Alt andet virker: alle elleve kald, alle roller, kontrakten. Du mister kun de tre automatiske tjek.
+
+Det betyder i praksis at du selv skal huske at køre `/agents:update` når plugin'et er blevet opdateret. Uden hooken er der ingen der gør opmærksom på at projektets kontrakt er blevet forældet.
+
+Kør derfor `node --version` som en del af opsætningen, og ikke først når noget opfører sig underligt.
+
 ## Opsætning
 
 **Én gang på din maskine:**
