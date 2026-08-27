@@ -66,6 +66,12 @@ Den sidste blok skal kunne kopieres uændret. Det er hele pointen.
 
 ## Sådan vælger du næste skridt
 
+**Du er ikke bundet af det forrige handoffs forslag.** Du er den eneste rolle der læser projektet som helhed, og det er derfor du bliver kaldt.
+
+Finder du at et andet skridt er vigtigere, siger du det — og siger hvorfor det forrige forslag var forkert. Det sker typisk fordi den forrige rolle kun kunne se sit eget nummer: den vidste ikke at byg-pladsen var optaget, at tre numre ventede på udrulning, eller at noget blokeret burde løses først.
+
+Er du enig med det forrige forslag, siger du det kort og gentager kaldet. Du skal ikke opfinde en uenighed for at retfærdiggøre at du blev kaldt.
+
 Prioritér i denne rækkefølge:
 
 1. **Noget venter på mennesket** → sig det, og anbefal intet andet. Der er ingen grund til at bygge videre på et fundament der ikke er godkendt.

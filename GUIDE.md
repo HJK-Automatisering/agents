@@ -80,7 +80,7 @@ Den finder selv ud af hvad der mangler: er projektet tomt, kører den hele inter
 | `/agents:security` | **eget vindue** | Fund: huller og logiske fejl |
 | `/agents:reviewer` | **eget vindue** | Fund: oprydning og dokumentation |
 | `/agents:scout` | **eget vindue** | Kort over en ukendt kodebase |
-| `/agents:status` | **eget vindue** | Hvor står vi, og hvad er næste skridt |
+| `/agents:status` | **eget vindue** | Læser projektet som helhed og vurderer næste skridt |
 
 Plus to hjælpekald: `/agents:workflow` tilføjer et fælles workflow, og `/agents:update` bringer projektets kontrakt ajour.
 
@@ -144,6 +144,16 @@ Præfikset siger hvad du skal gøre:
 - **`her →`** — skriv kaldet i den tråd du står i. Det er en rapportrolle; den kører isoleret.
 
 Kaldet skrives som du taster det i appen — `/agents:architect Regellogik`. Ikke pakket ind i `claude "..."`; det er terminalformen, og vi sidder i skrivebordsappen.
+
+## `status` er den der ser helheden
+
+Hver rolle ser kun sit eget nummer. `status` læser dem alle — plus beslutningsloggen, git-tilstanden og afstanden til drift.
+
+Derfor er den **ikke bundet af det forrige handoffs forslag.** Finder den at noget andet er vigtigere, siger den det og siger hvorfor det forrige var forkert.
+
+Og derfor skal rollerne spørge den **før de foreslår noget nyt.** Peger et `Næste` på et nyt nummer, eller på at det nuværende er færdigt, så kalder rollen `status` først. Inden for samme nummer spørger den ikke — der rækker dens egen viden.
+
+Det var den mekanisme der manglede i afprøvningen: ingen bemærkede at 33 commits lå upushet, eller at et nummer byggede tests til et modul der ventede på en migrering der ventede på et menneske.
 
 ## Hvor meget proces skal en opgave have
 

@@ -1,5 +1,5 @@
 ---
-kontrakt-version: 2
+kontrakt-version: 3
 ---
 
 # AGENTS.md — fælles kontrakt
@@ -201,6 +201,14 @@ Folk sidder i skrivebordsappen, ikke i en terminal.
 | `debugger` | `ny tråd →` | Altid. Gammel fejlkontekst giver falske spor |
 
 Er der intet næste skridt, skriver du `Næste: intet` og siger hvorfor i prosaen over blokken.
+
+### Spørg `status` før noget nyt startes
+
+Peger dit `Næste` på **et nyt nummer**, eller på at **dette nummer er færdigt**, så kald `her → /agents:status` først og lad dens vurdering afgøre hvad der skal stå i blokken.
+
+Grunden er at du kun kan se dit eget nummer. Du ved ikke om byg-pladsen er optaget, om der ligger tre numre og venter på udrulning, eller om noget blokeret burde løses først. `status` læser hele projektet og kan se det.
+
+Bliver dit `Næste` derimod inden for samme nummer — "koden er skrevet, næste er tester" — så spørg ikke. Der rækker din egen viden, og et ekstra kald koster kun tid.
 
 **Du påtager dig aldrig den næste rolle selv.** Når blokken er skrevet, er dit arbejde slut — også selvom tråden sagtens kunne fortsætte, og også selvom det næste skridt er indlysende. Du foreslår kaldet. Mennesket skriver det.
 
