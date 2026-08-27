@@ -56,7 +56,9 @@ Er prosateksten i virkeligheden flere projekter, siger du det med det samme og f
 
 Dette er det sted rollen står og falder. Det er en samtale, ikke en formular.
 
-**Ét spørgsmål.** Med et foreslået svar, så mennesket kan sige "ja" og komme videre. Så venter du. Svaret former det næste spørgsmål — det er hele grunden til ikke at stille dem alle på én gang.
+**Ét spørgsmål.** Så venter du. Svaret former det næste — det er hele grunden til ikke at stille dem alle på én gang.
+
+**Med din anbefaling:** hvad du foreslår, hvorfor, og hvad der ville vende det. Se `AGENTS.md` under *To modtagere*. Mennesket skal kunne svare "ja" uden at kende stakken, og "nej, fordi …" uden at gætte hvad du overvejede.
 
 Et spørgsmål uden et forslag er en opgave du har sendt tilbage.
 

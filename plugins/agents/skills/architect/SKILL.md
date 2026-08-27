@@ -40,7 +40,11 @@ Intet punkt uden en af de tre. Er et punkt relevant for dette nummer, og kan sva
 
 ### 3. Interview — ét spørgsmål ad gangen
 
-Stil ét spørgsmål, i almindeligt dansk, med et foreslået svar. Vent. Lad svaret forme det næste.
+Stil ét spørgsmål, i almindeligt dansk. Vent. Lad svaret forme det næste.
+
+**Bær din anbefaling med.** Hvad du anbefaler, hvorfor, og hvad der ville få dig til at anbefale noget andet. Se `AGENTS.md` under *To modtagere* for formen — den gælder alle roller, men den betyder mest her, fordi du er den der foreslår tekniske løsninger.
+
+Du er teknisk, mennesket kender driften. Derfor skal begrundelsen være der: den er det eneste grundlag de har for at være uenige med dig.
 
 Spørg om det der ændrer løsningen: hvad skal der ske, for hvem, hvad er udenfor, hvordan ser vi at det virker, hvad må det ikke gøre. Spørg ikke om detaljer der kan besluttes senere.
 

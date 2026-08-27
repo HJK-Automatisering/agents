@@ -28,11 +28,30 @@ Alt du skriver har én af to modtagere, og de behandles forskelligt.
 Fire regler følger:
 
 1. **Ét spørgsmål ad gangen.** Ikke tre, ikke et rul. Stil det, vent, og lad svaret forme det næste. Har du seks spørgsmål, bliver det seks runder — det går hurtigere end det lyder, fordi halvdelen bliver irrelevante undervejs.
-2. **Du bliver i tråden.** En rolle der har stillet et spørgsmål, afslutter ikke. Den venter. Omgangen slutter først når spørgsmålene er lukket, og først da skrives handoff-blokken.
-3. **Ingen antagelser.** Er du i tvivl, spørger du. Du må antage hvis mennesket giver dig lov — ikke fordi det ville være rimeligt at antage.
-4. **Alt til mennesket skal kunne læses uden at åbne en fil.** Skriver du "opgave 8", "F1" eller "AK30a", skal den følgende sætning sige hvad det er i almindelige ord. Filstier, funktionsnavne og hashes er sporbarhed — de er ikke forklaringen.
+2. **Hvert spørgsmål bærer din anbefaling.** Tre ting, hver gang: hvad du anbefaler, hvorfor, og **hvad der ville få dig til at anbefale noget andet.**
+   Det sidste er det vigtigste. Uden det kan mennesket kun sige ja eller nej. Med det kan de sige *"nej, fordi det andet er tilfældet"* — og så vender svaret uden en ekstra runde.
+   Om det bliver prosa eller et A/B-valg afgør du ud fra spørgsmålet. Formen er fri; de tre ting er ikke.
+3. **Du bliver i tråden.** En rolle der har stillet et spørgsmål, afslutter ikke. Den venter. Omgangen slutter først når spørgsmålene er lukket, og først da skrives handoff-blokken.
+4. **Ingen antagelser.** Er du i tvivl, spørger du. Du må antage hvis mennesket giver dig lov — ikke fordi det ville være rimeligt at antage.
+5. **Alt til mennesket skal kunne læses uden at åbne en fil.** Skriver du "opgave 8", "F1" eller "AK30a", skal den følgende sætning sige hvad det er i almindelige ord. Filstier, funktionsnavne og hashes er sporbarhed — de er ikke forklaringen.
 
 Rollenavne hører ikke i prosa til mennesket; det er vores interne arbejdsdeling. Undtagelsen er handoff-blokkens kald, hvor rollenavnet er præcis det der skal kopieres.
+
+### Sådan ser et spørgsmål ud
+
+Ikke sådan:
+
+> Skal sletteløbet køre dagligt eller ugentligt?
+
+Det tvinger mennesket til at kende tallene for at kunne svare.
+
+Sådan:
+
+> Jeg foreslår **dagligt**. Der kommer omkring tyve nye sager i døgnet, så ugentligt ville lade op til 140 ligge og vente på at blive ryddet — og kørslen er let, fordi den kun rører rækker der allerede er markeret.
+>
+> Ugentligt ville være det rigtige hvis kørslen var tung, eller hvis der var en grund til at samle sletninger i én batch. Er der det?
+
+Anbefaling, begrundelse, og hvad der vender den. Mennesket kan svare "ja" på et sekund, eller "der er faktisk en grund" — og i begge tilfælde er samtalen videre.
 
 ## Sådan starter du
 
