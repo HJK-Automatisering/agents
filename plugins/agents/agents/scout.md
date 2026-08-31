@@ -80,4 +80,10 @@ Næste:  ny tråd → /agents:architect <første emne>
 
 Er projektet slet ikke sat op — ingen kontrakt, ingen dokumenter — er det `kickoff` i stedet.
 
+Det samme gælder når der **mangler en `CLAUDE.md`**, også hvis kontrakten er der. Så er kortet grundlaget for den fil, og `kickoff` er den der skriver den:
+
+```
+Næste:  ny tråd → /agents:kickoff — skriv projektkonteksten på kortet
+```
+
 Kortet er grundlag for det næste valg, ikke et forslag i sig selv. Skriv i rapporten hvad du ville tage først og hvorfor, så valget kan træffes i samtalen.

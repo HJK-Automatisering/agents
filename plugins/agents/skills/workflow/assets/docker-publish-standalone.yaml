@@ -19,8 +19,8 @@ on:
     tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ "main" ]
-  # Manuel koersel fra en vilkaarlig gren. Uden denne kan tag-reglerne kun
-  # afproeves ved at pushe til main, og et PR-build pusher ikke noget image.
+  # Manuel kørsel fra en vilkårlig gren. Uden denne kan tag-reglerne kun
+  # afprøves ved at pushe til main, og et PR-build pusher ikke noget image.
   workflow_dispatch:
 
 env:
@@ -107,11 +107,11 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          # Portainer-vaerten er x86_64. arm64 ville bygge msodbcsql18 og
-          # pip-afhaengighederne under QEMU-emulering for ingenting.
+          # Portainer-værten er x86_64. arm64 ville bygge msodbcsql18 og
+          # pip-afhængighederne under QEMU-emulering for ingenting.
           platforms: linux/amd64
-          # Ender som ENV i imaget og logges ved opstart, saa Portainers
-          # log-visning viser hvilken build der koerer.
+          # Ender som ENV i imaget og logges ved opstart, så Portainers
+          # log-visning viser hvilken build der kører.
           build-args: |
             APP_VERSION=${{ steps.meta.outputs.version }}
             GIT_SHA=${{ github.sha }}
@@ -127,14 +127,14 @@ jobs:
           # https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
           IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
-        # Trinnet bruger identity-tokenet til at faa et kortlivet certifikat
-        # fra sigstores faelles Fulcio-instans.
+        # Trinnet bruger identity-tokenet til at få et kortlivet certifikat
+        # fra sigstores fælles Fulcio-instans.
         #
-        # Alle tags peger paa samme digest, saa den signeres én gang. Tidligere
-        # loeb dette over hvert tag og signerede det samme igen og igen.
+        # Alle tags peger på samme digest, så den signeres én gang. Tidligere
+        # løb dette over hvert tag og signerede det samme igen og igen.
         run: |
-          # GHCR kraever smaa bogstaver, og github.repository indeholder store
+          # GHCR kræver små bogstaver, og github.repository indeholder store
           # (HJK-Automatisering). metadata-action konverterer selv sine tags,
-          # men her bygges referencen i haanden.
+          # men her bygges referencen i hånden.
           image=$(echo "$IMAGE" | tr '[:upper:]' '[:lower:]')
           cosign sign --yes "${image}@${DIGEST}"

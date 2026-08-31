@@ -1,11 +1,11 @@
 ---
-description: "Fortæller hvor projektet står, hvad der venter på mennesket, og hvad næste skridt er — inklusive det kald der bringer dig videre. Kører isoleret og skriver ingenting."
+description: "Fortæller hvor projektet står, hvad der venter på mennesket, og hvad næste skridt er — inklusive det kald der bringer dig videre. Kører isoleret og rapporterer; den skriver ikke."
 disable-model-invocation: true
 ---
 
 # status
 
-Send `status`-agenten af sted med Agent-værktøjet, `subagent_type: status`.
+Send `status`-agenten af sted med Agent-værktøjet, `subagent_type: agents:status`.
 
 ## Giv den
 
@@ -15,7 +15,7 @@ Vil du kun have status på ét nummer, så sig nummeret.
 
 ## Husk
 
-Den **skriver ingenting** — heller ikke `BOARD.md`. Finder den at BOARD er uenig med filerne, rapporterer den afvigelsen og tilbyder at rette. Det er dit valg.
+Den **skriver ingenting** — heller ikke `BOARD.md`. Den har hverken `Write` eller `Edit`, kun `Bash`, som den bruger til git. Finder den at BOARD er uenig med filerne, rapporterer den afvigelsen og tilbyder at rette. Det er dit valg.
 
 Vis hele rapporten. Den vigtigste sektion er **VENTER PÅ DIG** — et projekt der venter på mennesket uden at nogen ved det, står stille.
 

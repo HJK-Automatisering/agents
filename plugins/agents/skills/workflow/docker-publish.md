@@ -1,7 +1,7 @@
 ---
 navn: docker-publish
 formål: Bygger og publicerer et container-image til GitHub Packages ved hvert push til main, med signering og rollback-tags
-foreslå-ja-når: fundamentet siger at projektet leveres som container-image eller kører på en Docker- eller Portainer-vært
+foreslå-ja-når: projektets dokument siger at projektet leveres som container-image eller kører på en Docker- eller Portainer-vært
 filer:
   - fra: assets/docker-publish.yaml
     til: .github/workflows/docker-publish.yaml
@@ -47,7 +47,7 @@ Uden disse fejler workflowet — eller, værre, lykkes uden at gøre hvad du tro
 2. **Dockerfilen skal tage imod `APP_VERSION` og `GIT_SHA`** som `ARG`, sætte dem som `ENV` og logge dem ved opstart. Ellers sendes de to build-args ind og forsvinder, og Portainers logvisning kan ikke fortælle hvilken build der kører. Det er hele grunden til at de er der.
 3. **`permissions`-blokken i kalderen skal stå der.** Et genbrugeligt workflow kan ikke give sig selv flere rettigheder end kalderen har. Er organisationens standard read-only, fejler push til GHCR uden den — og fejlen ser ud som et loginproblem.
 4. **Intet at gøre — `workflow`-repoet er offentligt**, og offentlige genbrugelige workflows kan kaldes af alle uden yderligere opsætning. Bliver det nogensinde privat igen, skal Settings → Actions → General → Access åbnes for organisationen; ellers fejler kaldet med at workflowet ikke findes, hvilket ligner en stavefejl i stien.
-5. **`@v1` skal findes i `workflow`-repoet** som et flytbart tag ved siden af de immutable `v1.x.y`. Se vedligeholdelse nedenfor. **Der er i dag ingen tags i repoet, så kalderen kan ikke resolve `@v1`.**
+5. **`@v1` skal findes i `workflow`-repoet** som et flytbart tag ved siden af de immutable `v1.x.y`. Se vedligeholdelse nedenfor. Kontrollér med `git ls-remote --tags https://github.com/HJK-Automatisering/workflow`.
 6. **Kun `linux/amd64` som standard.** Skal det køre på arm, sæt `platforms:` i kalderen. Tilføj ikke arm64 "for at være sikker": det bygger under QEMU-emulering og tager mange gange så lang tid.
 7. **Pakken oprettes ved første push til `main`** og er privat. Første gang skal den kobles til repoet, så adgangen arves, og synligheden sættes bevidst.
 8. **Store bogstaver i organisationsnavnet.** GHCR kræver små. `metadata-action` konverterer sine egne tags, og cosign-trinnet konverterer i hånden — men bygger du selv en imagereference et tredje sted, skal du huske det samme.
@@ -82,8 +82,10 @@ At andre uden for organisationen kan kalde workflowet er i sig selv ufarligt —
 
 ## Hvem gør hvad
 
-- **`kickoff`** kopierer kalderen til `.github/workflows/`, noterer valget i `CLAUDE.md`, og skriver et `ÅBENT`-punkt for hver forudsætning projektet endnu ikke opfylder — typisk en manglende `Dockerfile`.
-- **`architect`** skriver i fundamentet: imagenavn, hvor det deployes, og at rollback sker via `:sha-`-tagget eller digest. Uden det ved ingen hvordan man ruller tilbage klokken to om natten.
+Rollerne læser ikke dette dokument. Det de skal gøre, når til dem som opgaver på `BOARD.md`. Afsnittet her er til dig der skal forstå eller vedligeholde workflowet.
+
+- **`workflow`-skillen** kopierer kalderen til `.github/workflows/`, lægger dette dokument i `docs/workflows/`, nævner valget i `CLAUDE.md` under `## Valgte workflows`, og skriver hver uopfyldt forudsætning på `docs/BOARD.md` under `## Kommende` — typisk en manglende `Dockerfile`.
+- **`architect`** skriver i planen: imagenavn, hvor det deployes, og at rollback sker via `:sha-`-tagget eller digest. Uden det ved ingen hvordan man ruller tilbage klokken to om natten.
 - **`developer`** skriver `Dockerfile` med `ARG`/`ENV` for `APP_VERSION` og `GIT_SHA`, og logger dem ved opstart. Må gerne rette kalderens `with`-blok. Må **ikke** kopiere det genbrugelige workflow ind i projektet.
 - **`security`** tjekker at der ikke er hemmeligheder i build-args, at `secrets: inherit` ikke er sneget ind, og at pakkens synlighed er sat bevidst.
 - **`reviewer`** rører ikke workflow-filer.
@@ -104,4 +106,4 @@ Et projekt kan pinne til `@v1.0.3` hvis det skal stå helt stille. Prisen er at 
 
 `assets/docker-publish-standalone.yaml` er den gamle selvstændige udgave, der bygger uden at kalde noget. Brug den kun når projektet ikke kan nå `workflow`-repoet — et repo uden for organisationen, eller et hvor Actions-adgang på tværs af repositories er lukket.
 
-Vælger du den, arver projektet vedligeholdelsen af sine egne SHA-pins. Skriv det i fundamentet, så det ikke bliver en overraskelse.
+Vælger du den, arver projektet vedligeholdelsen af sine egne SHA-pins. Skriv det i projektets dokument, så det ikke bliver en overraskelse.

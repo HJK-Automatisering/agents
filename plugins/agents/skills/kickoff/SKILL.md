@@ -1,5 +1,5 @@
 ---
-description: "Sætter et projekt op. Interviewer dig ét spørgsmål ad gangen og skriver projektets dokument, .gitignore, CLAUDE.md og kontrakten — eller lægger bare kontrakt og skelet ind, hvis projektet allerede kører."
+description: "Sætter et projekt op. Interviewer dig ét spørgsmål ad gangen og skriver projektets dokument, .gitignore, CLAUDE.md og kontrakten — eller lægger kontrakt, projektkontekst og skelet ind, hvis projektet allerede kører."
 disable-model-invocation: true
 ---
 
@@ -33,10 +33,17 @@ Ingen commits, ingen `CLAUDE.md`, ingen dokumenter. **Kør hele processen nedenf
 
 Der er kode og commits, men ingen `AGENTS.md`. Projektet findes allerede og har sin egen historie.
 
-- Læg kontrakten og skelettet ind — trin 6 nedenfor. **Det er alt du skal.**
+- Læg kontrakten og skelettet ind — trin 6 nedenfor.
+- **Skriv `CLAUDE.md`** — trin 5, i den udgave der står under *I et projekt der allerede kører*. Fem roller læser den i hver eneste tråd, og de læser den også i et projekt du ikke selv har sat op.
 - Interview ikke om scope. Projektet er ikke til forhandling; det kører.
 - Tilbyd ét `0000`-dokument bagudrettet, hvis nogen vil have projektets formål skrevet ned. Pres det ikke. Siges der nej, er du færdig.
-- Er kodebasen ukendt, foreslå `her → /agents:scout` først. Et dokument skrevet uden at kende koden er gætteri.
+- Er kodebasen ukendt, foreslå `her → /agents:scout` først. Et dokument skrevet uden at kende koden er gætteri — og kortet er samtidig det bedste grundlag for `CLAUDE.md`.
+
+Det er alt du skal.
+
+**Rækkefølgen, når kodebasen er ukendt:** foreslå `scout`, skriv **ingenting**, og sig at du skriver `CLAUDE.md` når kortet er der. Lægger du kontrakten ind først, ser `scout` et opsat projekt og sender bolden til `architect` — og så bliver konteksten aldrig skrevet.
+
+Er kodebasen kendt, eller findes `docs/map.md` allerede, lægger du det hele ind i én omgang.
 
 ### C. Alt findes
 
@@ -153,6 +160,24 @@ Den vigtigste fil du laver — de andre rollers kontekst i hver eneste tråd. Ko
 
 Ingen procesregler her — de står i `AGENTS.md`. Ingen gentagelse af dokumentet.
 
+#### I et projekt der allerede kører
+
+Samme fil, samme felter. Men du interviewer dig ikke til den — du læser den frem, og spørger kun om det der ikke kan læses.
+
+| Felt | Hvor det står i forvejen |
+|---|---|
+| Hvad projektet er | `README`, `docs/map.md` |
+| Stak og versioner | stakkens afhængighedsfil, projektfilen, containerfilen |
+| Mappestruktur | filtræet, og kortets modultabel |
+| Domænebegreber | kortet, og navnene i koden |
+| **Kommandoerne** | **typisk ingen steder — spørg** |
+
+Findes `docs/map.md`, er den dit grundlag. `scout` har læst projektet for netop dette, og en fil skrevet oven på kortet er ikke et gæt.
+
+**Kommandoerne er det ene du skal spørge om**, og de er samtidig det vigtigste i filen. Hvordan køres testene, hvordan bygges det, hvordan køres det lokalt. Ét spørgsmål, med din bedste læsning som forslag. Det er ikke et interview om scope, så tilfælde B's forbud rammer det ikke.
+
+Kan du ikke få dem, skriver du det du fandt og lader resten stå som `ÅBENT`. Gæt ikke. En kommando der ikke virker, koster mere end en der mangler.
+
 ### 6. Kontrakt og overblik
 
 Tre filer ligger i denne skill-mappe. Kopiér dem **ordret** — skriv dem ikke om, og tilpas dem ikke. Kontrakten er fælles; afviger den fra projekt til projekt, er den ikke længere en kontrakt.
@@ -259,7 +284,7 @@ Skriv "ikke relevant" for stakke uden virtuelle miljøer.>
 ### Kommandoer
 <Test, byg, kør lokalt. Ordret, så de kan kopieres til CLAUDE.md.>
 
-### Uden for fundamentet
+### Uden for dette dokument
 <Hvad besluttes senere, og af hvem.>
 
 ## Beslutninger

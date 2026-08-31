@@ -1,5 +1,5 @@
 ---
-kontrakt-version: 5
+kontrakt-version: 7
 ---
 
 # AGENTS.md — fælles kontrakt
@@ -108,9 +108,10 @@ Når du slutter: opdater `docs/BOARD.md` og skriv handoff-blokken. En tråd der 
 | `docs/BOARD.md` | alle | Overblik over hvad der er i gang |
 | `docs/plans/NNNN-slug.md` | `kickoff`, `architect` | Hvad, hvorfor og hvordan — **ét dokument pr. nummer** |
 | `docs/tests/NNNN-slug.md` | `tester` | Testplan og acceptkriterier |
-| `docs/findings/NNNN-slug.md` | `security`, `reviewer`, `tester` | Fund der skal handles på |
+| `docs/findings/NNNN-security.md` · `-review.md` · `-test.md` | `security`, `reviewer`, `tester` | Fund der skal handles på |
 | `docs/rca/NNNN-slug.md` | `debugger` | Årsagsanalyse af en konkret fejl |
 | `docs/map.md` | `scout` | Kort over en eksisterende kodebase |
+| `docs/workflows/<navn>.md` | `workflow` | Beskrivelse af et valgt fælles workflow |
 | `docs/decisions/log.md` | alle | Append-only beslutningslog |
 
 `NNNN` er næste ledige 4-cifrede nummer. Numre genbruges aldrig. `0000` er projektet selv. Et dokument, dets testplan og dets fund deler nummer — det er den tråd der binder arbejdet sammen.
@@ -125,7 +126,8 @@ udkast → godkendt → i-gang → færdig
 - **Kun mennesket kan godkende.** Ingen rolle forfremmer sit eget arbejde fra `udkast`.
 - **Men mennesket skal aldrig åbne filen for at gøre det.** Godkendelse foregår i samtalen; du skriver den ind.
 - `i-gang` sættes af den rolle der udfører arbejdet.
-- **`færdig` betyder i drift.** Ikke "tests kører". Et dokument er færdigt når ændringen er merget og det kørende system svarer til den. Mennesket udfører merge og udrulning; du sætter status når det er sket.
+- **`færdig` betyder i drift.** Ikke "tests kører". Et dokument er færdigt når ændringen er merget og det kørende system svarer til den.
+- **Ingen rolle sætter `færdig`.** Merge og udrulning er menneskets skridt, og ingen tråd er åben når det sker. Feltet står på `i-gang`, og fasen på BOARD står som `afventer udrulning`, indtil et menneske siger at det er i drift — så skriver den rolle der er i tråden det ind. `status` rapporterer afstanden, så den er synlig imens.
 - Er arbejdet klar men venter på udrulning, står fasen som `afventer udrulning` på BOARD. Ikke `færdig`.
 
 ### Sådan beder du om en godkendelse
@@ -155,15 +157,40 @@ Bed aldrig nogen om selv at rette `status` i frontmatter. Det er clerikalt arbej
 
 `docs/BOARD.md` svarer på ét spørgsmål: **hvem har bolden.** Den skal kunne skimmes på ti sekunder.
 
-- **Tabelform, én række pr. nummer.** Ingen prosa. Formen er selve håndhævelsen — en tabelrække kan ikke blive otte linjers forklaring.
-- **Ingen commit-hashes, filstier eller rollenavne i fritekstfeltet.** Begrundelser hører i `docs/decisions/log.md`, som gør det arbejde bedre.
-- **Faser:** `plan` · `byg` · `test` · `sikkerhed` · `review` · `afventer udrulning` · `i drift`
+**Hvert felt har en lukket værdimængde.** Én række pr. nummer.
+
+| Felt | Tilladte værdier |
+|---|---|
+| `Nr.` | Fire cifre |
+| `Titel` | Nummerets titel, ordret fra dokumentet |
+| `Fase` | `plan` · `byg` · `test` · `sikkerhed` · `review` · `afventer udrulning` · `i drift` |
+| `Bolden hos` | Ét rollenavn, eller `menneske` |
+| `Status` | `udkast` · `godkendt` · `i-gang` · `færdig` · `henlagt` |
+| `Venter på` | Ét nummer · `menneske` · `intet` |
+
+Står der noget i et felt som ikke er på listen, er rækken forkert. Det gælder uanset hvor rigtigt det der står, er.
+
+**Ingen prosa i noget felt.** Ingen commit-hashes, filstier, fundnumre, datoer eller begrundelser. Skal der stå hvorfor, hører det i `docs/decisions/log.md`, som gør det arbejde bedre.
+
+Værdimængden er håndhævelsen, ikke et tegnloft. Et loft er et tal, og et tal kan forhandles ned til lige akkurat at passe. En værdimængde kan ikke.
+
+Det der ikke må stå der, går ikke tabt. Grentilstand, upushede commits og afstanden til drift beregner `status` live. Fundene står i `docs/findings/`. Et felt der gentager dem, er en kopi der driver fra originalen.
+
+- **Venter et nummer på et andet, står det andet nummers nummer i `Venter på`.** Ikke hvilken opgave, ikke hvorfor. Venter det på flere, står det der skal lukkes først.
+- **Et nummer der venter på et andet, går ikke videre end `plan`.** Peger `Venter på` på et nummer der ikke er nået til `afventer udrulning`, må dette nummer planlægges — men ikke bygges, testes eller gennemgås.
+  Grunden er ikke at bygge-pladsen er optaget. Den er at arbejdet ikke kan efterprøves: en test der hviler på noget uafsluttet, måler en tilstand der ikke findes endnu. Suiten bliver grøn eller rød af noget andet end det den påstår at måle.
+  Kræver en **enkelt opgave** at det andet nummer er i drift og ikke bare færdigt, hører det i planens `Afhænger af`. BOARD kender numre, planen kender opgaver, og hver regel hører dér hvor den kan afgøres.
 - **Der bygges kun på ét nummer ad gangen.** Er fasen `byg` optaget, startes der ikke et nyt nummer der. Flere numre må gerne ligge i `afventer udrulning` — det er kun bygningen der er begrænset.
+  Den regel og den ovenstående dækker to ting: denne begrænser hvor meget der er i gang, den ovenstående hvad det er i gang *oven på*. Et nummer kan overtræde den ene og overholde den anden.
+- **BOARD kolliderer, når to numre er i gang på hver sin gren.** Det er ventet. Løs konflikten ved at beholde **begge** rækker — hvert nummer har sin egen, og de rører ikke hinanden.
+  Er du i tvivl om en række efter en merge: **filerne har ret.** Genskab den fra dokumentets frontmatter, og kør `/agents:status` bagefter — den er bygget til at finde netop den slags uenighed.
 - Står der `menneske` under *bolden hos*, arbejder ingen rolle videre på det nummer.
 
 ## Handoff
 
-Hvert svar slutter med **denne blok**, i en kodeblok, med **alle seks felter**. Ingen undtagelser.
+Den omgang der **afslutter dit arbejde**, slutter med denne blok — i en kodeblok, med **alle seks felter**. Ingen undtagelser.
+
+Et svar der stiller et spørgsmål og venter, afslutter ingenting. Der skrives ingen blok. Se *To modtagere*, regel 3.
 
 ```
 HANDOFF
@@ -282,6 +309,7 @@ Det forudsætter at repoet er privat. **Et repo der indeholder `docs/findings/` 
 - **`.gitignore` findes før projektets anden fil.** En hemmelighed der er blevet committet, kan ikke slettes igen; den skal roteres. Derfor er rækkefølgen ikke til forhandling.
 - **`.gitattributes` med `* text=auto eol=lf`.** Vi udvikler på Windows og kører i Linux-containere.
 - **Én gren pr. nummer:** `0007-sagsliste-eksport`. Aldrig arbejde direkte på default-branch.
+  **Den rolle der først skriver en fil på nummeret, opretter grenen.** Findes den allerede — typisk fra en tidligere tråd — skifter du til den. Står du på default-branch og skal til at skrive, er det grenen der mangler; opret den, og sig det i din første besked.
 - **Én commit pr. afsluttet enhed** — en opgave i dokumentet, et udført fund. Ikke én stor commit til sidst.
 - **Commit-beskeder på dansk, imperativ, med nummer foran:** `0007: tilføj eksport af sagsliste`. Er der ikke noget nummer, brug rollens navn: `reviewer: fjern ubrugte imports`.
 - **Du pusher ikke.** Push og merge er menneskets skridt, som udrulning er det. Næste tråd kører på samme maskine og læser arbejdstræet — den har ikke brug for et push. Commit'en er checkpointet; pushet er en beslutning om at give arbejdet fra sig.

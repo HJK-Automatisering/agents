@@ -1,0 +1,43 @@
+name: Kontrol
+
+# Koerer paa hvert push og hver pull request. Kontrollerer plugin'et:
+# manifester, frontmatter, agentnavne, kodeblokke og hooken.
+#
+# Kontrollerne staar i tools/validate.mjs og kan koeres lokalt med
+#   node tools/validate.mjs
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      # Hele historikken, saa kontrollen af kontrakt-version kan sammenligne
+      # med basisgrenen. Uden den springer det tjek bare over.
+      - name: Hent repoet
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          fetch-depth: 0
+
+      - name: Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: '22'
+
+      - name: Kontroller plugin'et
+        env:
+          # Paa en pull request sammenlignes kontrakten med maalgrenen.
+          # Paa et push til main findes den ikke, og tjekket springes over.
+          BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || '' }}
+        run: node tools/validate.mjs

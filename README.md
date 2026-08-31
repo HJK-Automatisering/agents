@@ -53,24 +53,24 @@ Almindelig prosa i Claude Code udløser **ingenting**. Rollerne kaldes eksplicit
 | `/agents:workflow` | skill | din tråd | kun workflow-filer |
 | `/agents:update` | skill | din tråd | kun `AGENTS.md` |
 
-**Samtaleroller** kører i din tråd, så du kan tale med dem — ét spørgsmål ad gangen, og de venter på svaret. **Rapportroller** sendes af sted, kører isoleret med håndhævet værktøjsspærring, og kommer tilbage med en rapport.
+**Samtaleroller** kører i din tråd, så du kan tale med dem — ét spørgsmål ad gangen, og de venter på svaret. **Rapportroller** sendes af sted, kører isoleret uden `Edit`, og kommer tilbage med en rapport.
+
+"Nej" i tabellen er et mandat, ikke en lås. Se `GUIDE.md`.
 
 En rolle starter aldrig den næste. Den foreslår kaldet; du skriver det. Og bolden står aldrig hos dig i en handoff-blok — spørgsmål stilles og besvares i chatten.
-
-**Samtaleroller** kører i din tråd, så du kan tale med dem. **Rapportroller** sendes af sted, kører isoleret med håndhævet værktøjsspærring, og kommer tilbage med en rapport.
-
-En rolle starter aldrig den næste. Den foreslår kaldet; du skriver det.
 
 ## Hvad ligger hvor
 
 | Sti | Hvad |
 |---|---|
-| `plugins/agents/skills/` | De ti kald. Seks samtaleroller, fire dispatch-skills |
-| `plugins/agents/agents/` | De fire rapportroller. Værktøjsspærringen håndhæves her |
+| `plugins/agents/skills/` | De elleve kald. Syv kører i din tråd, fire er dispatch-skills |
+| `plugins/agents/agents/` | De fire rapportroller. Værktøjslisten står her |
 | `plugins/agents/skills/kickoff/AGENTS.md` | Kontrakten med `kontrakt-version`. Kopieres ind af `kickoff`, opdateres af `/agents:update` |
 | `plugins/agents/skills/workflow/` | Valgfrie arbejdsgange. Kaldes eksplicit — ingen rolle foreslår dem |
 | `plugins/agents/hooks/` | SessionStart-hook der genkender projekt nul |
 | `.claude-plugin/marketplace.json` | Kataloget |
+| `CLAUDE.md` | Reglerne der gælder når nogen redigerer *dette* repo med Claude |
+| `CHANGELOG.md` | Hvad der ændrede sig ved hver udgivelse. Teksten til mailen |
 | `GUIDE.md` · `PLUGIN.md` | Til mennesker |
 
 Bemærk at `AGENTS.md` ikke ligger i roden. Den ville være en kopi, og en kopi driver.

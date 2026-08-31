@@ -5,7 +5,7 @@ disable-model-invocation: true
 
 # scout
 
-Send `scout`-agenten af sted med Agent-værktøjet, `subagent_type: scout`.
+Send `scout`-agenten af sted med Agent-værktøjet, `subagent_type: agents:scout`.
 
 ## Brug den når
 

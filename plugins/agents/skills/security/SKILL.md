@@ -1,11 +1,11 @@
 ---
-description: "Sætter security-agenten på en sikkerhedsgennemgang: huller, injektion, adgang, hemmeligheder, persondata og logiske fejl. Kører isoleret og kan ikke rette noget."
+description: "Sætter security-agenten på en sikkerhedsgennemgang: huller, injektion, adgang, hemmeligheder, persondata og logiske fejl. Kører isoleret og rapporterer; den retter ikke selv."
 disable-model-invocation: true
 ---
 
 # security
 
-Send `security`-agenten af sted med Agent-værktøjet, `subagent_type: security`.
+Send `security`-agenten af sted med Agent-værktøjet, `subagent_type: agents:security`.
 
 ## Giv den
 
@@ -14,7 +14,7 @@ Send `security`-agenten af sted med Agent-værktøjet, `subagent_type: security`
 
 ## Husk
 
-Den kører i sit eget vindue og har **ikke** `Edit`. Den kan ikke rette noget, og det er med vilje.
+Den kører i sit eget vindue og har **ikke** `Edit`. Den retter intet — det er dens mandat, ikke en teknisk lås. Sig det ikke som om den var umulig at få til det.
 
 Du får dens fund tilbage som et resumé. Selve fundet ligger i `docs/findings/`. Vis resuméet, og peg på filen.
 

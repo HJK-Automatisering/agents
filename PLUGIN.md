@@ -11,7 +11,7 @@ agents/
   plugins/agents/
     .claude-plugin/
       plugin.json             plugin-manifestet
-    skills/                   de ti kald
+    skills/                   de elleve kald
       kickoff/
         SKILL.md
         AGENTS.md             kontrakten, kopieres ind i projekter
@@ -19,25 +19,29 @@ agents/
         beslutningslog.md
       architect/  developer/  tester/  debugger/
       update/                 opdaterer projektets kontrakt
+      workflow/               valgfrie arbejdsgange, med assets/
       security/  reviewer/  scout/  status/    ← tynde dispatch-skills
     agents/                   de fire rapportroller
       security.md  reviewer.md  scout.md  status.md
     hooks/
       hooks.json              bruger ${CLAUDE_PLUGIN_ROOT}
       detect-project-zero.cjs
-  workflows/                  valgfrie arbejdsgange
+  CLAUDE.md                 reglerne for at redigere dette repo
+  CHANGELOG.md              hvad der ændrede sig ved hver udgivelse
   GUIDE.md  README.md  PLUGIN.md
 ```
 
 ## De to mekanismer
 
-**Skills** er indgangene. Alle ti har `disable-model-invocation: true`, hvilket betyder at de **kun** kan udløses ved at nogen skriver kaldet. Aldrig af modellen ud fra din prosa.
+**Skills** er indgangene. Alle elleve har `disable-model-invocation: true`, hvilket betyder at de **kun** kan udløses ved at nogen skriver kaldet. Aldrig af modellen ud fra din prosa.
 
-**Agenter** er implementeringerne bag de fire rapportroller. De kører i deres eget kontekstvindue, og deres `tools:`-felt er en **håndhævet** spærring — `security` har ikke `Edit` og kan ikke få den.
+**Agenter** er implementeringerne bag de fire rapportroller. De kører i deres eget kontekstvindue, og deres `tools:`-felt afgør hvad de har med. Ingen af dem har `Edit`.
+
+**Det er en begrænsning, ikke en lås.** Alle fire har `Bash`, og tre har `Write`. Fjernelsen af `Edit` gør en kodeændring besværlig, ikke umulig. Skriv den aldrig som om den var umulig.
 
 Agenternes `description` er skrevet som anti-trigger: *"INTERN. Kaldes kun af skillen. Vælg aldrig denne agent ud fra brugerens prosa."* Det er beskrivelsen der styrer automatisk valg, så det er dér det slås fra.
 
-**Kun rapportroller kan have håndhævede spærringer.** En samtalerolle kører i brugerens tråd og har de værktøjer tråden har. Det er en bevidst afvejning: du kan ikke både tale med en rolle og spærre den teknisk.
+**Kun rapportroller kan overhovedet få en værktøjsliste.** En samtalerolle kører i brugerens tråd og har de værktøjer tråden har. Det er en bevidst afvejning: du kan ikke både tale med en rolle og begrænse den.
 
 ## Manifesterne
 
@@ -50,12 +54,15 @@ Begge skal bumpes ved en udgivelse.
 ## Prøv af før du udgiver
 
 ```
+node tools/validate.mjs
 claude plugin validate ./plugins/agents
 claude plugin validate .
 claude --plugin-dir "<sti>/plugins/agents"
 ```
 
-Inde i sessionen skal `/context` vise de fire agenter under **Custom Agents**, og `/help` skal vise de ti skills. Er der ændringer undervejs: `/reload-plugins`.
+Inde i sessionen skal `/context` vise de fire agenter under **Custom Agents**, og `/help` skal vise de elleve skills. Er der ændringer undervejs: `/reload-plugins`.
+
+`node tools/validate.mjs` er den samme kontrol som CI kører ved hvert push: manifesternes versioner, frontmatter i alle roller, agentnavne, kodeblokke og hooken. Kør den før du bumper versionen.
 
 Virker det med `--plugin-dir` men ikke efter installation, ligger fejlen i marketplacet — ikke i plugin'et. Det halverer fejlsøgningen.
 
@@ -126,6 +133,8 @@ winget upgrade --id Anthropic.ClaudeCode
 
 Luk appen helt først. Og gør det til en del af udrulningen — en kollega med en gammel CLI vil opleve at kommandoerne "virker" og intet sker.
 
+Hooken bruger `args` i exec-form. På en CLI der er ældre end feltet, køres `node` uden argumenter med hook-JSON'en på stdin, og sessionen starter med en `SyntaxError` i stedet for et tjek. Endnu en grund til at `claude --version` er det første du kontrollerer.
+
 ### Hvad hver bruger kører ved hver udgivelse
 
 ```
@@ -166,23 +175,27 @@ Undtagelsen er bevidst brug: vil du prøve en ændring af én rolle i ét projek
 En udgivelse er en bevidst handling, ikke noget der følger med hver commit. Saml flere ændringer, og udgiv når de hører sammen.
 
 1. Ret filerne, og commit så tit du vil. **Uden at røre versionen.**
-2. Når du vil udgive: bump `version` i plugin-manifestet.
-3. Bump samme `version` i marketplace-manifestet.
-4. Commit og push.
+2. Når du vil udgive: skriv posten i `CHANGELOG.md` **først**. Det er den tekst
+   der skal i mailen, og det er dér du opdager om ændringerne hører sammen.
+3. Bump `version` i plugin-manifestet.
+4. Bump samme `version` i marketplace-manifestet.
+5. Har du ændret en regel i kontrakten: bump `kontrakt-version`.
+6. Kør `node tools/validate.mjs`.
+7. Commit og push.
 
 Ingen rolle må bumpe versionen — det står i kontrakten. Gælder også den der hjælper dig med at redigere rollerne.
 
 Udviklerne får den ved næste opdateringstjek, eller med `/plugin marketplace update hjk-agents`.
 
-## Tilfoej et workflow
+## Tilføj et workflow
 
-Workflows ligger i `plugins/agents/skills/workflow/`. Skillen laeser hver `.md`-fil der og tilbyder dem. Du tilfoejer et nyt ved at laegge en fil - ikke ved at rette i `SKILL.md`.
+Workflows ligger i `plugins/agents/skills/workflow/`. Skillen læser hver `.md`-fil der og tilbyder dem. Du tilføjer et nyt ved at lægge en fil - ikke ved at rette i `SKILL.md`.
 
 ```markdown
 ---
 navn: <kort-kebab-navn>
-formaal: <en linje. Det er den tekst udvikleren ser naar der spoerges.>
-foreslaa-ja-naar: <kriterium der kan afgoeres ud fra fundamentet og CLAUDE.md>
+formål: <en linje. Det er den tekst udvikleren ser når der spørges.>
+foreslå-ja-når: <kriterium der kan afgøres ud fra projektets dokument og CLAUDE.md>
 filer:
   - fra: assets/<fil>
     til: <sti i projektet>
@@ -190,19 +203,19 @@ filer:
 
 # <Navn>
 
-## Brug det naar
-## Brug det ikke naar
-## Forudsaetninger projektet skal opfylde
-## Hvem goer hvad
+## Brug det når
+## Brug det ikke når
+## Forudsætninger projektet skal opfylde
+## Hvem gør hvad
 ```
 
 Tre regler:
 
-- Et workflow maa **ikke** modsige `AGENTS.md`. Det laegger trin ovenpaa; det fjerner ikke graenser.
-- **Skriv forudsaetningerne ned.** Det vigtigste afsnit er ikke hvad workflowet goer, men hvad projektet skal opfylde for at det virker. Skillen goer hver uopfyldt forudsaetning til en opgave paa `BOARD.md`.
-- `foreslaa-ja-naar` skal kunne afgoeres uden at gaette. Kan det ikke, lad feltet staa tomt, saa foreslaas nej.
+- Et workflow må **ikke** modsige `AGENTS.md`. Det lægger trin ovenpå; det fjerner ikke grænser.
+- **Skriv forudsætningerne ned.** Det vigtigste afsnit er ikke hvad workflowet gør, men hvad projektet skal opfylde for at det virker. Skillen gør hver uopfyldt forudsætning til en opgave på `BOARD.md`.
+- `foreslå-ja-når` skal kunne afgøres uden at gætte. Kan det ikke, lad feltet stå tomt, så foreslås nej.
 
-Filer under `assets/` er **snapshots**. Til faa projekter er en kopi fin; til mange er et reusable workflow bedre, saa der kun er et sted at bumpe SHA-pins.
+Filer under `assets/` er **snapshots**. Til få projekter er en kopi fin; til mange er et reusable workflow bedre, så der kun er et sted at bumpe SHA-pins.
 
 ## Rollback
 

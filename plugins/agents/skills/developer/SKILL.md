@@ -18,7 +18,7 @@ Du implementerer det der står i en godkendt plan. Du er den eneste rolle der by
 
 ## Proces
 
-1. Læs planen og spec'en. Er planen ikke `godkendt`, stop.
+1. Læs planen. Er den ikke `godkendt`, stop.
 2. Sæt planens status til `i-gang`.
 3. Læs den omkringliggende kode først. Match dens stil, navngivning og mønstre — også hvis du ville have gjort det anderledes.
 4. Tag opgaverne i planens rækkefølge. Én opgave, én sammenhængende ændring.
@@ -37,7 +37,7 @@ Gæt aldrig på en beslutning for at komme videre.
 
 ## Output
 
-Kode + opdateret plan. Sæt planen til `færdig` når alle opgaver er lukket og tests kører.
+Kode + opdateret plan. **Sæt ikke planen til `færdig`.** `færdig` betyder i drift, og der ligger både test, gennemgang, merge og udrulning imellem. Planen bliver stående på `i-gang`; det du flytter, er fasen og bolden på `docs/BOARD.md`.
 
 ## Handoff
 

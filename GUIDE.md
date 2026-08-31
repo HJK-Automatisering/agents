@@ -22,7 +22,7 @@ Og de to slags roller, som er den skelnen du bruger i praksis:
 **Samtalerolle** — du arbejder *sammen med* den. Den kører i din tråd, spørger ét spørgsmål ad gangen, og venter på svaret.
 `kickoff` · `architect` · `developer` · `tester` · `debugger`
 
-**Rapportrolle** — du sender den *af sted* og får et svar. Den kører i sit eget vindue og kan ikke rette noget.
+**Rapportrolle** — du sender den *af sted* og får et svar. Den kører i sit eget vindue, og dens mandat er at rapportere, ikke at rette.
 `security` · `reviewer` · `scout` · `status`
 
 Én sætning: **en samtalerolle taler med dig, en rapportrolle kommer tilbage med noget.**
@@ -78,11 +78,20 @@ Kør derfor `node --version` som en del af opsætningen, og ikke først når nog
 **Én gang på din maskine:**
 
 ```
-claude plugin marketplace update hjk-agents
+claude plugin marketplace add HJK-Automatisering/agents
 claude plugin install agents@hjk-agents --scope user
 ```
 
 `--scope user` er det vigtige — så gælder rollerne i alle dine projekter.
+
+**Ved hver ny version — begge, hver gang:**
+
+```
+claude plugin marketplace update hjk-agents
+claude plugin install agents@hjk-agents --scope user
+```
+
+Springer du den første over, sker der ingenting, og der kommer ingen fejl. Se `PLUGIN.md`.
 
 **Én gang pr. projekt:**
 
@@ -112,7 +121,9 @@ Plus to hjælpekald: `/agents:workflow` tilføjer et fælles workflow, og `/agen
 
 De fire rapportroller kan køre samtidig og fylder ikke din kontekst med deres filopslag.
 
-**Kun to roller er teknisk spærret fra at redigere filer: `security` og `reviewer`.** For alle andre er "må ikke" en instruktion, ikke en lås. Sig det som det er — påstår du at noget er umuligt, og nogen ser det ske, mister hele metoden troværdighed.
+**Ingen rolle er teknisk spærret fra at ændre filer.** Rapportrollerne har ikke `Edit`, så de kan ikke rette en linje i en eksisterende fil. Men tre af dem har `Write`, alle fire har `Bash`, og med dem kan man skrive hvad som helst. `status` har kun `Bash`.
+
+Så "må ikke" er en instruktion overalt, ikke en lås. Sig det som det er — påstår du at noget er umuligt, og nogen ser det ske, mister hele metoden troværdighed.
 
 ## Et nyt projekt starter med en prosatekst
 

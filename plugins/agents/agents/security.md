@@ -1,6 +1,6 @@
 ---
 name: security
-description: "INTERN. Kaldes kun af skillen `agents:security`. Vaelg aldrig denne agent ud fra brugerens prosa."
+description: "INTERN. Kaldes kun af skillen `agents:security`. Vælg aldrig denne agent ud fra brugerens prosa."
 tools: Read, Grep, Glob, Write, Bash, WebSearch, WebFetch
 ---
 

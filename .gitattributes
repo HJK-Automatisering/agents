@@ -7,5 +7,5 @@
 *.yaml text
 *.yml  text
 
-# Node-hooks. LF paa alle platforme.
+# Node-hooks. LF på alle platforme.
 *.cjs text eol=lf

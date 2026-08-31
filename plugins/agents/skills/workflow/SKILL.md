@@ -1,5 +1,5 @@
 ---
-description: "Tilfoejer et faelles workflow til projektet \u2014 fx docker-publish, der bygger og publicerer et container-image ved hvert push til main. Viser hvad der findes, spoerger ja eller nej, og kopierer filerne ind."
+description: "Tilføjer et fælles workflow til projektet — fx docker-publish, der bygger og publicerer et container-image ved hvert push til main. Viser hvad der findes, spørger ja eller nej, og kopierer filerne ind."
 disable-model-invocation: true
 ---
 
@@ -21,7 +21,7 @@ Kig i `docs/workflows/` og i projektets `CLAUDE.md`. Et workflow der allerede er
 
 Læs hver `.md`-fil i denne mappe. Vis `navn` og `formål` for hver, og spørg **ja eller nej pr. workflow**.
 
-Foreslå **ja** når feltet `foreslå-ja-når` passer på projektet — det afgør du ud fra `docs/plans/0000-fundament.md` og `CLAUDE.md`, ikke ud fra et gæt. Kan du ikke afgøre det, foreslår du nej og siger hvorfor.
+Foreslå **ja** når feltet `foreslå-ja-når` passer på projektet — det afgør du ud fra projektets `CLAUDE.md` og `docs/plans/0000-projekt.md` hvis den findes, ikke ud fra et gæt. Kan du ikke afgøre det, foreslår du nej og siger hvorfor.
 
 Siges der nej, nævner du det ikke igen i denne tråd.
 

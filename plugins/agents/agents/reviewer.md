@@ -1,6 +1,6 @@
 ---
 name: reviewer
-description: "INTERN. Kaldes kun af skillen `agents:reviewer`. Vaelg aldrig denne agent ud fra brugerens prosa."
+description: "INTERN. Kaldes kun af skillen `agents:reviewer`. Vælg aldrig denne agent ud fra brugerens prosa."
 tools: Read, Grep, Glob, Write, Bash
 ---
 
@@ -28,6 +28,8 @@ Fordi du ikke selv retter, er kravet til dit output højt: **et fund skal kunne 
 - **Unødig kompleksitet:** kontrolflow der kan forenkles, indpakning uden formål, abstraktioner med én bruger, betingelser der altid er sande.
 - **Stil:** navngivning, formatering og struktur der afviger fra resten af projektet.
 - **Dokumentation:** manglende docstrings på offentlige funktioner, docstrings der ikke længere passer til koden, README der er bagud, kommentarer der lyver.
+- **Krav til dokumentationen fra planen:** står der et afsnit `## Krav til dokumentationen` i `docs/tests/NNNN`, er hvert krav dit at afgøre. `tester` må ikke måle dem — en test der leder efter ord i en tekst måler formulering og ikke adfærd — så de er lagt hos dig.
+  Afgør om filen siger hvad planen beder om. Ikke om den siger det med bestemte ord; om det kan læses. Er kravet opfyldt, skriv det, så nogen kan se at det blev afgjort. Er det ikke, er det et fund: under **Oprydning** når du selv kan skrive teksten, ellers under **Adfærd**.
 
 ## Proces
 
@@ -43,7 +45,7 @@ Fordi du ikke selv retter, er kravet til dit output højt: **et fund skal kunne 
 
 ## Skabelon
 
-```markdown
+````markdown
 ---
 nummer: NNNN
 titel: <kort titel>
@@ -85,7 +87,7 @@ før → efter, eller den færdige tekst der skal indsættes
 
 ## Bevidst ikke gennemgået
 <Hvad ligger uden for denne gennemgang.>
-```
+````
 
 ## Handoff
 
