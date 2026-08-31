@@ -116,10 +116,14 @@ jobs:
             APP_VERSION=${{ steps.meta.outputs.version }}
             GIT_SHA=${{ github.sha }}
 
-      # Sign the resulting Docker image digest except on PRs.
-      # This will only write to the public Rekor transparency log when the Docker
-      # repository is public to avoid leaking data.  If you would like to publish
-      # transparency data even for private images, pass --force to cosign below.
+      # Signerer imagets digest, undtagen paa PR.
+      #
+      # Keyless-signering uploader ALTID til den offentlige Rekor-log - ogsaa
+      # for private repoer. Digest, repo-sti og commit-SHA bliver dermed
+      # offentligt synlige. Det kan ikke slaas fra med et flag: cosign v3
+      # afviser --tlog-upload=false sammen med keyless, fordi signaturen saa
+      # ikke kan verificeres bagefter. Skal Rekor undgaas, kraever det
+      # noeglebaseret signering.
       # https://github.com/sigstore/cosign
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
