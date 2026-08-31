@@ -117,6 +117,7 @@ Rækkefølgen er ikke til forhandling:
 
    ```gitignore
    .claude/settings.local.json
+   .vscode/
    .env
    .env.*
    *.pem
@@ -132,6 +133,26 @@ Rækkefølgen er ikke til forhandling:
 3. `.gitattributes` med `* text=auto eol=lf`. Vi udvikler på Windows og kører i Linux-containere; uden den havner CRLF i shell-scripts, og fejlen viser sig først inde i en container med en ulæselig besked.
    Samme sted: `.editorconfig` for den valgte stak, hvis stakken håndhæver stil gennem den — det gør .NET. Uden den har `reviewer` ingen målestok.
 4. `.venv` hvis det blev besluttet, og `requirements.txt` hvis stakken bruger den.
+
+   Samme sted: `.vscode/settings.json`, så mennesket havner i miljøet uden at tænke over det:
+
+   ```json
+   {
+     "python.defaultInterpreterPath": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+     "python.terminal.activateEnvironment": true,
+     "terminal.integrated.env.windows": {
+       "VIRTUAL_ENV": "${workspaceFolder}\\.venv",
+       "PATH": "${workspaceFolder}\\.venv\\Scripts;${env:PATH}",
+       "PIP_REQUIRE_VIRTUALENV": "1"
+     }
+   }
+   ```
+
+   **Det er `terminal.integrated.env` der gør arbejdet.** De to første indstillinger afhænger af Python-udvidelsen, og den ignorerer dem, hvis der allerede er valgt en fortolker for mappen — hvilket der er i ethvert projekt der har været åbnet før. PATH-linjen virker uanset, fordi den sætter miljøet før noget andet kører. `PIP_REQUIRE_VIRTUALENV` nægter installation, hvis det alligevel går galt.
+
+   Skriv for den maskine du står på: på Linux og macOS hedder nøglen `terminal.integrated.env.linux` eller `.osx`, mappen hedder `bin`, og PATH adskilles med `:`. Filen er gitignoreret og rejser ikke, så den skal ikke være platformneutral.
+
+   Prompten viser ikke `(.venv)`, fordi aktiveringsscriptet ikke køres. Det er i orden. Reglen om at rollerne kalder fortolkeren direkte står uændret i `AGENTS.md` — den her fil er til mennesket.
 5. Første commit: `kickoff: initialiser projekt`
 
 Grunden til at interviewet kommer først, er at du skal kende stakken for at skrive en rigtig `.gitignore`. Grunden til at `.gitignore` kommer før alt andet, er at en hemmelighed der først er committet, ikke kan slettes igen. Byt aldrig om på de to.

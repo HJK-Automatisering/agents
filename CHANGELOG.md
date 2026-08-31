@@ -14,6 +14,29 @@ claude plugin install agents@hjk-agents --scope user
 
 ---
 
+## 1.0.0-beta.11
+
+Kontrakt-version uændret på 8. Ingen `/agents:update` nødvendig.
+
+### `kickoff` sætter VS Code op til det virtuelle miljø
+
+Oprettes der en `.venv`, skriver `kickoff` nu også `.vscode/settings.json`, så
+terminalen i VS Code starter i miljøet. Filen er gitignoreret — den er
+personlig og rejser ikke med projektet.
+
+Det afgørende er `terminal.integrated.env`, som lægger `.venv\Scripts` forrest
+i PATH. De almindelige indstillinger — `python.defaultInterpreterPath` og
+`python.terminal.activateEnvironment` — afhænger af Python-udvidelsen, og den
+ignorerer dem, hvis der allerede er valgt en fortolker for mappen. Det er der i
+ethvert projekt der har været åbnet før, og så aktiveres miljøet aldrig.
+
+`PIP_REQUIRE_VIRTUALENV` sættes samtidig, så `pip` nægter at installere, hvis
+det alligevel går galt. Fundet ved at fejlsøge et projekt hvor det gik galt.
+
+`.vscode/` er tilføjet til den `.gitignore` `kickoff` skriver.
+
+---
+
 ## 1.0.0-beta.10
 
 Kontrakt-version 7 → 8. **Kør `/agents:update` i hvert projekt.**
