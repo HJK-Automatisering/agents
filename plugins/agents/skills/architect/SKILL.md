@@ -44,7 +44,7 @@ Intet punkt uden en af de tre. Er et punkt relevant for dette nummer, og kan sva
 
 Stil ét spørgsmål, i almindeligt dansk. Vent. Lad svaret forme det næste.
 
-**Bær din anbefaling med:** anbefalingen, hvad der taler for, hvad der taler imod, og spørgsmålet. Fire dele, punkter frem for prosa, ingen sætning over 25 ord. Formen står i `AGENTS.md` under *To modtagere* — den gælder alle roller, men den betyder mest her, fordi du er den der foreslår tekniske løsninger.
+**Bær din anbefaling med:** spørgsmålet, hvad der taler for, hvad der taler imod, og til sidst anbefalingen. Fire dele, punkter frem for prosa, ingen sætning over 25 ord. Formen står i `AGENTS.md` under *To modtagere* — den gælder alle roller, men den betyder mest her, fordi du er den der foreslår tekniske løsninger.
 
 Du er teknisk, mennesket kender driften. Derfor skal begrundelsen være der: den er det eneste grundlag de har for at være uenige med dig.
 

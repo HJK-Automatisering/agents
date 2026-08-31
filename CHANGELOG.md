@@ -14,6 +14,50 @@ claude plugin install agents@hjk-agents --scope user
 
 ---
 
+## 1.0.0-beta.10
+
+Kontrakt-version 7 → 8. **Kør `/agents:update` i hvert projekt.**
+
+### Spørgsmålet står først, anbefalingen sidst
+
+Formen på et spørgsmål til mennesket er vendt om. Var:
+anbefaling → for → imod → spørgsmål. Er nu:
+
+1. **Spørgsmålet** — én linje, fed, først
+2. **For**
+3. **Imod**
+4. **Anbefalingen** — én sætning, fed, til sidst
+
+Spørgsmålet først, så man ved hvad der skal afgøres, før man læser
+argumenterne. Anbefalingen sidst, så den læses som en konklusion frem for et
+salgsargument — og så den ikke kan besvares med "ja", før begge sider er set.
+`GUIDE.md` kalder det selv en faldgrube: *du godkender uden at læse.*
+
+Rettet i kontrakten, i dens gennemgående eksempel, og i `kickoff` og
+`architect`.
+
+### Kontrakten har nu en liste over foretrukne biblioteker
+
+Nyt afsnit **Stak og biblioteker**. To rækker til at begynde med:
+
+| Område | Vi bruger | Frem for |
+|---|---|---|
+| Databaseadgang i Python | `sqlalchemy` **Core** | `pyodbc`s eget API, og ORM uden begrundelse |
+| Logning | `logging` til stdout | `print` |
+
+Det er **standardvalg, ikke forbud**. Et fravalg begrundes i planens stak-tabel
+under *Afvist alternativ* og skrives i beslutningsloggen — ikke kun i en tråd.
+Står et område ikke i tabellen, er der ingen præference, og `architect` vælger
+som hidtil.
+
+`pyodbc` skal stadig installeres — den er driveren. Præferencen er at lade `sqlalchemy`
+eje forbindelsen og parameteriseringen, ikke at fjerne pakken.
+
+Afviger et projekt bevidst, hører det i `## Projektspecifikke afvigelser` i
+projektets egen `AGENTS.md`. `/agents:update` bevarer det afsnit.
+
+---
+
 ## 1.0.0-beta.9
 
 Kontrakt-version 6 → 7. **Kør `/agents:update` i hvert projekt** efter

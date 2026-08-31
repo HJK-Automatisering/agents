@@ -1,5 +1,5 @@
 ---
-kontrakt-version: 7
+kontrakt-version: 8
 ---
 
 # AGENTS.md — fælles kontrakt
@@ -30,10 +30,12 @@ Fem regler følger:
 1. **Ét spørgsmål ad gangen.** Ikke tre, ikke et rul. Stil det, vent, og lad svaret forme det næste. Har du seks spørgsmål, bliver det seks runder — det går hurtigere end det lyder, fordi halvdelen bliver irrelevante undervejs.
 2. **Hvert spørgsmål bærer din anbefaling.** Fire dele, i denne rækkefølge:
 
-   - **Anbefalingen** — én sætning, fed. Ikke mere.
+   - **Spørgsmålet** — én linje, fed, først. Besvarligt med ja, nej eller A/B.
    - **For** — punkter. Aldrig prosa.
    - **Imod** — punkter. Skal være der, også når du er sikker.
-   - **Spørgsmålet** — én linje til sidst. Besvarligt med ja, nej eller A/B.
+   - **Anbefalingen** — én sætning, fed, til sidst. Ikke mere.
+
+   **Rækkefølgen er ikke tilfældig.** Spørgsmålet står først, så man ved hvad der skal afgøres, før man læser argumenterne. Anbefalingen står sidst, så den læses som en konklusion frem for et salgsargument — og så den ikke kan besvares med "ja", før begge sider er set. `GUIDE.md` kalder det selv en faldgrube: *du godkender uden at læse.* En fed anbefaling øverst er invitationen til netop det.
 
    **Ingen sætning over 25 ord i nogen af delene.** Det er den regel der bærer resten. En anbefaling kan være rigtig og alligevel ubrugelig, hvis den står i en sætning på halvfems ord.
 
@@ -52,17 +54,11 @@ Ikke sådan:
 
 > Jeg anbefaler at der altid står præcis én linje pr. gennemført ugentligt løb — er sletningen slukket, den linje der findes i dag; er den tændt og der blev fjernet noget, den linje sletteløbet selv skriver; er den tændt og der ikke var noget at fjerne, en ny linje med bestanden og de to tællinger. Det er én linje om ugen, det gør beviset til noget der er der frem for noget der mangler, og linjen kan lægges det sted der i forvejen ved om sletningen er tændt, så modulet med reglerne ikke skal røres.
 
-Anbefalingen er rigtig. Den er også ulæselig. Tre tilfælde er presset ind i én sætning med semikolonner, begrundelserne står i den næste, og det der taler imod, står slet ikke.
+Anbefalingen er rigtig. Den er også ulæselig. Tre tilfælde er presset ind i én sætning med semikolonner, begrundelserne står i den næste, og det der taler imod, står slet ikke. Og den begynder med konklusionen, før nogen ved hvad der spørges om.
 
 Sådan:
 
-> **Jeg anbefaler én linje i loggen pr. gennemført ugentligt løb — altid, uanset udfald.**
->
-> | Sletningen | Blev der fjernet noget | Linjen |
-> |---|---|---|
-> | slukket | — | den der skrives i dag |
-> | tændt | ja | den sletteløbet selv skriver |
-> | tændt | nej | en ny linje med bestanden og de to tællinger |
+> **Skal der skrives en linje i loggen ved hvert gennemført ugentligt løb — også når der intet blev fjernet?**
 >
 > **For:**
 >
@@ -75,9 +71,15 @@ Sådan:
 > - Spec'en siger ordret at der intet skrives, når der ikke blev fjernet noget. Læser du loggen som noget der kun bærer afvigelser, bryder forslaget den læsning.
 > - Med sletningen tændt og alt normalt kommer linjen hver uge i årevis.
 >
-> Vejer indvendingen tungest, retter jeg i stedet kriteriet for det skridt. Så bliver beviset kontrollerne mod databasen plus de før- og eftertal du alligevel skriver ned.
+> **Jeg anbefaler én linje pr. gennemført løb — altid, uanset udfald.**
 >
-> **Linjen ind, eller kriteriet rettet?**
+> | Sletningen | Blev der fjernet noget | Linjen |
+> |---|---|---|
+> | slukket | — | den der skrives i dag |
+> | tændt | ja | den sletteløbet selv skriver |
+> | tændt | nej | en ny linje med bestanden og de to tællinger |
+>
+> Vejer indvendingen tungest, retter jeg i stedet kriteriet for det skridt. Så bliver beviset kontrollerne mod databasen plus de før- og eftertal du alligevel skriver ned.
 
 Samme indhold, samme anbefaling. Forskellen er at det kan besvares uden at læses to gange.
 
@@ -297,6 +299,23 @@ Er projektet i Python, arbejdes der i et virtuelt miljø. Det er standardantagel
 - Findes der ingen `.venv`, og er projektet i Python, så **spørg** om der skal oprettes en, før du kører noget. Opret den ikke selv uden at have spurgt.
 
 Andre stakke har deres egen isolering — `.NET` har ingen tilsvarende, og Node har `node_modules` implicit. Reglen udløses kun hvor den giver mening, men den er ubetinget hvor den gør.
+
+## Stak og biblioteker
+
+Organisationen har præferencer. De er **standardvalg, ikke forbud** — men et fravalg begrundes i planens stak-tabel under *Afvist alternativ* og skrives i beslutningsloggen. Ikke kun i en tråd.
+
+| Område | Vi bruger | Frem for | Hvorfor |
+|---|---|---|---|
+| Databaseadgang i Python | `sqlalchemy` **Core** | `pyodbc`s eget API. ORM, medmindre den er begrundet | Parameterisering som standard, så en streng ikke kan blive til SQL. Forbindelser håndteres ét sted. Du ser den SQL der køres |
+| Logning | `logging` til stdout | `print` | Containerværten læser stdout. `print` mister niveau og tidsstempel, og kan ikke skrues ned i produktion uden at ændre kode |
+
+**`pyodbc` skal stadig installeres.** Den er driveren — forbindelsesstrengen er `mssql+pyodbc://`. Præferencen er ikke at fjerne pakken, men at lade `sqlalchemy` eje forbindelsen og parameteriseringen frem for at kalde `pyodbc` direkte.
+
+**ORM'en er ikke forbudt.** Den er bygget på Core, og et nummer der henter, ændrer og gemmer samme entitet igen, kan have god grund til den. Men den er et valg der skal begrundes, ikke udgangspunktet: den skjuler SQL'en, og lazy loading giver forespørgsler der først viser sig ved produktionsmængder.
+
+Står et område ikke i tabellen, er der ingen præference. Så vælger `architect` efter etableret praksis og begrunder valget som ethvert andet.
+
+Er du fagligt uenig i en præference: skriv én indvending under `## Indvendinger` og arbejd videre efter den. Præferencer ændres i `agents`-repoet, ikke i et projekt.
 
 ## Versionering
 

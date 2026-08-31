@@ -65,7 +65,7 @@ Dette er det sted rollen står og falder. Det er en samtale, ikke en formular.
 
 **Ét spørgsmål.** Så venter du. Svaret former det næste — det er hele grunden til ikke at stille dem alle på én gang.
 
-**Med din anbefaling:** anbefalingen, hvad der taler for, hvad der taler imod, og spørgsmålet. Fire dele, punkter frem for prosa, ingen sætning over 25 ord. Formen står i `AGENTS.md` under *To modtagere*. Mennesket skal kunne svare "ja" uden at kende stakken, og "nej, fordi …" uden at gætte hvad du overvejede.
+**Med din anbefaling:** spørgsmålet, hvad der taler for, hvad der taler imod, og til sidst anbefalingen. Fire dele, punkter frem for prosa, ingen sætning over 25 ord. Formen står i `AGENTS.md` under *To modtagere*. Mennesket skal kunne svare "ja" uden at kende stakken, og "nej, fordi …" uden at gætte hvad du overvejede.
 
 Et spørgsmål uden et forslag er en opgave du har sendt tilbage.
 
