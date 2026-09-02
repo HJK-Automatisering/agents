@@ -208,7 +208,7 @@ Du har tre opgaver. Ikke flere.
 
 **2. Du afgør hvad der sendes af sted.** Skal der testes nu, eller bygges videre? Skal der en maskinel kontrol til, eller er en advarsel i filen nok? `architect` anbefaler; du bestemmer. Det er dér proportionaliteten afgøres — ikke af en regel inde i `tester`.
 
-**3. Du merger og ruller ud.** Det sidste skridt er dit, fordi det tit rører produktionsdata. `status` fortæller dig hvor langt der er.
+**3. Du siger ja til merge og push — og du ruller ud.** Er en gren færdig, giver `architect` dig de linjer der skal køres, og spørger om den skal køre dem. Siger du ja, kører den dem; siger du nej, står linjerne der til dig selv. **Ja'et gælder kun den ene gang** — næste gren bliver du spurgt igen. Udrulningen er alene din, fordi den tit rører produktionsdata. `status` fortæller dig hvor langt der er.
 
 ## Lukning og retur
 
@@ -310,7 +310,7 @@ For koden:
 - `.gitignore` før projektets anden fil. En committet hemmelighed kan ikke slettes, kun roteres.
 - `.gitattributes` med `* text=auto eol=lf`. Windows-maskiner, Linux-containere.
 - Én gren pr. opgave — `task-0042-schema-baseline` — én commit pr. afsluttet enhed, beskeder på dansk med nummeret foran.
-- **Rollerne committer. Du pusher.** Næste tråd læser arbejdstræet på din maskine og har ikke brug for et push. `status` siger hvor mange commits der ligger upushet.
+- **Rollerne committer. Merge og push kræver dit ja hver gang.** `architect` viser linjerne og spørger; ingen anden rolle rører dem. Næste tråd læser arbejdstræet på din maskine og har ikke brug for et push. `status` siger hvor mange commits der ligger upushet.
 - **Ingen rolle ændrer et versionsnummer.** En udgivelse er din beslutning.
 
 ## Workflows
@@ -340,11 +340,12 @@ Alt herunder sker i **én** tråd, bortset fra det du selv gør til sidst.
 | 7 | Fundet bliver `task-0013`. `developer` af sted igen | agent |
 | 8 | Du siger: klar til udrulning. `security` af sted | agent |
 | 9 | To fund bliver opgaver, ét afvises med begrundelse i loggen | din tråd |
-| 10 | **Du merger og ruller ud** | dig |
+| 10 | Den viser merge- og push-linjerne og spørger. Du siger ja | din tråd |
+| 11 | **Du ruller ud** | dig |
 
 Bemærk trin 5: der blev **spurgt** om der skulle testes. Der er ingen station der fyrer af sig selv, og det er derfor `task-0012` ikke fik et testapparat større end sig selv.
 
-Og trin 10: uden det er der ikke leveret noget, uanset hvor grønt det ser ud.
+Og trin 10-11: uden dem er der ikke leveret noget, uanset hvor grønt det ser ud. Havde du sagt nej i trin 10, stod de samme linjer klar til dig selv.
 
 ## Faldgruber
 
@@ -392,7 +393,8 @@ Rapportstatus klar til behandling · behandlet
 Ændrer kode            kun developer
 Opretter opgaver        kun architect
 Afgør hvad der testes   kun dig
-Merger og udruller      kun dig
+Merge og push           architect spørger, du svarer — hver gang
+Udruller                kun dig
 ```
 
 Er en rolle for løs eller for stram, ret den i `agents`-repoet — ikke i dit projekt. Så får alle rettelsen.

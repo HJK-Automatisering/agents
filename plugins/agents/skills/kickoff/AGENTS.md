@@ -1,5 +1,5 @@
 ---
-kontrakt-version: 10
+kontrakt-version: 11
 ---
 
 # AGENTS.md — fælles kontrakt
@@ -337,6 +337,7 @@ Det forudsætter at repoet er privat. **Et repo der indeholder `docs/securities/
 - **Commit-beskeder på dansk, imperativ, med opgavenummeret foran:** `task-0042: skriv skemaet ned i sql/schema.sql`. Er der ikke nogen opgave, brug rollens navn: `reviewer: fjern ubrugte imports`.
 - **Du pusher ikke.** Push og merge er menneskets skridt, som udrulning er det. Commit'en er checkpointet; pushet er en beslutning om at give arbejdet fra sig.
   `status` rapporterer hvor mange commits der ikke er pushet, så afstanden er synlig uden at være din opgave.
+  **Én undtagelse:** `architect` må køre merge og push, når den har vist de præcise linjer og fået et ja på netop dem. Tilladelsen gælder kun den blok — ikke næste gren, og ikke resten af tråden. Alle andre roller pusher aldrig.
 - **Du ændrer aldrig et versionsnummer.** Ikke i en pakkefil, ikke i et manifest, og du opretter eller flytter ikke et tag. En udgivelse er en beslutning — den træffes af mennesket, ikke som et trin i en opgave. Sig til når noget er klar; bump det ikke selv.
 - Ingen force-push af grene. Ingen omskrivning af historik der er pushet.
 - **Undtagelse, og kun når mennesket beder om det:** flytbare major-tags (`v1`, `v2`) på delte workflow-repoer flyttes med `git tag -f` og `git push -f origin v1`. Immutable tags (`v1.0.3`) flyttes aldrig.

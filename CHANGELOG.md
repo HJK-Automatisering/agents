@@ -14,6 +14,53 @@ claude plugin install agents@hjk-agents --scope user
 
 ---
 
+## 1.0.0-beta.14
+
+Kontrakt-version 10 → 11. **Kør `/agents:update` i hvert projekt.**
+
+### `architect` lukker grenen — med linjerne, og efter et ja
+
+Rollerne committer, men ingen pushede, og sidste skridt stod ingen steder.
+Man sad med en færdig gren og skulle selv huske default-branchens navn,
+`--no-ff`, og hvad der egentlig manglede at blive committet. Grønt arbejde blev
+liggende i et arbejdstræ, fordi det billigste skridt var det eneste der ikke var
+skrevet ned.
+
+`architect` har fået et nyt **trin 8, "Luk grenen"**, mellem vurderingen af
+opgaven og lukningen af tråden. Når en opgave er `afsluttet` og grenen ikke skal
+bruges til mere, gør den to ting i samme besked:
+
+1. **Skriver linjerne.** Præcis dem der skal køres, i én blok, klar til at
+   kopiere. Den slår tilstanden op først — uncommittede filer, aktuel gren,
+   default-branchens navn — så blokken passer til virkeligheden. Den gætter ikke
+   på `main`. Er der intet uncommitteret, står commit-linjerne der ikke; er
+   grenen allerede merget, er der ingen blok.
+2. **Spørger om den skal køre dem.** Ét spørgsmål, og så venter den.
+
+**Ja'et gælder kun den ene blok.** Ikke næste gren, ikke næste opgave, ikke
+resten af tråden — og et *"det må du gerne fremover"* ændrer det ikke. Et push er
+det skridt der giver arbejdet fra sig, og det koster et ja hver gang. Siger du
+nej, kører den ingenting: linjerne står der stadig, til dig selv.
+
+Sikringerne i blokken: filerne navngives i `git add` frem for `-A`, merge sker
+med `--no-ff`, og der force-pushes ikke. Kører projektet med pull requests,
+merges der ikke lokalt — og ved rollen det ikke, spørger den.
+
+**Udrulning er uændret menneskets.** Det er kun merge og push der har flyttet
+sig.
+
+### Kontrakten
+
+`Du pusher ikke` har fået én undtagelse: `architect` må køre merge og push, når
+den har vist de præcise linjer og fået et ja på netop dem. Alle andre roller
+pusher aldrig. Uden undtagelsen vinder kontrakten over rollefilen, og
+`architect` ville stå med to regler der modsiger hinanden.
+
+`GUIDE.md` er rettet med. Menneskets tredje opgave er nu at svare på
+spørgsmålet — ikke at huske kommandoen.
+
+---
+
 ## 1.0.0-beta.13
 
 Kontrakt-version 9 → 10. **Kør `/agents:update` i hvert projekt.**
