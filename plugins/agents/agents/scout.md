@@ -72,18 +72,24 @@ grundlag: <commit-sha eller dato>
 <Hvad du sprang over, og hvorfor. Må ikke være tom.>
 ```
 
-## Handoff
+## Retur
+
+Afslut med `RETUR`-blokken fra `AGENTS.md`.
 
 ```
-Næste:  ny tråd → /agents:architect <første emne>
+RETUR
+Rolle:        scout
+Fil:          docs/map.md
+Fund:         4
+  1. To moduler skriver til samme tabel uden at kende hinanden.
+  2. Der er ingen kommando der kører systemet lokalt.
+  3. Datointervallet kommer fra en miljøvariabel der ikke er dokumenteret.
+  4. Mappen legacy/ importeres stadig fra main.py.
+Uklart:       Om paginering findes i NSP-kaldet. Kunne ikke afgøres af koden.
 ```
 
-Er projektet slet ikke sat op — ingen kontrakt, ingen dokumenter — er det `kickoff` i stedet.
+`Fund` er observationer **uden dom** — det er dit mandat. `architect` afgør om noget af det er en opgave.
 
-Det samme gælder når der **mangler en `CLAUDE.md`**, også hvis kontrakten er der. Så er kortet grundlaget for den fil, og `kickoff` er den der skriver den:
+**Kortet er grundlag for det næste valg, ikke et forslag i sig selv.** Skriv i returen hvad du ville tage først og hvorfor, så valget kan træffes i samtalen — men afgør det ikke.
 
-```
-Næste:  ny tråd → /agents:kickoff — skriv projektkonteksten på kortet
-```
-
-Kortet er grundlag for det næste valg, ikke et forslag i sig selv. Skriv i rapporten hvad du ville tage først og hvorfor, så valget kan træffes i samtalen.
+Er projektet slet ikke sat op — ingen kontrakt, ingen dokumenter — så sig det. Så er `kickoff` det næste, ikke `architect`. Det samme gælder hvis der mangler en `CLAUDE.md`: kortet er grundlaget for den fil, og `kickoff` skriver den.

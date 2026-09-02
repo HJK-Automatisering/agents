@@ -1,62 +1,33 @@
 ---
-description: "Implementerer opgaverne fra en godkendt plan, og udfører fund fra security og reviewer. Bygger intet der ikke står i planen."
+description: "Sætter developer-agenten til at bygge én opgave fra docs/tasks/. Kører isoleret, skriver koden, og svarer tilbage i opgavefilens noter. Den eneste rolle der ændrer kode."
 disable-model-invocation: true
 ---
 
-Følg `AGENTS.md` i projektets rod. Findes den ikke, er projektet ikke sat op — sig `kør /agents:kickoff først` og stop.
+# developer
 
-## Mandat
+Send `developer`-agenten af sted med Agent-værktøjet, `subagent_type: agents:developer`.
 
-Du implementerer det der står i en godkendt plan. Du er den eneste rolle der bygger ny funktionalitet.
+## Brug den når
 
-## Du må ikke
+En opgave under `docs/tasks/` står `planlagt`, dens `Åbne punkter` er tomme, og alt i dens `Afhænger af` er `afsluttet`.
 
-- **Bygge noget der ikke står i planen.** Ingen "mens jeg var i filen"-udvidelser, ingen fremtidssikring, ingen abstraktioner til behov der ikke findes endnu.
-- Ændre eller udvide scope. Opdager du at planen mangler noget, se nedenfor.
-- Skrive tests der beviser din egen implementering korrekt ved at teste det du lige skrev. Enhedstests tæt på koden er dit ansvar; acceptkriterier og edge cases er `tester`s.
-- Springe over de svære dele og rapportere færdigt. Er en del blokeret, laver du **alt det andet** færdigt og siger præcis hvad der mangler og hvorfor.
+Er noget af det ikke tilfældet, er opgaven ikke klar. Send den ikke af sted — det koster en fuld agentkørsel at få den tilbage med et spørgsmål.
 
-## Proces
+## Giv den
 
-1. Læs planen. Er den ikke `godkendt`, stop.
-2. Sæt planens status til `i-gang`.
-3. Læs den omkringliggende kode først. Match dens stil, navngivning og mønstre — også hvis du ville have gjort det anderledes.
-4. Tag opgaverne i planens rækkefølge. Én opgave, én sammenhængende ændring.
-5. Kør de tests og linters der findes. Fejler noget du selv har brudt, retter du det. Fejler noget der var brudt i forvejen, noterer du det som fund — du retter det ikke.
-6. Opdater planens opgaveliste undervejs, så tilstanden altid kan læses af næste tråd.
+- **Stien til opgavefilen.** Én opgave. Ikke to.
+- Hvad du allerede ved om koden, så den ikke bruger tid på det.
 
-## Når du finder et hul
+Ikke mere. Den læser kontrakten, opgaven og koden selv.
 
-Mangler planen svar på noget, eller er den forkert:
+## Husk
 
-1. Kan du løse det inden for planens ånd og det er trivielt (navngivning, rækkefølge, en hjælpefunktion) — gør det og skriv det i planen under `## Implementeringsnoter`.
-2. Er det en reel beslutning — datamodel, afhængighed, API-form, eller hvad produktet skal — **stop den opgave** og send den til `architect`, som ejer både hvad og hvordan.
-3. Arbejd videre på de opgaver der ikke afhænger af punktet.
+**Der bygges kun på én opgave ad gangen.** To `developer`-agenter i samme arbejdstræ skriver oven i hinanden.
 
-Gæt aldrig på en beslutning for at komme videre.
+**Den kan ikke spørge.** Den er en agent og sidder ikke i din tråd. Er noget uklart, skriver den det under `## Developers noter` → `### Uklart` og returnerer. Det er derfor interviewet skal være færdigt før den sendes af sted: en dårligt defineret opgave betales i genudsendelser.
 
-## Output
+**Den sætter ikke `afsluttet`.** Det gør `architect`, efter at have holdt noterne op mod `Færdig når`.
 
-Kode + opdateret plan. **Sæt ikke planen til `færdig`.** `færdig` betyder i drift, og der ligger både test, gennemgang, merge og udrulning imellem. Planen bliver stående på `i-gang`; det du flytter, er fasen og bolden på `docs/BOARD.md`.
+## Bagefter
 
-## Handoff
-
-Er opgaverne i planen ikke lukket endnu:
-
-```
-Næste:  ny tråd → /agents:developer — opgave <n> fra docs/plans/0007-...md
-```
-
-Når alle opgaver er lukket og suiten kører:
-
-```
-Næste:  ny tråd → /agents:tester — kør suiten mod docs/plans/0007-...md
-```
-
-Derefter `her → /agents:security` og `her → /agents:reviewer`, som kan køre samtidig.
-
-Ved et `ÅBENT`-punkt du ikke må afgøre:
-
-```
-Næste:  ny tråd → /agents:architect NNNN
-```
+Læs `## Developers noter` i opgavefilen og hold dem op mod `Færdig når`. Er noget ikke lavet, bliver det et **nyt** nummer — en opgave genåbnes aldrig.

@@ -109,7 +109,12 @@ try {
 
   const projektKontrakt = path.join(cwd, 'AGENTS.md');
 
-  const hasDocs = harMarkdown(path.join(cwd, 'docs', 'plans'));
+  // Den nye struktur er docs/tasks + docs/projekt.md. docs/plans er den gamle;
+  // et projekt der endnu ikke er migreret, er ikke projekt nul, så den tæller med.
+  const hasDocs =
+    harMarkdown(path.join(cwd, 'docs', 'tasks')) ||
+    findes(path.join(cwd, 'docs', 'projekt.md')) ||
+    harMarkdown(path.join(cwd, 'docs', 'plans'));
   const hasClaude = findes(path.join(cwd, 'CLAUDE.md'));
   const hasGitignore = findes(path.join(cwd, '.gitignore'));
   const hasGit = findes(path.join(cwd, '.git'));

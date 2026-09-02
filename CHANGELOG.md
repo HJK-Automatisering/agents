@@ -14,6 +14,150 @@ claude plugin install agents@hjk-agents --scope user
 
 ---
 
+## 1.0.0-beta.13
+
+Kontrakt-version 9 → 10. **Kør `/agents:update` i hvert projekt.**
+
+Dette er den største ændring siden metoden blev lagt ind. Kæden er erstattet af
+en stjerne, og fem roller har fået et andet mandat. Læs `GUIDE.md` igen — det
+er ikke nok at køre `/agents:update`.
+
+### Hvorfor
+
+Afprøvningen blev målt. På ét nummer gik **55 % af omkostningen til test og
+efterprøvning, mod 11 % til selve leverancen** — og testapparatet endte på 5,8
+gange så mange linjer som det nummeret leverede.
+
+Proportionalitetsreglerne i `tester` virkede: rollen vurderede konsekvensen,
+prioriterede, og skrev ti bevidste fravalg. Volumen faldt alligevel ikke, fordi
+den ikke kom fra `tester`s dømmekraft. Den kom fra **routingen**: `architect`,
+`developer` og `debugger` pegede alle ubetinget videre på `tester`, og der
+fandtes ingen rute forbi. Den billigste testrunde havde et gulv, uanset hvor
+lille nummeret var.
+
+En regel inde i en rolle kan ikke løse et problem der ligger i rækkefølgen
+mellem roller. Derfor stjernen.
+
+### `architect` er navet
+
+Alle andre roller returnerer til den. Ingen rolle peger på en tredje.
+
+`architect` har nu fem jobs: holde den grove liste, interviewe et emne frem til
+en opgave, sende agenter af sted, triagere det de kommer tilbage med, og
+vurdere om en opgave er bygget. Den ejer også `docs/BOARD.md` og
+beslutningsloggen.
+
+**Det er dig og `architect` der afgør om der skal testes.** Der er ingen station
+der fyrer af sig selv. Det er hele rettelsen.
+
+### Kun `developer` ændrer kode
+
+Grundprincip 2 hed før *"kun tre roller ændrer kode"*. Nu er det én.
+
+- **`tester` skriver ikke tests.** Den læser koden, kører hvad der findes,
+  prøver sammenhængen, og rapporterer. Skal en kontrol *blive* i projektet, er
+  det en opgave. Mutations- og attrap-apparatet er væk.
+- **`debugger` retter ikke.** Den reproducerer, indsnævrer og forklarer
+  årsagen. Rettelsen bliver en opgave.
+- **`developer` er blevet en agent.** Den sidder ikke længere i din tråd. Den
+  får én opgave, bygger den, og svarer i opgavefilens noter.
+
+### Der er ingen godkendelse længere
+
+`architect`s oprettelse af en opgave **er** godkendelsen — den hviler på det
+interview du var med i. `status: godkendt` findes ikke, og `udkast` heller ikke.
+
+Sig nej undervejs i interviewet, ikke til sidst.
+
+### Fem mapper, fem tællere
+
+| Mappe | Fil | Skrevet af |
+|---|---|---|
+| `docs/tasks/` | `task-NNNN-slug.md` | `architect` |
+| `docs/tests/` | `test-NNNN-slug.md` | `tester` |
+| `docs/securities/` | `security-NNNN-slug.md` | `security` |
+| `docs/reviews/` | `review-NNNN-slug.md` | `reviewer` |
+| `docs/debugs/` | `debug-NNNN-slug.md` | `debugger` |
+
+`docs/plans/`, `docs/findings/` og `docs/rca/` findes ikke længere, og
+projektdokumentet er flyttet til `docs/projekt.md` uden nummer.
+
+**Præfikset er obligatorisk.** `task-0001` og `security-0001` findes samtidig,
+så et bart `0001` betyder ikke noget.
+
+**Rapporten er kilden, opgaven er dens afkom.** En rapport bærer ikke et
+opgavenummer — `tester` læser hele koden, ikke ét nummer. Den afføder opgaver,
+og hver opgave skriver i sit `Kilde`-felt hvilken rapport den kom af.
+
+### To statussæt
+
+En opgave og en rapport har ikke samme livscyklus, så de har ikke samme ord.
+
+- **Opgaver:** `planlagt` → `i-gang` → `afsluttet`. `afsluttet` betyder bygget
+  **eller** afvist. **En opgave genåbnes aldrig** — skal noget bygges om, er det
+  et nyt nummer. Det er `architect` der vurderer, ikke `developer`.
+- **Rapporter:** `klar til behandling` → `behandlet`. `behandlet` betyder at
+  hvert punkt er blevet en opgave eller er afvist med en begrundelse i loggen.
+
+En rapport der står `klar til behandling`, har uafhentede fund. **Det er det
+eneste sted et fund kan forsvinde i en stjerne** — der er ingen kæde der bærer
+det videre af sig selv. `status` tæller dem.
+
+**Udrulning er ikke en status.** `afventer udrulning` findes ikke. Udrulning er
+en begivenhed; `security` kører før den, og `status` rapporterer afstanden.
+
+### `task-NNNN` har to skrivere
+
+`architect` ejer alt over overskriften `## Developers noter`. `developer`
+skriver kun under den — hvad der er lavet, hvad der ikke er, og hvad der er
+uklart. Den retter aldrig i definitionen.
+
+**En agent kan ikke spørge.** Noten er dens eneste vej, og `architect` læser
+den som et spørgsmål. Det er derfor interviewet skal være færdigt før noget
+sendes af sted: en dårligt defineret opgave betales i genudsendelser.
+
+### Handoff er erstattet af to blokke
+
+`ny tråd →` og `her →` er væk. Der er kun én slags tråd, så der er ikke noget
+at vælge imellem.
+
+- **`LUKNING`** — `architect` og `kickoff`, når tråden lukkes. Triggeren er
+  ikke at tråden er lang, men at den rummer viden filerne ikke gør. Feltet
+  `Uskrevet` skal stå på `intet`.
+- **`RETUR`** — agenterne. En henvisning og én linje pr. fund, ikke dokumentet.
+  Fem rapporter tømt ind i navets tråd fylder den, og så bliver den komprimeret.
+
+Reglen om at spørge `status` før noget nyt startes er væk — den fandtes fordi en
+rolle kun kunne se sit eget nummer.
+
+### `scout` er ikke længere en station
+
+Den er noget `architect` sender af sted når den mangler grundlag. Den kører
+stadig isoleret, af samme grund som før: du vil ikke have to hundrede filopslag
+i din kontekst.
+
+### BOARD er en tilstandsrapport
+
+Faser og *bolden hos* er væk. Fire afsnit: rapporter klar til behandling,
+opgaver, kommende, afsluttet. **Ejes af `architect`** — `status` skriver den
+ikke, den læser den og melder afvigelser.
+
+### Om at opdatere et projekt der er i gang
+
+`/agents:update` **flytter ikke dine filer.** Den opdager at kontrakten
+beskriver mapper projektet ikke har, siger hvor mange filer der ligger i de
+gamle, og lægger tre veje frem: flyt dem, bliv på den gamle kontrakt indtil
+igangværende arbejde er i drift, eller skriv den gamle struktur ind som en
+bevidst afvigelse.
+
+En omdøbning af `docs/` ændrer hvad hver fil hedder. Det er en beslutning, ikke
+et trin i en opdatering.
+
+SessionStart-hooken tåler begge strukturer, så et projekt der ikke er migreret,
+bliver ikke meldt som projekt nul.
+
+---
+
 ## 1.0.0-beta.12
 
 Kontrakt-version 8 → 9. **Kør `/agents:update` i hvert projekt.**

@@ -6,9 +6,11 @@ Til dig der skal bruge det. Læs den én gang, brug snydearket bagefter.
 
 Vi bruger ikke én AI-assistent til alt. Vi bruger **ni roller**, der hver kan én ting og har forbud mod resten.
 
-**Almindelig prosa udløser ingenting.** Skriver du bare i Claude Code, sker der ikke noget særligt. Rollerne træder først i kraft når du kalder dem: `/agents:kickoff`, `/agents:security`.
+**Du sidder hos én af dem.** `architect` er navet: den interviewer dig, opretter opgaverne, og sender de andre roller af sted. De kommer tilbage med en rapport. Alt vender tilbage til navet.
 
-Rollerne taler ikke sammen — de afleverer markdown i `docs/`, og næste rolle læser den. **Tråde er engangs, filerne er hukommelsen.**
+**Almindelig prosa udløser ingenting.** Skriver du bare i Claude Code, sker der ikke noget særligt. Rollerne træder først i kraft når du kalder dem.
+
+Rollerne taler ikke sammen — de afleverer markdown i `docs/`, og `architect` læser den. **Tråde er engangs, filerne er hukommelsen.**
 
 ## Ordene
 
@@ -20,12 +22,29 @@ Sproget kolliderer let, så hold de to fra hinanden:
 Og de to slags roller, som er den skelnen du bruger i praksis:
 
 **Samtalerolle** — du arbejder *sammen med* den. Den kører i din tråd, spørger ét spørgsmål ad gangen, og venter på svaret.
-`kickoff` · `architect` · `developer` · `tester` · `debugger`
+`architect` · `kickoff`
 
-**Rapportrolle** — du sender den *af sted* og får et svar. Den kører i sit eget vindue, og dens mandat er at rapportere, ikke at rette.
-`security` · `reviewer` · `scout` · `status`
+**Rapportrolle** — du sender den *af sted* og får et svar tilbage. Den kører i sit eget vindue.
+`developer` · `tester` · `security` · `reviewer` · `debugger` · `scout` · `status`
 
-Én sætning: **en samtalerolle taler med dig, en rapportrolle kommer tilbage med noget.**
+Én sætning: **`architect` taler med dig, alle andre kommer tilbage med noget.**
+
+`developer` er også en rapportrolle. Den bygger, men den sidder ikke i din tråd — den får en opgave, skriver koden, og svarer i opgavefilens noter.
+
+## Navet
+
+Det er den ændring der betyder mest i praksis. **Du skifter ikke tråd mellem hvert skridt.**
+
+Du åbner `/agents:architect`. Derfra:
+
+- Den interviewer dig frem til en opgave der kan bygges.
+- Den sender `developer` af sted. Den kommer tilbage.
+- Skal noget prøves, sender den `tester` af sted. Den kommer tilbage med en rapport.
+- Hvert fund i rapporten bliver en ny opgave, eller bliver afvist med en begrundelse.
+
+**Der er ingen kæde.** Ingen rolle sender bolden videre til en tredje. Alt går gennem navet, og navet er der hvor du er.
+
+Det betyder også at `architect`s tråd bliver langlivet. Den lukker den selv, når den siger til — og triggeren er ikke at tråden er lang, men at den rummer noget filerne ikke gør.
 
 ## To modtagere
 
@@ -35,17 +54,17 @@ Det er den regel der bærer resten. Rollerne skriver to steder, og de skriver fo
 
 **Til dig: chatten.** Ét spørgsmål ad gangen, i almindeligt dansk, og så venter de. Filen er protokol over at spørgsmålet blev stillet — den er ikke måden at stille det.
 
-Derfor skal du **aldrig åbne en fil for at svare på noget.** Heller ikke for at godkende. Rollen viser hvad der skal besluttes, du svarer i chatten, og rollen skriver det ind.
+Derfor skal du **aldrig åbne en fil for at svare på noget.** `architect` viser hvad der skal afgøres, du svarer i chatten, og den skriver det ind.
 
-Og derfor slutter en rolle ikke midt i en dialog. Har den seks spørgsmål, bliver det seks runder i samme tråd — det går hurtigere end det lyder, fordi halvdelen bliver irrelevante undervejs.
+**Kun `architect` og `kickoff` kan spørge.** En agent sidder ikke i din tråd. Er noget uklart for den, skriver den det ned og returnerer det — og `architect` læser det som et spørgsmål til dig. Det er derfor interviewet skal være ordentligt: en dårligt defineret opgave betales i genudsendelser.
 
-## Hvorfor ikke bare én lang tråd
+## Hvorfor ikke bare én lang tråd til alt
 
 Tre grunde, i rækkefølge efter hvad de koster os:
 
 1. **En lang tråd husker koden som den var.** Efter en times arbejde redigerer den selvsikkert ud fra en version af filen der ikke findes længere. Fejlen ser kompetent ud, og det er derfor den er dyr.
-2. **En model der lige har skrevet koden er dårlig til at angribe den.** Den vil have at det virker. Derfor er `tester` og `security` egne kald — ikke fordi vi mangler plads, men fordi de skal være i dårligt humør.
-3. **Konteksten bliver for stor**, og kvaliteten falder længe før den løber tør.
+2. **En model der lige har skrevet koden er dårlig til at angribe den.** Den vil have at det virker. Derfor er `tester` og `security` egne agenter — ikke fordi vi mangler plads, men fordi de skal være i dårligt humør.
+3. **Konteksten bliver for stor**, og kvaliteten falder længe før den løber tør. En agent læser hundrede filer i sit eget vindue; du får resultatet, ikke arbejdet.
 
 ## Forudsætning: Node
 
@@ -105,23 +124,25 @@ Den finder selv ud af hvad der mangler: er projektet tomt, kører den hele inter
 
 ## De ni roller
 
-| Kald | Kører | Laver |
-|---|---|---|
-| `/agents:kickoff` | din tråd | Projektets dokument, `.gitignore`, `CLAUDE.md`, kontrakten |
-| `/agents:architect` | din tråd | Ét dokument pr. nummer: hvad, hvorfor og hvordan |
-| `/agents:developer` | din tråd | Koden |
-| `/agents:tester` | din tråd | Acceptkriterier og tests |
-| `/agents:debugger` | din tråd | Rettelse + årsagsanalyse |
-| `/agents:security` | **eget vindue** | Fund: huller og logiske fejl |
-| `/agents:reviewer` | **eget vindue** | Fund: oprydning og dokumentation |
-| `/agents:scout` | **eget vindue** | Kort over en ukendt kodebase |
-| `/agents:status` | **eget vindue** | Læser projektet som helhed og vurderer næste skridt |
+| Kald | Kører | Laver | Svarer til |
+|---|---|---|---|
+| `/agents:kickoff` | din tråd | Projektets dokument, `.gitignore`, `CLAUDE.md`, kontrakten | dig |
+| `/agents:architect` | **din tråd** | Opgaverne. Sender alle andre af sted | dig |
+| `/agents:developer` | eget vindue | Koden, plus noter i opgavefilen | `architect` |
+| `/agents:tester` | eget vindue | Rapport: holder sammenhængen | `architect` |
+| `/agents:security` | eget vindue | Rapport: huller og logiske fejl | `architect` |
+| `/agents:reviewer` | eget vindue | Rapport: oprydning og dokumentation | `architect` |
+| `/agents:debugger` | eget vindue | Rapport: årsagen til én fejl | `architect` |
+| `/agents:scout` | eget vindue | Kort over en ukendt kodebase | `architect` |
+| `/agents:status` | eget vindue | Læser projektet som helhed og vurderer næste skridt | dig |
 
 Plus to hjælpekald: `/agents:workflow` tilføjer et fælles workflow, og `/agents:update` bringer projektets kontrakt ajour.
 
-De fire rapportroller kan køre samtidig og fylder ikke din kontekst med deres filopslag.
+**Du behøver ikke kalde dem selv.** `architect` sender dem af sted. Du kan gøre det direkte — `/agents:security` før en udrulning, `/agents:status` når du vil vide hvor du står — men det normale er at arbejdet går gennem navet.
 
-**Ingen rolle er teknisk spærret fra at ændre filer.** Rapportrollerne har ikke `Edit`, så de kan ikke rette en linje i en eksisterende fil. Men tre af dem har `Write`, alle fire har `Bash`, og med dem kan man skrive hvad som helst. `status` har kun `Bash`.
+De undersøgende agenter kan køre samtidig og fylder ikke din kontekst med deres filopslag.
+
+**Ingen rolle er teknisk spærret fra at ændre filer.** Rapportrollerne har ikke `Edit`, så de kan ikke rette en linje i en eksisterende fil. Men de fleste har `Write`, alle har `Bash`, og med dem kan man skrive hvad som helst. `status` har kun `Bash`.
 
 Så "må ikke" er en instruktion overalt, ikke en lås. Sig det som det er — påstår du at noget er umuligt, og nogen ser det ske, mister hele metoden troværdighed.
 
@@ -135,74 +156,118 @@ Du behøver ikke en plan eller en idé om teknologi. Du behøver den tekst du fi
 Her er opgaven: <indsæt prosateksten, ufuldstændig og løs som den er>
 ```
 
-`kickoff` spørger **ét spørgsmål ad gangen**, hvert med et foreslået svar, så du kan sige "ja" og komme videre. Den bliver ved indtil to ting holder: problemet kan beskrives uden forbehold, og den kan navngive de første tre til fem numre.
+`kickoff` spørger **ét spørgsmål ad gangen**, hvert med et foreslået svar, så du kan sige "ja" og komme videre. Den bliver ved indtil to ting holder: problemet kan beskrives uden forbehold, og den kan navngive de første tre til fem emner.
 
 Først derefter skriver den noget. Et afbrudt interview efterlader ingen halve filer.
 
-Prosateksten gemmes ordret i dokumentet. Om tre måneder kan du se hvad der faktisk blev bedt om, kontra hvad vi udledte.
+Prosateksten gemmes ordret i `docs/projekt.md`. Om tre måneder kan du se hvad der faktisk blev bedt om, kontra hvad vi udledte.
 
-## Ét dokument pr. nummer
+## Et nummer er en opgave
 
-`docs/plans/0007-sagsliste-eksport.md` med to halvdele:
+Der er to niveauer, og kun det ene er nummereret:
 
-**Hvad og hvorfor** — problem, mål, ikke-mål, og *hvordan vi ser at det virker*. Kan læses alene.
+**Den grove liste** står på `docs/BOARD.md` under `Kommende`. Emnelinjer, ingen numre. Det er hvad `architect` kan se der skal laves.
 
-**Sådan bygger vi det** — moduler, datamodel, afhængigheder, opgaver i rækkefølge.
+**Den definerede opgave** er `docs/tasks/task-0042-slug.md`. Den findes først når interviewet har gjort emnet udførbart. Viser interviewet at emnet dækker flere uafhængige ting, deler `architect` det i flere numre — når det er blevet klart, ikke på forhånd.
 
-`architect` skriver begge. Én godkendelse dækker dem. Og hver opgave i anden halvdel skal kunne **spores** til noget i første — kan den ikke det, hører den ikke til i nummeret. Det er den kontrol der forhindrer at et nummer vokser.
+Og modsat: en opgave skal være stor nok til at bære en tråd. *"Lav en `.dockerignore`"* er ikke en opgave. *"Hemmeligheder ude af det byggede image"* er.
+
+### Fem mapper, fem tællere
+
+| Mappe | Fil | Skrevet af |
+|---|---|---|
+| `docs/tasks/` | `task-NNNN-slug.md` | `architect` |
+| `docs/tests/` | `test-NNNN-slug.md` | `tester` |
+| `docs/securities/` | `security-NNNN-slug.md` | `security` |
+| `docs/reviews/` | `review-NNNN-slug.md` | `reviewer` |
+| `docs/debugs/` | `debug-NNNN-slug.md` | `debugger` |
+
+Hver mappe tæller for sig. `task-0001` og `security-0001` findes samtidig og har intet med hinanden at gøre — **derfor er præfikset obligatorisk.** Et bart `0001` betyder ikke noget.
+
+**Rapporten er kilden, opgaven er dens afkom.** En testrapport afføder numre; hvert nummer skriver i sit `Kilde`-felt hvilken rapport det kom af, og rapporten lister hvad den afled. Det er den binding der gør at et fund kan spores til den kode der lukkede det.
+
+## Status: to sæt
+
+En opgave og en rapport har ikke samme livscyklus, så de har ikke samme ord.
+
+**Opgaver:** `planlagt` → `i-gang` → `afsluttet`.
+
+`afsluttet` betyder bygget **eller** afvist. **En opgave genåbnes aldrig** — skal noget bygges om, er det et nyt nummer. Det er `architect` der vurderer om en opgave er bygget, ikke `developer`.
+
+**Rapporter:** `klar til behandling` → `behandlet`.
+
+`behandlet` betyder at hvert punkt i rapporten er blevet en opgave eller er afvist med en begrundelse i beslutningsloggen. En rapport der står `klar til behandling`, har uafhentede fund — **det er det eneste sted et fund kan forsvinde i denne model.** `status` viser dem.
+
+**Udrulning er ikke en status.** Der er ingen `afventer udrulning`. Udrulning er noget du gør; `security` kører før, og `status` fortæller hvor langt der er.
 
 ## Din rolle som menneske
 
 Du har tre opgaver. Ikke flere.
 
-**1. Du godkender — i samtalen.** Ingen rolle må sætte sit eget arbejde til `godkendt`. Men du skal aldrig åbne en fil for at gøre det: rollen viser hvad der skal besluttes, du svarer, og rollen skriver det ind.
+**1. Du bliver interviewet — og det er dér du afgør hvad opgaven er.** Der er ikke et godkendelsestrin bagefter: `architect`s oprettelse af opgaven **er** godkendelsen, fordi den hviler på interviewet du var med i. Sig nej undervejs, ikke til sidst.
 
-**2. Du skriver kaldene.** Hver rolle slutter med at foreslå det næste kald, klar til at kopiere. **Ingen rolle starter den næste selv.**
+**2. Du afgør hvad der sendes af sted.** Skal der testes nu, eller bygges videre? Skal der en maskinel kontrol til, eller er en advarsel i filen nok? `architect` anbefaler; du bestemmer. Det er dér proportionaliteten afgøres — ikke af en regel inde i `tester`.
 
-**3. Du merger og ruller ud.** `færdig` betyder **i drift** — ikke "tests kører". Det sidste skridt er dit, fordi det tit rører produktionsdata. `status` fortæller dig hvor langt der er.
+**3. Du merger og ruller ud.** Det sidste skridt er dit, fordi det tit rører produktionsdata. `status` fortæller dig hvor langt der er.
 
-## Handoff: læs de to nederste linjer
+## Lukning og retur
+
+Der er ikke længere en handoff-blok med et næste kald. Der er to blokke.
+
+**`architect` og `kickoff` lukker deres tråd:**
 
 ```
-HANDOFF
-Nummer:       0007
-Rolle:        architect
-Udført:       Dokument med fire opgaver, rækkefølge fastlagt.
-Filer:        docs/plans/0007-sagsliste-eksport.md
-Næste:        ny tråd → /agents:tester 0007
-Blokeret af:  intet
+LUKNING
+Skrevet:      docs/tasks/task-0042-schema-baseline.md, docs/decisions/log.md
+Åbent:        test-0003 er klar til behandling, 2 punkter tilbage
+Næste:        interview task-0043 — pagineringen i NSP-kaldet
+Uskrevet:     intet
 ```
 
-`Næste` peger **altid på en rolle**. Bolden står aldrig hos dig her — spørgsmål stilles og besvares i chatten, og blokken skrives først når retningen er kendt.
+**`Uskrevet` skal stå på `intet`.** Står der noget andet, er tråden ikke klar til at lukke — den rummer viden filerne ikke gør, og den viden forsvinder med tråden.
 
-Præfikset siger hvad du skal gøre:
+**Agenterne returnerer:**
 
-- **`ny tråd →`** — luk tråden, åbn en ny, indsæt kaldet.
-- **`her →`** — skriv kaldet i den tråd du står i. Det er en rapportrolle; den kører isoleret.
+```
+RETUR
+Rolle:        tester
+Fil:          docs/tests/test-0003-etl-sammenhaeng.md
+Fund:         3
+  1. Vandmærket kan flytte forbi rækker der aldrig blev læst.
+  2. Ingen kontrol af hvad der ligger i det byggede image.
+  3. Tomt datointerval giver en tom skrivning uden fejl.
+Uklart:       intet
+```
 
-Kaldet skrives som du taster det i appen — `/agents:architect Regellogik`. Ikke pakket ind i `claude "..."`; det er terminalformen, og vi sidder i skrivebordsappen.
+Én linje pr. fund, i almindeligt dansk. **Rapporten kommer ikke ind i din tråd** — kun henvisningen og linjerne. Det er med vilje: fem rapporter tømt ind i tråden fylder den, og så bliver den komprimeret.
 
 ## `status` er den der ser helheden
 
-Hver rolle ser kun sit eget nummer. `status` læser dem alle — plus beslutningsloggen, git-tilstanden og afstanden til drift.
+`architect` ser det den arbejder på. `status` læser dem alle — plus beslutningsloggen, git-tilstanden og afstanden til drift.
 
-Derfor er den **ikke bundet af det forrige handoffs forslag.** Finder den at noget andet er vigtigere, siger den det og siger hvorfor det forrige var forkert.
+Den skriver ingenting, heller ikke `BOARD.md`. Finder den at BOARD er uenig med filerne, siger den det; `architect` retter det.
 
-Og derfor skal rollerne spørge den **før de foreslår noget nyt.** Peger et `Næste` på et nyt nummer, eller på at det nuværende er færdigt, så kalder rollen `status` først. Inden for samme nummer spørger den ikke — der rækker dens egen viden.
+To ting kan kun ses derfra:
 
-Det var den mekanisme der manglede i afprøvningen: ingen bemærkede at 33 commits lå upushet, eller at et nummer byggede tests til et modul der ventede på en migrering der ventede på et menneske.
+- **En rapport med uafhentede fund.** Har den stået der i dagevis, er det et fund på vej til at blive glemt.
+- **Om arbejdet står mål med det der blev bedt om.** Den holder `docs/projekt.md` op mod grenen — især om en opgave har avlet mere kontrol end leverance.
 
 ## Hvor meget proces skal en opgave have
 
-**Nyt projekt** — `/agents:kickoff`, godkend, så `/agents:architect`. Altid, uanset hvor lille projektet lyder.
+Det er ikke længere et spørgsmål om at vælge en rute. **Ruten er den samme; det er dig der afgør hvad der sendes af sted.**
 
-**Lille** — tekstændring, tydelig fejl, ét felt mere: `/agents:developer` eller `/agents:debugger`. Ingen dokument. Én linje i `docs/decisions/log.md`.
+- **Nyt projekt** — `/agents:kickoff`, så `/agents:architect`. Altid.
+- **Alt andet** — `/agents:architect`. Den interviewer, opretter opgaven, og sender `developer` af sted.
 
-**Mellem** — afgrænset feature, under en dag: `/agents:architect` → `/agents:developer` → `/agents:reviewer`.
+Og så er der de tre valg du tager undervejs:
 
-**Stor** — nyt modul, ny integration, noget der rører data eller adgang: hele flowet. `security` er ikke valgfri her.
+| Spørgsmål | Hvornår svaret er ja |
+|---|---|
+| Skal `tester` af sted? | Der er noget at prøve **på tværs**. Ikke fordi en opgave blev bygget |
+| Skal `security` af sted? | **Før en udrulning.** Ikke løbende |
+| Skal `reviewer` af sted? | Noget er bygget og skal ryddes op bagefter |
 
-Og uanset størrelse: **der bygges kun på ét nummer ad gangen.** Er `byg` optaget, startes der ikke et nyt. Flere numre må gerne vente på udrulning.
+**Der bygges kun på én opgave ad gangen.** To `developer`-agenter i samme arbejdstræ skriver oven i hinanden. De undersøgende agenter kan godt køre samtidig.
 
 ## Miljø
 
@@ -210,7 +275,7 @@ Er projektet i Python, arbejdes der i en `.venv`. Det er antagelsen, og `kickoff
 
 Rollerne kalder fortolkeren direkte — `.venv\Scripts\python.exe -m pytest` — frem for at aktivere miljøet. Aktivering holder ikke fra ét kald til det næste, fordi hvert kald kører i sin egen skal.
 
-Ingen pakke installeres globalt. Har projektet brug for en ny afhængighed, står det i et godkendt dokument.
+Ingen pakke installeres globalt. Har projektet brug for en ny afhængighed, står det i en opgave.
 
 ## Kontrakten er en kopi
 
@@ -218,7 +283,7 @@ Ingen pakke installeres globalt. Har projektet brug for en ny afhængighed, stå
 
 Derfor har den et versionsnummer i frontmatter, og derfor siger Claude Code til når den er bagud:
 
-> KONTRAKTEN ER BAGUD. Projektets AGENTS.md er version 1; plugin'et har version 2.
+> KONTRAKTEN ER BAGUD. Projektets AGENTS.md er version 9; plugin'et har version 10.
 
 Så kører du:
 
@@ -230,7 +295,7 @@ Den henter den nye kontrakt og **bevarer projektets egne afvigelser** — afsnit
 
 Har nogen ændret i den generelle tekst i stedet for at bruge afvigelsesafsnittet, stopper den og spørger. Den overskriver ikke i tavshed.
 
-Det er værd at kende, fordi symptomet ellers er forvirrende: rollerne opfører sig efter gamle regler, og man tror rettelserne ikke virker.
+**Ændrer kontrakten mappestrukturen, flytter `update` ikke dine filer.** Den opdager forskellen, siger hvor mange filer der ligger i de gamle mapper, og lægger vejene frem. Valget er dit — en omdøbning af `docs/` ændrer hvad hver fil hedder, og det er ikke et trin i en opdatering.
 
 ## Versionering
 
@@ -238,13 +303,13 @@ Det er værd at kende, fordi symptomet ellers er forvirrende: rollerne opfører 
 
 Kun det personlige, det hemmelige og det genskabelige holdes ude: `.claude/settings.local.json`, `.env`, nøgler, `.venv/`, byggeoutput.
 
-Det forudsætter at repoet er privat. **Et repo der indeholder `docs/findings/` må ikke gøres offentligt uden gennemgang** — fund kan beskrive sårbarheder der ikke er udbedret, og historik kan ikke gøres privat bagefter.
+Det forudsætter at repoet er privat. **Et repo der indeholder `docs/securities/` må ikke gøres offentligt uden gennemgang** — fund kan beskrive sårbarheder der ikke er udbedret, og historik kan ikke gøres privat bagefter. Samme forsigtighed gælder `docs/reviews/` og `docs/debugs/`.
 
 For koden:
 
 - `.gitignore` før projektets anden fil. En committet hemmelighed kan ikke slettes, kun roteres.
 - `.gitattributes` med `* text=auto eol=lf`. Windows-maskiner, Linux-containere.
-- Én gren pr. nummer, én commit pr. afsluttet enhed, beskeder på dansk med nummer foran.
+- Én gren pr. opgave — `task-0042-schema-baseline` — én commit pr. afsluttet enhed, beskeder på dansk med nummeret foran.
 - **Rollerne committer. Du pusher.** Næste tråd læser arbejdstræet på din maskine og har ikke brug for et push. `status` siger hvor mange commits der ligger upushet.
 - **Ingen rolle ændrer et versionsnummer.** En udgivelse er din beslutning.
 
@@ -262,32 +327,38 @@ Vælger du det: **din `Dockerfile` skal tage imod `APP_VERSION` og `GIT_SHA`** s
 
 ## Gennemspillet: en lille eksport-funktion
 
-| # | Kald | Hvad der sker |
+Alt herunder sker i **én** tråd, bortset fra det du selv gør til sidst.
+
+| # | Hvad | Hvor |
 |---|---|---|
-| 1 | `/agents:architect` | Dialog, ét spørgsmål ad gangen. Ét dokument med fire opgaver |
-| 2 | *dig* | Godkender i samtalen |
-| 3 | `/agents:tester` | Acceptkriterier — inkl. "tom liste giver en tom fil, ikke en fejl" |
-| 4 | `/agents:developer` | Opgave 1-2 |
-| 5 | `/agents:developer` | Opgave 3-4 |
-| 6 | `/agents:tester` | Kører suiten. Ét fund: 10.000 rækker timer ud |
-| 7 | `/agents:developer` | Retter fundet |
-| 8 | `/agents:security` + `/agents:reviewer` | Samtidig, begge i eget vindue |
-| 9 | `/agents:developer` | Udfører fundene |
-| 10 | *dig* | Merger og ruller ud. **Nu er nummeret færdigt** |
+| 1 | `/agents:architect` — dialog, ét spørgsmål ad gangen | din tråd |
+| 2 | Den opretter `task-0012 — sagsliste kan eksporteres` | din tråd |
+| 3 | Den sender `developer` af sted. Kommer tilbage: bygget, én ting uklar | agent |
+| 4 | Du svarer på det uklare. Den vurderer opgaven `afsluttet` | din tråd |
+| 5 | Den spørger: skal sammenhængen prøves? Du siger ja | din tråd |
+| 6 | `tester` af sted. Kommer tilbage: **10.000 rækker timer ud** | agent |
+| 7 | Fundet bliver `task-0013`. `developer` af sted igen | agent |
+| 8 | Du siger: klar til udrulning. `security` af sted | agent |
+| 9 | To fund bliver opgaver, ét afvises med begrundelse i loggen | din tråd |
+| 10 | **Du merger og ruller ud** | dig |
 
-Bemærk trin 3: acceptkriterierne blev skrevet **før** koden fandtes. Det er derfor tom-liste-tilfældet blev fanget.
+Bemærk trin 5: der blev **spurgt** om der skulle testes. Der er ingen station der fyrer af sig selv, og det er derfor `task-0012` ikke fik et testapparat større end sig selv.
 
-Og trin 10: uden det er nummeret ikke færdigt, uanset hvor grøn suiten er.
+Og trin 10: uden det er der ikke leveret noget, uanset hvor grønt det ser ud.
 
 ## Faldgruber
 
-**"Kan du lige også …"** Den mest almindelige. Du beder `developer` om at rette noget du opdagede undervejs. Så er der ændret kode som intet dokument dækker. Skriv den i loggen og tag den som sit eget nummer.
+**"Kan du lige også …"** Den mest almindelige. Du beder om at få rettet noget du opdagede undervejs. Så er der ændret kode som ingen opgave dækker. Det bliver et nummer, eller det bliver ikke lavet.
 
-**Du fortsætter i samme tråd.** `/agents:architect` er færdig, og du skriver bare videre. Nu er `architect`s kontekst med i `developer`s arbejde. Handoff siger `ny tråd →` af en grund.
+**Du lader tråden bære en beslutning.** I stjernemodellen er `architect`s tråd langlivet, og den bliver komprimeret. Alt der kun står i samtalen, forsvinder. Det er derfor `Uskrevet` skal stå på `intet` før tråden lukkes.
 
-**Grønt er ikke færdigt.** 33 commits og en grøn suite er ikke en leverance hvis intet er merget. `status` siger hvor langt der er til drift — spørg den.
+**En rapport der bliver liggende.** `klar til behandling` i tre dage er tre dages fund ingen har afgjort. Spørg `status`.
 
-**Du godkender uden at læse.** Det eneste sted metoden kan fange en misforståelse, før den bliver kode.
+**Grønt er ikke leveret.** 33 commits og en grøn suite er ikke en leverance hvis intet er merget.
+
+**En for lille opgave.** *"Lav en `.dockerignore`"* kan ikke bære en tråd og trækker kontrol til sig som var den et helt nummer. Interview den frem til noget der har et formål.
+
+**Overdefinering.** Den nye version af den gamle fejl. Et interview hakket i småstykker koster det samme som en fil testet i småstykker. Spærren står i kontrakten: kan `architect` ikke finde noget der taler imod, har den ikke et spørgsmål.
 
 **En `.claude/agents/` i projektet.** Overskriver plugin-rollerne. Alt ser ud til at virke, og dine rettelser rammer ingenting.
 
@@ -295,27 +366,33 @@ Og trin 10: uden det er nummeret ikke færdigt, uanset hvor grøn suiten er.
 
 ```
 Nyt eller uopsat projekt   /agents:kickoff
-Hvad og hvordan            /agents:architect
-Byg det                    /agents:developer
-Acceptkriterier og tests   /agents:tester
-Noget er i stykker         /agents:debugger      (altid ny tråd)
-
-Huller og logiske fejl     /agents:security      (eget vindue)
-Oprydning og dokumentation /agents:reviewer      (eget vindue)
-Ukendt kodebase            /agents:scout         (eget vindue)
+Alt arbejde                /agents:architect     ← her sidder du
 Hvor er vi                 /agents:status        (eget vindue)
 Tilføj docker-publish      /agents:workflow
 Kontrakten er bagud        /agents:update
 
+Sendes af sted af architect:
+  developer   bygger én opgave
+  tester      prøver sammenhængen        (ikke pr. opgave)
+  security    før en udrulning           (ikke løbende)
+  reviewer    oprydning bagefter
+  debugger    årsagen til én fejl
+  scout       kort over ukendt kodebase
+
 Overblik      docs/BOARD.md
-Dokumenter    docs/plans/NNNN-slug.md
+Projektet     docs/projekt.md
+Opgaver       docs/tasks/task-NNNN-slug.md
+Rapporter     docs/{tests,securities,reviews,debugs}/
 Beslutninger  docs/decisions/log.md
 Kontrakt      AGENTS.md
 
-Spærret fra at rette   security, reviewer
-Godkender              kun dig
-Merger og udruller     kun dig
-Starter næste rolle    kun dig
+Opgavestatus  planlagt · i-gang · afsluttet
+Rapportstatus klar til behandling · behandlet
+
+Ændrer kode            kun developer
+Opretter opgaver        kun architect
+Afgør hvad der testes   kun dig
+Merger og udruller      kun dig
 ```
 
 Er en rolle for løs eller for stram, ret den i `agents`-repoet — ikke i dit projekt. Så får alle rettelsen.

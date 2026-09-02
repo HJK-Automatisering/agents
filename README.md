@@ -39,32 +39,34 @@ Derefter, i hvert projekt: `/agents:kickoff`
 
 Almindelig prosa i Claude Code udløser **ingenting**. Rollerne kaldes eksplicit.
 
+`architect` er **navet**: du sidder hos den, og den sender de øvrige roller af sted. De kommer tilbage med en rapport. Alt vender tilbage til navet.
+
 | Kald | Mekanisme | Kører | Må rette filer |
 |---|---|---|---|
-| `/agents:kickoff` | skill | din tråd | ja |
-| `/agents:architect` | skill | din tråd | ja |
-| `/agents:developer` | skill | din tråd | ja |
-| `/agents:tester` | skill | din tråd | ja |
-| `/agents:debugger` | skill | din tråd | ja |
-| `/agents:security` | skill → agent | eget vindue | **nej** |
-| `/agents:reviewer` | skill → agent | eget vindue | **nej** |
+| `/agents:kickoff` | skill | din tråd | ja, projektets skelet |
+| `/agents:architect` | skill | **din tråd** | kun `docs/tasks/`, BOARD og loggen |
+| `/agents:developer` | skill → agent | eget vindue | **ja — den eneste** |
+| `/agents:tester` | skill → agent | eget vindue | kun `docs/tests/` |
+| `/agents:security` | skill → agent | eget vindue | kun `docs/securities/` |
+| `/agents:reviewer` | skill → agent | eget vindue | kun `docs/reviews/` |
+| `/agents:debugger` | skill → agent | eget vindue | kun `docs/debugs/` |
 | `/agents:scout` | skill → agent | eget vindue | kun `docs/map.md` |
-| `/agents:status` | skill → agent | eget vindue | **nej** |
+| `/agents:status` | skill → agent | eget vindue | **nej, intet** |
 | `/agents:workflow` | skill | din tråd | kun workflow-filer |
 | `/agents:update` | skill | din tråd | kun `AGENTS.md` |
 
-**Samtaleroller** kører i din tråd, så du kan tale med dem — ét spørgsmål ad gangen, og de venter på svaret. **Rapportroller** sendes af sted, kører isoleret uden `Edit`, og kommer tilbage med en rapport.
+**Samtaleroller** — `architect` og `kickoff` — kører i din tråd, så du kan tale med dem: ét spørgsmål ad gangen, og de venter på svaret. **Rapportroller** sendes af sted, kører isoleret, og kommer tilbage med en henvisning og én linje pr. fund.
 
-"Nej" i tabellen er et mandat, ikke en lås. Se `GUIDE.md`.
+Begrænsningerne i tabellen er mandater, ikke låse. Se `GUIDE.md`.
 
-En rolle starter aldrig den næste. Den foreslår kaldet; du skriver det. Og bolden står aldrig hos dig i en handoff-blok — spørgsmål stilles og besvares i chatten.
+**Du behøver ikke kalde rollerne selv** — `architect` sender dem af sted. Og der er ikke et godkendelsestrin: dens oprettelse af en opgave *er* godkendelsen, fordi den hviler på interviewet du var med i.
 
 ## Hvad ligger hvor
 
 | Sti | Hvad |
 |---|---|
-| `plugins/agents/skills/` | De elleve kald. Syv kører i din tråd, fire er dispatch-skills |
-| `plugins/agents/agents/` | De fire rapportroller. Værktøjslisten står her |
+| `plugins/agents/skills/` | De elleve kald. Fire kører i din tråd, syv er dispatch-skills |
+| `plugins/agents/agents/` | De syv rapportroller. Værktøjslisten står her |
 | `plugins/agents/skills/kickoff/AGENTS.md` | Kontrakten med `kontrakt-version`. Kopieres ind af `kickoff`, opdateres af `/agents:update` |
 | `plugins/agents/skills/workflow/` | Valgfrie arbejdsgange. Kaldes eksplicit — ingen rolle foreslår dem |
 | `plugins/agents/hooks/` | SessionStart-hook der genkender projekt nul |

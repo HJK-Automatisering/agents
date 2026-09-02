@@ -9,9 +9,9 @@ Send `scout`-agenten af sted med Agent-værktøjet, `subagent_type: agents:scout
 
 ## Brug den når
 
-Projektet findes i forvejen og ingen af os kender det. Typisk lige før `kickoff` på et brownfield-projekt, eller når nogen overtager noget de ikke har skrevet.
+Projektet findes i forvejen, og ingen af os kender det. Typisk lige før `kickoff` på et brownfield-projekt, eller når `architect` skal interviewe i en kodebase der ikke er kortlagt.
 
-Er projektet vores eget og velkendt, er den spild af tid.
+**Den er ikke et trin i arbejdet.** Den er noget `architect` sender af sted når den mangler grundlag — som at slå noget op. Er projektet vores eget og velkendt, er den spild af tid.
 
 ## Giv den
 
@@ -20,10 +20,12 @@ Er projektet vores eget og velkendt, er den spild af tid.
 
 ## Husk
 
-Den læser mange filer. Det er hele grunden til at den kører i sit eget vindue — du vil ikke have to hundrede filopslag i din kontekst.
+Den læser mange filer. **Det er hele grunden til at den kører i sit eget vindue** — du vil ikke have to hundrede filopslag i din kontekst. Det er den samme grund til at alle rapportroller er agenter: du får resultatet, ikke arbejdet.
 
-Den **dømmer ikke**. Ser den noget der ser forkert ud, noterer den det uden vurdering, så `security` og `reviewer` kan se på det med friske øjne.
+Den **dømmer ikke**. Ser den noget der ser forkert ud, noterer den det uden vurdering. Det er `security` og `reviewer` der bedømmer, og dig der afgør.
 
 ## Bagefter
 
-Kortet ligger i `docs/map.md`. Vis resuméet og sig hvad du ville tage først og hvorfor — kortet er grundlag for det næste valg, ikke et forslag i sig selv. Valget tages i samtalen, og først derefter skriver du handoff.
+Kortet ligger i `docs/map.md`. Det er ikke en rapport med fund der skal behandles — det er et grundlag. Det får ikke status, og det afføder ikke numre af sig selv.
+
+Men **kortets `Ikke undersøgt`-liste skal kvitteres**, ellers bliver den til huller ingen husker. Hvert punkt: afklaret, bevidst accepteret, eller sit eget nummer.

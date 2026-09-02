@@ -2,7 +2,7 @@
 
 ## Hvad dette repo er
 
-Kildekode til Claude Code-plugin'et `agents`: elleve skills, fire agenter, en
+Kildekode til Claude Code-plugin'et `agents`: elleve skills, syv agenter, en
 SessionStart-hook og to manifester. Repoet er **både marketplace og plugin** —
 brugerne peger deres klient direkte på det.
 
@@ -55,7 +55,7 @@ echo '{"cwd":"<sti til et testprojekt>"}' | node plugins/agents/hooks/detect-pro
 | Sti | Hvad |
 |---|---|
 | `plugins/agents/skills/<navn>/SKILL.md` | De elleve kald |
-| `plugins/agents/agents/<navn>.md` | De fire rapportroller |
+| `plugins/agents/agents/<navn>.md` | De syv rapportroller |
 | `plugins/agents/skills/kickoff/` | Kontrakt, BOARD og beslutningslog der kopieres ind i projekter |
 | `plugins/agents/hooks/` | SessionStart-hook |
 | `.claude-plugin/marketplace.json` | Kataloget — skal ligge i roden |
@@ -66,7 +66,14 @@ echo '{"cwd":"<sti til et testprojekt>"}' | node plugins/agents/hooks/detect-pro
 - **Skill** / **agent** — hvordan rollen leveres. En skill kører i brugerens
   tråd; en agent kører isoleret i sit eget kontekstvindue.
 - **Samtalerolle** — arbejder sammen med mennesket, ét spørgsmål ad gangen.
-- **Rapportrolle** — sendes af sted, kommer tilbage med et dokument.
+  Der er **to**: `architect` og `kickoff`. Kun de to kan spørge.
+- **Rapportrolle** — sendes af sted, kommer tilbage med en henvisning og
+  én linje pr. fund. De syv øvrige, inklusive `developer`.
+- **Navet** — `architect`. Den eneste rolle der opretter opgaver og sender de
+  andre af sted. Ingen rolle peger på en anden; alt returnerer til navet.
+- **Opgave** kontra **rapport** — de to slags dokumenter, med hver sit
+  statussæt. En opgave planlægges og udføres; en rapport produceres og
+  forbruges. Bland dem ikke.
 - **Kontrakten** — `AGENTS.md`, den fælles regelbog alle roller arver.
   Den kopieres ind i hvert projekt og driver derfor; derfor `kontrakt-version`.
 

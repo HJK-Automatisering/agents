@@ -17,12 +17,14 @@ agents/
         AGENTS.md             kontrakten, kopieres ind i projekter
         BOARD.md
         beslutningslog.md
-      architect/  developer/  tester/  debugger/
+      architect/              navet — den eneste samtalerolle i drift
       update/                 opdaterer projektets kontrakt
       workflow/               valgfrie arbejdsgange, med assets/
-      security/  reviewer/  scout/  status/    ← tynde dispatch-skills
-    agents/                   de fire rapportroller
-      security.md  reviewer.md  scout.md  status.md
+      developer/  tester/  security/           ← tynde dispatch-skills
+      reviewer/   debugger/  scout/  status/    ← tynde dispatch-skills
+    agents/                   de syv rapportroller
+      developer.md  tester.md  security.md  reviewer.md
+      debugger.md   scout.md   status.md
     hooks/
       hooks.json              bruger ${CLAUDE_PLUGIN_ROOT}
       detect-project-zero.cjs
@@ -35,13 +37,23 @@ agents/
 
 **Skills** er indgangene. Alle elleve har `disable-model-invocation: true`, hvilket betyder at de **kun** kan udløses ved at nogen skriver kaldet. Aldrig af modellen ud fra din prosa.
 
-**Agenter** er implementeringerne bag de fire rapportroller. De kører i deres eget kontekstvindue, og deres `tools:`-felt afgør hvad de har med. Ingen af dem har `Edit`.
+**Agenter** er implementeringerne bag de syv rapportroller. De kører i deres eget kontekstvindue, og deres `tools:`-felt afgør hvad de har med.
 
-**Det er en begrænsning, ikke en lås.** Alle fire har `Bash`, og tre har `Write`. Fjernelsen af `Edit` gør en kodeændring besværlig, ikke umulig. Skriv den aldrig som om den var umulig.
+**`developer` er den eneste agent med `Edit`.** Den er også den eneste rolle der må ændre kode. De øvrige seks har den ikke.
+
+**Det er en begrænsning, ikke en lås.** Alle har `Bash`, og alle på nær `status` har `Write`. Fjernelsen af `Edit` gør en kodeændring besværlig, ikke umulig. Skriv den aldrig som om den var umulig.
 
 Agenternes `description` er skrevet som anti-trigger: *"INTERN. Kaldes kun af skillen. Vælg aldrig denne agent ud fra brugerens prosa."* Det er beskrivelsen der styrer automatisk valg, så det er dér det slås fra.
 
-**Kun rapportroller kan overhovedet få en værktøjsliste.** En samtalerolle kører i brugerens tråd og har de værktøjer tråden har. Det er en bevidst afvejning: du kan ikke både tale med en rolle og begrænse den.
+**Kun rapportroller kan overhovedet få en værktøjsliste.** En samtalerolle kører i brugerens tråd og har de værktøjer tråden har. Det er en bevidst afvejning: du kan ikke både tale med en rolle og begrænse den. Det er også grunden til at kun `architect` og `kickoff` er samtaleroller — de skal kunne spørge, og prisen er at de er ubegrænsede.
+
+## Stjernemodellen
+
+`architect` er nav. De øvrige roller peger ikke på hinanden; de returnerer til den. Det har tre konsekvenser for vedligeholdelsen:
+
+- **Der er ingen routingtabel at holde konsistent.** Tidligere skulle hver rolles handoff kende den næste rolles indgang. Nu har hver agent én adresse.
+- **En agents retur er en kontrakt.** `RETUR`-blokken er det eneste `architect` ser uden at åbne en fil. Ændrer du den, ændrer du hvad navet kan handle på.
+- **Filerne bærer al tilstand.** `architect`s tråd er langlivet og bliver komprimeret. Enhver regel der antager at en rolle husker noget fra tidligere i tråden, er forkert.
 
 ## Manifesterne
 
@@ -60,7 +72,7 @@ claude plugin validate .
 claude --plugin-dir "<sti>/plugins/agents"
 ```
 
-Inde i sessionen skal `/context` vise de fire agenter under **Custom Agents**, og `/help` skal vise de elleve skills. Er der ændringer undervejs: `/reload-plugins`.
+Inde i sessionen skal `/context` vise de syv agenter under **Custom Agents**, og `/help` skal vise de elleve skills. Er der ændringer undervejs: `/reload-plugins`.
 
 `node tools/validate.mjs` er den samme kontrol som CI kører ved hvert push: manifesternes versioner, frontmatter i alle roller, agentnavne, kodeblokke og hooken. Kør den før du bumper versionen.
 

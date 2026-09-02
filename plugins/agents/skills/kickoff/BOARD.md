@@ -1,29 +1,45 @@
 # BOARD
 
-Svarer på **ét** spørgsmål: hvem har bolden. Skal kunne skimmes på ti sekunder.
+Tilstandsrapport. Svarer på: **hvad er åbent, og hvad venter på mig.** Skal kunne skimmes på ti sekunder.
 
-Opdateres af den rolle der afslutter et handoff — sidste handling før handoff-blokken.
+**Skrives af `architect`**, som er den eneste rolle der opretter opgaver, sætter statusser og triagerer rapporter. Opdateres før tråden lukkes. Ingen agent skriver her.
 
-**Hvert felt har en lukket værdimængde, og den står i `AGENTS.md` under *BOARD*.** Står der noget andet i et felt — prosa, en filsti, et fundnummer, en begrundelse — er rækken forkert. Begrundelser hører i `docs/decisions/log.md`.
+`status` skriver den ikke — den læser den, holder den op mod filerne, og siger til hvis den er skredet. **Er BOARD uenig med en fil, er filen rigtig.**
 
-Er BOARD uenig med et dokument i `docs/plans/`, er dokumentet rigtigt og BOARD forkert. Ret BOARD.
+**Ingen prosa i tabellerne.** Ingen commit-hashes, filstier, datoer eller begrundelser. Begrundelser hører i `docs/decisions/log.md`.
 
-## I gang
+## Rapporter klar til behandling
 
-| Nr. | Titel | Fase | Bolden hos | Status | Venter på |
-|---|---|---|---|---|---|
-| 0001 | <eksempel — slet linjen> | byg | developer | i-gang | intet |
+| Nr. | Rolle | Uafhentede punkter |
+|---|---|---|
+
+<En rapport står her indtil hvert af dens fund er blevet en opgave eller er
+afvist i beslutningsloggen. Det er det eneste sted et fund kan forsvinde —
+en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
+
+## Opgaver
+
+| Nr. | Titel | Status | Kilde |
+|---|---|---|---|
+| task-0001 | <eksempel — slet linjen> | planlagt | interview |
+
+<`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
+eller nummeret på den rapport opgaven kom af.>
 
 ## Kommende
 
-| Nr. | Emne |
-|---|---|
+| Emne |
+|---|
 
-<Overskrifter, én linje hver. Skrevet af `kickoff`, taget af `architect`.>
+<Den grove liste: hvad architect kan se der skal laves. **Ingen numre.**
+Et emne får først et nummer når interviewet har gjort det udførbart —
+ellers fyldes `docs/tasks/` med halve idéer.>
 
-## Færdige
+## Afsluttet
 
-| Nr. | Titel | I drift siden |
+| Nr. | Titel | Udfald |
 |---|---|---|
 
-<Flyt hertil når nummeret er i drift — ikke når testene er grønne. Slet ikke herfra; historikken er billig.>
+<`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
+opgaven — ikke når udrulningen er sket; udrulning er ikke en status.
+Slet ikke herfra; historikken er billig.>

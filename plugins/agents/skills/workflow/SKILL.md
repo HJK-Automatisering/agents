@@ -21,7 +21,7 @@ Kig i `docs/workflows/` og i projektets `CLAUDE.md`. Et workflow der allerede er
 
 Læs hver `.md`-fil i denne mappe. Vis `navn` og `formål` for hver, og spørg **ja eller nej pr. workflow**.
 
-Foreslå **ja** når feltet `foreslå-ja-når` passer på projektet — det afgør du ud fra projektets `CLAUDE.md` og `docs/plans/0000-projekt.md` hvis den findes, ikke ud fra et gæt. Kan du ikke afgøre det, foreslår du nej og siger hvorfor.
+Foreslå **ja** når feltet `foreslå-ja-når` passer på projektet — det afgør du ud fra projektets `CLAUDE.md` og `docs/projekt.md` hvis den findes, ikke ud fra et gæt. Kan du ikke afgøre det, foreslår du nej og siger hvorfor.
 
 Siges der nej, nævner du det ikke igen i denne tråd.
 
@@ -45,10 +45,16 @@ Antag aldrig at nogen selv opdager dem. Et workflow der lykkes uden at gøre hva
 - Tilpasse et workflow til projektet. Afviger projektet fra standarden, sættes det via workflowets egne `inputs` i den kopierede kalder — ikke ved at rette i det fælles.
 - Lægge et workflow ind som ikke blev sagt ja til.
 
-## Handoff
+## Lukning
+
+Forudsætningerne er **emner**, ikke opgaver. De står på `docs/BOARD.md` under `## Kommende` og får ikke numre her — `architect` interviewer dem frem til opgaver, som `developer` bygger.
 
 ```
-Næste:  ny tråd → /agents:developer — <første uopfyldte forudsætning>
+LUKNING
+Skrevet:      .github/workflows/docker-publish.yaml, docs/BOARD.md, CLAUDE.md
+Åbent:        to uopfyldte forudsætninger på Kommende
+Næste:        /agents:architect — Dockerfile skal tage imod APP_VERSION og GIT_SHA
+Uskrevet:     intet
 ```
 
 Er alle forudsætninger opfyldt, er der ikke noget næste skridt — workflowet kører ved næste push til `main`. Skriv `Næste: intet` og sig det i samtalen.
