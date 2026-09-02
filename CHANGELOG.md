@@ -14,6 +14,49 @@ claude plugin install agents@hjk-agents --scope user
 
 ---
 
+## 1.0.0-beta.15
+
+Kontrakt-version 11 → 12. **Kør `/agents:update` i hvert projekt.**
+
+### Ja'et til merge og push holdt ikke ved næste gren
+
+Trin 8 kom med i beta.14: `architect` skriver commit-, merge- og push-linjerne
+og spørger om den skal køre dem, og tilladelsen gælder kun den ene gang. I den
+første afprøvning gjorde den det ikke. Den fik ét ja, og fortsatte derefter med
+at committe og merge på de følgende grene uden at spørge igen.
+
+Det var ikke klientens tilladelsesdialog — der lå ingen `git push` i
+`settings.local.json`. Det var rollefilen. Betingelsen stod som et afsnit
+**efter** "Ja → du kører linjerne", altså efter at instruksen om at køre var
+læst, og den var formuleret som en oplysning frem for som en spærre. Tre
+rettelser:
+
+- **Gaten er flyttet op** og står nu som det første i trin 8: har du stillet
+  spørgsmålet for **denne** gren og fået et ja på **denne** blok? Ellers kører
+  du ingenting. Med den ene sætning der forklarer hvorfor det glipper —
+  tilladelsen føles som en indstilling mennesket har slået til, og den er en
+  engangsting.
+- **Spørgsmålet skal bære grennavnet.** *"Skal jeg køre dem for
+  `task-0042-schema-baseline`?"* Et ja på et navngivet spørgsmål strækker sig
+  ikke lige så let til den næste gren som et ja på "skal jeg køre dem?".
+- **Ny linje i `Du må ikke`** — den liste er det der bliver scannet: køre en
+  git-linje uden at have spurgt om netop den gren. Og: ja'et er opbrugt når
+  blokken er kørt.
+
+Kontraktens undtagelse fra `Du pusher ikke` er skærpet tilsvarende. Samme regel
+som i beta.14, sagt så den ikke kan læses som en indstilling.
+
+### To spørgsmål der ligner hinanden
+
+`GUIDE.md` har fået en faldgrube om forskellen. `architect` spørger i samtalen,
+pr. gren. Claude Code spørger i sin egen dialog, om lov til at køre kommandoen
+— og dén har en "spørg ikke igen", som skriver en linje i
+`.claude/settings.local.json`. Trykkes den, prompter klienten aldrig mere for
+`git push`, uanset hvad rollen gør. Det er værd at kunne kende forskel på, den
+dag det ser ud som om rollen ikke adlyder.
+
+---
+
 ## 1.0.0-beta.14
 
 Kontrakt-version 10 → 11. **Kør `/agents:update` i hvert projekt.**

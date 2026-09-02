@@ -361,6 +361,8 @@ Og trin 10-11: uden dem er der ikke leveret noget, uanset hvor grønt det ser ud
 
 **Overdefinering.** Den nye version af den gamle fejl. Et interview hakket i småstykker koster det samme som en fil testet i småstykker. Spærren står i kontrakten: kan `architect` ikke finde noget der taler imod, har den ikke et spørgsmål.
 
+**"Spørg ikke igen" i tilladelsesdialogen.** Der er to spørgsmål, og de ligner hinanden. `architect` spørger i samtalen, hver gang, pr. gren. Claude Code spørger i sin egen dialog, om lov til at køre kommandoen — og dén har en "spørg ikke igen", som skriver en linje i `.claude/settings.local.json`. Trykker du på den, prompter klienten aldrig mere for `git push`, uanset hvad rollen gør. Sker det, så fjern linjen igen.
+
 **En `.claude/agents/` i projektet.** Overskriver plugin-rollerne. Alt ser ud til at virke, og dine rettelser rammer ingenting.
 
 ## Snydeark
