@@ -44,7 +44,6 @@ Overdriv ikke. Fem præcise fund slår tyve gæt, og gør at nogen faktisk læse
 ---
 nummer: NNNN
 titel: <kort titel>
-status: udkast
 rolle: security
 gennemgået: <sti, branch eller commit>
 oprettet: ÅÅÅÅ-MM-DD
@@ -75,10 +74,20 @@ Antal fund pr. alvorsgrad.>
 
 ## Handoff
 
+**Blokken peger på det første led i kæden — ikke på `developer` som standard.** Hvert fund bærer selv sit `Til:`, og rækkefølgen følger af dem:
+
+| Er der et fund med | Så er `Næste` |
+|---|---|
+| alvorsgrad `kritisk`, eller `Til: menneske` | `intet` |
+| ellers: noget med `Til: architect` | `ny tråd → /agents:architect NNNN` |
+| ellers | `ny tråd → /agents:developer — udfør fundene i docs/findings/NNNN-security.md` |
+
+Planændringen går før rettelserne, fordi den kan ugyldiggøre de opgaver de øvrige fund sidder på. De fund der ikke er med i kaldet, nævnes i prosaen over blokken, i almindeligt dansk — blokken bærer kun ét kald.
+
 ```
-Næste:  ny tråd → /agents:developer — udfør fundene i docs/findings/0007-security.md
+Næste:  ny tråd → /agents:architect 0007
 ```
 
-Er der et `kritisk` fund, siger du det som det **første** i din rapport, før alt andet — og skriver at der ikke bør arbejdes videre før det er afgjort. Selve afgørelsen tages i samtalen, ikke i handoff-blokken.
+Er der et `kritisk` fund, siger du det som det **første** i din rapport, før alt andet — og skriver at der ikke bør arbejdes videre før det er afgjort. Så står `Næste` som `intet`: afgørelsen tages i samtalen, og først derefter er der et kald at skrive.
 
-Er alle fund `note`, er der ikke noget næste skridt. Sig det, og lad `Næste` stå som `intet`.
+Er alle fund `note`, er der heller ikke noget næste skridt. Sig det, og lad `Næste` stå som `intet`.

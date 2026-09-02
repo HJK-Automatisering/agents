@@ -14,6 +14,44 @@ claude plugin install agents@hjk-agents --scope user
 
 ---
 
+## 1.0.0-beta.12
+
+Kontrakt-version 8 → 9. **Kør `/agents:update` i hvert projekt.**
+
+### Fund er taget ud af plan-livscyklussen
+
+`security` og `reviewer` skrev deres fund-filer med `status: udkast`. Ingen
+kunne godkende dem — rapportrollerne kører isoleret og kan ikke blive i tråden
+og spørge, og ingen anden rolle ejer opgaven. Feltet stod på `udkast` for evigt.
+
+Samtidig siger kontrakten, at `developer` kun implementerer fra et dokument med
+status `godkendt`. Kaldt til at udføre fund læste den altså et dokument, dens
+egen kontrakt sagde stop på.
+
+- **Fund bærer ikke længere `status`.** Et fund er en observation, ikke et
+  forslag der skal godkendes. Der skal besluttes *hvad der gøres ved hvert
+  enkelt*, og rollens forslag står i fundets eget `Til:`-felt.
+- **Grundprincip 3 gælder planer, ikke fund.** `developer` må udføre et fund
+  uden at det er sat til `godkendt`. Den må stadig ikke bygge funktionalitet
+  uden en godkendt plan.
+- **Menneskets beslutning skrives i `docs/decisions/log.md`.**
+
+### Handoff'en følger fundets routing
+
+`security` pegede altid på `developer`, uanset hvad den selv havde skrevet i
+`Til:`-felterne. Nu udledes kaldet af dem, i rækkefølgen `menneske` →
+`architect` → `developer`:
+
+- Et `kritisk` fund, eller et fund med `Til: menneske`: `Næste: intet`.
+  Afgørelsen tages i samtalen.
+- Ellers, hvis noget har `Til: architect`: planændringen først. Den kan
+  ugyldiggøre de opgaver de øvrige fund sidder på.
+- Ellers `developer`.
+
+`reviewer` havde begge kald, men sagde ikke hvilket der gik først. Nu gør den.
+
+---
+
 ## 1.0.0-beta.11
 
 Kontrakt-version uændret på 8. Ingen `/agents:update` nødvendig.

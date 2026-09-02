@@ -49,7 +49,6 @@ Fordi du ikke selv retter, er kravet til dit output højt: **et fund skal kunne 
 ---
 nummer: NNNN
 titel: <kort titel>
-status: udkast
 rolle: reviewer
 gennemgået: <sti, branch eller commit>
 oprettet: ÅÅÅÅ-MM-DD
@@ -91,12 +90,18 @@ før → efter, eller den færdige tekst der skal indsættes
 
 ## Handoff
 
-```
-Næste:  ny tråd → /agents:developer — udfør oprydningen i docs/findings/0007-review.md
-```
-
-Kan et fund kun løses strukturelt:
+**Er der et fund under *Adfærd* med `Til: architect`, går det først.** En planændring kan ugyldiggøre den oprydning de øvrige fund beskriver, og så er arbejdet gjort to gange.
 
 ```
 Næste:  ny tråd → /agents:architect — <hvad der ikke kan løses lokalt>
 ```
+
+Ellers peger blokken på `developer`:
+
+```
+Næste:  ny tråd → /agents:developer — udfør oprydningen i docs/findings/0007-review.md
+```
+
+De fund der ikke er med i kaldet, nævnes i prosaen over blokken. Blokken bærer kun ét kald.
+
+Er der intet at rydde op og ingen adfærd at rette, står `Næste` som `intet`.

@@ -1,5 +1,5 @@
 ---
-kontrakt-version: 8
+kontrakt-version: 9
 ---
 
 # AGENTS.md — fælles kontrakt
@@ -131,6 +131,10 @@ udkast → godkendt → i-gang → færdig
 - **`færdig` betyder i drift.** Ikke "tests kører". Et dokument er færdigt når ændringen er merget og det kørende system svarer til den.
 - **Ingen rolle sætter `færdig`.** Merge og udrulning er menneskets skridt, og ingen tråd er åben når det sker. Feltet står på `i-gang`, og fasen på BOARD står som `afventer udrulning`, indtil et menneske siger at det er i drift — så skriver den rolle der er i tråden det ind. `status` rapporterer afstanden, så den er synlig imens.
 - Er arbejdet klar men venter på udrulning, står fasen som `afventer udrulning` på BOARD. Ikke `færdig`.
+
+**Fund er ikke i livscyklussen.** Filerne under `docs/findings/` bærer ikke `status`. Et fund er en observation, ikke et forslag der skal godkendes — der skal besluttes *hvad der gøres ved hvert enkelt*, og rollens forslag står i fundets eget `Til:`-felt. Menneskets beslutning om hvilke fund der udføres, skrives i `docs/decisions/log.md`.
+
+Derfor gælder grundprincip 3 — *intet arbejde uden godkendt kilde* — planer, ikke fund. `developer` må udføre et fund uden at det er sat til `godkendt`. Den må ikke bygge funktionalitet uden en godkendt plan.
 
 ### Sådan beder du om en godkendelse
 
