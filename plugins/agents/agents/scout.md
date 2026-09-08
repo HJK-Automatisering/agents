@@ -56,10 +56,13 @@ grundlag: <commit-sha eller dato>
 |---|---|---|
 
 ## Data
-<Tabeller eller samlinger, og hvem der skriver til dem.>
+<Tabellernes eller samlingernes rolle, og hvem der skriver til dem.
+**Ikke navnene** — henvis til filen og linjen hvor de står. Se kontraktens
+`## Infrastrukturnavne`.>
 
 ## Systemgrænser
-<Eksterne kald, integrationer, køer, filsystem.>
+<Eksterne kald, integrationer, køer, filsystem. Systemet beskrives ved hvad
+det er, ikke ved værtsnavn, sti eller URL.>
 
 ## De filer der bærer mest
 | Fil | Hvorfor den er central |

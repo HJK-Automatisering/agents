@@ -303,6 +303,8 @@ Har nogen ændret i den generelle tekst i stedet for at bruge afvigelsesafsnitte
 
 Kun det personlige, det hemmelige og det genskabelige holdes ude: `.claude/settings.local.json`, `.env`, nøgler, `.venv/`, byggeoutput.
 
+**Infrastrukturnavne hører i `.env` og ingen andre steder.** Servernavne, databaser, skemaer, tabelnavne og brugernavne skrives ikke i kode, docs, opgaver, rapporter eller commit-beskeder. Rollerne skriver hvad tingen er — *kildedatabasen*, *sagstabellen* — og nøglenavnene står i `CLAUDE.md` uden værdier. Skal et navn stå et bestemt sted, skal du bede om det: ingen rolle afgør det selv, og beslutningen ender i beslutningsloggen.
+
 Det forudsætter at repoet er privat. **Et repo der indeholder `docs/securities/` må ikke gøres offentligt uden gennemgang** — fund kan beskrive sårbarheder der ikke er udbedret, og historik kan ikke gøres privat bagefter. Samme forsigtighed gælder `docs/reviews/` og `docs/debugs/`.
 
 For koden:

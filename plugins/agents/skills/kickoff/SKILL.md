@@ -190,6 +190,7 @@ Findes der en fjern-repo, opretter du den ikke selv og pusher ikke uden at have 
 - **Prosateksten ordret**, uændret, i sin egen sektion. Om tre måneder skal man kunne se hvad der faktisk blev bedt om, kontra hvad vi udledte.
 - Ikke-mål må ikke være tom.
 - Hver linje i stak-tabellen skal have en begrundelse **og** det alternativ der blev afvist.
+- **Ingen infrastrukturnavne**, heller ikke i `Systemer vi skal leve med`. Skriv systemet som det det er, ikke som det hedder. Se kontraktens `## Infrastrukturnavne`.
 - **Der er ikke et afsnit til åbne punkter.** Et blokerende spørgsmål afklares i interviewet, før du skriver. Noget der først besluttes senere, står under `### Uden for dette dokument`. Noget der skal gøres, bliver et emne på `docs/BOARD.md`.
 
 Vælg det kedelige og det organisationen kender, medmindre der er en skrevet grund til andet. Et fundament er ikke stedet at prøve noget nyt.
@@ -201,6 +202,8 @@ Den vigtigste fil du laver — de andre rollers kontekst i hver eneste tråd. Ko
 - Hvad projektet er, i tre linjer.
 - Stak og versioner.
 - **Kommandoerne:** kør tests, byg, kør lokalt, formatter, linter. Ordret, så de kan kopieres. Er der en `.venv`, skrives kommandoerne med fortolkeren i den: `.venv\Scripts\python.exe -m pytest`.
+  Indeholder en kommando et infrastrukturnavn, står nøglen i stedet — `$DB_SERVER`. *Ordret* gælder kommandoen, ikke navnet.
+- **Nøglerne der skal stå i `.env`:** navnene alene, uden værdier. Så kan en ny udvikler se hvad der mangler, uden at nogen har skrevet værdien ned. Se kontraktens `## Infrastrukturnavne`.
 - Mappestruktur og hvor tingene hører.
 - Domænebegreber en ny udvikler ville spørge om.
 
