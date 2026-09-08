@@ -14,6 +14,51 @@ claude plugin install agents@hjk-agents --scope user
 
 ---
 
+## 1.0.0-beta.17
+
+Kontrakt-version 12 → 13. **Kør `/agents:update` i hvert projekt.**
+
+### Infrastrukturnavne hører i `.env` og ingen andre steder
+
+Servernavne, databasenavne, skemaer, tabelnavne, brugernavne, delte stier,
+interne URL'er og IP-adresser stod i projekternes filer — i dokumenter, kort og
+kode. Kontrakten sagde kun noget om hemmeligheder og persondata, og et tabelnavn
+er ingen af de to. Rollerne havde ingen regel at følge, og `scout` havde det
+modsatte: dens kort bad udtrykkeligt om *"tabeller eller samlinger, og hvem der
+skriver til dem"*.
+
+Nyt afsnit i kontrakten, `## Infrastrukturnavne`. Navnene hører i `.env`, som
+ikke versionsstyres, og de skrives ikke i kode, tests, `docs/`, `CLAUDE.md`,
+opgaver, rapporter eller commit-beskeder. Det der skrives i stedet:
+
+- **I kode** læses værdien fra miljøet. Ingen standardværdi — en standardværdi
+  er navnet skrevet ned.
+- **I tekst** står rollen frem for navnet: *kildedatabasen*, *sagstabellen*,
+  *tjenestebrugeren*. Eller nøglen.
+- **Nøglerne** står i projektets `CLAUDE.md` — navnene alene, ingen værdier, så
+  det kan ses hvad der skal sættes. Der er ingen `.env.example`; `.gitignore`
+  udelukker `.env.*`.
+
+To grænser står i afsnittet, fordi reglen ellers gør skade:
+
+- **Kan et navn ikke undgås i kode** — et skema i en migrering, en tabel bundet
+  i et ORM — er det et spørgsmål til mennesket. Ingen rolle omskriver kode der
+  virker for at flytte et navn.
+- **Står der navne i forvejen**, bliver det en opgave. Ikke en rettelse i
+  tavshed: navnene står også i historikken, og den kan ikke gøres privat
+  bagefter.
+
+Undtagelsen kan kun mennesket gøre, og den skrives i beslutningsloggen. Et navn
+der allerede står ét sted, er ikke en tilladelse til det næste.
+
+`scout` er rettet: `## Data` beskriver tabellernes rolle og henviser til fil og
+linje, og `## Systemgrænser` beskriver systemet ved hvad det er frem for ved
+værtsnavn. `kickoff` forbyder navne i projektdokumentet — også under *Systemer
+vi skal leve med*, hvor de ellers landede — skriver kommandoer med nøglen i
+stedet for navnet, og lægger nøglenavnene i `CLAUDE.md`.
+
+---
+
 ## 1.0.0-beta.16
 
 Kontrakt-version uændret på 12. Ingen `/agents:update` nødvendig.
