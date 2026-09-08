@@ -60,10 +60,10 @@ Derfor skal du **aldrig åbne en fil for at svare på noget.** `architect` viser
 
 ## Hvorfor ikke bare én lang tråd til alt
 
-Tre grunde, i rækkefølge efter hvad de koster os:
+Tre grunde, i rækkefølge efter hvad de koster:
 
 1. **En lang tråd husker koden som den var.** Efter en times arbejde redigerer den selvsikkert ud fra en version af filen der ikke findes længere. Fejlen ser kompetent ud, og det er derfor den er dyr.
-2. **En model der lige har skrevet koden er dårlig til at angribe den.** Den vil have at det virker. Derfor er `tester` og `security` egne agenter — ikke fordi vi mangler plads, men fordi de skal være i dårligt humør.
+2. **En model der lige har skrevet koden er dårlig til at angribe den.** Den vil have at det virker. Derfor er `tester` og `security` egne agenter — det er ikke et spørgsmål om plads, men om at de skal være i dårligt humør.
 3. **Konteksten bliver for stor**, og kvaliteten falder længe før den løber tør. En agent læser hundrede filer i sit eget vindue; du får resultatet, ikke arbejdet.
 
 ## Forudsætning: Node
@@ -144,7 +144,7 @@ De undersøgende agenter kan køre samtidig og fylder ikke din kontekst med dere
 
 **Ingen rolle er teknisk spærret fra at ændre filer.** Rapportrollerne har ikke `Edit`, så de kan ikke rette en linje i en eksisterende fil. Men de fleste har `Write`, alle har `Bash`, og med dem kan man skrive hvad som helst. `status` har kun `Bash`.
 
-Så "må ikke" er en instruktion overalt, ikke en lås. Sig det som det er — påstår du at noget er umuligt, og nogen ser det ske, mister hele metoden troværdighed.
+Så "må ikke" er en instruktion overalt, ikke en lås. Påstås det som umuligt, falder troværdigheden i det øjeblik nogen ser det modsatte ske.
 
 ## Et nyt projekt starter med en prosatekst
 
@@ -343,13 +343,13 @@ Alt herunder sker i **én** tråd, bortset fra det du selv gør til sidst.
 | 10 | Den viser merge- og push-linjerne og spørger. Du siger ja | din tråd |
 | 11 | **Du ruller ud** | dig |
 
-Bemærk trin 5: der blev **spurgt** om der skulle testes. Der er ingen station der fyrer af sig selv, og det er derfor `task-0012` ikke fik et testapparat større end sig selv.
+I trin 5 blev der **spurgt** om der skulle testes. Ingen station fyrer af sig selv, og det er derfor `task-0012` ikke fik et testapparat større end sig selv.
 
-Og trin 10-11: uden dem er der ikke leveret noget, uanset hvor grønt det ser ud. Havde du sagt nej i trin 10, stod de samme linjer klar til dig selv.
+Uden trin 10-11 er der ikke leveret noget, uanset hvor grønt det ser ud. Et nej i trin 10 efterlader de samme linjer klar til dig selv.
 
 ## Faldgruber
 
-**"Kan du lige også …"** Den mest almindelige. Du beder om at få rettet noget du opdagede undervejs. Så er der ændret kode som ingen opgave dækker. Det bliver et nummer, eller det bliver ikke lavet.
+**"Kan du lige også …"** Du beder om at få rettet noget du opdagede undervejs. Så er der ændret kode som ingen opgave dækker. Det bliver et nummer, eller det bliver ikke lavet.
 
 **Du lader tråden bære en beslutning.** I stjernemodellen er `architect`s tråd langlivet, og den bliver komprimeret. Alt der kun står i samtalen, forsvinder. Det er derfor `Uskrevet` skal stå på `intet` før tråden lukkes.
 
@@ -359,7 +359,7 @@ Og trin 10-11: uden dem er der ikke leveret noget, uanset hvor grønt det ser ud
 
 **En for lille opgave.** *"Lav en `.dockerignore`"* kan ikke bære en tråd og trækker kontrol til sig som var den et helt nummer. Interview den frem til noget der har et formål.
 
-**Overdefinering.** Den nye version af den gamle fejl. Et interview hakket i småstykker koster det samme som en fil testet i småstykker. Spærren står i kontrakten: kan `architect` ikke finde noget der taler imod, har den ikke et spørgsmål.
+**Overdefinering.** Det modsatte af en for lille opgave, og lige så dyrt. Et interview hakket i småstykker koster det samme som en fil testet i småstykker. Spærren står i kontrakten: kan `architect` ikke finde noget der taler imod, har den ikke et spørgsmål.
 
 **"Spørg ikke igen" i tilladelsesdialogen.** Der er to spørgsmål, og de ligner hinanden. `architect` spørger i samtalen, hver gang, pr. gren. Claude Code spørger i sin egen dialog, om lov til at køre kommandoen — og dén har en "spørg ikke igen", som skriver en linje i `.claude/settings.local.json`. Trykker du på den, prompter klienten aldrig mere for `git push`, uanset hvad rollen gør. Sker det, så fjern linjen igen.
 

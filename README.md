@@ -89,10 +89,10 @@ Bemærk at `AGENTS.md` ikke ligger i roden. Den ville være en kopi, og en kopi 
 
 Glemmer du marketplacets version, ser folk stadig den gamle i kataloget.
 
-Ændringer i en rolle bør komme af at den fejlede på samme måde tre gange — ikke af at nogen havde en holdning i går.
+Ændringer i en rolle bør komme af at den fejlede på samme måde tre gange — ikke af en enkelt indvending.
 
 ## Bevidst ikke med
 
 - **`docs` som selvstændig rolle.** `reviewer` skriver den konkrete dokumentationstekst i sit fund.
 - **`release` / devops.** Versionering, CI og deploy holdes uden for rollerne indtil vi har et fast flow.
-- **Dispatch-agenter for samtalerollerne.** Ville betyde to filer pr. rolle der kan drive fra hinanden. Tilføjes for `developer` alene, hvis behovet for "gå væk og lav opgave 3" viser sig.
+- **Dispatch-agenter for samtalerollerne.** Ville betyde to filer pr. rolle der kan drive fra hinanden. Tilføjes for `developer` alene, hvis behovet for at sende en opgave af sted uden selv at sidde med den viser sig.
