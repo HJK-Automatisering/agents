@@ -3,9 +3,13 @@
 Agent-roller og arbejdsmetode til HJK-Automatiserings projekter. Distribueres som Claude Code-plugin, så alle har det samme og rettelser rammer alle.
 
 **Start her: [GUIDE.md](GUIDE.md)** — den praktiske guide til dem der skal bruge det.
+**Ny maskine: [OPSAETNING.md](OPSAETNING.md)** — fra bar pc til første `/agents:kickoff`.
 **Vedligeholdelse og udrulning: [PLUGIN.md](PLUGIN.md)**
 
 ## Installation
+
+Hele vejen fra en bar maskine — terminal, Git, Node, begge klienter — står i
+[OPSAETNING.md](OPSAETNING.md). Kort fortalt:
 
 **Node skal være installeret først.** Plugin'ets SessionStart-hook kører på Node, og Claude Codes egen indbyggede runtime er ikke tilgængelig for hooks.
 
@@ -73,7 +77,7 @@ Begrænsningerne i tabellen er mandater, ikke låse. Se `GUIDE.md`.
 | `.claude-plugin/marketplace.json` | Kataloget |
 | `CLAUDE.md` | Reglerne der gælder når nogen redigerer *dette* repo med Claude |
 | `CHANGELOG.md` | Hvad der ændrede sig ved hver udgivelse. Teksten til mailen |
-| `GUIDE.md` · `PLUGIN.md` | Til mennesker |
+| `OPSAETNING.md` · `GUIDE.md` · `PLUGIN.md` | Til mennesker: opsætning, brug, vedligeholdelse |
 
 Bemærk at `AGENTS.md` ikke ligger i roden. Den ville være en kopi, og en kopi driver.
 

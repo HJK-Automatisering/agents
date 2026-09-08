@@ -30,7 +30,7 @@ agents/
       detect-project-zero.cjs
   CLAUDE.md                 reglerne for at redigere dette repo
   CHANGELOG.md              hvad der ændrede sig ved hver udgivelse
-  GUIDE.md  README.md  PLUGIN.md
+  GUIDE.md  README.md  PLUGIN.md  OPSAETNING.md
 ```
 
 ## De to mekanismer
@@ -83,6 +83,9 @@ Virker det med `--plugin-dir` men ikke efter installation, ligger fejlen i marke
 Push til GitHub. Marketplacet *er* repoet.
 
 ## Installér
+
+Den fulde vej fra en bar maskine — terminal, Git, Node, begge klienter — står i
+`OPSAETNING.md`. Det er den fil du sender til en ny kollega.
 
 Pr. udvikler:
 
