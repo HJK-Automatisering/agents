@@ -14,6 +14,52 @@ claude plugin install agents@hjk-agents --scope user
 
 ---
 
+## 1.0.0-beta.16
+
+Kontrakt-version uændret på 12. Ingen `/agents:update` nødvendig.
+
+### Åbne punkter i projektdokumentet blev aldrig lukket
+
+`kickoff` skrev punkter under `## Åbne punkter` i `docs/projekt.md`, og
+kontraktens filtabel gør `kickoff` til dokumentets eneste skriver. `architect`
+har samtidig direkte forbud mod at røre filer uden for `docs/tasks/`, BOARD og
+beslutningsloggen. Blev et punkt afgjort i en `architect`-tråd, landede svaret
+derfor i loggen eller i opgaven, mens linjen i `projekt.md` blev stående som
+åben. Rollerne fulgte reglerne; der var ingen regel der lukkede punktet, og
+ingen rolle der meldte det.
+
+Afsnittet er udgået. Åbent arbejde står ét sted: `docs/BOARD.md` under
+`## Kommende` for det grove, og en opgaves `## Åbne punkter` for det definerede.
+Et spørgsmål der blokerer, afklares i interviewet før dokumentet skrives. Noget
+der først besluttes senere, står under `### Uden for dette dokument`, hvor det
+er en oplysning om rammen og ikke en liste nogen skal vende tilbage til.
+
+BOARD fik ikke en ny sektion. Et åbent spørgsmål omformuleres til et emne — det
+der skal gøres — fordi BOARD's egen regel er at der ikke står prosa i
+tabellerne. Det holder samtidig skabelonen ens med de BOARD-filer der allerede
+ligger i projekterne.
+
+**Projekter der allerede har afsnittet:** `/agents:kickoff` lukker det. Hvert
+punkt får én af tre — beslutningen skrevet ind under `## Beslutninger`,
+spørgsmålet stillet, eller et emne på BOARD — og derefter slettes afsnittet.
+`architect` siger til når den ser afsnittet, men retter ikke filen selv.
+
+### Ny fil: `OPSAETNING.md`
+
+Vejen fra en bar maskine til første `/agents:kickoff`: hvilken terminal, Git,
+Node, Claude Code, og at den første plugin-opsætning kræver CLI'en selv når
+skrivebordsappen er den klient der bruges bagefter. `README.md` og `PLUGIN.md`
+henviser til den.
+
+### Guides skrevet beskrivende
+
+`PLUGIN.md`, `GUIDE.md` og `README.md` talte stedvis til den der ejer
+udrulningen — *fortæl udviklerne*, *den mail du sender ud* — og gengav
+episoder frem for mekanismer. Repoet læses af alle, så teksten forklarer nu i
+stedet for at uddelegere. Ingen regler ændret.
+
+---
+
 ## 1.0.0-beta.15
 
 Kontrakt-version 11 → 12. **Kør `/agents:update` i hvert projekt.**

@@ -59,6 +59,8 @@ Læs de afsluttede opgaver. Du skal ikke foreslå noget der allerede findes, og 
 
 **Findes `docs/map.md`, skal dens `Ikke undersøgt`-liste kvitteres.** Hvert punkt får én af tre: **afklaret** (skriv hvor svaret står), **bevidst accepteret** (skriv hvorfor det er forsvarligt), eller **eget nummer**. Intet punkt uden en af de tre — ellers er kortets huller blevet projektets huller, og ingen husker at de var der.
 
+**Har `docs/projekt.md` et afsnit `## Åbne punkter`, er dokumentet skrevet efter en ældre skabelon.** Kvittér punkterne som kortets — emne på BOARD, eget nummer, eller beslutning i loggen. Selve afsnittet må du ikke røre; sig at `/agents:kickoff` lukker det.
+
 ### 2. Hold den grove liste
 
 Hvad kan du se i projektet der skal laves? Emnelinjer, ingen numre, ingen filer. De står under `Kommende` på BOARD.
