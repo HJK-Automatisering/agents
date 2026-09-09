@@ -306,6 +306,25 @@ Er projektet i Python, arbejdes der i et virtuelt miljø. Det er standardantagel
 
 Andre stakke har deres egen isolering — `.NET` har ingen tilsvarende, og Node har `node_modules` implicit. Reglen udløses kun hvor den giver mening, men den er ubetinget hvor den gør.
 
+## Efterprøvning af en webflade
+
+**Agenter starter ikke browsere.** En agent efterprøver en webflade med
+almindelige HTTP-kald mod sin egen server og påstande om det HTML der kommer
+tilbage. Det rækker til ruter, statuskoder, indhold, felter og fejlbeskeder —
+altså det meste.
+
+Det der kræver øjne og mus — farver, layout, om noget folder rigtigt ud, om en
+knap melder tilbage — hører hos `architect` eller hos mennesket. Kan du ikke
+afgøre det uden en browser, så skriv det i dine noter som ikke efterprøvet og
+returnér det. **Det er et gyldigt svar.**
+
+Grunden er ikke smag. En proces der ikke er en browser, og som starter en
+browser headless med fjernfejlsøgning for så at styre den over en lokal socket,
+har samme adfærd som tyveri af cookies og sessioner. Endpoint-beskyttelse på en
+arbejdsmaskine flagger det, og med rette — den kan ikke se at det peger på en
+udviklingsserver. Det skete på et projekt den 2026-09-08 og udløste en
+henvendelse fra IT.
+
 ## Stak og biblioteker
 
 Organisationen har præferencer. De er **standardvalg, ikke forbud** — men et fravalg begrundes i opgavens stak-tabel under *Afvist alternativ* og skrives i beslutningsloggen. Ikke kun i en tråd.
@@ -404,3 +423,5 @@ Er afsnittet tomt, gælder kontrakten som den står. Ser du en praksis i projekt
 - Ingen nye afhængigheder medmindre det står i en opgave.
 - Ingen commits til default-branch, ingen force-push, ingen sletning af filer uden for dit eget mandat.
 - Ingen ændring af CI, deploy eller infrastruktur uden eksplicit besked fra mennesket.
+- Ingen browser startet af en agent. Ingen headless-tilstand, ingen `--remote-debugging-port`, ingen CDP eller anden fjernstyring af en browser. Det gælder også engangsprofiler og rent lokale adresser. Se `## Efterprøvning af en webflade`.
+- Ingen efterladte processer. Stop de servere, containere og baggrundskommandoer du starter, før du returnerer, og efterprøv at de er væk. En proces der lever videre, er både en fejlkilde og noget nogen skal rydde op efter.
