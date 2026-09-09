@@ -14,6 +14,44 @@ claude plugin install agents@hjk-agents --scope user
 
 ---
 
+## 1.0.0-beta.18
+
+Kontrakt-version 13 → 14. **Kør `/agents:update` i hvert projekt.**
+
+### Agenter starter ikke browsere
+
+Den 2026-09-08 startede developer-agenter på et projekt Microsoft Edge headless
+med fjernfejlsøgning slået til, for at efterprøve en webflade på en lokal port.
+Maskinens endpoint-beskyttelse flaggede det. Det var ikke en falsk positiv i
+adfærdsmæssig forstand: en proces der ikke er en browser, og som starter en
+browser headless for så at styre den over en lokal socket, har samme adfærd som
+tyveri af cookies og sessioner. Beskyttelsen kan ikke se at det peger på en
+udviklingsserver. Hændelsen kostede en henvendelse fra IT.
+
+Nyt afsnit i kontrakten, `## Efterprøvning af en webflade`, efter `## Miljø`.
+En agent efterprøver en webflade med almindelige HTTP-kald mod sin egen server
+og påstande om det HTML der kommer tilbage — ruter, statuskoder, indhold,
+felter, fejlbeskeder. Det der kræver øjne og mus hører hos `architect` eller hos
+mennesket, og en agent der ikke kan afgøre det uden en browser, returnerer det
+som **ikke efterprøvet**. Det er et gyldigt svar, og det står som et gyldigt
+svar, så ingen rolle føler sig nødsaget til at finde en vej udenom.
+
+To linjer i `## Aldrig`:
+
+- **Ingen browser startet af en agent.** Ingen headless-tilstand, ingen
+  `--remote-debugging-port`, ingen CDP eller anden fjernstyring. Det gælder også
+  engangsprofiler og rent lokale adresser — de var netop hvad der blev brugt.
+- **Ingen efterladte processer.** Ved samme lejlighed kørte en webserver videre
+  i over en halv time efter opgaven, plus en baggrundskommando der hang. Det
+  blev opdaget af mennesket, ikke af nogen rolle. Servere, containere og
+  baggrundskommandoer stoppes før returnering, og det efterprøves at de er væk.
+
+Ingen rollefil bad om det modsatte: browsere, porte og processer var slet ikke
+nævnt i plugin'et før nu. Reglen kolliderer derfor ikke med en instruks — den
+lukker et hul.
+
+---
+
 ## 1.0.0-beta.17
 
 Kontrakt-version 12 → 13. **Kør `/agents:update` i hvert projekt.**
