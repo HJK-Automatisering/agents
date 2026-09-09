@@ -134,21 +134,28 @@ der.
 
 ## 7. Kontrollér at det er landet
 
-Start en session — i appen eller i terminalen — og se efter:
+Start en session — i appen eller i terminalen — og skriv:
 
-- `/help` viser de elleve `agents:`-kald
-- `/context` viser de syv agenter under **Custom Agents**
+```
+/agents:
+```
 
-Hvilken version der faktisk er installeret:
+Rullelisten skal vise kaldene: `kickoff`, `architect`, `developer` og resten.
+Gør den det, er plugin'et indlæst, og du er færdig med opsætningen.
+
+Dukker der ingenting op, er der to ting at tjekke, i denne rækkefølge.
+
+**Hvilken version der er installeret:**
 
 ```
 claude plugin list
 ```
 
-Den viser den **installerede** version — ikke katalogets. Er de uenige, mangler
-der en `claude plugin update`; se punkt 9.
+Den viser den **installerede** version — ikke katalogets. Står den bagud,
+mangler der en `claude plugin update`; se punkt 9. Husk at en opdatering først
+slår igennem i en ny session.
 
-Gør den ikke det, så tjek CLI'ens version **før** du fejlsøger noget andet:
+**CLI'ens egen version:**
 
 ```
 claude --version
