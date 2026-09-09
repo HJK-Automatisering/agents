@@ -358,9 +358,10 @@ Det der skrives i stedet, er hvad tingen er:
   navn — en standardværdi er navnet skrevet ned.
 - **I tekst:** rollen frem for navnet. *Kildedatabasen*, *sagstabellen*,
   *tjenestebrugeren*. Eller nøglen: `DB_SERVER`.
-- **Nøglerne** står i projektets `CLAUDE.md` — navnene alene, ingen værdier, så
-  det kan ses hvad der skal sættes. Der er ingen `.env.example`; `.gitignore`
-  udelukker `.env.*`.
+- **Nøglerne** står i `.env.example` — navnene alene, ingen værdier. Den
+  versionsstyres, så det kan ses hvad der skal sættes uden at nogen har skrevet
+  en værdi ned. Værdierne hører kun i `.env`, som ikke versionsstyres.
+  `CLAUDE.md` henviser til filen frem for at gentage listen.
 
 **Kun mennesket kan gøre undtagelsen.** Beder mennesket udtrykkeligt om at et
 navn står i en fil, står det der, og beslutningen skrives i beslutningsloggen.

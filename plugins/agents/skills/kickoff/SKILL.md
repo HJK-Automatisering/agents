@@ -144,6 +144,7 @@ Rækkefølgen er ikke til forhandling:
    .vscode/
    .env
    .env.*
+   !.env.example
    *.pem
    *.key
    *.pfx
@@ -154,9 +155,13 @@ Rækkefølgen er ikke til forhandling:
 
    **Alt andet versionsstyres** — også `AGENTS.md`, `docs/` og `.claude/settings.json`. Kontrakten koden blev skrevet under skal rejse sammen med koden.
 
-3. `.gitattributes` med `* text=auto eol=lf`. Vi udvikler på Windows og kører i Linux-containere; uden den havner CRLF i shell-scripts, og fejlen viser sig først inde i en container med en ulæselig besked.
+3. `.env.example` hvis projektet har brug for et miljø: **nøglenavnene alene, uden værdier.**
+   Den versionsstyres — undtagelsen i mønstret ovenfor er sat netop til det — og den er
+   stedet en ny udvikler kan se hvad der skal sættes. `cp .env.example .env` og udfyld.
+   Værdierne hører kun i `.env`. Se kontraktens `## Infrastrukturnavne`.
+4. `.gitattributes` med `* text=auto eol=lf`. Vi udvikler på Windows og kører i Linux-containere; uden den havner CRLF i shell-scripts, og fejlen viser sig først inde i en container med en ulæselig besked.
    Samme sted: `.editorconfig` for den valgte stak, hvis stakken håndhæver stil gennem den — det gør .NET. Uden den har `reviewer` ingen målestok.
-4. `.venv` hvis det blev besluttet, og `requirements.txt` hvis stakken bruger den.
+5. `.venv` hvis det blev besluttet, og `requirements.txt` hvis stakken bruger den.
 
    Samme sted: `.vscode/settings.json`, så mennesket havner i miljøet uden at tænke over det:
 
@@ -177,7 +182,7 @@ Rækkefølgen er ikke til forhandling:
    Skriv for den maskine du står på: på Linux og macOS hedder nøglen `terminal.integrated.env.linux` eller `.osx`, mappen hedder `bin`, og PATH adskilles med `:`. Filen er gitignoreret og rejser ikke, så den skal ikke være platformneutral.
 
    Prompten viser ikke `(.venv)`, fordi aktiveringsscriptet ikke køres. Det er i orden. Reglen om at rollerne kalder fortolkeren direkte står uændret i `AGENTS.md` — den her fil er til mennesket.
-5. Første commit: `kickoff: initialiser projekt`
+6. Første commit: `kickoff: initialiser projekt`
 
 Grunden til at interviewet kommer først, er at du skal kende stakken for at skrive en rigtig `.gitignore`. Grunden til at `.gitignore` kommer før alt andet, er at en hemmelighed der først er committet, ikke kan slettes igen. Byt aldrig om på de to.
 
@@ -203,7 +208,7 @@ Den vigtigste fil du laver — de andre rollers kontekst i hver eneste tråd. Ko
 - Stak og versioner.
 - **Kommandoerne:** kør tests, byg, kør lokalt, formatter, linter. Ordret, så de kan kopieres. Er der en `.venv`, skrives kommandoerne med fortolkeren i den: `.venv\Scripts\python.exe -m pytest`.
   Indeholder en kommando et infrastrukturnavn, står nøglen i stedet — `$DB_SERVER`. *Ordret* gælder kommandoen, ikke navnet.
-- **Nøglerne der skal stå i `.env`:** navnene alene, uden værdier. Så kan en ny udvikler se hvad der mangler, uden at nogen har skrevet værdien ned. Se kontraktens `## Infrastrukturnavne`.
+- **En henvisning til `.env.example`**, som er der nøglerne står. Gentag ikke listen her — to lister driver fra hinanden, og den ved siden af `.env` er den der bliver holdt ved.
 - Mappestruktur og hvor tingene hører.
 - Domænebegreber en ny udvikler ville spørge om.
 
@@ -266,7 +271,7 @@ kickoff: kontrakt og dokumentationsskelet
 
 ## Output
 
-`.gitignore` · `.gitattributes` · evt. `.editorconfig` · `AGENTS.md` · `CLAUDE.md` · `docs/projekt.md` · `docs/BOARD.md` · `docs/decisions/log.md` · de fem tomme docs-mapper
+`.gitignore` · `.gitattributes` · evt. `.env.example` · evt. `.editorconfig` · `AGENTS.md` · `CLAUDE.md` · `docs/projekt.md` · `docs/BOARD.md` · `docs/decisions/log.md` · de fem tomme docs-mapper
 
 **Dokumentet bærer ikke status.** Det er hverken en opgave eller en rapport, og de to statussæt i kontrakten gælder ikke for det. Det der siger om dit arbejde er færdigt, er interviewet: er der et blokerende spørgsmål tilbage, er du ikke færdig. Spørgsmålet stilles i tråden — det skrives ikke ned som et punkt i dokumentet.
 
