@@ -58,7 +58,7 @@ grundlag: <commit-sha eller dato>
 ## Data
 <Tabellernes eller samlingernes rolle, og hvem der skriver til dem.
 **Ikke navnene** — henvis til filen og linjen hvor de står. Se kontraktens
-`## Infrastrukturnavne`.>
+`## Værdier hører i .env`.>
 
 ## Systemgrænser
 <Eksterne kald, integrationer, køer, filsystem. Systemet beskrives ved hvad

@@ -81,7 +81,7 @@ Grunden er mekanisk: fem rapporter tømt ind i `architect`s tråd fylder den, og
 
 Numre, filstier, funktionsnavne, commit-hashes, struktureret markdown. Den næste rolle læser filen koldt og har brug for præcision.
 
-Præcision er numre og stier — ikke navne på infrastruktur. Se `## Infrastrukturnavne`.
+Præcision er numre, nøgler og stier i repoet — ikke forretningsspecifikke værdier. Se `## Værdier hører i .env`.
 
 ### Sådan ser et spørgsmål ud
 
@@ -342,39 +342,49 @@ Står et område ikke i tabellen, er der ingen præference. Så vælger `archite
 
 Er du fagligt uenig i en præference: skriv én indvending under `## Indvendinger` og arbejd videre efter den. Præferencer ændres i `agents`-repoet, ikke i et projekt.
 
-## Infrastrukturnavne
+## Værdier hører i `.env`
 
-Infrastrukturnavne er **servernavne, databasenavne, skemaer, tabelnavne,
-brugernavne, delte stier, interne URL'er og IP-adresser.** De hører i `.env`,
-som ikke versionsstyres, og de står ingen andre steder.
+**Nøgler må altid nævnes. Værdier må ikke.** `DB_SERVER` er en nøgle og kan stå
+hvor som helst — i kode, i en opgave, i et fund, i `CLAUDE.md`. Værdien bag den
+hører i `.env`, som ikke versionsstyres, og kun der.
 
-De skrives ikke i kode, tests, `docs/`, `CLAUDE.md`, opgaver, rapporter eller
-commit-beskeder. Heller ikke som eksempel, og heller ikke i et fund der handler
-om netop dem.
+Det gælder de værdier der er **forretningsspecifikke eller forretningskritiske**:
+organisationens servernavne, databasenavne, skemaer, tabelnavne, tjenestebrugere,
+delte stier, interne URL'er og IP-adresser. De skrives ikke i kode, tests,
+`docs/`, `CLAUDE.md`, opgaver, rapporter eller commit-beskeder. Heller ikke som
+eksempel, og heller ikke i et fund der handler om netop dem.
 
-Det der skrives i stedet, er hvad tingen er:
+**Generiske og ligegyldige værdier er ikke omfattet.** `localhost`, et
+portnummer, `utf-8`, en tidszone, en pakkeversion, et feltnavn i et offentligt
+API. De må stå hvor det er praktisk — at gemme dem væk gør kun projektet svært
+at læse.
 
-- **I kode:** værdien læses fra miljøet. Ingen standardværdi der er det rigtige
-  navn — en standardværdi er navnet skrevet ned.
-- **I tekst:** rollen frem for navnet. *Kildedatabasen*, *sagstabellen*,
-  *tjenestebrugeren*. Eller nøglen: `DB_SERVER`.
+Grænsen mellem de to er ikke altid skarp, og den er ikke din at flytte: **er du
+i tvivl, er værdien forretningsspecifik.** Så står nøglen i teksten, værdien i
+`.env`, og gør det noget uklart, spørger du.
+
+Det der skrives i stedet for en værdi:
+
+- **I kode:** værdien læses fra miljøet. Ingen standardværdi der er den rigtige
+  værdi — en standardværdi er værdien skrevet ned.
+- **I tekst:** nøglen, eller hvad tingen er. `DB_SERVER`, *kildedatabasen*,
+  *sagstabellen*, *tjenestebrugeren*.
 - **Nøglerne** står i `.env.example` — navnene alene, ingen værdier. Den
   versionsstyres, så det kan ses hvad der skal sættes uden at nogen har skrevet
-  en værdi ned. Værdierne hører kun i `.env`, som ikke versionsstyres.
-  `CLAUDE.md` henviser til filen frem for at gentage listen.
+  en værdi ned. `CLAUDE.md` henviser til filen frem for at gentage listen.
 
-**Kun mennesket kan gøre undtagelsen.** Beder mennesket udtrykkeligt om at et
-navn står i en fil, står det der, og beslutningen skrives i beslutningsloggen.
-Ingen rolle træffer den selv, og et navn der allerede står ét sted, er ikke en
+**Kun mennesket kan gøre undtagelsen.** Beder mennesket udtrykkeligt om at en
+værdi står i en fil, står den der, og beslutningen skrives i beslutningsloggen.
+Ingen rolle træffer den selv, og en værdi der allerede står ét sted, er ikke en
 tilladelse til det næste.
 
-Kan et navn ikke undgås i kode — et skema i en migrering, en tabel bundet i et
+Kan en værdi ikke undgås i kode — et skema i en migrering, en tabel bundet i et
 ORM — er det et spørgsmål til mennesket, ikke et valg rollen tager.
 
-**Står der navne i forvejen:** sig det, og lad det blive en opgave. Ret det ikke
-i tavshed, og omskriv ikke kode der virker for at flytte et navn. Navnene står
-også i historikken, og den kan ikke gøres privat bagefter — samme forbehold som
-for `docs/securities/`.
+**Står der værdier i forvejen:** sig det, og lad det blive en opgave. Ret det
+ikke i tavshed, og omskriv ikke kode der virker for at flytte en værdi. Værdierne
+står også i historikken, og den kan ikke gøres privat bagefter — samme forbehold
+som for `docs/securities/`.
 
 ## Versionering
 
@@ -420,7 +430,7 @@ Er afsnittet tomt, gælder kontrakten som den står. Ser du en praksis i projekt
 ## Aldrig
 
 - Ingen hemmeligheder, tokens, adgangskoder eller personoplysninger i kode, tests, docs eller commits.
-- Ingen infrastrukturnavne — servere, databaser, skemaer, tabeller, brugere — nogen af de steder. Se `## Infrastrukturnavne`.
+- Ingen forretningsspecifikke værdier — servere, databaser, skemaer, tabeller, brugere — nogen af de steder. Nøglen må stå; værdien hører i `.env`. Se `## Værdier hører i .env`.
 - Ingen nye afhængigheder medmindre det står i en opgave.
 - Ingen commits til default-branch, ingen force-push, ingen sletning af filer uden for dit eget mandat.
 - Ingen ændring af CI, deploy eller infrastruktur uden eksplicit besked fra mennesket.

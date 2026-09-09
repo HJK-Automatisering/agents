@@ -158,7 +158,7 @@ Rækkefølgen er ikke til forhandling:
 3. `.env.example` hvis projektet har brug for et miljø: **nøglenavnene alene, uden værdier.**
    Den versionsstyres — undtagelsen i mønstret ovenfor er sat netop til det — og den er
    stedet en ny udvikler kan se hvad der skal sættes. `cp .env.example .env` og udfyld.
-   Værdierne hører kun i `.env`. Se kontraktens `## Infrastrukturnavne`.
+   Værdierne hører kun i `.env`. Se kontraktens `## Værdier hører i .env`.
 4. `.gitattributes` med `* text=auto eol=lf`. Vi udvikler på Windows og kører i Linux-containere; uden den havner CRLF i shell-scripts, og fejlen viser sig først inde i en container med en ulæselig besked.
    Samme sted: `.editorconfig` for den valgte stak, hvis stakken håndhæver stil gennem den — det gør .NET. Uden den har `reviewer` ingen målestok.
 5. `.venv` hvis det blev besluttet, og `requirements.txt` hvis stakken bruger den.
@@ -195,7 +195,7 @@ Findes der en fjern-repo, opretter du den ikke selv og pusher ikke uden at have 
 - **Prosateksten ordret**, uændret, i sin egen sektion. Om tre måneder skal man kunne se hvad der faktisk blev bedt om, kontra hvad vi udledte.
 - Ikke-mål må ikke være tom.
 - Hver linje i stak-tabellen skal have en begrundelse **og** det alternativ der blev afvist.
-- **Ingen infrastrukturnavne**, heller ikke i `Systemer vi skal leve med`. Skriv systemet som det det er, ikke som det hedder. Se kontraktens `## Infrastrukturnavne`.
+- **Ingen forretningsspecifikke værdier**, heller ikke i `Systemer vi skal leve med`. Skriv systemet som det det er, ikke som det hedder. Se kontraktens `## Værdier hører i .env`.
 - **Der er ikke et afsnit til åbne punkter.** Et blokerende spørgsmål afklares i interviewet, før du skriver. Noget der først besluttes senere, står under `### Uden for dette dokument`. Noget der skal gøres, bliver et emne på `docs/BOARD.md`.
 
 Vælg det kedelige og det organisationen kender, medmindre der er en skrevet grund til andet. Et fundament er ikke stedet at prøve noget nyt.
@@ -207,7 +207,7 @@ Den vigtigste fil du laver — de andre rollers kontekst i hver eneste tråd. Ko
 - Hvad projektet er, i tre linjer.
 - Stak og versioner.
 - **Kommandoerne:** kør tests, byg, kør lokalt, formatter, linter. Ordret, så de kan kopieres. Er der en `.venv`, skrives kommandoerne med fortolkeren i den: `.venv\Scripts\python.exe -m pytest`.
-  Indeholder en kommando et infrastrukturnavn, står nøglen i stedet — `$DB_SERVER`. *Ordret* gælder kommandoen, ikke navnet.
+  Indeholder en kommando en forretningsspecifik værdi, står nøglen i stedet — `$DB_SERVER`. *Ordret* gælder kommandoen, ikke værdien.
 - **En henvisning til `.env.example`**, som er der nøglerne står. Gentag ikke listen her — to lister driver fra hinanden, og den ved siden af `.env` er den der bliver holdt ved.
 - Mappestruktur og hvor tingene hører.
 - Domænebegreber en ny udvikler ville spørge om.

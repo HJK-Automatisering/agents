@@ -305,7 +305,9 @@ Har nogen ændret i den generelle tekst i stedet for at bruge afvigelsesafsnitte
 
 Kun det personlige, det hemmelige og det genskabelige holdes ude: `.claude/settings.local.json`, `.env`, nøgler, `.venv/`, byggeoutput.
 
-**Infrastrukturnavne hører i `.env` og ingen andre steder.** Servernavne, databaser, skemaer, tabelnavne og brugernavne skrives ikke i kode, docs, opgaver, rapporter eller commit-beskeder. Rollerne skriver hvad tingen er — *kildedatabasen*, *sagstabellen* — og nøglenavnene står i `.env.example`, som versionsstyres og kun indeholder navne. Skal et navn stå et bestemt sted, skal du bede om det: ingen rolle afgør det selv, og beslutningen ender i beslutningsloggen.
+**Forretningsspecifikke værdier hører i `.env` og ingen andre steder.** Nøglen må altid nævnes — `DB_SERVER` kan stå hvor som helst — men værdien bag den ikke: organisationens servere, databaser, skemaer, tabelnavne og tjenestebrugere skrives ikke i kode, docs, opgaver, rapporter eller commit-beskeder. Rollerne skriver nøglen eller hvad tingen er, *kildedatabasen*, *sagstabellen*, og nøglenavnene står i `.env.example`, som versionsstyres og kun indeholder navne.
+
+Generiske værdier er ikke omfattet — `localhost`, et portnummer, en tidszone. Er en rolle i tvivl, behandler den værdien som forretningsspecifik og spørger. Skal en værdi stå et bestemt sted, skal du bede om det: ingen rolle afgør det selv, og beslutningen ender i beslutningsloggen.
 
 Det forudsætter at repoet er privat. **Et repo der indeholder `docs/securities/` må ikke gøres offentligt uden gennemgang** — fund kan beskrive sårbarheder der ikke er udbedret, og historik kan ikke gøres privat bagefter. Samme forsigtighed gælder `docs/reviews/` og `docs/debugs/`.
 
