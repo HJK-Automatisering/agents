@@ -154,14 +154,22 @@ Hooken bruger `args` i exec-form. På en CLI der er ældre end feltet, køres `n
 
 ```
 claude plugin marketplace update hjk-agents
-claude plugin install agents@hjk-agents --scope user
+claude plugin update agents@hjk-agents --scope user
 ```
 
-To kommandoer, hver gang versionen bumpes. Den første henter katalogget, så klienten overhovedet ved at der findes en nyere version; den anden installerer den.
+To kommandoer, hver gang versionen bumpes. Den første henter katalogget, så klienten overhovedet ved at der findes en nyere version; den anden flytter den installerede version.
 
 Springer man den første over, sker der ingenting — og der kommer ingen fejl. Klienten ved bare ikke bedre.
 
-**Begge linjer hører i udgivelsesbeskeden.** Ikke "genstart appen", ikke "den kommer af sig selv".
+#### `install` opgraderer ikke
+
+`claude plugin install` på et plugin der allerede er installeret, er en no-op. Den svarer `Plugin "agents@hjk-agents" is already installed (scope: user)` og stopper — med et flueben, uden en fejl, og uden at røre versionen. Kataloget kan stå på den nyeste udgave mens den installerede bliver hvor den er, i ugevis.
+
+`claude plugin update` er kommandoen. Den svarer `updated from X to Y` og **beder om en genstart**: `Restart to apply changes`. Indtil klienten er genstartet, kører sessionen videre på den gamle udgave.
+
+`claude plugin list` viser den **installerede** version — ikke katalogets. Er de to uenige, er det `update` der mangler, og det er det første der skal kontrolleres når en rolleændring ikke slår igennem.
+
+**Begge linjer hører i udgivelsesbeskeden**, og genstarten med dem. En genstart alene henter ingenting — men uden den er den hentede udgave ikke i brug.
 
 Alternativt via Intune eller Group Policy: `HKLM\SOFTWARE\Policies\ClaudeCode`, eller filen `C:\Program Files\ClaudeCode\managed-settings.json`. Bemærk at `C:\ProgramData\ClaudeCode\managed-settings.json` er **udgået** fra v2.1.75 og stadig optræder i ældre vejledninger.
 

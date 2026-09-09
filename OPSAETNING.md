@@ -139,6 +139,15 @@ Start en session — i appen eller i terminalen — og se efter:
 - `/help` viser de elleve `agents:`-kald
 - `/context` viser de syv agenter under **Custom Agents**
 
+Hvilken version der faktisk er installeret:
+
+```
+claude plugin list
+```
+
+Den viser den **installerede** version — ikke katalogets. Er de uenige, mangler
+der en `claude plugin update`; se punkt 9.
+
 Gør den ikke det, så tjek CLI'ens version **før** du fejlsøger noget andet:
 
 ```
@@ -194,11 +203,16 @@ marketplace-opdateringer virker ikke der.
 
 ```
 claude plugin marketplace update hjk-agents
-claude plugin install agents@hjk-agents --scope user
+claude plugin update agents@hjk-agents --scope user
 ```
 
-Springer du den første over, sker der ingenting, og der kommer ingen fejl.
-Klienten ved bare ikke bedre.
+**`install` opgraderer ikke.** Er plugin'et installeret, svarer den
+`already installed` og gør ingenting — med et flueben og uden en fejl. Det er
+`update` der flytter versionen, og den skriver `Restart to apply changes`: luk
+klienten og åbn den igen, ellers kører sessionen videre på den gamle udgave.
+
+Springer du katalogopdateringen over, sker der ingenting, og der kommer heller
+ingen fejl. Klienten ved bare ikke bedre.
 
 ## To fælder der ser ud som om alt virker
 

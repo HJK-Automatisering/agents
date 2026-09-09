@@ -107,10 +107,12 @@ claude plugin install agents@hjk-agents --scope user
 
 ```
 claude plugin marketplace update hjk-agents
-claude plugin install agents@hjk-agents --scope user
+claude plugin update agents@hjk-agents --scope user
 ```
 
-Springer du den første over, sker der ingenting, og der kommer ingen fejl. Se `PLUGIN.md`.
+**`install` opgraderer ikke.** Er plugin'et installeret, svarer den `already installed` og gør ingenting — med et flueben og uden en fejl. Det er `update` der flytter versionen, og klienten skal genstartes bagefter, før den nye udgave er i brug.
+
+Springer du katalogopdateringen over, sker der ingenting, og der kommer heller ingen fejl. `claude plugin list` viser hvad der faktisk er installeret. Se `PLUGIN.md`.
 
 **Én gang pr. projekt:**
 
