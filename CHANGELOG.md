@@ -17,6 +17,57 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.0.0-beta.19
+
+Kontrakt-version 14 → 15. **Kør `/agents:update` i hvert projekt.**
+
+To rettelser af reglen fra beta.17. Den var for bred, og den afskrev en fil der
+ikke skulle afskrives.
+
+### Det er værdierne der har en plads — ikke nøglerne
+
+Afsnittet hed `## Infrastrukturnavne` og forbød navne. Det ramte for bredt: en
+nøgle som `DB_SERVER` blev lige så mistænkelig som værdien bag den, og en rolle
+der ikke må nævne nøglen, kan hverken beskrive koden eller stille et brugbart
+spørgsmål.
+
+Afsnittet heder nu `## Værdier hører i .env` og åbner med skellet: **nøgler må
+altid nævnes, værdier må ikke.** `DB_SERVER` kan stå i kode, i en opgave, i et
+fund, i `CLAUDE.md`. Værdien bag den hører i `.env`, som ikke versionsstyres, og
+kun der.
+
+Det gælder de **forretningsspecifikke og forretningskritiske** værdier:
+organisationens servernavne, databasenavne, skemaer, tabelnavne, tjenestebrugere,
+delte stier, interne URL'er og IP-adresser.
+
+**Generiske og ligegyldige værdier er ikke omfattet** — `localhost`, et
+portnummer, `utf-8`, en tidszone, en pakkeversion, et feltnavn i et offentligt
+API. De må stå hvor det er praktisk. Den gamle formulering kendte ikke det skel,
+og en regel der gemmer alt væk, gør projektet svært at læse i stedet for sikkert.
+
+Grænsen er ikke skarp, så den er ikke rollens at flytte: **er rollen i tvivl, er
+værdien forretningsspecifik**, og så spørger den. Uden den sætning kan en rolle
+tale sig frem til at noget er generisk.
+
+### `.env.example` er ikke afskrevet
+
+Reglen henviste nøglenavnene til `CLAUDE.md` og skrev at `.env.example` ikke
+findes, med den begrundelse at `.gitignore`-skabelonen har `.env.*`. Det var at
+lade et mønster afgøre en konvention i stedet for at rette mønstret.
+
+Skabelonen har nu `!.env.example`, så `.env.local` og `.env.production` stadig
+holdes ude. Filen indeholder nøglenavne uden værdier og er derfor ikke
+forretningskritisk. `kickoff` opretter den i skelettrinnet lige efter
+`.gitignore`, og `CLAUDE.md` henviser til den frem for at gentage listen — to
+lister driver fra hinanden, og den der ligger ved siden af `.env` er den der
+bliver holdt ved.
+
+Har et projekt fået nøglenavne skrevet ind i `CLAUDE.md` under beta.17 eller
+beta.18, er der ingen hast: et nøglenavn er ikke en hemmelighed. Det falder ind
+under reglen om værdier der allerede står i projektet, og bliver en opgave.
+
+---
+
 ## 1.0.0-beta.18
 
 Kontrakt-version 13 → 14. **Kør `/agents:update` i hvert projekt.**
