@@ -44,7 +44,7 @@ Du åbner `/agents:architect`. Derfra:
 
 **Der er ingen kæde.** Ingen rolle sender bolden videre til en tredje. Alt går gennem navet, og navet er der hvor du er.
 
-Det betyder også at `architect`s tråd bliver langlivet. Den lukker den selv, når den siger til — og triggeren er ikke at tråden er lang, men at den rummer noget filerne ikke gør.
+Det betyder også at `architect`s tråd bliver langlivet. **Den anbefaler selv et skifte når tråden er blevet mudret** — typisk fordi emnet er skiftet til noget urelateret, eller fordi tråden er blevet komprimeret. Du bestemmer; siger du nej, spørger den ikke igen før noget nyt sker. Der går ingenting tabt ved at sige ja: alt står i filerne, og `Næste` i lukkeblokken er det første den nye tråd tager.
 
 ## To modtagere
 
@@ -210,7 +210,9 @@ Du har tre opgaver. Ikke flere.
 
 **2. Du afgør hvad der sendes af sted.** Skal der testes nu, eller bygges videre? Skal der en maskinel kontrol til, eller er en advarsel i filen nok? `architect` anbefaler; du bestemmer. Det er dér proportionaliteten afgøres — ikke af en regel inde i `tester`.
 
-**3. Du siger ja til merge og push — og du ruller ud.** Er en gren færdig, giver `architect` dig de linjer der skal køres, og spørger om den skal køre dem. Siger du ja, kører den dem; siger du nej, står linjerne der til dig selv. **Ja'et gælder kun den ene gang** — næste gren bliver du spurgt igen. Udrulningen er alene din, fordi den tit rører produktionsdata. `status` fortæller dig hvor langt der er.
+**3. Du siger ja til merge, push og udgivelse — og du ruller ud.** Er en gren færdig, giver `architect` dig de linjer der skal køres, og spørger om den skal køre dem. Siger du ja, kører den dem; siger du nej, står linjerne der til dig selv. **Ja'et gælder kun den ene gang** — næste gren bliver du spurgt igen. Udrulningen er alene din, fordi den tit rører produktionsdata. `status` fortæller dig hvor langt der er.
+
+Er grenen en **reel udgivelse** — eller en rettelse til noget der er udgivet — foreslår `architect` samtidig det nye versionsnummer efter `x.y.z`, med en begrundelse for netop det led, og betaer tæller for sig. Den bumper aldrig af sig selv, og et ja gælder den ene udgivelse. Har projektet slet ikke et versionsnummer, indfører den det ikke — det er et emne du tager op.
 
 ## Lukning og retur
 
@@ -317,7 +319,7 @@ For koden:
 - `.gitattributes` med `* text=auto eol=lf`. Windows-maskiner, Linux-containere.
 - Én gren pr. opgave — `task-0042-schema-baseline` — én commit pr. afsluttet enhed, beskeder på dansk med nummeret foran.
 - **Rollerne committer. Merge og push kræver dit ja hver gang.** `architect` viser linjerne og spørger; ingen anden rolle rører dem. Næste tråd læser arbejdstræet på din maskine og har ikke brug for et push. `status` siger hvor mange commits der ligger upushet.
-- **Ingen rolle ændrer et versionsnummer.** En udgivelse er din beslutning.
+- **Ingen rolle ændrer et versionsnummer uopfordret.** `architect` foreslår det ved en reel udgivelse og kører det efter dit ja; de øvrige roller rører det aldrig.
 
 ## Workflows
 

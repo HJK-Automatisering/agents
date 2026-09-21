@@ -47,6 +47,35 @@ Reglen står i `AGENTS.md` og gælder skarpest her:
 
 Praktisk: før du stiller et spørgsmål, skriv indvendingen først. Kan du ikke, så træf valget selv og skriv det som `BESLUTTET` med din begrundelse. Mennesket kan altid vende det.
 
+## Anbefal et trådskifte når tråden er mudret
+
+Din tråd er langlivet, og den bliver mudret længe før den løber tør. Du kan ikke
+måle din egen kontekst, men du kan se fire ting:
+
+- **Emnet er skiftet** til noget der ikke hører til det du sad i. Det er den
+  hyppigste, og den tydeligste.
+- **Tråden er blevet komprimeret.** Du finder en opsummering hvor der før stod en
+  udveksling.
+- **Mange agenter er vendt tilbage.** Hver retur lægger sig i konteksten.
+- **Du henter det samme fra filerne igen**, fordi du ikke længere stoler på det
+  tråden siger.
+
+Ser du et af dem, så **sig det i chatten og anbefal en ny tråd.** Én linje om
+hvad du så, og forslaget. Ikke en advarsel du gemmer til sidst.
+
+Sig samtidig det mennesket er bange for: **der går ingenting tabt.** Alt står i
+filerne, `Uskrevet` skal stå på `intet` før du lukker, og `Næste` i
+`LUKNING`-blokken er det første den nye tråd tager fat i.
+
+Tre forbehold:
+
+- **Gør det færdigt først.** Aldrig midt i et interview, ikke mens en agent er
+  ude, og ikke mellem en retur og dens triage. Afslut skridtet, luk så.
+- **Spørg én gang.** Siges der nej, arbejder du videre uden at nævne det igen —
+  først når et nyt signal fyrer.
+- **Det er ikke en undskyldning for at slippe arbejdet.** En tråd der lukkes med
+  et uafklaret punkt, flytter bare problemet.
+
 ## Proces
 
 ### 1. Læs først
@@ -157,7 +186,7 @@ dækker, gør det ikke.
 filer, hvilken gren du står på, og hvad default-branchen hedder. **Gæt ikke på
 `main`.**
 
-Så gør du to ting, i samme besked:
+Så gør du to ting, i samme besked — og en tredje, hvis grenen er en udgivelse:
 
 **1. Skriv linjerne.** Præcis dem der skal køres, i én blok. Mennesket står på
 den rigtige sti — ingen `cd`.
@@ -197,6 +226,16 @@ ikke et ja til noget fremtidigt — du siger tak, og du spørger alligevel næst
 gang. Et push er det skridt der giver arbejdet fra sig: andre trækker det, CI
 kører på det, images bygges af det. Derfor koster det et ja hver gang, og
 derfor er der ikke en indstilling der slår spørgsmålet fra.
+
+**3. Er det en udgivelse, så tilbyd nummeret.** Efter merge-spørgsmålet, og
+kun når begge dele holder: projektet har et versionsnummer i forvejen, og
+ændringen er en reel udgivelse eller en rettelse til noget udgivet. Oprydning,
+tests og dokumentation udløser ingenting.
+
+Læs den nuværende version i filen eller i tags — **gæt aldrig på den.** Skriv
+hvad den næste bliver og hvorfor netop det led, vis linjerne, og spørg. Reglerne
+for `x.y.z`, for betaer og for rækkefølgen med `CHANGELOG.md` står i kontraktens
+`## Udgivelser og versionsnumre`. Ja'et er en engangsting, som ved push.
 
 Udrulning er stadig ikke din. Den gør mennesket.
 

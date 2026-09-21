@@ -206,7 +206,7 @@ En udgivelse er en bevidst handling, ikke noget der følger med hver commit. Sam
 6. Kør `node tools/validate.mjs`.
 7. Commit og push.
 
-Ingen rolle må bumpe versionen — det står i kontrakten. Det gælder også en model der redigerer rollerne.
+Ingen rolle må bumpe versionen her. Det står i `CLAUDE.md` og gælder også en model der redigerer rollerne. Kontraktens regel om at `architect` tilbyder en udgivelse er skrevet til brugerprojekter; dette repo udgives i hånden.
 
 Udviklerne får den ved næste opdateringstjek, eller med `/plugin marketplace update hjk-agents`.
 

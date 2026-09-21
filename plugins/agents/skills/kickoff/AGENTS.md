@@ -267,6 +267,8 @@ Uskrevet:     intet
 
 **`Uskrevet` skal stå på `intet`.** Står der noget andet, er tråden ikke klar til at lukke. Skriv det ned først.
 
+**Lukningen er noget du foreslår, ikke noget du gør i stilhed.** Fyrer et af signalerne, siger du det i chatten med det samme: hvad du så, og at arbejdet fortsætter i en frisk tråd. Mennesket bestemmer. Siges der nej, spørger du ikke igen før et nyt signal.
+
 ## Agentretur
 
 **Gælder alle agenter.** Du afslutter med en kort retur til `architect`s tråd — ikke dit dokument.
@@ -403,10 +405,58 @@ Det forudsætter at repoet er privat. **Et repo der indeholder `docs/securities/
 - **Du pusher ikke.** Push og merge er menneskets skridt, som udrulning er det. Commit'en er checkpointet; pushet er en beslutning om at give arbejdet fra sig.
   `status` rapporterer hvor mange commits der ikke er pushet, så afstanden er synlig uden at være din opgave.
   **Én undtagelse:** `architect` må køre merge og push, når den har vist de præcise linjer og fået et ja på netop dem, for en navngiven gren. Ja'et er opbrugt når blokken er kørt — næste gren kræver et nyt spørgsmål, og der findes ikke et ja der gælder fremover. Alle andre roller pusher aldrig.
-- **Du ændrer aldrig et versionsnummer.** Ikke i en pakkefil, ikke i et manifest, og du opretter eller flytter ikke et tag. En udgivelse er en beslutning — den træffes af mennesket, ikke som et trin i en opgave. Sig til når noget er klar; bump det ikke selv.
+- **Du ændrer aldrig et versionsnummer uopfordret.** Ikke i en pakkefil, ikke i et manifest, og du opretter eller flytter ikke et tag af dig selv. En udgivelse er menneskets beslutning. `architect` **foreslår** den ved trin 8 og kører den efter et ja; alle andre roller lader nummeret være. Se `## Udgivelser og versionsnumre`.
 - Ingen force-push af grene. Ingen omskrivning af historik der er pushet.
 - **Undtagelse, og kun når mennesket beder om det:** flytbare major-tags (`v1`, `v2`) på delte workflow-repoer flyttes med `git tag -f` og `git push -f origin v1`. Immutable tags (`v1.0.3`) flyttes aldrig.
 - Er en hemmelighed havnet i en commit: **stop, sig det, og få nøglen roteret.** At slette filen i næste commit løser ingenting.
+
+## Udgivelser og versionsnumre
+
+En udgivelse er en beslutning, ikke et trin i en opgave. Men den skal **tilbydes** —
+ellers bliver den glemt, og så kan ingen se hvad der kører hvor.
+
+**Kun `architect` foreslår, og kun ved trin 8, når grenen lukkes.** De øvrige
+roller rører aldrig et versionsnummer og nævner det ikke.
+
+**Hvornår spørgsmålet stilles.** Ikke ved hvert push. To ting skal holde:
+
+1. **Projektet har et versionsnummer** — i en pakkefil, et manifest, en
+   `VERSION`-fil eller sine tags. Har det ikke, er det et emne til mennesket, og
+   ikke noget du indfører på eget initiativ.
+2. **Ændringen er en reel udgivelse eller en rettelse til noget udgivet** — nogen
+   uden for grenen vil mærke den. Oprydning, tests, dokumentation og arbejde der
+   ikke er taget i brug endnu, udløser ingenting.
+
+**Nummeret følger `x.y.z`:**
+
+| Led | Bumpes når | Eksempel |
+|---|---|---|
+| `z` — rettelse | En fejl er rettet, adfærden er som lovet | `1.4.2` → `1.4.3` |
+| `y` — funktion | Noget nyt, og det gamle virker uændret | `1.4.3` → `1.5.0` |
+| `x` — brud | Noget der virkede, virker ikke længere på samme måde | `1.5.0` → `2.0.0` |
+
+Bumpes `y`, nulstilles `z`. Bumpes `x`, nulstilles begge.
+
+**Før første rigtige udgivelse står projektet på `0.y.z`**, hvor `y` bæres som
+brud-leddet. Skal noget prøves af før det er færdigt, er det en
+forhåndsudgivelse: `1.5.0-beta.1`, `-beta.2`, tællende for sig. Betegnelsen
+falder bort når udgivelsen bliver rigtig — `1.5.0-beta.3` efterfølges af
+`1.5.0`, ikke af `1.5.1`.
+
+**Sådan foreslås det.** Læs den nuværende version i filen eller i tags — gæt
+aldrig på den. Skriv hvad den næste bliver og **hvorfor netop det led**, vis
+linjerne der ændrer nummeret og sætter tagget, og spørg. Ét spørgsmål.
+
+- **Ja** → du skriver nummeret og kører linjerne. Ja'et er opbrugt bagefter,
+  som ved push.
+- **Nej** → du rører ingenting. Linjerne står til mennesket.
+
+Har projektet en `CHANGELOG.md`, skrives posten **før** nummeret bumpes; det er
+dér det viser sig om ændringerne hører sammen. Har projektet ingen, er det ikke
+din opgave at indføre en.
+
+**Du bumper aldrig uopfordret**, og et ja til én udgivelse er ikke et ja til den
+næste.
 
 ## Projektspecifikke afvigelser
 
