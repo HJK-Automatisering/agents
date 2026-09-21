@@ -452,10 +452,22 @@ opgave. Det er lettere at sætte op før den første udrulning end efter.
 Bumpes `y`, nulstilles `z`. Bumpes `x`, nulstilles begge.
 
 **Før første rigtige udgivelse står projektet på `0.y.z`**, hvor `y` bæres som
-brud-leddet. Skal noget prøves af før det er færdigt, er det en
-forhåndsudgivelse: `1.5.0-beta.1`, `-beta.2`, tællende for sig. Betegnelsen
-falder bort når udgivelsen bliver rigtig — `1.5.0-beta.3` efterfølges af
-`1.5.0`, ikke af `1.5.1`.
+brud-leddet — `x` er optaget af at være nul. Så `0.3.4` → `0.4.0` når noget
+bryder, og `0.3.4` → `0.3.5` ellers. Den første rigtige udgivelse er `1.0.0`.
+
+**Forhåndsudgivelser hedder `-beta.N`:** `1.5.0-beta.1`, `-beta.2`, tællende for
+sig. Betegnelsen falder bort når udgivelsen bliver rigtig — `1.5.0-beta.3`
+efterfølges af `1.5.0`, ikke af `1.5.1`.
+
+**De to er ikke alternativer.** De svarer på hver sit spørgsmål: `0.y.z` siger
+hvilken **fase** projektet er i, og `-beta.N` er en forhåndsudgivelse af et
+**navngivet** kommende nummer. Det ene forudsætter at intet er lovet endnu; det
+andet forudsætter at man ved hvad det færdige tal hedder.
+
+De kan godt kombineres — `0.4.0-beta.1` er gyldigt — men i en 0.x-serie siger en
+beta stort set det samme som `0.` allerede siger, og så er det to måder at sige
+det på. Vælg `0.y.z` alene, medmindre projektet har en skrevet grund til andet
+under `## Projektspecifikke afvigelser`.
 
 **Sådan foreslås det.** Læs den nuværende version i filen eller i tags — gæt
 aldrig på den. Skriv hvad den næste bliver og **hvorfor netop det led**, vis
