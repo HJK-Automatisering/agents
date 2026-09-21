@@ -418,14 +418,28 @@ ellers bliver den glemt, og så kan ingen se hvad der kører hvor.
 **Kun `architect` foreslår, og kun ved trin 8, når grenen lukkes.** De øvrige
 roller rører aldrig et versionsnummer og nævner det ikke.
 
-**Hvornår spørgsmålet stilles.** Ikke ved hvert push. To ting skal holde:
+**Det er produktionskoden der kalder på et nummer.** Koden der kører — eller
+skal køre — i test eller i drift. Er den ændret sådan at nogen uden for grenen
+mærker det, er det en udgivelse.
 
-1. **Projektet har et versionsnummer** — i en pakkefil, et manifest, en
-   `VERSION`-fil eller sine tags. Har det ikke, er det et emne til mennesket, og
-   ikke noget du indfører på eget initiativ.
-2. **Ændringen er en reel udgivelse eller en rettelse til noget udgivet** — nogen
-   uden for grenen vil mærke den. Oprydning, tests, dokumentation og arbejde der
-   ikke er taget i brug endnu, udløser ingenting.
+| Kalder på et nummer | Gør ikke |
+|---|---|
+| Ny funktion i produktionskoden | Logfiler, logudskrifter, loglinjer |
+| En rettet fejl | Testkode, og tests der er kørt igennem |
+| Ændret adfærd, ændret kontrakt udadtil | Dokumentation og alt under `docs/` |
+| En afhængighed der flytter adfærden | Oprydning uden mærkbar adfærd |
+
+En omlægning uden mærkbar adfærd kalder ikke på et nummer af sig selv — den
+følger med den næste udgivelse. Og et grønt testrul er ikke en udgivelse; det
+er en forudsætning for en.
+
+**Findes der ikke et versionsnummer**, så **sig det** — når projektet nærmer sig
+test eller drift, og ikke før. Der skal være produktionskode der skal køre et
+sted, eller være tæt på det. Du indfører ikke nummereringen på eget initiativ,
+men du lader den heller ikke ligge: sig at den mangler, foreslå hvor nummeret
+skal bo — stakkens pakkefil eller et manifest, ellers en `VERSION`-fil og et
+git-tag — og at det starter på `0.1.0`. Så bliver det et emne på BOARD eller en
+opgave. Det er lettere at sætte op før den første udrulning end efter.
 
 **Nummeret følger `x.y.z`:**
 

@@ -212,7 +212,9 @@ Du har tre opgaver. Ikke flere.
 
 **3. Du siger ja til merge, push og udgivelse — og du ruller ud.** Er en gren færdig, giver `architect` dig de linjer der skal køres, og spørger om den skal køre dem. Siger du ja, kører den dem; siger du nej, står linjerne der til dig selv. **Ja'et gælder kun den ene gang** — næste gren bliver du spurgt igen. Udrulningen er alene din, fordi den tit rører produktionsdata. `status` fortæller dig hvor langt der er.
 
-Er grenen en **reel udgivelse** — eller en rettelse til noget der er udgivet — foreslår `architect` samtidig det nye versionsnummer efter `x.y.z`, med en begrundelse for netop det led, og betaer tæller for sig. Den bumper aldrig af sig selv, og et ja gælder den ene udgivelse. Har projektet slet ikke et versionsnummer, indfører den det ikke — det er et emne du tager op.
+Har grenen ændret **produktionskoden** — ny funktion, rettet fejl, ændret adfærd i det der kører i test eller drift — foreslår `architect` samtidig det nye versionsnummer efter `x.y.z`, med en begrundelse for netop det led, og betaer tæller for sig. Logudskrifter, testkode, grønne testrul og dokumentation udløser ingenting. Den bumper aldrig af sig selv, og et ja gælder den ene udgivelse.
+
+Har projektet slet ikke et versionsnummer, indfører den det ikke — men den **siger til** når test eller drift nærmer sig, foreslår hvor nummeret skal bo, og gør det til et emne. Det er lettere at sætte op før den første udrulning end efter.
 
 ## Lukning og retur
 

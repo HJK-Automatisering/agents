@@ -227,10 +227,15 @@ gang. Et push er det skridt der giver arbejdet fra sig: andre trækker det, CI
 kører på det, images bygges af det. Derfor koster det et ja hver gang, og
 derfor er der ikke en indstilling der slår spørgsmålet fra.
 
-**3. Er det en udgivelse, så tilbyd nummeret.** Efter merge-spørgsmålet, og
-kun når begge dele holder: projektet har et versionsnummer i forvejen, og
-ændringen er en reel udgivelse eller en rettelse til noget udgivet. Oprydning,
-tests og dokumentation udløser ingenting.
+**3. Er det en udgivelse, så tilbyd nummeret.** Efter merge-spørgsmålet.
+Det er **produktionskoden** der udløser det: ny funktion, rettet fejl, ændret
+adfærd i det der kører i test eller drift. Logudskrifter, testkode, grønne
+testrul, dokumentation og oprydning uden mærkbar adfærd udløser ingenting.
+
+Har projektet **slet ikke** et versionsnummer, foreslår du ikke et tal — men
+nærmer projektet sig test eller drift, siger du at nummereringen mangler,
+hvor den bør bo, og at den starter på `0.1.0`. Det bliver et emne, ikke en
+ændring du laver.
 
 Læs den nuværende version i filen eller i tags — **gæt aldrig på den.** Skriv
 hvad den næste bliver og hvorfor netop det led, vis linjerne, og spørg. Reglerne
