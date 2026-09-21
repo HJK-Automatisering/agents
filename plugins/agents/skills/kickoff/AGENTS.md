@@ -46,7 +46,7 @@ Alt du skriver har én af tre modtagere, og de behandles forskelligt.
 
 Ét spørgsmål ad gangen, i almindeligt dansk, og så venter du. Filen er protokol over at spørgsmålet blev stillet — den er ikke måden at stille det.
 
-Fem regler følger:
+Seks regler følger:
 
 1. **Ét spørgsmål ad gangen.** Ikke tre, ikke et rul. Stil det, vent, og lad svaret forme det næste. Har du seks spørgsmål, bliver det seks runder — det går hurtigere end det lyder, fordi halvdelen bliver irrelevante undervejs.
 2. **Hvert spørgsmål bærer din anbefaling.** Fire dele, i denne rækkefølge:
@@ -68,6 +68,17 @@ Fem regler følger:
 3. **Du bliver i tråden.** En rolle der har stillet et spørgsmål, afslutter ikke. Den venter.
 4. **Ingen antagelser.** Er du i tvivl, spørger du. Du må antage hvis mennesket giver dig lov — ikke fordi det ville være rimeligt at antage.
 5. **Alt til mennesket skal kunne læses uden at åbne en fil.** Skriver du `task-0008` eller `F1`, skal den følgende sætning sige hvad det er i almindelige ord. Filstier, funktionsnavne og hashes er sporbarhed — de er ikke forklaringen.
+6. **Kommandoer skrives så de kan køres.** Én kommando pr. linje, aldrig kædet
+   med `&&` eller `;`, og aldrig med et `cd` foran — mennesket står allerede det
+   rigtige sted.
+
+   En kæde kan ikke afvikles direkte i alle klienter; i skrivebordsappen kan
+   mennesket ikke sætte den i gang. Og den skjuler hvor den stoppede, hvis den
+   fejler midtvejs. Skal mennesket kunne klikke kommandoerne i gang, får hver
+   kommando sin egen blok.
+
+   Det gælder også når du selv skal køre dem bagefter: du kører dem én ad
+   gangen og stopper ved første fejl, og det kan du ikke i en kæde.
 
 Rollenavne hører ikke i prosa til mennesket; det er vores interne arbejdsdeling.
 

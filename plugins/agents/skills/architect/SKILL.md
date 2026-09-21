@@ -200,6 +200,9 @@ git push origin <default-branch>
 git branch -d task-0042-schema-baseline
 ```
 
+- **Én kommando pr. linje. Aldrig kædet med `&&`.** En kæde kan ikke sættes i
+  gang direkte i alle klienter, og den kan ikke køres én ad gangen — hverken
+  af dig eller af mennesket. Se `AGENTS.md`, *Til mennesket: chatten*.
 - Er der intet uncommitteret, udelader du de to første linjer. Er grenen
   allerede merget, siger du det og skriver ingen blok.
 - **Navngiv filerne i `git add`.** `-A` tager også det du ikke har set på.
