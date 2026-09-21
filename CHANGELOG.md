@@ -17,6 +17,71 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.0.0-beta.20
+
+Kontrakt-version 15 → 16. **Kør `/agents:update` i hvert projekt.**
+
+### `architect` anbefaler et trådskifte når tråden er mudret
+
+Signalerne fandtes allerede — emneskift, komprimering, antal agentreturer — men
+de stod i kontrakten som en definition af *hvornår en tråd er klar til at lukke*.
+Ikke som noget der skulle siges. Derfor blev det aldrig sagt, og tråde kørte
+videre længe efter at de var blevet mudrede.
+
+`architect` har nu et stående afsnit med fire ting den faktisk kan se: emnet er
+skiftet til noget urelateret, tråden er blevet komprimeret, mange agenter er
+vendt tilbage, eller den henter det samme fra filerne igen fordi den ikke længere
+stoler på tråden. Ser den et af dem, siger den det i chatten med det samme — én
+linje om hvad den så, og forslaget om en frisk tråd.
+
+Tre forbehold gør reglen brugbar frem for irriterende:
+
+- **Den siger at der ikke går noget tabt.** Alt står i filerne, `Uskrevet` skal
+  stå på `intet` før lukning, og `Næste` er det første den nye tråd tager fat i.
+  Det er dét mennesket er bange for, så det hører i selve forslaget.
+- **Aldrig midt i et skridt.** Ikke under et interview, ikke mens en agent er
+  ude, ikke mellem en retur og dens triage.
+- **Den spørger én gang.** Et nej står, indtil et nyt signal fyrer.
+
+### Udgivelser bliver tilbudt, og versioner holdes efter `x.y.z`
+
+Kontrakten sagde `Du ændrer aldrig et versionsnummer`. Det er blevet til: du
+ændrer det aldrig **uopfordret** — og du skal tilbyde det. Et forbud alene
+betyder at udgivelser bliver glemt, og så kan ingen se hvad der kører hvor.
+
+`architect` foreslår ved trin 8, sammen med merge-linjerne. **Det er
+produktionskoden der kalder på et nummer** — det der kører, eller skal køre, i
+test eller drift:
+
+| Kalder på et nummer | Gør ikke |
+|---|---|
+| Ny funktion i produktionskoden | Logfiler, logudskrifter, loglinjer |
+| En rettet fejl | Testkode, og tests der er kørt igennem |
+| Ændret adfærd, ændret kontrakt udadtil | Dokumentation og alt under `docs/` |
+| En afhængighed der flytter adfærden | Oprydning uden mærkbar adfærd |
+
+Et grønt testrul er ikke en udgivelse; det er en forudsætning for en.
+
+Nummeret følger `x.y.z`: `z` for en rettelse, `y` for noget nyt der ikke bryder,
+`x` for noget der bryder. De lavere led nulstilles. Før første rigtige udgivelse
+står projektet på `0.y.z`. Forhåndsudgivelser tælles for sig — `1.5.0-beta.1`,
+`-beta.2` — og betegnelsen falder bort ved den endelige udgivelse, så
+`1.5.0-beta.3` efterfølges af `1.5.0` og ikke af `1.5.1`.
+
+`architect` **læser** den nuværende version i filen eller i tags frem for at
+gætte, skriver hvad den næste bliver og hvorfor netop det led, viser linjerne og
+spørger. Ja'et er en engangsting, som ved push. Har projektet en `CHANGELOG.md`,
+skrives posten før nummeret bumpes.
+
+**Mangler projektet et versionsnummer**, foreslår den ikke et tal — men nærmer
+projektet sig test eller drift, siger den at nummereringen mangler, hvor den bør
+bo, og at den starter på `0.1.0`. Det bliver et emne, ikke en ændring rollen
+laver. Det er lettere at sætte op før den første udrulning end efter.
+
+De øvrige roller rører fortsat aldrig et versionsnummer og nævner det ikke.
+
+---
+
 ## 1.0.0-beta.19
 
 Kontrakt-version 14 → 15. **Kør `/agents:update` i hvert projekt.**
