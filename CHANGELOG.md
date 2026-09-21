@@ -17,6 +17,38 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.0.0-beta.21
+
+Kontrakt-version 16 → 17. **Kør `/agents:update` i hvert projekt.**
+
+### `0.y.z` og `-beta.N` svarer på hver sit spørgsmål
+
+Afsnittet om versionsnumre pakkede de to mekanismer i samme sætning. Så kan de
+læses som alternativer man vælger imellem — og det blev de: et projekt havde
+skrevet en afvigelse om at `-beta.N` og `0.x` følges ad, uden at nogen havde
+taget stilling til om `y` bærer brud i 0.x-serien.
+
+`y` bliver ved med at bære brud — `x` er optaget af at være nul — og det står nu
+med tal: `0.3.4` → `0.4.0` når noget bryder, `0.3.4` → `0.3.5` ellers. Første
+rigtige udgivelse er `1.0.0`.
+
+De to mekanismer er skilt ad: **`0.y.z` siger hvilken fase projektet er i**, og
+**`-beta.N` er en forhåndsudgivelse af et navngivet kommende nummer.** Det ene
+forudsætter at intet er lovet endnu; det andet forudsætter at man ved hvad det
+færdige tal hedder.
+
+De kan kombineres — `0.4.0-beta.1` er gyldigt — men i en 0.x-serie siger en beta
+stort set det samme som `0.` allerede siger. Udgangspunktet er derfor `0.y.z`
+alene, medmindre projektet har en **skrevet grund** under
+`## Projektspecifikke afvigelser`.
+
+Det gør ikke en eksisterende afvigelse ugyldig. Den står det rigtige sted, og
+kontrakten anerkender nu netop den situation — men den kræver en begrundelse.
+Har et projekt afvigelsen uden en, er det `architect` der skal stille spørgsmålet
+og skrive svaret i beslutningsloggen.
+
+---
+
 ## 1.0.0-beta.20
 
 Kontrakt-version 15 → 16. **Kør `/agents:update` i hvert projekt.**
