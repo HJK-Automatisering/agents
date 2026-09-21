@@ -72,10 +72,9 @@ Seks regler følger:
    med `&&` eller `;`, og aldrig med et `cd` foran — mennesket står allerede det
    rigtige sted.
 
-   En kæde kan ikke afvikles direkte i alle klienter; i skrivebordsappen kan
-   mennesket ikke sætte den i gang. Og den skjuler hvor den stoppede, hvis den
-   fejler midtvejs. Skal mennesket kunne klikke kommandoerne i gang, får hver
-   kommando sin egen blok.
+   Flere kommandoer må gerne stå i samme blok, én pr. linje. Det er kæden der
+   er problemet, ikke blokken: den kan ikke afvikles direkte i alle klienter,
+   og den skjuler hvor den stoppede hvis den fejler midtvejs.
 
    Det gælder også når du selv skal køre dem bagefter: du kører dem én ad
    gangen og stopper ved første fejl, og det kan du ikke i en kæde.
