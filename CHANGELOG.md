@@ -17,6 +17,33 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.0.0-beta.22
+
+Kontrakt-version 17 → 18. **Kør `/agents:update` i hvert projekt.**
+
+### Kommandoer til mennesket kædes ikke med `&&`
+
+En tråd gav merge- og push-linjerne som én kædet kommando:
+`git checkout main && git merge --no-ff <gren> -m "…" && git push origin main`.
+Den kan ikke sættes i gang direkte i skrivebordsappen, så mennesket sad med en
+linje der skulle klippes fra hinanden i hånden.
+
+Kæden stod ingen steder i skabelonerne — trin 8 skriver allerede én kommando pr.
+linje — men intet forbød den, og intet sagde hvorfor det betyder noget.
+
+Sjette regel under `### Til mennesket: chatten`: **én kommando pr. linje, aldrig
+kædet med `&&` eller `;`, og aldrig et `cd` foran.** Flere kommandoer må gerne
+stå i samme blok, én pr. linje; det er kæden der er problemet, ikke blokken.
+
+To grunde, og den anden holder også hvis klienterne ændrer sig:
+
+- En kæde kan ikke afvikles direkte i alle klienter.
+- Den skjuler hvor den stoppede, hvis den fejler midtvejs — og den modsiger
+  `architect`s egen regel om at køre linjerne **én ad gangen** og stoppe ved
+  første fejl. Det kan man ikke i en kæde. Henvisningen står nu også i trin 8.
+
+---
+
 ## 1.0.0-beta.21
 
 Kontrakt-version 16 → 17. **Kør `/agents:update` i hvert projekt.**
