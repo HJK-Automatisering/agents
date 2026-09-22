@@ -168,6 +168,7 @@ for (const navn of skillNavne) {
 const WF = join(SKILLS, 'workflow');
 const FELT_FORMAAL = 'form' + String.fromCharCode(229) + 'l';
 const FELT_JANAAR = 'foresl' + String.fromCharCode(229) + '-ja-n' + String.fromCharCode(229) + 'r';
+const workflowDokumenter = [];
 if (existsSync(WF)) {
   for (const sti of mdFiler(WF)) {
     if (basename(sti) === 'SKILL.md') continue;
@@ -176,17 +177,39 @@ if (existsSync(WF)) {
       sig(fejl, relativ(sti), 'workflow-dokument uden frontmatter');
       continue;
     }
-    for (const n of ['navn', FELT_FORMAAL, FELT_JANAAR]) {
+    for (const n of ['navn', FELT_FORMAAL, FELT_JANAAR, 'skabelon-version']) {
       if (!felt(fm, n)) sig(fejl, relativ(sti), 'mangler feltet ' + n);
     }
+    const version = felt(fm, 'skabelon-version');
+    if (version && !/^[0-9]+$/.test(version)) {
+      sig(fejl, relativ(sti), 'skabelon-version: ' + version + ' er ikke et heltal');
+    }
+
+    // Filerne dokumentet daekker: det selv, dem der kopieres ind i et projekt,
+    // og de assets der baerer dokumentets navn. Standalone-udgaven staar ikke i
+    // filer:, fordi den ikke kopieres automatisk - men den hoerer til samme
+    // skabelon og maa ikke drive fra den.
+    const assets = new Set();
     for (const linje of fm.split('\n')) {
       const t = linje.trim();
       if (!t.startsWith('- fra:')) continue;
       const fra = t.slice('- fra:'.length).trim();
       if (!existsSync(join(WF, fra))) {
         sig(fejl, relativ(sti), 'filer: peger paa ' + fra + ', som ikke findes');
+        continue;
+      }
+      assets.add(join(WF, fra));
+    }
+    const praefiks = basename(sti, '.md');
+    const assetMappe = join(WF, 'assets');
+    if (existsSync(assetMappe)) {
+      for (const navn of readdirSync(assetMappe)) {
+        if (navn.startsWith(praefiks + '.') || navn.startsWith(praefiks + '-')) {
+          assets.add(join(assetMappe, navn));
+        }
       }
     }
+    workflowDokumenter.push({ sti, version, assets: [...assets] });
   }
 }
 
@@ -263,15 +286,26 @@ if (!existsSync(hook)) {
 }
 
 // ------------------ 11. ADVARSEL: kontrakten aendret uden bump af versionen
-const KONTRAKT = 'plugins/agents/skills/kickoff/AGENTS.md';
 const base = process.env.BASE_REF || 'origin/main';
-try {
-  const foer = execFileSync('git', ['show', base + ':' + KONTRAKT], {
-    cwd: ROD, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
-  });
+
+// Filens indhold paa sammenligningsgrenen. null naar der intet er at
+// sammenligne med - ingen base, eller filen er ny. Saa springes tjekket over.
+function fraBase(relativSti) {
+  try {
+    return execFileSync('git', ['show', base + ':' + relativSti], {
+      cwd: ROD, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+    });
+  } catch {
+    return null;
+  }
+}
+
+const KONTRAKT = 'plugins/agents/skills/kickoff/AGENTS.md';
+const kontraktFoer = fraBase(KONTRAKT);
+if (kontraktFoer !== null) {
   const nu = laes(join(ROD, KONTRAKT));
-  if (foer !== nu) {
-    const vFoer = felt(frontmatter(foer), 'kontrakt-version');
+  if (kontraktFoer !== nu) {
+    const vFoer = felt(frontmatter(kontraktFoer), 'kontrakt-version');
     const vNu = felt(frontmatter(nu), 'kontrakt-version');
     if (vFoer === vNu) {
       sig(advarsler, KONTRAKT,
@@ -280,8 +314,32 @@ try {
         'deres kopi er foraeldet. Er det kun en omformulering, er alt som det skal vaere.');
     }
   }
-} catch {
-  // Ingen base at sammenligne med. Saa springes tjekket over.
+}
+
+// ----------- 12. ADVARSEL: en workflow-skabelon aendret uden bump af stemplet
+// Et projekt opdager kun en aendring gennem skabelon-version. Flytter filerne
+// sig uden at stemplet foelger med, staar projekterne med en kopi de tror er
+// den nuvaerende - og et workflow der udloeses af noget andet end de tror.
+for (const doku of workflowDokumenter) {
+  const r = relativ(doku.sti);
+  const foer = fraBase(r);
+  if (foer === null) continue;
+  const vFoer = felt(frontmatter(foer), 'skabelon-version') || '1';
+  if (vFoer !== doku.version) continue;
+
+  const aendrede = [];
+  if (foer !== laes(doku.sti)) aendrede.push(r);
+  for (const asset of doku.assets) {
+    const assetFoer = fraBase(relativ(asset));
+    if (assetFoer === null || assetFoer !== laes(asset)) aendrede.push(relativ(asset));
+  }
+  if (aendrede.length) {
+    sig(advarsler, r,
+      'skabelonen er aendret siden ' + base + ' (' + aendrede.join(', ') + '), men ' +
+      'skabelon-version staar stadig paa ' + doku.version + '. Aendrer den hvad workflowet ' +
+      'goer, skal den bumpes - ellers faar projekterne aldrig besked om at deres kopi er ' +
+      'foraeldet. Er det kun en omformulering, er alt som det skal vaere.');
+  }
 }
 
 // ------------------------------------------------------------------ Rapport
