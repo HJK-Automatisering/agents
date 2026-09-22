@@ -88,5 +88,57 @@ intet
 developer, som aldrig retter i definitionen ovenfor.>
 
 ### Hvad er lavet
+
+- `.github/workflows/validate.yaml`: nyt job `tag` efter kontroljobbet. Det
+  hænger på det med `needs: validate`, så et rødt kontroljob aldrig fører til et
+  mærke, og det kører kun når `github.event_name == 'push'` — push-triggeren er
+  i forvejen begrænset til `main`, så pull requests og `workflow_dispatch`
+  falder fra. `contents: write` står på jobbet; workflowets egen rettighed er
+  urørt på `contents: read`.
+- Jobbet læser `version` fra `plugins/agents/.claude-plugin/plugin.json` med
+  `node -p` — samme kilde og samme værktøj som resten af repoet — og sætter
+  `v<version>` på det commit der blev pushet. Findes mærket allerede på origin,
+  skriver jobbet det i loggen og slutter grønt uden at røre noget.
+- `PLUGIN.md`, `## Udgiv en rolleændring`: afsnit efter de syv trin om at mærket
+  kommer af sig selv efter push, at det ikke sættes i hånden, at intet sker når
+  versionen er uændret eller kontrollen fejler, og at der ikke oprettes en
+  udgivelsesside.
+
+Holdt op mod `Færdig når`, punkt for punkt:
+
+| Punkt | Hvor |
+|---|---|
+| Mærke i historikken på den commit versionen blev ændret i | `tag`-jobbet sætter `v<version>` på `GITHUB_SHA` for pushet |
+| Sættes af sig selv | Jobbet kører på hvert push til `main`; intet manuelt trin |
+| Uændret version efterlader ingenting | `git ls-remote --exit-code --tags` finder mærket og jobbet stopper med `exit 0` |
+| Røde kontroller efterlader ingenting | `needs: validate` |
+| De fjorten tidligere udgivelser urørte | Ingen mærkning bagud, intet rørt i historikken |
+| Ingen udgivelsesside | Kun `git tag` og `git push`; intet kald til GitHubs release-API |
+| Proceduren siger hvad der nu sker af sig selv | Afsnittet i `PLUGIN.md` |
+| Ingen versionsnumre ændret | `git diff` rører kun de to filer; begge manifester står stadig på samme nummer |
+
+Efterprøvet her: YAML'en parser og har nu de to jobs `validate` og `tag` med de
+rettigheder der er beskrevet; `bash -n` på jobbets skript; skriptet kørt mod et
+lokalt testrepo med et kunstigt manifest, hvor første kørsel satte mærket og
+anden kørsel meldte at det fandtes og sluttede grønt; `node tools/validate.mjs`
+er grøn.
+
 ### Hvad er ikke lavet, og hvorfor
+
+Selve jobbet kan ikke afprøves herfra — GitHub Actions kører ikke lokalt, og
+jeg pusher ikke. Logikken er afprøvet som beskrevet ovenfor, men at jobbet
+faktisk udløses, arver rettigheden og får lov at skrive et tag, viser sig først
+ved det første rigtige push til `main` med et nyt versionsnummer. Er
+`contents: write` ikke nok i repoets indstillinger (fx hvis workflow-tokenet er
+sat til read-only på organisationsniveau), fejler jobbet der.
+
+Jobbet bruger den Node der ligger på løberen frem for et `setup-node`-trin, som
+kontroljobbet har. Det er kun et JSON-felt der læses, og det gør trin færre; vil
+`architect` have samme fastlåste version begge steder, er det fire linjer mere.
+
 ### Uklart
+
+Opgaven siger hvad mærket hedder, men ikke om det skal være annoteret. Jeg satte
+et letvægtstag — det kræver ingen identitet på løberen og er nok til at pege på
+et commit. Skal mærket bære dato, udgiver og en tekst, er det et annoteret tag
+og en lille ændring i samme trin.
