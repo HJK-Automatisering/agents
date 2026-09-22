@@ -10,6 +10,7 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-09-22 | task-0005 | `tag`-jobbets første rigtige kørsel holdt | Ved pushet af merge-commit'en meldte det at versionen stod uændret, og satte intet mærke. Grønt, og remote har fortsat ingen tags. At jobbet kan skrive et mærke, viser sig først ved næste bump | architect |
 | 2026-09-22 | task-0005 | Opgaven er bygget og sat afsluttet | Alle otte kriterier holder. Mærket sættes af CI når versionen har ændret sig, et uændret push og et rødt kontroljob efterlader ingenting, de fjorten tidligere udgivelser er urørte, og intet versionsnummer er ændret. Selve jobbet viser sig først ved første rigtige udgivelse | architect |
 | 2026-09-22 | task-0005 | Fund under vurderingen: jobbet udløstes af at mærket manglede, ikke af at versionen havde ændret sig | Remote har ingen tags, så første push efter merge ville have sat `v1.0.0-beta.22` på merge-commit'en. Rettet på grenen til en sammenligning mod første forælder, før opgaven blev lukket | architect |
 | 2026-09-22 | task-0005 | Mærket er et letvægtstag, ikke annoteret | Intet her bruger `git describe`, og en besked på mærket ville være en kopi af posten i `CHANGELOG.md` — samme grund som til at fravælge en udgivelsesside. Letvægt kræver desuden ingen identitet på løberen | architect |
