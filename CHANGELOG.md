@@ -17,6 +17,76 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.0.0-beta.23
+
+Kontrakt-version 18 → 19, og workflow-skabelonen `docker-publish` 1 → 2.
+**Kør `/agents:update` i hvert projekt** — den bringer nu også
+workflow-kopierne ajour, ikke kun kontrakten.
+
+### `docker-publish` bygger kun på versionstag
+
+Workflowet byggede ved hvert push til `main`. Et commit i en markdown-fil
+kostede en ny digest i GHCR, en post i den offentlige Rekor-log og et
+`:main`-tag der flyttede sig uden at noget var ændret.
+
+Nu bygger det kun ved push af et semver-tag (`v1.2.3`), ved pull requests — der
+bygger men ikke pusher — og ved manuel kørsel. **Uden et tag bygges der aldrig,
+og ingen fejl siger det.** Sæt tagget når udgivelsen er besluttet:
+
+```
+git tag v1.2.3
+git push origin v1.2.3
+```
+
+`:main` skrives kun ved manuel kørsel fra `main` og kommer ikke af sig selv
+længere. Værter der trækker `:main`, skal flyttes til `:latest`.
+
+### Workflow-kopier bærer et stempel, og `update` synkroniserer dem
+
+Kopien i `.github/workflows/` blev lagt ind dengang workflowet blev valgt, og
+fulgte aldrig med siden. Trigger-ændringen ovenfor ville altså aldrig nå ud af
+sig selv.
+
+Workflow-dokumentet i `docs/workflows/` har nu `skabelon-version` i sin
+frontmatter, som kontrakten har `kontrakt-version`. Er plugin'ets nyere, siger
+hooken det ved sessionsstart, og `/agents:update` skriver både workflow-filen
+og dokumentet. Projektets egen `with:`-blok bevares ordret; er der rettet
+andre steder i filen, stopper kaldet og viser det.
+
+### Hooken opdager en workflow-kopi uden sit dokument
+
+Uden dokumentet er der intet stempel, og versionstjekket tier — en håndlagt
+eller fritstående kopi kunne stå forældet i årevis uden at nogen fik det at
+vide. Hooken kender nu vores kopier på henvisningen til plugin'et i filens
+hoved, uanset hvad filen hedder, og siger til når dokumentet mangler.
+
+`update` lægger det på plads: en kopi uden dokument er en **ukendt** udgave,
+ikke en gammel, så der skrives uden at måle på stemplet — og stoppet ved
+rettelser i filen gælder stadig.
+
+### `update` ruller aldrig en kopi tilbage
+
+Er projektets kopi *nyere* end plugin'ets — typisk fordi klienten kører en
+ældre plugin-udgave — rører `update` den ikke. Reglen dækkede kun "ens" og
+"bagud"; nu står den for alle tre udfald, og for kontrakten og hvert workflow
+hver for sig.
+
+### `update` opregner det en ændret trigger gjorde forkert
+
+Udløses et workflow af noget andet end før, er det det vigtigste i kaldets
+rapport. Bagefter opregner det de steder i projektet der stadig beskriver det
+gamle vilkår — `CLAUDE.md`, `README.md`, filerne under `docs/` — ét sted pr.
+linje. Det retter ingenting; det siger hvor og hvad.
+
+### Udgivelser af selve plugin'et mærkes af CI
+
+Fra og med denne udgivelse sætter dette repos CI mærket `v<version>` på
+merge-commit'en, når manifestversionen har ændret sig og kontrollerne er
+grønne. Det manuelle trin blev glemt ved alle fjorten tidligere udgivelser;
+de mærkes ikke bagud.
+
+---
+
 ## 1.0.0-beta.22
 
 Kontrakt-version 17 → 18. **Kør `/agents:update` i hvert projekt.**
