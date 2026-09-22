@@ -21,7 +21,7 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
-| task-0001 | <eksempel — slet linjen> | planlagt | interview |
+| task-0001 | Workflow-skabelon: tag-trigger og synkronisering | planlagt | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -30,6 +30,9 @@ eller nummeret på den rapport opgaven kom af.>
 
 | Emne |
 |---|
+| Udgivelser tagges ikke i git; nummeret står kun i commit-beskeden |
+| Hookens navn dækker ikke dens tre ansvar |
+| Runtime-version står ikke i CLAUDE.md |
 
 <Den grove liste: hvad architect kan se der skal laves. **Ingen numre.**
 Et emne får først et nummer når interviewet har gjort det udførbart —
