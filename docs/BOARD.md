@@ -21,7 +21,9 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
-| task-0002 | PLUGIN.md kender kun kontraktens stempel | planlagt | interview |
+| task-0002 | Vedligeholdelsesdokumentet kender kun kontraktens stempel, og afprøvningsvejen er forkert | planlagt | interview |
+| task-0003 | Opdateringskaldet har ingen regel for en kilde der er ældre end projektets kopi | planlagt | interview |
+| task-0004 | Opdateringskaldet opregner ikke de steder der stadig beskriver det gamle vilkår | planlagt | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -33,7 +35,7 @@ eller nummeret på den rapport opgaven kom af.>
 | Udgivelser tagges ikke i git; nummeret står kun i commit-beskeden |
 | Hookens navn dækker ikke dens fire ansvar |
 | Runtime-version står ikke i CLAUDE.md |
-| Workflow-synkroniseringen afprøves i hånden i et containerprojekt før udgivelse |
+| Fritstående workflow-kopier uden dokument får aldrig besked om at de er bagud |
 
 <Den grove liste: hvad architect kan se der skal laves. **Ingen numre.**
 Et emne får først et nummer når interviewet har gjort det udførbart —
