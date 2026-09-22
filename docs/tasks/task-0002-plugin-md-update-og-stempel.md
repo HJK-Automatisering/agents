@@ -71,5 +71,39 @@ task-0001
 ## Developers noter
 
 ### Hvad er lavet
+
+- `PLUGIN.md`: træets linje om `update/` siger nu "opdaterer projektets kopier:
+  kontrakt og workflows" — dækker begge slags kopier (punkt 1).
+- `PLUGIN.md`, `## Kontrakten driver`: to afsnit tilføjet om workflow-kopierne —
+  stemplet `skabelon-version` i workflow-dokumentets frontmatter, at hooken
+  sammenligner det pr. fil, og hvad der sker hvis bumpet glemmes. Reglen for
+  hvornår der bumpes, og validatorens advarsel, er henvist til `CLAUDE.md`
+  frem for gentaget (punkt 2).
+- `PLUGIN.md`, `## Prøv af før udgivelsen`: `claude --plugin-dir` er taget ud af
+  kommandoblokken, og et nyt underafsnit `### Kør en uudgivet udgave i en
+  session` beskriver engangskopien uden for repoet med et andet `name` i
+  manifestet, de tre trin, det ændrede kaldnavn `/agents-proeve:architect` og at
+  kopien ikke er et arbejdstræ (punkt 3).
+- `PLUGIN.md`, samme afsnit: fejlbilledet står som eget afsnit — kaldet svarer
+  som det plejer, men efter den installerede udgaves tekst, uden fejl eller
+  advarsel (punkt 4). Den gamle slutlinje om marketplacet er bevaret, men
+  omskrevet til at pege på kopien i stedet for `--plugin-dir`.
+- `CLAUDE.md`: kommandolistens `--plugin-dir`-linje peger nu på kopien, og et
+  kort afsnit under blokken siger hvorfor og henviser til `PLUGIN.md` (punkt 3
+  og 4).
+- Kun de to filer er ændret ud over denne opgavefil. Intet versionsnummer er
+  rørt — hverken de to manifester, `kontrakt-version` eller `skabelon-version`
+  (punkt 5). `node tools/validate.mjs` kører OK.
+
 ### Hvad er ikke lavet, og hvorfor
+
+intet
+
 ### Uklart
+
+- Navnet `agents-proeve` på engangskopien er valgt af mig, fordi
+  fremgangsmåden ikke kan skrives uden et konkret navn. Er der et navn der
+  bruges i forvejen, er det ét søg-og-erstat i begge filer.
+- Overskriften `## Kontrakten driver` dækker nu også workflow-kopierne. Jeg har
+  ladet den stå, fordi opgaven kun nævner indholdet, og ingen anden fil henviser
+  til overskriften.
