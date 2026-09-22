@@ -33,6 +33,7 @@ eller nummeret på den rapport opgaven kom af.>
 | Udgivelser tagges ikke i git; nummeret står kun i commit-beskeden |
 | Hookens navn dækker ikke dens tre ansvar |
 | Runtime-version står ikke i CLAUDE.md |
+| Workflow-synkroniseringen afprøves i hånden i et containerprojekt før udgivelse |
 
 <Den grove liste: hvad architect kan se der skal laves. **Ingen numre.**
 Et emne får først et nummer når interviewet har gjort det udførbart —
