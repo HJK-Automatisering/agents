@@ -21,7 +21,7 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
-| task-0001 | Workflow-skabelon: tag-trigger og synkronisering | i-gang | interview |
+| task-0002 | PLUGIN.md kender kun kontraktens stempel | planlagt | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -31,7 +31,7 @@ eller nummeret på den rapport opgaven kom af.>
 | Emne |
 |---|
 | Udgivelser tagges ikke i git; nummeret står kun i commit-beskeden |
-| Hookens navn dækker ikke dens tre ansvar |
+| Hookens navn dækker ikke dens fire ansvar |
 | Runtime-version står ikke i CLAUDE.md |
 | Workflow-synkroniseringen afprøves i hånden i et containerprojekt før udgivelse |
 
@@ -43,6 +43,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 
 | Nr. | Titel | Udfald |
 |---|---|---|
+| task-0001 | Workflow-skabelon: tag-trigger og synkronisering | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.

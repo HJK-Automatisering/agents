@@ -1,7 +1,7 @@
 ---
 nummer: task-0001
 titel: Workflow-skabelon: tag-trigger og synkronisering
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-09-22
 ---
