@@ -10,6 +10,8 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-09-22 | — | Tag-jobbet har bevist sig: CI satte `v1.0.0-beta.23` på merge-commit'en | Første tag i repoet, sat automatisk ved pushet af udgivelsen. Ved task-0005s lukning stod at det først ville vise sig ved næste bump — det har det nu | architect |
+| 2026-09-22 | — | Udgivelsen hedder 1.0.0-beta.23, ikke 1.0.0 | At erklære plugin'et færdigt er en milepæl, ikke et biprodukt af en opgave. Betaserien fortsætter som forhåndsudgivelser af netop 1.0.0, så beslutningen om det tal står urørt. Afvist: 1.0.0 nu | architect |
 | 2026-09-22 | task-0006 | Hooken tier når filens hoved kun har kilden og ikke dokumentstien | Afvist som eget nummer. Den eneste anden vej til dokumentets navn er at udlede det af filnavnet, hvilket `gæt ikke på stier` afviser. Kontrollen holder vores egne assets ude af tilstanden, og den kræver at nogen fjerner den ene linje og lader den anden stå | architect |
 | 2026-09-22 | task-0006 | Opgaven er bygget og sat afsluttet | Alle elleve kriterier holder. Jeg efterprøvede selv de tre bærende: en omdøbt fritstående kopi uden dokument udløser beskeden, den udebliver når dokumentet lægges ind, og et projekts egen fil uden kendetegnet udløser intet. Begge kontroller rene, intet versionsnummer rørt | architect |
 | 2026-09-22 | task-0006 | Emnet om hookens navn omformuleret til også at dække tællingen | `README.md`, `GUIDE.md` og `OPSAETNING.md` siger "tre automatiske tjek" hvor der er fire, og task-0006 gør dem forkerte med to. Tællingen holdes sammen med navnet frem for at blive et fjerde emne | architect |
