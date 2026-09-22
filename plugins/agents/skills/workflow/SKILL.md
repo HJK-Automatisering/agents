@@ -1,5 +1,5 @@
 ---
-description: "Tilføjer et fælles workflow til projektet — fx docker-publish, der bygger og publicerer et container-image ved hvert push til main. Viser hvad der findes, spørger ja eller nej, og kopierer filerne ind."
+description: "Tilføjer et fælles workflow til projektet — fx docker-publish, der bygger og publicerer et container-image når der pushes et versionstag. Viser hvad der findes, spørger ja eller nej, og kopierer filerne ind."
 disable-model-invocation: true
 ---
 
@@ -57,4 +57,4 @@ Næste:        /agents:architect — Dockerfile skal tage imod APP_VERSION og GI
 Uskrevet:     intet
 ```
 
-Er alle forudsætninger opfyldt, er der ikke noget næste skridt — workflowet kører ved næste push til `main`. Skriv `Næste: intet` og sig det i samtalen.
+Er alle forudsætninger opfyldt, er der ikke noget næste skridt — men sig hvad der skal til for at workflowet kører. `docker-publish` udløses kun af et versionstag: uden et tag bygges der aldrig, og der kommer ingen fejl der fortæller det. Skriv `Næste: intet` og sig det i samtalen.

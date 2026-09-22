@@ -34,10 +34,20 @@ echo '{"cwd":"<sti til et testprojekt>"}' | node plugins/agents/hooks/detect-pro
   trin i en opgave. Sig til når noget er klar.
 - **De to manifesters `version` skal følges ad.** Bumpes den ene og ikke den
   anden, ser brugerne stadig den gamle udgave i kataloget.
-- **`plugins/agents/skills/kickoff/AGENTS.md` er en skabelon, ikke dette repos
-  kontrakt.** Den kopieres ind i brugerprojekter. Ændrer du en *regel* i den,
-  skal `kontrakt-version` bumpes — ellers opdager projekterne aldrig at deres
-  kopi er forældet. Bumpet er menneskets beslutning.
+- **To filer hedder `AGENTS.md`. Forveksl dem aldrig.**
+  `plugins/agents/skills/kickoff/AGENTS.md` er **skabelonen** — den kopieres ind
+  i brugerprojekter, og det er den en opgave om kontrakten altid mener.
+  `AGENTS.md` i roden er **dette repos egen kontrakt**, som rollerne selv
+  arbejder under; retter du den, ændrer du reglerne for det arbejde du er midt
+  i. Er du i tvivl om hvilken en opgave peger på, er det skabelonen.
+  Ændrer du en *regel* i skabelonen, skal `kontrakt-version` bumpes — ellers
+  opdager projekterne aldrig at deres kopi er forældet. Bumpet er menneskets
+  beslutning.
+- **Skabelonerne under `plugins/agents/skills/workflow/` har deres eget stempel.**
+  `skabelon-version` i workflow-dokumentet er det eneste et projekt kan se en
+  ændring på. Ændrer du hvad et workflow gør, skal den bumpes — men bumpet er,
+  som `kontrakt-version`, menneskets beslutning. `node tools/validate.mjs`
+  advarer når filerne har flyttet sig uden at stemplet fulgte med.
 - **Repoet er offentligt.** Alle kan læse det, og historik kan ikke gøres privat
   bagefter. Ingen kundenavne, systemnavne, logudskrifter, fund eller persondata i
   eksempler — heller ikke opdigtede der ligner rigtige. `EVALUERING.md` er

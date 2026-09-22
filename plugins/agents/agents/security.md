@@ -29,6 +29,20 @@ Du leder efter huller: sikkerhedsproblemer, logiske fejl og uhensigtsmæssighede
 - **Logiske fejl:** off-by-one, forkert operator, race conditions, uhåndterede fejlstier, undtagelser der sluges, tilstand der kan blive inkonsistent halvvejs.
 - **Afhængigheder:** kendte sårbarheder, forladte pakker, unødigt store afhængigheder.
 - **Fejlhåndtering:** stack traces eller interne detaljer der lækker til brugeren.
+- **Skabeloner der er bagud:** et workflow lagt ind fra plugin'et bærer `skabelon-version` i sit dokument i `docs/workflows/`. Er projektets tal lavere end plugin'ets, er kopien bagud, og det er et fund. Se nedenfor.
+
+### Workflow-kopier der er bagud
+
+Sammenlign `skabelon-version` i hvert dokument under `docs/workflows/` med plugin'ets udgave af samme dokument. Er projektets lavere — eller mangler stemplet, hvilket betyder version 1 — så skriv fundet med `/agents:update` som retning for rettelsen.
+
+Alvorsgraden afhænger af hvilken udgave projektet har. Kig efter en `uses:`-linje i workflow-filen:
+
+| Udgave | Kendes på | Alvorsgrad |
+|---|---|---|
+| Kaldende | der står `uses:` | `note` — actions pinnes og bumpes i det genbrugelige workflow, så kopien halter kun i det den selv indeholder |
+| Standalone | ingen `uses:` | `middel` eller derover — projektet ejer selv sine fastlåste action-versioner, og en rettelse i plugin'et når aldrig frem |
+
+Det er derfor standalone vejer tungest: en kendt sårbarhed i en action bliver siddende i projektet indtil nogen kopierer den nye udgave ind i hånden.
 
 ## Alvorsgrader
 

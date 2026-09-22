@@ -10,6 +10,11 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-09-22 | task-0001 | En standalone-kopi med lokale ændringer opdateres ikke af kaldet; det stopper og viser forskellen | Projektet ejer selv sine fastlåste action-versioner i den udgave. Afvist: at bevare pin-linjerne og erstatte resten — en opblødning bliver sit eget nummer hvis stoppet gør ondt | architect |
+| 2026-09-22 | task-0001 | Rækken om :main i tag-tabellen står urettet | Efterprøvet i det genbrugelige workflow, som er offentligt: type=ref,event=branch er der stadig, og manuel kørsel pusher. Beskrivelsen er altså rigtig | architect |
+| 2026-09-22 | task-0001 | Opgaven er bygget og sat afsluttet | Alle ti kriterier holder. Triggeren er tag-only i begge assets, stemplet står på 2, hooken og validate.mjs kontrollerer det, og intet versionsnummer er rørt | architect |
+| 2026-09-22 | task-0002 | PLUGIN.md-fundet bliver et eget nummer | Filen stod bevidst uden for task-0001s tabel, og en opgave genåbnes ikke. Afvist: at rette den på task-0001s gren | architect |
+| 2026-09-22 | task-0001 | Fundet om at hookens kontrol blev den fjerde, ikke tredje, afvises som eget nummer | Det er ingen fejl i det byggede. Emnet på BOARD om at hookens navn ikke dækker dens ansvar er rettet fra tre til fire og dækker det | architect |
 | 2026-09-22 | task-0001 | Opgavedokument, BOARD og log ligger på opsætningsgrenen, ikke på en task-gren | Kontraktens gren-pr-opgave dækker byggearbejdet; definitionen er architects bogholderi. Afvist: egen gren til et dokument der refererer BOARD på en anden gren | architect |
 | 2026-09-22 | task-0001 | Alt leveres i én udgivelse | Delene virker kun sammen. Afvist: tom plumbing-udgivelse først — manglende stempel regnes som 1, så synkroniseringen ville aldrig blive prøvet | architect |
 | 2026-09-22 | task-0001 | architect og security bærer kontrollen af manglende stempel og manglende tagging | Begge har mandatet i forvejen. Afvist: reviewer, fordi docker-publish.md holder den ude af workflow-filer med vilje | architect |

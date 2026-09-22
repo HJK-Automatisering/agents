@@ -32,7 +32,7 @@ Ved konflikt: rollefilen bestemmer *hvad* der skal laves, denne fil bestemmer *h
 | `scout` | agent | `architect` | `docs/map.md` |
 | `status` | agent | mennesket eller `architect` | tilstandsrapport i chatten. Skriver intet |
 | `workflow` | i menneskets tråd | mennesket | `docs/workflows/<navn>.md` |
-| `update` | i menneskets tråd | mennesket | opdateret kontrakt og skelet |
+| `update` | i menneskets tråd | mennesket | opdateret kontrakt og opdaterede workflow-kopier |
 
 **Der er én slags tråd.** Mennesket sidder hos `architect`; alt andet sendes af sted derfra og kommer tilbage. Der findes ikke længere et `ny tråd →`/`her →`-valg, fordi der ikke er noget at vælge imellem.
 
@@ -154,7 +154,7 @@ Derefter, i din **første** besked, før du arbejder: skriv i én linje hvad du 
 | `docs/reviews/review-NNNN-slug.md` | `reviewer` | `architect` | Gennemgang og oprydningsfund |
 | `docs/debugs/debug-NNNN-slug.md` | `debugger` | `architect` | Årsagsanalyse af en konkret fejl |
 | `docs/map.md` | `scout` | `architect` | Kort over en eksisterende kodebase |
-| `docs/workflows/<navn>.md` | `workflow` | alle | Beskrivelse af et valgt fælles workflow |
+| `docs/workflows/<navn>.md` | `workflow` (+ `update`) | alle | Beskrivelse af et valgt fælles workflow. `skabelon-version` i frontmatter siger hvilken udgave kopien er |
 | `docs/decisions/log.md` | `architect` | alle | Append-only beslutningslog |
 
 **Beslutningsloggen er ikke optional.** `architect`-tråden er den eneste samtale i modellen, og loggen er det eneste spor den efterlader der overlever tråden. Hver beslutning truffet i en `architect`-tråd skrives ind, med begrundelse, før tråden lukkes.

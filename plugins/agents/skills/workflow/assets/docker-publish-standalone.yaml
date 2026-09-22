@@ -11,16 +11,23 @@ name: Docker
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
 # documentation.
+#
+# Filen er en kopi fra plugin'et `agents`, lagt ind af `/agents:workflow`:
+# plugins/agents/skills/workflow/assets/docker-publish-standalone.yaml. Hvilken
+# udgave kopien er, står som `skabelon-version` i docs/workflows/docker-publish.md.
+# `/agents:update` bringer begge filer ajour, men stopper og viser det hvis der
+# er rettet i denne fil — i standalone-udgaven ejer projektet selv sine pins.
 
 on:
   push:
-    branches: [ "main" ]
-    # Publish semver tags as releases.
+    # Kun udgivelser bygger. Et commit i en markdown-fil skal ikke koste en ny
+    # digest i GHCR, en post i den offentlige Rekor-log og et tag der flytter
+    # sig uden at noget er ændret. Uden et tag bygges der aldrig.
     tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ "main" ]
-  # Manuel kørsel fra en vilkårlig gren. Uden denne kan tag-reglerne kun
-  # afprøves ved at pushe til main, og et PR-build pusher ikke noget image.
+  # Manuel kørsel fra en vilkårlig gren. Uden denne kan en ændring i selve
+  # workflowet kun afprøves ved at tagge, og et PR-build pusher ikke noget image.
   workflow_dispatch:
 
 env:
@@ -29,7 +36,7 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
-# To hurtige pushes til main kappes ellers om at skrive :main, og den
+# To tags pushet lige efter hinanden kappes ellers om at skrive :latest, og den
 # langsomste build vinder. Afløs i stedet den igangværende.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -81,10 +88,11 @@ jobs:
         uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          # Uden denne blok bruges standardreglerne, og et push til main giver
-          # kun det mutable :main — intet at rulle tilbage til.
+          # Uden denne blok bruges standardreglerne, og så er der intet
+          # immutabelt :sha--tag at rulle tilbage til.
           tags: |
-            # rullende tag pr. gren: :main
+            # rullende tag pr. gren: :main. Kommer kun ved manuel kørsel,
+            # da grenpush ikke længere udløser workflowet.
             type=ref,event=branch
             # :pr-123, bygges men pushes ikke
             type=ref,event=pr

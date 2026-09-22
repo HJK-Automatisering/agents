@@ -1,10 +1,12 @@
 #!/usr/bin/env node
-// SessionStart-hook. Tre tjek:
-//   1. Er dette projekt nul? Udelukker de to andre — beskeden beder
+// SessionStart-hook. Fire tjek:
+//   1. Er dette projekt nul? Udelukker de tre andre — beskeden beder
 //      allerede selv om .gitignore.
 //   2. Er projektets AGENTS.md bagud i forhold til plugin'ets?
-//   3. Mangler der en .gitignore?
-// 2 og 3 kan optræde sammen. Tjek 3 er sikkerhed og må ikke tabe til 2.
+//   3. Er en kopi af et workflow i docs/workflows/ bagud?
+//   4. Mangler der en .gitignore?
+// 2, 3 og 4 kan optræde sammen. Tjek 4 er sikkerhed og må ikke tabe til de
+// to versionsbeskeder.
 //
 // Skriver ren tekst til stdout, så Claude ser beskeden. SessionStart lægger
 // tekst der ikke starter med '{' direkte ind som kontekst, så JSON-indpakning
@@ -36,7 +38,9 @@ function harMarkdown(mappe) {
   }
 }
 
-function getKontraktVersion(sti) {
+// Læser et versionsstempel fra frontmatter. Bruges til både kontrakten
+// (kontrakt-version) og workflow-dokumenterne (skabelon-version).
+function getVersion(sti, noegle) {
   let indhold;
   try {
     indhold = fs.readFileSync(sti, 'utf8');
@@ -45,11 +49,25 @@ function getKontraktVersion(sti) {
   }
   // Frontmatter står i de første linjer. Mangler feltet, er filen fra
   // før versionsstemplet fandtes, og det regnes som version 1.
+  const moenster = new RegExp('^\\s*' + noegle + '\\s*:\\s*(\\d+)\\s*$');
   for (const linje of indhold.split(/\r?\n/, 12)) {
-    const traef = linje.match(/^\s*kontrakt-version\s*:\s*(\d+)\s*$/);
+    const traef = linje.match(moenster);
     if (traef) return parseInt(traef[1], 10);
   }
   return 1;
+}
+
+// Navnene på de markdown-filer der ligger i en mappe. Tom liste hvis mappen
+// ikke findes — et projekt uden workflows er ikke en fejl.
+function mdFiler(mappe) {
+  try {
+    return fs
+      .readdirSync(mappe, { withFileTypes: true })
+      .filter((e) => e.isFile() && e.name.toLowerCase().endsWith('.md'))
+      .map((e) => e.name);
+  } catch {
+    return [];
+  }
 }
 
 function getCommitAntal(cwd) {
@@ -84,6 +102,24 @@ function kontraktBagud(vProjekt, vPlugin) {
     '',
     'Arbejd videre hvis brugeren beder om det, men gør opmærksom på at reglerne kan',
     'have ændret sig siden kopien blev lagt ind.',
+  ].join('\n');
+}
+
+function skabelonBagud(bagud) {
+  const linjer = bagud.map(
+    (w) => `  - docs/workflows/${w.navn} er version ${w.vProjekt}; plugin'et har version ${w.vPlugin}.`,
+  );
+  return [
+    'ET WORKFLOW ER BAGUD. Projektet har en kopi der ikke er den nuværende:',
+    '',
+    ...linjer,
+    '',
+    'Kopien blev lagt ind dengang workflowet blev valgt, og den følger ikke med når',
+    'plugin\'et opdateres. Det workflow der kører i GitHub, er altså ikke det der står',
+    'i plugin\'et — og det kan udløses af noget andet end kopien lover.',
+    '',
+    'Sig det til brugeren, og foreslå `/agents:update` — den bringer både',
+    'workflow-filen og dokumentet ajour og bevarer projektets egen `with`-blok.',
   ].join('\n');
 }
 
@@ -130,16 +166,34 @@ try {
     if (hasKontrakt) {
       // Plugin'ets kontrakt ligger i kickoff-skillen ved siden af denne hook.
       const pluginKontrakt = path.join(__dirname, '..', 'skills', 'kickoff', 'AGENTS.md');
-      const vProjekt = getKontraktVersion(projektKontrakt);
-      const vPlugin = getKontraktVersion(pluginKontrakt);
+      const vProjekt = getVersion(projektKontrakt, 'kontrakt-version');
+      const vPlugin = getVersion(pluginKontrakt, 'kontrakt-version');
 
       if (vPlugin && vProjekt && vPlugin > vProjekt) {
         beskeder.push(kontraktBagud(vProjekt, vPlugin));
       }
     }
 
+    // Workflows er kopier på samme måde som kontrakten, og bærer deres eget
+    // stempel. Filnavnet er det samme i projektet og i plugin'et, fordi
+    // workflow-skillen lægger dokumentet ind uden at omdøbe det. Mangler
+    // mappen, er der intet at sige.
+    const pluginWorkflows = path.join(__dirname, '..', 'skills', 'workflow');
+    const projektWorkflows = path.join(cwd, 'docs', 'workflows');
+    const bagud = [];
+    for (const navn of mdFiler(projektWorkflows)) {
+      const iPlugin = path.join(pluginWorkflows, navn);
+      if (!findes(iPlugin)) continue; // Projektets eget workflow. Ikke vores at versionere.
+      const vProjekt = getVersion(path.join(projektWorkflows, navn), 'skabelon-version');
+      const vPlugin = getVersion(iPlugin, 'skabelon-version');
+      if (vPlugin && vProjekt && vPlugin > vProjekt) {
+        bagud.push({ navn, vProjekt, vPlugin });
+      }
+    }
+    if (bagud.length > 0) beskeder.push(skabelonBagud(bagud));
+
     // Denne er sikkerhed og ikke hygiejne, så den må ikke tabe til en
-    // versionsbesked. Begge kan stå på én gang.
+    // versionsbesked. Alle kan stå på én gang.
     if (!hasGitignore) beskeder.push(MANGLER_GITIGNORE);
   }
 

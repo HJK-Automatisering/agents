@@ -6,23 +6,30 @@ name: Docker
 # Skal du afvige fra standarden, så kommentér `with`-blokken ind nedenfor.
 # Ret ikke i det genbrugelige workflow for at løse et enkelt projekts behov —
 # tilføj i stedet et input der.
+#
+# Filen er en kopi fra plugin'et `agents`, lagt ind af `/agents:workflow`:
+# plugins/agents/skills/workflow/assets/docker-publish.yaml. Hvilken udgave
+# kopien er, står som `skabelon-version` i docs/workflows/docker-publish.md.
+# `/agents:update` bringer begge filer ajour og bevarer `with`-blokken —
+# ret derfor helst ikke andet end den her.
 
 on:
   push:
-    branches: [ "main" ]
-    # Publish semver tags as releases.
+    # Kun udgivelser bygger. Et commit i en markdown-fil skal ikke koste en ny
+    # digest i GHCR, en post i den offentlige Rekor-log og et tag der flytter
+    # sig uden at noget er ændret. Uden et tag bygges der aldrig.
     tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ "main" ]
-  # Manuel kørsel fra en vilkårlig gren. Uden denne kan tag-reglerne kun
-  # afprøves ved at pushe til main, og et PR-build pusher ikke noget image.
+  # Manuel kørsel fra en vilkårlig gren. Uden denne kan en ændring i selve
+  # workflowet kun afprøves ved at tagge, og et PR-build pusher ikke noget image.
   workflow_dispatch:
 
-# To hurtige pushes til main kappes ellers om at skrive :main, og den
+# To tags pushet lige efter hinanden kappes ellers om at skrive :latest, og den
 # langsomste build vinder. Afløs i stedet den igangværende.
 #
 # Denne hører her og ikke i det genbrugelige workflow: det er denne kørsel
-# og denne gren der skal aflyses.
+# og denne reference der skal aflyses.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true

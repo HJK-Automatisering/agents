@@ -331,7 +331,7 @@ For koden:
 
 Ingen roller nævner workflows af sig selv. Vil du have et, kalder du det — og det kan du gøre når som helst, også på et projekt der har kørt i et halvt år.
 
-I dag findes **`docker-publish`**: bygger og publicerer et container-image til GitHub Packages ved hvert push til `main`, signerer det, og giver dig et immutabelt `:sha-`tag at rulle tilbage til.
+I dag findes **`docker-publish`**: bygger og publicerer et container-image til GitHub Packages når du pusher et versionstag som `v1.2.3`, signerer det, og giver dig et immutabelt `:sha-`tag at rulle tilbage til. Almindelige commits bygger ikke — tagger du aldrig, sker der aldrig noget, og der kommer ingen fejl der siger det.
 
 Vælger du det: **din `Dockerfile` skal tage imod `APP_VERSION` og `GIT_SHA`** som `ARG` og logge dem ved opstart. Ellers virker workflowet, men logvisningen kan ikke fortælle hvilken build der kører.
 

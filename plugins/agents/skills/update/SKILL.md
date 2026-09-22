@@ -1,27 +1,34 @@
 ---
-description: "Opdaterer projektets AGENTS.md til plugin'ets nuværende kontrakt og bevarer projektets egne afvigelser. Brug når hooken siger at kontrakten er bagud, eller efter en plugin-opdatering."
+description: "Bringer projektets kopier fra plugin'et ajour: AGENTS.md og de workflows der er lagt ind. Bevarer projektets afvigelser og dets egne indstillinger. Brug når hooken siger at noget er bagud, eller efter en plugin-opdatering."
 disable-model-invocation: true
 ---
 
 # update
 
-Projektets `AGENTS.md` er en **kopi**, lagt ind dengang `kickoff` kørte. Opdaterer man plugin'et, følger den ikke med. Du bringer den ajour.
+Projektet har **kopier** fra plugin'et. De følger ikke med når plugin'et opdateres, og du er den eneste vej tilbage. Der er to slags:
 
-Det er den eneste fil du rører.
+| Kopi | Lagt ind af | Bærer versionen |
+|---|---|---|
+| `AGENTS.md` i projektets rod | `kickoff` | `kontrakt-version` i frontmatter |
+| Et workflow i `.github/workflows/` med sit dokument i `docs/workflows/` | `workflow` | `skabelon-version` i dokumentets frontmatter |
 
-## Find plugin'ets kontrakt
+Du rører kun de filer. Tag kontrakten først, workflows bagefter — begge dele kan være ajour, og så siger du det og stopper med netop den del.
+
+## Find plugin'ets filer
 
 Kontrakten ligger i søsterskillen `kickoff`, i samme plugin: filen `AGENTS.md` i dens mappe. Fra denne mappe er den `../kickoff/AGENTS.md`.
 
-Kan du ikke finde den ad den vej, så søg efter `*/skills/kickoff/AGENTS.md` under plugin-mappen. **Gæt ikke på indholdet, og skriv den ikke selv** — findes filen ikke, siger du det og stopper.
+Workflow-dokumenterne ligger i søsterskillen `workflow`: hver `.md`-fil i dens mappe undtagen `SKILL.md`. Fra denne mappe er det `../workflow/*.md`.
 
-## Proces
+Kan du ikke finde dem ad den vej, så søg efter `*/skills/kickoff/AGENTS.md` og `*/skills/workflow/*.md` under plugin-mappen. **Gæt ikke på indholdet, og skriv det ikke selv** — findes en fil ikke, siger du det og springer den del over.
+
+## Del 1 — kontrakten
 
 ### 1. Sammenlign versionerne
 
 Begge filer har `kontrakt-version` i frontmatter. Mangler projektets, er den version 1 — fra før versionsstemplet fandtes.
 
-Er de ens, er der intet at gøre. Sig det og stop.
+Er de ens, er der intet at gøre. Sig det og gå videre til del 2.
 
 ### 2. Tag projektets afvigelser til side
 
@@ -60,25 +67,74 @@ Er der ingen forskel, går du videre uden at nævne det.
 
 Skriv plugin'ets kontrakt til projektets `AGENTS.md`, og indsæt de bevarede afvigelser i `## Projektspecifikke afvigelser`.
 
-### 6. Rapportér hvad der ændrede sig
+## Del 2 — workflows
 
-I almindeligt dansk, ikke som en diff. Hvilke afsnit er nye, hvilke regler er ændret, og hvad det betyder for den måde der arbejdes. Mennesket skal kunne læse det uden at åbne filen.
+Gør det i denne rækkefølge, ét workflow ad gangen.
+
+### 1. Find ud af hvad der er lagt ind
+
+For hvert af plugin'ets workflow-dokumenter: læs `filer:`-feltet. Hver post har et `til:` — det er stien i projektet. Findes den fil, er workflowet lagt ind.
+
+**Gæt ikke på stier.** `filer:` er det eneste sted der ved hvor kopien havnede. Findes der ingen af filerne, har projektet ikke workflowet, og der er intet at gøre.
+
+### 2. Afgør hvilken udgave projektet har
+
+Et workflow kan findes i to udgaver, og de skal behandles forskelligt:
+
+| Udgave | Kendes på | Hvad projektet ejer |
+|---|---|---|
+| Den kaldende | en `uses:`-linje i projektets fil | kun `with:`-blokken |
+| Standalone | ingen `uses:`-linje på jobbet | hele filen, inklusive sine fastlåste action-versioner |
+
+**Et projekt flyttes aldrig fra den ene udgave til den anden.** Valget blev truffet dengang workflowet blev lagt ind, og det kan have en grund du ikke kan se — typisk at projektet ikke kan nå det repo det genbrugelige workflow bor i. Ser du at projektet har standalone, opdaterer du standalone.
+
+### 3. Sammenlign versionerne
+
+Projektets kopi af dokumentet ligger i `docs/workflows/<navn>.md`. Sammenlign dets `skabelon-version` med plugin'ets.
+
+- **Mangler stemplet** i projektets kopi, er den version 1 — fra før stemplet fandtes.
+- **Er de ens,** sker der ingenting med det workflow. Sig det og gå videre til det næste.
+
+### 4. Bevar projektets egne indstillinger
+
+**I den kaldende udgave bevares `with:`-blokken i projektets kalder ordret.** Det er der projektets egne valg står — platforme, en Dockerfile der ligger et andet sted, et andet imagenavn. Alt andet i filen erstattes af plugin'ets udgave, **også `permissions:`.**
+
+`permissions:` erstattes hårdt med vilje. Blokken er en forudsætning for at push til registryet virker, og er den ændret, er den forkert. En bevaret fejl der viser sig som et loginproblem, koster mere end en overskrevet tilpasning.
+
+**I standalone-udgaven er der ingen kalder og dermed ingen `with:`-blok at bevare.** Er filen ændret i forhold til plugin'ets udgave, gælder trin 5 for hele filen.
+
+### 5. Stop hvis der er rettet andre steder
+
+Er der ændringer uden for `with:`-blokken — et trin tilføjet, en action-version bumpet, en betingelse rettet — så **stop og vis dem.** Ét spørgsmål ad gangen: skal ændringen kasseres, eller skal opdateringen droppes for det workflow?
+
+Overskriv den ikke i tavshed. I standalone-udgaven især: der ejer projektet sine egne pins, og en lokal bumpet version kan være svaret på noget.
+
+### 6. Skriv begge filer
+
+Kalderen i `.github/workflows/` **og** dokumentet i `docs/workflows/`. Skrives kun den ene, lyver den anden — og næste gang står der et stempel der ikke passer til det filen gør.
+
+## Rapportér hvad der ændrede sig
+
+I almindeligt dansk, ikke som en diff. Hvilke afsnit i kontrakten er nye, hvilke regler er ændret, hvad workflowet gør anderledes nu, og hvad det betyder for den måde der arbejdes. Mennesket skal kunne læse det uden at åbne filen.
 
 Er der kommet regler der gør igangværende arbejde forkert — en ny formregel, et nyt loft — så sig det eksplicit.
 
+**Ændrer et workflow sig sådan at det udløses af noget andet end før**, er det det vigtigste du siger. Et workflow der ikke længere bygger ved hvert commit, bygger ikke af sig selv — og det opdager ingen, fordi der ikke kommer en fejl.
+
 ## Du må ikke
 
-- Røre andre filer. Ikke `BOARD.md`, ikke beslutningsloggen, ikke `CLAUDE.md`, ikke kode.
-- **Flytte, omdøbe eller oprette mapper under `docs/`.** Se trin 4. Du opdager forskellen og lægger vejene frem; valget er menneskets.
-- Kaste projektets afvigelser væk.
-- Skrive kontrakten ud fra hukommelsen. Findes plugin'ets fil ikke, stopper du.
+- Røre andet end de to slags kopier: projektets `AGENTS.md`, de installerede workflow-filer, og deres dokumenter i `docs/workflows/`. Ikke `BOARD.md`, ikke beslutningsloggen, ikke `CLAUDE.md`, ikke kode.
+- **Flytte, omdøbe eller oprette mapper under `docs/`.** Se del 1, trin 4. Du opdager forskellen og lægger vejene frem; valget er menneskets.
+- Kaste projektets afvigelser væk, eller dets `with:`-blok.
+- Flytte et projekt mellem den kaldende og den standalone udgave af et workflow.
+- Skrive en kontrakt eller et workflow ud fra hukommelsen. Findes plugin'ets fil ikke, stopper du.
 - Opdatere hvis versionerne er ens.
 
 ## Lukning
 
 ```
 LUKNING
-Skrevet:      AGENTS.md
+Skrevet:      AGENTS.md, .github/workflows/docker-publish.yaml, docs/workflows/docker-publish.md
 Åbent:        docs/plans/ og docs/findings/ hedder noget andet i den nye kontrakt. 7 filer. Ikke flyttet
 Næste:        beslut hvad der skal ske med den gamle docs-struktur
 Uskrevet:     intet
