@@ -41,3 +41,30 @@ jobs:
           # Paa et push til main findes den ikke, og tjekket springes over.
           BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || '' }}
         run: node tools/validate.mjs
+
+  # Saetter maerket v<version> naar plugin-manifestet har faaet et nyt nummer.
+  # Kun paa push til main - ikke paa pull requests og ikke i haanden - og kun
+  # naar kontrollen er groen. De fleste push aendrer ikke versionen, og saa
+  # findes maerket allerede og jobbet slutter groent uden at roere noget.
+  tag:
+    needs: validate
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      # Kun dette job maa skrive. Kontroljobbet laeser fortsat kun.
+      contents: write
+    steps:
+      - name: Hent repoet
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+
+      - name: Saet maerket paa udgivelsen
+        run: |
+          version=$(node -p "require('./plugins/agents/.claude-plugin/plugin.json').version")
+          tag="v$version"
+          if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null 2>&1; then
+            echo "$tag findes allerede. Versionen er uaendret, og der saettes intet maerke."
+            exit 0
+          fi
+          git tag "$tag"
+          git push origin "refs/tags/$tag"
+          echo "Satte $tag paa ${GITHUB_SHA}."
