@@ -209,6 +209,24 @@ if (existsSync(WF)) {
         }
       }
     }
+    // Hooken kender en kopi i et projekts .github/workflows/ paa de to stier i
+    // filens hoved: kilden i plugin'et, og dokumentet der baerer stemplet.
+    // Ryddes de vaek, bliver kopien usynlig for hooken uden at noget fejler.
+    const dokumentSti = 'docs/workflows/' + basename(sti);
+    for (const asset of assets) {
+      const tekst = laes(asset);
+      const mangler = [];
+      if (!tekst.includes('plugins/agents/skills/workflow/assets/')) {
+        mangler.push('stien til kilden i plugin\'et');
+      }
+      if (!tekst.includes(dokumentSti)) mangler.push(dokumentSti);
+      if (mangler.length) {
+        sig(fejl, relativ(asset),
+          'mangler ' + mangler.join(' og ') + ' i filens hoved. Hooken kender projektets ' +
+          'kopi paa netop de stier - uden dem kan den ikke se at dokumentet mangler.');
+      }
+    }
+
     workflowDokumenter.push({ sti, version, assets: [...assets] });
   }
 }
