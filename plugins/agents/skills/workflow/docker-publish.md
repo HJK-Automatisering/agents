@@ -1,6 +1,7 @@
 ---
 navn: docker-publish
-formål: Bygger og publicerer et container-image til GitHub Packages ved hvert push til main, med signering og rollback-tags
+skabelon-version: 2
+formål: Bygger og publicerer et container-image til GitHub Packages når der pushes et versionstag, med signering og rollback-tags
 foreslå-ja-når: projektets dokument siger at projektet leveres som container-image eller kører på en Docker- eller Portainer-vært
 filer:
   - fra: assets/docker-publish.yaml
@@ -9,7 +10,7 @@ filer:
 
 # docker-publish
 
-Ved hvert push til `main` bygges et image og pushes til `ghcr.io/<org>/<repo>`. Semver-tags (`v1.2.3`) giver versionerede images. PR-builds bygger men pusher ikke.
+Når der pushes et semver-tag (`v1.2.3`), bygges et image og pushes til `ghcr.io/<org>/<repo>`. **Almindelige commits bygger ikke** — heller ikke på `main`. PR-builds bygger men pusher ikke, så det kan ses at imaget overhovedet bygger, før nogen tagger.
 
 Projektet får en **kalder** på ti linjer. Selve bygningen bor i `HJK-Automatisering/workflow` som et genbrugeligt workflow, så de SHA-pinnede action-versioner kan bumpes ét sted i stedet for i hvert repository.
 
@@ -29,9 +30,9 @@ Projektet får en **kalder** på ti linjer. Selve bygningen bor i `HJK-Automatis
 
 | Tag | Hvornår | Brug |
 |---|---|---|
-| `:main` | hvert push til main | rullende, altid nyeste |
-| `:sha-a1b2c3d` | hvert push | **immutabelt — det er dette du ruller tilbage til** |
+| `:sha-a1b2c3d` | hver bygning | **immutabelt — det er dette du ruller tilbage til** |
 | `:1.2.3` og `:1.2` | tag `v1.2.3` | udgivelser |
+| `:main` | manuel kørsel fra `main` | rullende. Kommer ikke af sig selv længere |
 | `:latest` | seneste semver-tag | |
 | `:pr-123` | pull request | bygges, pushes ikke |
 
@@ -43,14 +44,15 @@ Workflowet returnerer `digest`, `version` og `tags` som outputs, så et efterfø
 
 Uden disse fejler workflowet — eller, værre, lykkes uden at gøre hvad du tror:
 
-1. **`./Dockerfile` skal findes i roden.** Ligger den et andet sted, sæt `dockerfile:` i kalderen. Ret ikke det genbrugelige workflow.
-2. **Dockerfilen skal tage imod `APP_VERSION` og `GIT_SHA`** som `ARG`, sætte dem som `ENV` og logge dem ved opstart. Ellers sendes de to build-args ind og forsvinder, og Portainers logvisning kan ikke fortælle hvilken build der kører. Det er hele grunden til at de er der.
-3. **`permissions`-blokken i kalderen skal stå der.** Et genbrugeligt workflow kan ikke give sig selv flere rettigheder end kalderen har. Er organisationens standard read-only, fejler push til GHCR uden den — og fejlen ser ud som et loginproblem.
-4. **Intet at gøre — `workflow`-repoet er offentligt**, og offentlige genbrugelige workflows kan kaldes af alle uden yderligere opsætning. Bliver det nogensinde privat igen, skal Settings → Actions → General → Access åbnes for organisationen; ellers fejler kaldet med at workflowet ikke findes, hvilket ligner en stavefejl i stien.
-5. **`@v1` skal findes i `workflow`-repoet** som et flytbart tag ved siden af de immutable `v1.x.y`. Se vedligeholdelse nedenfor. Kontrollér med `git ls-remote --tags https://github.com/HJK-Automatisering/workflow`.
-6. **Kun `linux/amd64` som standard.** Skal det køre på arm, sæt `platforms:` i kalderen. Tilføj ikke arm64 "for at være sikker": det bygger under QEMU-emulering og tager mange gange så lang tid.
-7. **Pakken oprettes ved første push til `main`** og er privat. Første gang skal den kobles til repoet, så adgangen arves, og synligheden sættes bevidst.
-8. **Store bogstaver i organisationsnavnet.** GHCR kræver små. `metadata-action` konverterer sine egne tags, og cosign-trinnet konverterer i hånden — men bygger du selv en imagereference et tredje sted, skal du huske det samme.
+1. **Der skal tagges. Ellers bygges der aldrig.** Workflowet udløses kun af et push af et tag på formen `v1.2.3` — og af pull requests og manuel kørsel, som ikke pusher noget image. Et projekt der merger til `main` uden nogensinde at sætte et tag, får aldrig et image i GHCR, og der kommer ingen fejl der fortæller det. Sæt tagget når en udgivelse er besluttet: `git tag v1.2.3` og `git push origin v1.2.3`.
+2. **`./Dockerfile` skal findes i roden.** Ligger den et andet sted, sæt `dockerfile:` i kalderen. Ret ikke det genbrugelige workflow.
+3. **Dockerfilen skal tage imod `APP_VERSION` og `GIT_SHA`** som `ARG`, sætte dem som `ENV` og logge dem ved opstart. Ellers sendes de to build-args ind og forsvinder, og Portainers logvisning kan ikke fortælle hvilken build der kører. Det er hele grunden til at de er der.
+4. **`permissions`-blokken i kalderen skal stå der.** Et genbrugeligt workflow kan ikke give sig selv flere rettigheder end kalderen har. Er organisationens standard read-only, fejler push til GHCR uden den — og fejlen ser ud som et loginproblem.
+5. **Intet at gøre — `workflow`-repoet er offentligt**, og offentlige genbrugelige workflows kan kaldes af alle uden yderligere opsætning. Bliver det nogensinde privat igen, skal Settings → Actions → General → Access åbnes for organisationen; ellers fejler kaldet med at workflowet ikke findes, hvilket ligner en stavefejl i stien.
+6. **`@v1` skal findes i `workflow`-repoet** som et flytbart tag ved siden af de immutable `v1.x.y`. Se vedligeholdelse nedenfor. Kontrollér med `git ls-remote --tags https://github.com/HJK-Automatisering/workflow`.
+7. **Kun `linux/amd64` som standard.** Skal det køre på arm, sæt `platforms:` i kalderen. Tilføj ikke arm64 "for at være sikker": det bygger under QEMU-emulering og tager mange gange så lang tid.
+8. **Pakken oprettes ved den første bygning der pusher** — altså ved det første versionstag — og er privat. Første gang skal den kobles til repoet, så adgangen arves, og synligheden sættes bevidst.
+9. **Store bogstaver i organisationsnavnet.** GHCR kræver små. `metadata-action` konverterer sine egne tags, og cosign-trinnet konverterer i hånden — men bygger du selv en imagereference et tredje sted, skal du huske det samme.
 
 ## Inputs i kalderen
 
@@ -101,6 +103,8 @@ Versionering følger action-konventionen:
 - Brydende ændringer får `v2`, og projekterne flytter når de er klar.
 
 Et projekt kan pinne til `@v1.0.3` hvis det skal stå helt stille. Prisen er at det ikke får rettelser.
+
+**`skabelon-version` i frontmatter er kopiens udgave.** Bumpes den i plugin'et, siger hooken ved sessionsstart at projektets kopi er bagud, og `/agents:update` bringer både kalderen og dette dokument ajour. Rør den ikke i hånden.
 
 ## Standalone-fallback
 
