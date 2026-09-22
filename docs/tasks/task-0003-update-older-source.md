@@ -1,7 +1,7 @@
 ---
 nummer: task-0003
 titel: Opdateringskaldet har ingen regel for en kilde der er ældre end projektets kopi
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-09-22
 ---

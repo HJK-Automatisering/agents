@@ -22,7 +22,6 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
 | task-0002 | Vedligeholdelsesdokumentet kender kun kontraktens stempel, og afprøvningsvejen er forkert | planlagt | interview |
-| task-0003 | Opdateringskaldet har ingen regel for en kilde der er ældre end projektets kopi | planlagt | interview |
 | task-0004 | Opdateringskaldet opregner ikke de steder der stadig beskriver det gamle vilkår | planlagt | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
@@ -46,6 +45,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | Nr. | Titel | Udfald |
 |---|---|---|
 | task-0001 | Workflow-skabelon: tag-trigger og synkronisering | bygget |
+| task-0003 | Opdateringskaldet har ingen regel for en kilde der er ældre end projektets kopi | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.
