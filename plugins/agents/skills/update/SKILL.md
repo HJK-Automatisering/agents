@@ -124,6 +124,16 @@ Er der kommet regler der gør igangværende arbejde forkert — en ny formregel,
 
 **Ændrer et workflow sig sådan at det udløses af noget andet end før**, er det det vigtigste du siger. Et workflow der ikke længere bygger ved hvert commit, bygger ikke af sig selv — og det opdager ingen, fordi der ikke kommer en fejl.
 
+Så opregner du de steder i projektet der stadig beskriver det gamle vilkår. De blev forkerte i samme sekund, og ingen fejl siger det.
+
+Kig i `CLAUDE.md`, `README.md`, filerne under `docs/`, og projektets `AGENTS.md`. **Også `## Projektspecifikke afvigelser`**, som du lige har bevaret ordret — en bevaret sætning kan være blevet forkert, og den er svær at få øje på netop fordi den blev bevaret med vilje.
+
+Ikke kode. Og ikke rapporterne under `docs/` eller beslutningsloggen: de beskriver hvad der var sandt dengang, og det skal de blive ved med.
+
+Ét sted pr. linje: hvor det står, og hvad der er forkert ved det nu. **Du retter ingenting** — de filer er ikke dine, og opregningen er noget du siger.
+
+**Har udløsningsvilkåret ikke ændret sig, leder du ikke, og du siger ikke noget om det.** En liste der kommer hver gang, finder tilfældigheder og lærer folk at springe den over.
+
 ## Du må ikke
 
 - Røre andet end de to slags kopier: projektets `AGENTS.md`, de installerede workflow-filer, og deres dokumenter i `docs/workflows/`. Ikke `BOARD.md`, ikke beslutningsloggen, ikke `CLAUDE.md`, ikke kode.
@@ -131,7 +141,7 @@ Er der kommet regler der gør igangværende arbejde forkert — en ny formregel,
 - Kaste projektets afvigelser væk, eller dets `with:`-blok.
 - Flytte et projekt mellem den kaldende og den standalone udgave af et workflow.
 - Skrive en kontrakt eller et workflow ud fra hukommelsen. Findes plugin'ets fil ikke, stopper du.
-- Opdatere hvis versionerne er ens.
+- Opdatere når plugin'ets version ikke er højere end projektets. Det gælder både når de er ens, og når plugin'ets er lavere.
 
 ## Lukning
 
