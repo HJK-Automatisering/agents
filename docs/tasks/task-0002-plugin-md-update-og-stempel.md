@@ -1,7 +1,7 @@
 ---
 nummer: task-0002
 titel: Vedligeholdelsesdokumentet kender kun kontraktens stempel, og afprøvningsvejen er forkert
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-09-22
 ---
