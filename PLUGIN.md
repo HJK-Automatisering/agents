@@ -229,6 +229,11 @@ En udgivelse er en bevidst handling, ikke noget der følger med hver commit. Sam
 6. Kør `node tools/validate.mjs`.
 7. Commit og push.
 
+Kontrollen i `.github/workflows/validate.yaml` sætter selv mærket `v<version>`
+på det push der bragte det nye nummer ind — for eksempel `v1.0.0-beta.23`.
+**Sæt det ikke i hånden.** Er versionen uændret, eller fejler kontrollen, sker
+der ingenting. Der oprettes ingen udgivelsesside; teksten står i `CHANGELOG.md`.
+
 Ingen rolle må bumpe versionen her. Det står i `CLAUDE.md` og gælder også en model der redigerer rollerne. Kontraktens regel om at `architect` tilbyder en udgivelse er skrevet til brugerprojekter; dette repo udgives i hånden.
 
 Udviklerne får den ved næste opdateringstjek, eller med `/plugin marketplace update hjk-agents`.

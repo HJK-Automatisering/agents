@@ -29,7 +29,6 @@ eller nummeret på den rapport opgaven kom af.>
 
 | Emne |
 |---|
-| Udgivelser tagges ikke i git; nummeret står kun i commit-beskeden |
 | Hookens navn dækker ikke dens fire ansvar |
 | Runtime-version står ikke i CLAUDE.md |
 | Fritstående workflow-kopier uden dokument får aldrig besked om at de er bagud |
@@ -46,6 +45,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0002 | Vedligeholdelsesdokumentet kender kun kontraktens stempel, og afprøvningsvejen er forkert | bygget |
 | task-0003 | Opdateringskaldet har ingen regel for en kilde der er ældre end projektets kopi | bygget |
 | task-0004 | Opdateringskaldet opregner ikke de steder der stadig beskriver det gamle vilkår | bygget |
+| task-0005 | Udgivelser efterlader intet spor i historikken | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.
