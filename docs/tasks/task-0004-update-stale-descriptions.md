@@ -1,7 +1,7 @@
 ---
 nummer: task-0004
 titel: Opdateringskaldet opregner ikke de steder der stadig beskriver det gamle vilkår
-status: planlagt
+status: i-gang
 kilde: interview
 oprettet: 2026-09-22
 ---
@@ -75,5 +75,43 @@ intet
 ## Developers noter
 
 ### Hvad er lavet
+
+- `plugins/agents/skills/update/SKILL.md`, `## Rapportér hvad der ændrede sig`:
+  opregningen er hængt på afsnittet om det ændrede udløsningsvilkår, som fem
+  korte afsnit efter det. Den siger at kaldet opregner de steder der stadig
+  beskriver det gamle vilkår, hvor der kigges, at der ikke rettes, og hvornår
+  der ikke ledes.
+- Samme fil, `## Du må ikke`, sidste punkt: `Opdatere hvis versionerne er ens.`
+  er erstattet af `Opdatere når plugin'ets version ikke er højere end
+  projektets. Det gælder både når de er ens, og når plugin'ets er lavere.`
+  Formuleringen er taget fra del 1 trin 1 og del 2 trin 3, uden begrundelsen.
+
+Holdt op mod `Færdig når`:
+
+- Opregner ved ændret udløsningsvilkår: afsnittet begynder med `Så opregner du
+  de steder i projektet der stadig beskriver det gamle vilkår`, umiddelbart
+  efter det afsnit der konstaterer ændringen.
+- Siger hvor og hvad, retter ingenting: `Ét sted pr. linje: hvor det står, og
+  hvad der er forkert ved det nu. **Du retter ingenting**`.
+- Ingen ændring, ingen søgning: eget afsnit til sidst, med hvorfor.
+- Historik opregnes ikke: rapporterne under `docs/` og beslutningsloggen er
+  skrevet ud som undtagelser samtidig med at kode holdes ude.
+- Forbudslisten: se ovenfor.
+- Versionsnumre: ingen rørt. `node tools/validate.mjs` melder begge manifester
+  på `1.0.0-beta.22`, uændret.
+
+Søgestederne er skrevet som `CLAUDE.md`, `README.md`, filerne under `docs/` og
+projektets `AGENTS.md`, med `## Projektspecifikke afvigelser` fremhævet — det
+er en delmængde af projektets `AGENTS.md`, men nævnt for sig fordi den bevarede
+ordlyd er det svære sted at se en forældet sætning.
+
+`node tools/validate.mjs` kørt til sidst: OK, 11 skills, 7 agenter, 36
+markdown-filer.
+
 ### Hvad er ikke lavet, og hvorfor
+
+intet
+
 ### Uklart
+
+intet

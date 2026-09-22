@@ -141,7 +141,7 @@ Ikke kode. Og ikke rapporterne under `docs/` eller beslutningsloggen: de beskriv
 - Kaste projektets afvigelser væk, eller dets `with:`-blok.
 - Flytte et projekt mellem den kaldende og den standalone udgave af et workflow.
 - Skrive en kontrakt eller et workflow ud fra hukommelsen. Findes plugin'ets fil ikke, stopper du.
-- Opdatere hvis versionerne er ens.
+- Opdatere når plugin'ets version ikke er højere end projektets. Det gælder både når de er ens, og når plugin'ets er lavere.
 
 ## Lukning
 
