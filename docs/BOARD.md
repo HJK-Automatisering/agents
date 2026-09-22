@@ -21,7 +21,7 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
-| task-0001 | Workflow-skabelon: tag-trigger og synkronisering | planlagt | interview |
+| task-0001 | Workflow-skabelon: tag-trigger og synkronisering | i-gang | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
