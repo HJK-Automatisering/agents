@@ -10,6 +10,9 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-09-22 | task-0002 | Opgaven er bygget og sat afsluttet | Alle fem kriterier holder. Træet dækker begge slags kopier, stempelafsnittet nævner også workflow-stemplet og hvad der sker hvis bumpet glemmes, afprøvningsvejen virker med plugin'et installeret, fejlbilledet kan genkendes, og intet versionsnummer er rørt | architect |
+| 2026-09-22 | task-0002 | Engangskopien hedder agents-preview | Navnet ender i en kommando og i et kaldenavn, og kontrakten siger identifiers på engelsk. Afvist: agents-proeve, et dansk ord skrevet uden ø | architect |
+| 2026-09-22 | task-0002 | Overskriften Kontrakten driver bliver stående, selvom afsnittet nu dækker to stempler | Ingen anden fil henviser til den, og afsnittet er kort nok til at skimme. En omdøbning giver læseren ingenting | architect |
 | 2026-09-22 | task-0004 | Opgaven er bygget og sat afsluttet | Alle seks kriterier holder. Opregningen udløses kun af et ændret udløsningsvilkår, den siger hvor og hvad uden at rette, historik og kode er holdt ude, forbudslisten matcher nu de to trin den opsummerer, og intet versionsnummer er rørt | architect |
 | 2026-09-22 | task-0004 | Fundet om forbudslisten der kun nævner "ens", lægges i task-0004 | Samme fil, og opgaven er stadig planlagt, så definitionen kan udvides. Afvist: et femte nummer til én linje i en opsummerende liste | architect |
 | 2026-09-22 | task-0003 | Opgaven er bygget og sat afsluttet | Alle fire kriterier holder. Reglen står positivt formuleret begge steder der sammenlignes, en for gammel kontrakt standser ikke workflow-delen, hooken er urørt, og intet versionsnummer er ændret | architect |

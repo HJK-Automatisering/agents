@@ -18,7 +18,7 @@ agents/
         BOARD.md
         beslutningslog.md
       architect/              navet — den eneste samtalerolle i drift
-      update/                 opdaterer projektets kontrakt
+      update/                 opdaterer projektets kopier: kontrakt og workflows
       workflow/               valgfrie arbejdsgange, med assets/
       developer/  tester/  security/           ← tynde dispatch-skills
       reviewer/   debugger/  scout/  status/    ← tynde dispatch-skills
@@ -69,14 +69,33 @@ Begge skal bumpes ved en udgivelse.
 node tools/validate.mjs
 claude plugin validate ./plugins/agents
 claude plugin validate .
-claude --plugin-dir "<sti>/plugins/agents"
 ```
-
-Inde i sessionen skal `/context` vise de syv agenter under **Custom Agents**, og `/help` skal vise de elleve skills. Er der ændringer undervejs: `/reload-plugins`.
 
 `node tools/validate.mjs` er den samme kontrol som CI kører ved hvert push: manifesternes versioner, frontmatter i alle roller, agentnavne, kodeblokke og hooken. Den skal køres før versionen bumpes.
 
-Virker det med `--plugin-dir` men ikke efter installation, ligger fejlen i marketplacet — ikke i plugin'et.
+### Kør en uudgivet udgave i en session
+
+**`--plugin-dir` mod arbejdstræet virker ikke, når plugin'et allerede er installeret under samme navn.** Klienten står med to kandidater der begge hedder `agents`, og vælger selv hvilken den læser. Den 2026-09-22 blev kilden læst fra den installerede udgave i tre af fire forsøg.
+
+Sådan ser fejlen ud: kaldet svarer, helt som det plejer — men efter den installerede udgaves tekst. Der kommer ingen fejl og ingen advarsel, og ændringen i arbejdstræet ser bare ud til ikke at virke.
+
+Vejen der virker, er en engangskopi uden for repoet under et andet navn:
+
+1. Kopiér mappen `plugins/agents` ud af repoet, fx til `<sti uden for repoet>/agents-preview`.
+2. Ret `name` i kopiens `.claude-plugin/plugin.json` til `agents-preview`. Så er der kun én kandidat med det navn.
+3. Start klienten mod kopien:
+
+```
+claude --plugin-dir "<sti uden for repoet>/agents-preview"
+```
+
+Kaldene bærer det nye navn: `/agents-preview:architect` i stedet for `/agents:architect`. Det er samtidig kvitteringen for at det er kopien der læses.
+
+Inde i sessionen skal `/context` vise de syv agenter under **Custom Agents**, og `/help` skal vise de elleve skills.
+
+**Ret i repoet, ikke i kopien.** Har du rettet noget undervejs, kopierer du mappen ud igen og kører `/reload-plugins`. Kopien slettes bagefter; den er et prøveeksemplar, ikke et arbejdstræ.
+
+Virker det i kopien men ikke efter installation, ligger fejlen i marketplacet — ikke i plugin'et.
 
 ## Udgiv
 
@@ -182,6 +201,10 @@ Om managed settings også fjerner `install`-kommandoen er dokumentationen ikke e
 Derfor har kontrakten `kontrakt-version` i frontmatter. Den bumpes når en regel ændres — og SessionStart-hooken sammenligner projektets tal med plugin'ets og siger til når kopien er bagud.
 
 **`kontrakt-version` skal bumpes hver gang en regel i kontrakten ændres.** Glemmes det, siger hooken ingenting, og projekterne kører videre efter de gamle regler uden at nogen ser det. Det er den fejl der er sværest at opdage, fordi rollerne opfører sig konsekvent — bare efter det forkerte.
+
+**Workflows er kopier på samme måde.** `workflow` lægger dokumentet i `docs/workflows/` og selve filen i `.github/workflows/`, og de følger heller ikke med når plugin'et opdateres. Deres stempel hedder `skabelon-version` og står i workflow-dokumentets frontmatter. Hooken sammenligner det pr. fil, som den gør med kontrakten, og `update` henter den nye udgave ind.
+
+Glemmes bumpet, sker det samme som ovenfor: projekterne kører videre på en forældet arbejdsgang, og hverken hooken eller `update` kan se det. Hvornår de to stempler skal bumpes, og hvad `node tools/validate.mjs` advarer om, står i `CLAUDE.md`.
 
 Versionstjekket ligger i hooken og ikke i rollerne, så det findes ét sted i stedet for elleve der kan drive fra hinanden.
 
