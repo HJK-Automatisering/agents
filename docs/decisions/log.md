@@ -10,6 +10,10 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-09-22 | task-0005 | CI sætter udgivelsesmærket, ikke et trin i hånden | Det manuelle trin er glemt ved alle fjorten udgivelser, og et trin der skal huskes, er ikke en løsning på at det blev glemt. Afvist: trin otte i proceduren | architect |
+| 2026-09-22 | task-0005 | Kun fremad; de fjorten tidligere udgivelser mærkes ikke | Det er mekanismen der er i stykker, ikke historikken. Afvist: mærkning bagud, som er arkæologi — et bump-commit er ikke nødvendigvis det commit udgivelsen blev hentet fra | architect |
+| 2026-09-22 | task-0005 | Kun mærket, ingen udgivelsesside | `CHANGELOG.md` er allerede kanalen til udviklerne. Afvist: en GitHub Release med posten, som ville lægge samme tekst to steder og kræve at den rigtige sektion klippes ud | architect |
+| 2026-09-22 | task-0005 | Mærket hedder `v<version>`, og `contents: write` gives kun til det nye job | Kontraktens egne tag-eksempler bruger `v`-præfikset, og kontroljobbet skal blive ved med kun at læse | architect |
 | 2026-09-22 | task-0002 | Opgaven er bygget og sat afsluttet | Alle fem kriterier holder. Træet dækker begge slags kopier, stempelafsnittet nævner også workflow-stemplet og hvad der sker hvis bumpet glemmes, afprøvningsvejen virker med plugin'et installeret, fejlbilledet kan genkendes, og intet versionsnummer er rørt | architect |
 | 2026-09-22 | task-0002 | Engangskopien hedder agents-preview | Navnet ender i en kommando og i et kaldenavn, og kontrakten siger identifiers på engelsk. Afvist: agents-proeve, et dansk ord skrevet uden ø | architect |
 | 2026-09-22 | task-0002 | Overskriften Kontrakten driver bliver stående, selvom afsnittet nu dækker to stempler | Ingen anden fil henviser til den, og afsnittet er kort nok til at skimme. En omdøbning giver læseren ingenting | architect |

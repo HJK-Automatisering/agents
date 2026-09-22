@@ -21,6 +21,7 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
+| task-0005 | Udgivelser efterlader intet spor i historikken | planlagt | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -29,7 +30,6 @@ eller nummeret på den rapport opgaven kom af.>
 
 | Emne |
 |---|
-| Udgivelser tagges ikke i git; nummeret står kun i commit-beskeden |
 | Hookens navn dækker ikke dens fire ansvar |
 | Runtime-version står ikke i CLAUDE.md |
 | Fritstående workflow-kopier uden dokument får aldrig besked om at de er bagud |
