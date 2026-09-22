@@ -81,15 +81,15 @@ Sådan ser fejlen ud: kaldet svarer, helt som det plejer — men efter den insta
 
 Vejen der virker, er en engangskopi uden for repoet under et andet navn:
 
-1. Kopiér mappen `plugins/agents` ud af repoet, fx til `<sti uden for repoet>/agents-proeve`.
-2. Ret `name` i kopiens `.claude-plugin/plugin.json` til `agents-proeve`. Så er der kun én kandidat med det navn.
+1. Kopiér mappen `plugins/agents` ud af repoet, fx til `<sti uden for repoet>/agents-preview`.
+2. Ret `name` i kopiens `.claude-plugin/plugin.json` til `agents-preview`. Så er der kun én kandidat med det navn.
 3. Start klienten mod kopien:
 
 ```
-claude --plugin-dir "<sti uden for repoet>/agents-proeve"
+claude --plugin-dir "<sti uden for repoet>/agents-preview"
 ```
 
-Kaldene bærer det nye navn: `/agents-proeve:architect` i stedet for `/agents:architect`. Det er samtidig kvitteringen for at det er kopien der læses.
+Kaldene bærer det nye navn: `/agents-preview:architect` i stedet for `/agents:architect`. Det er samtidig kvitteringen for at det er kopien der læses.
 
 Inde i sessionen skal `/context` vise de syv agenter under **Custom Agents**, og `/help` skal vise de elleve skills.
 

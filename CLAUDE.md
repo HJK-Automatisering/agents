@@ -16,7 +16,7 @@ næste udgivelse.
 node tools/validate.mjs                     # alle kontroller, samme som CI
 claude plugin validate .                    # marketplace-manifestet
 claude plugin validate ./plugins/agents     # plugin-manifestet
-claude --plugin-dir "<sti>/agents-proeve"   # prøv af uden at udgive, se nedenfor
+claude --plugin-dir "<sti>/agents-preview"  # prøv af uden at udgive, se nedenfor
 node --check plugins/agents/hooks/detect-project-zero.cjs
 ```
 

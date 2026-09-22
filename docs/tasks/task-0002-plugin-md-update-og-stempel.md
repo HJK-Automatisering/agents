@@ -82,7 +82,7 @@ task-0001
 - `PLUGIN.md`, `## Prøv af før udgivelsen`: `claude --plugin-dir` er taget ud af
   kommandoblokken, og et nyt underafsnit `### Kør en uudgivet udgave i en
   session` beskriver engangskopien uden for repoet med et andet `name` i
-  manifestet, de tre trin, det ændrede kaldnavn `/agents-proeve:architect` og at
+  manifestet, de tre trin, det ændrede kaldnavn `/agents-preview:architect` og at
   kopien ikke er et arbejdstræ (punkt 3).
 - `PLUGIN.md`, samme afsnit: fejlbilledet står som eget afsnit — kaldet svarer
   som det plejer, men efter den installerede udgaves tekst, uden fejl eller
@@ -91,6 +91,9 @@ task-0001
 - `CLAUDE.md`: kommandolistens `--plugin-dir`-linje peger nu på kopien, og et
   kort afsnit under blokken siger hvorfor og henviser til `PLUGIN.md` (punkt 3
   og 4).
+- Engangskopien hedder `agents-preview` i begge filer — sti, `name`-værdi og
+  kaldenavn. Navnet er afgjort i tråden: det ender i en kommando og i et
+  kaldenavn, og kontrakten siger identifiers på engelsk.
 - Kun de to filer er ændret ud over denne opgavefil. Intet versionsnummer er
   rørt — hverken de to manifester, `kontrakt-version` eller `skabelon-version`
   (punkt 5). `node tools/validate.mjs` kører OK.
@@ -101,9 +104,4 @@ intet
 
 ### Uklart
 
-- Navnet `agents-proeve` på engangskopien er valgt af mig, fordi
-  fremgangsmåden ikke kan skrives uden et konkret navn. Er der et navn der
-  bruges i forvejen, er det ét søg-og-erstat i begge filer.
-- Overskriften `## Kontrakten driver` dækker nu også workflow-kopierne. Jeg har
-  ladet den stå, fordi opgaven kun nævner indholdet, og ingen anden fil henviser
-  til overskriften.
+intet
