@@ -1,7 +1,7 @@
 ---
 nummer: task-0003
 titel: Opdateringskaldet har ingen regel for en kilde der er ældre end projektets kopi
-status: planlagt
+status: i-gang
 kilde: interview
 oprettet: 2026-09-22
 ---
@@ -72,5 +72,38 @@ intet
 ## Developers noter
 
 ### Hvad er lavet
+
+- `plugins/agents/skills/update/SKILL.md`, del 1 trin 1: linjen "Er de ens, er
+  der intet at gøre" er erstattet af den positive betingelse — der skrives kun
+  når plugin'ets `kontrakt-version` er højere end projektets. En sætning dækker
+  både "ens" og "ældre". Kaldet skal sige hvilke to versioner det så, og at
+  kontrakten derfor bliver stående, så et manglende skriv ikke ligner en fejl.
+- Samme sted, andet afsnit: en ældre kontrakt i plugin'et er udtrykkeligt ikke
+  en fejl i projektet, rulles ikke tilbage, og standser ikke del 2 — med
+  begrundelsen at workflows bærer deres eget stempel og sammenlignes hver for
+  sig.
+- `plugins/agents/skills/update/SKILL.md`, del 2 trin 3: punktet "Er de ens"
+  er erstattet af samme positive betingelse for `skabelon-version`, med et
+  punkt mere om at et lavere stempel i plugin'et ikke er en fejl og ikke rulles
+  tilbage.
+- Formuleringen følger hooken `plugins/agents/hooks/detect-project-zero.cjs`,
+  der siger til på `vPlugin > vProjekt` og ellers tier. Hooken er ikke rørt.
+- `Færdig når`, punkt for punkt: ældre kilde giver intet skriv og en
+  begrundelse — ja, begge steder. Reglen står begge steder der sammenlignes —
+  ja, del 1 trin 1 og del 2 trin 3. En for gammel kontrakt stopper ikke del 2 —
+  ja, skrevet ind i del 1 trin 1. Ingen versionsnumre rørt — ja, diffen rammer
+  kun de to linjer i `SKILL.md` og denne fil.
+- `node tools/validate.mjs` kort til sidst: OK, 11 skills, 7 agenter, 36
+  markdown-filer, begge manifester på 1.0.0-beta.22.
+
 ### Hvad er ikke lavet, og hvorfor
+
+- Punktet "Opdatere hvis versionerne er ens" under `## Du må ikke` i samme fil
+  står uændret. Det er stadig sandt, men det nævner kun "ens" og ikke en ældre
+  kilde, så listen er nu mindre fuldstændig end de to trin den opsummerer.
+  Opgaven peger på linje 31 og linje 96, og en tredje linje er uden for den —
+  det er `architect`s afgørelse om den skal med.
+
 ### Uklart
+
+intet

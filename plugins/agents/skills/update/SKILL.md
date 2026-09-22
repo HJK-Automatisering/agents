@@ -28,7 +28,9 @@ Kan du ikke finde dem ad den vej, så søg efter `*/skills/kickoff/AGENTS.md` og
 
 Begge filer har `kontrakt-version` i frontmatter. Mangler projektets, er den version 1 — fra før versionsstemplet fandtes.
 
-Er de ens, er der intet at gøre. Sig det og gå videre til del 2.
+**Der skrives kun når plugin'ets version er højere end projektets.** Er de ens, eller er plugin'ets lavere, rører du ikke filen. Sig hvilke to versioner du så, og at kontrakten derfor bliver stående, og gå videre til del 2.
+
+At plugin'ets kontrakt er ældre end projektets, er ikke en fejl i projektet. Projektets kopi kan være lagt ind fra en nyere udgave end den der er installeret nu. Du ruller den ikke tilbage, og det standser ikke del 2 — workflows bærer deres eget stempel og sammenlignes hver for sig.
 
 ### 2. Tag projektets afvigelser til side
 
@@ -93,7 +95,8 @@ Et workflow kan findes i to udgaver, og de skal behandles forskelligt:
 Projektets kopi af dokumentet ligger i `docs/workflows/<navn>.md`. Sammenlign dets `skabelon-version` med plugin'ets.
 
 - **Mangler stemplet** i projektets kopi, er den version 1 — fra før stemplet fandtes.
-- **Er de ens,** sker der ingenting med det workflow. Sig det og gå videre til det næste.
+- **Der skrives kun når plugin'ets stempel er højere end projektets.** Er de ens, eller er plugin'ets lavere, sker der ingenting med det workflow. Sig hvilke to versioner du så, og gå videre til det næste.
+- **Et lavere stempel i plugin'et er ikke en fejl.** Projektets kopi kan komme fra en nyere udgave af plugin'et end den der er installeret nu. Du ruller den ikke tilbage.
 
 ### 4. Bevar projektets egne indstillinger
 
