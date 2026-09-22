@@ -1,12 +1,14 @@
 #!/usr/bin/env node
-// SessionStart-hook. Fire tjek:
-//   1. Er dette projekt nul? Udelukker de tre andre — beskeden beder
+// SessionStart-hook. Fem tjek:
+//   1. Er dette projekt nul? Udelukker de fire andre — beskeden beder
 //      allerede selv om .gitignore.
 //   2. Er projektets AGENTS.md bagud i forhold til plugin'ets?
 //   3. Er en kopi af et workflow i docs/workflows/ bagud?
-//   4. Mangler der en .gitignore?
-// 2, 3 og 4 kan optræde sammen. Tjek 4 er sikkerhed og må ikke tabe til de
-// to versionsbeskeder.
+//   4. Ligger der en workflow-fil fra plugin'et uden det dokument der bærer
+//      stemplet? Så kan udgaven ikke aflæses, og tjek 3 siger ingenting.
+//   5. Mangler der en .gitignore?
+// 2, 3, 4 og 5 kan optræde sammen. Tjek 5 er sikkerhed og må ikke tabe til de
+// tre øvrige beskeder.
 //
 // Skriver ren tekst til stdout, så Claude ser beskeden. SessionStart lægger
 // tekst der ikke starter med '{' direkte ind som kontekst, så JSON-indpakning
@@ -70,6 +72,49 @@ function mdFiler(mappe) {
   }
 }
 
+// Navnene på de workflow-filer der ligger i en mappe. Tom liste hvis mappen
+// ikke findes — et projekt uden .github/workflows er ikke en fejl.
+function yamlFiler(mappe) {
+  try {
+    return fs
+      .readdirSync(mappe, { withFileTypes: true })
+      .filter((e) => {
+        const n = e.name.toLowerCase();
+        return e.isFile() && (n.endsWith('.yaml') || n.endsWith('.yml'));
+      })
+      .map((e) => e.name);
+  } catch {
+    return [];
+  }
+}
+
+// Kendetegnet på at en workflow-fil er vores kopi: hovedet henviser til kilden
+// i plugin'et. Ved siden af står stien til det dokument der bærer stemplet.
+const ASSET_KILDE = 'plugins/agents/skills/workflow/assets/';
+const DOKUMENT_MAPPE = 'docs/workflows/';
+
+// Stien til det dokument en workflow-fil peger på, eller null hvis filen ikke
+// er vores kopi. De to stier læses som enkeltstående tokens: sætningen omkring
+// dem er ombrudt forskelligt i de to assets, så den kan ikke antages at stå
+// samlet på én linje. Står kilden uden en dokumentsti, gættes der ikke på en —
+// så er der intet at sige.
+function dokumentFor(sti) {
+  let indhold;
+  try {
+    indhold = fs.readFileSync(sti, 'utf8');
+  } catch {
+    return null;
+  }
+  let erKopi = false;
+  let dokument = null;
+  for (const token of indhold.split(/\s+/)) {
+    const t = token.replace(/^[`'"([]+/, '').replace(/[`'",.;:)\]]+$/, '');
+    if (t.includes(ASSET_KILDE)) erKopi = true;
+    else if (!dokument && t.startsWith(DOKUMENT_MAPPE) && t.endsWith('.md')) dokument = t;
+  }
+  return erKopi ? dokument : null;
+}
+
 function getCommitAntal(cwd) {
   try {
     const ud = execFileSync('git', ['-C', cwd, 'rev-list', '--count', 'HEAD'], {
@@ -120,6 +165,23 @@ function skabelonBagud(bagud) {
     '',
     'Sig det til brugeren, og foreslå `/agents:update` — den bringer både',
     'workflow-filen og dokumentet ajour og bevarer projektets egen `with`-blok.',
+  ].join('\n');
+}
+
+function udgaveUkendt(fund) {
+  const linjer = fund.map((f) => `  - ${f.fil} peger på ${f.dokument}, som ikke findes.`);
+  return [
+    'EN WORKFLOW-KOPI UDEN SIT DOKUMENT. Projektet har en workflow-fil fra plugin\'et,',
+    'men ikke det dokument der bærer dens stempel:',
+    '',
+    ...linjer,
+    '',
+    'Uden dokumentet kan det ikke aflæses hvilken udgave kopien er. Den kan være den',
+    'nuværende, og den kan være længe forældet — det kan ikke ses herfra, og derfor',
+    'siger versionstjekket heller ingenting om den.',
+    '',
+    'Sig det til brugeren, og foreslå `/agents:update` — den lægger dokumentet på',
+    'plads og bringer workflow-filen ajour.',
   ].join('\n');
 }
 
@@ -191,6 +253,20 @@ try {
       }
     }
     if (bagud.length > 0) beskeder.push(skabelonBagud(bagud));
+
+    // Mangler dokumentet, er der intet stempel at sammenligne, og tjekket
+    // ovenfor siger ingenting. Kopien kendes på henvisningen i filens hoved og
+    // ikke på filnavnet: et projekts eget workflow kan hedde det samme som
+    // vores, og det er ikke vores at melde om.
+    const projektFiler = path.join(cwd, '.github', 'workflows');
+    const udenDokument = [];
+    for (const navn of yamlFiler(projektFiler)) {
+      const dokument = dokumentFor(path.join(projektFiler, navn));
+      if (!dokument) continue;
+      if (findes(path.join(cwd, dokument))) continue;
+      udenDokument.push({ fil: '.github/workflows/' + navn, dokument });
+    }
+    if (udenDokument.length > 0) beskeder.push(udgaveUkendt(udenDokument));
 
     // Denne er sikkerhed og ikke hygiejne, så den må ikke tabe til en
     // versionsbesked. Alle kan stå på én gang.

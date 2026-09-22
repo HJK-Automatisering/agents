@@ -29,9 +29,8 @@ eller nummeret på den rapport opgaven kom af.>
 
 | Emne |
 |---|
-| Hookens navn dækker ikke dens fire ansvar |
+| Hookens navn og tællingen af dens tjek passer ikke til hvad den gør |
 | Runtime-version står ikke i CLAUDE.md |
-| Fritstående workflow-kopier uden dokument får aldrig besked om at de er bagud |
 
 <Den grove liste: hvad architect kan se der skal laves. **Ingen numre.**
 Et emne får først et nummer når interviewet har gjort det udførbart —
@@ -46,6 +45,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0003 | Opdateringskaldet har ingen regel for en kilde der er ældre end projektets kopi | bygget |
 | task-0004 | Opdateringskaldet opregner ikke de steder der stadig beskriver det gamle vilkår | bygget |
 | task-0005 | Udgivelser efterlader intet spor i historikken | bygget |
+| task-0006 | En workflow-kopi uden sit dokument er usynlig for hooken | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.

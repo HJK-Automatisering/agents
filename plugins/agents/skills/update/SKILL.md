@@ -77,7 +77,9 @@ Gør det i denne rækkefølge, ét workflow ad gangen.
 
 For hvert af plugin'ets workflow-dokumenter: læs `filer:`-feltet. Hver post har et `til:` — det er stien i projektet. Findes den fil, er workflowet lagt ind.
 
-**Gæt ikke på stier.** `filer:` er det eneste sted der ved hvor kopien havnede. Findes der ingen af filerne, har projektet ikke workflowet, og der er intet at gøre.
+**Kig også i projektets `.github/workflows/`.** Bærer en fil dér en henvisning til `plugins/agents/skills/workflow/assets/` i sit hoved, er den vores kopi — også selv om den ikke står i noget `til:`. Det er sådan den fritstående udgave findes, for den kopieres ikke automatisk og har derfor ingen post i `filer:`. Samme hoved siger hvilket dokument i `docs/workflows/` der hører til filen.
+
+**Gæt ikke på stier.** `til:` og henvisningen i filens hoved er de eneste steder der ved hvor kopien havnede og hvad dens dokument hedder. En fil uden den henvisning er ikke vores, uanset hvad den hedder. Findes der ingen af filerne, har projektet ikke workflowet, og der er intet at gøre.
 
 ### 2. Afgør hvilken udgave projektet har
 
@@ -98,6 +100,14 @@ Projektets kopi af dokumentet ligger i `docs/workflows/<navn>.md`. Sammenlign de
 - **Der skrives kun når plugin'ets stempel er højere end projektets.** Er de ens, eller er plugin'ets lavere, sker der ingenting med det workflow. Sig hvilke to versioner du så, og gå videre til det næste.
 - **Et lavere stempel i plugin'et er ikke en fejl.** Projektets kopi kan komme fra en nyere udgave af plugin'et end den der er installeret nu. Du ruller den ikke tilbage.
 
+**Findes workflow-filen, men ikke dokumentet, er udgaven ukendt.** Så er der intet stempel at sammenligne med, og du regner den ikke for version 1 — et manglende dokument betyder at ingen ved hvad kopien er, ikke at den er gammel. I det tilfælde:
+
+- **Versionsporten springes over.** Der skrives, uanset hvad plugin'ets stempel står på.
+- **Begge filer skrives**, som i trin 6: workflow-filen og dokumentet, der lægges på plads for første gang.
+- Trin 4 og 5 gælder uændret, og trin 5 er det der beskytter projektet i stedet for porten.
+
+Sig til brugeren at dokumentet manglede, og at udgaven derfor ikke kunne aflæses.
+
 ### 4. Bevar projektets egne indstillinger
 
 **I den kaldende udgave bevares `with:`-blokken i projektets kalder ordret.** Det er der projektets egne valg står — platforme, en Dockerfile der ligger et andet sted, et andet imagenavn. Alt andet i filen erstattes af plugin'ets udgave, **også `permissions:`.**
@@ -111,6 +121,8 @@ Projektets kopi af dokumentet ligger i `docs/workflows/<navn>.md`. Sammenlign de
 Er der ændringer uden for `with:`-blokken — et trin tilføjet, en action-version bumpet, en betingelse rettet — så **stop og vis dem.** Ét spørgsmål ad gangen: skal ændringen kasseres, eller skal opdateringen droppes for det workflow?
 
 Overskriv den ikke i tavshed. I standalone-udgaven især: der ejer projektet sine egne pins, og en lokal bumpet version kan være svaret på noget.
+
+**Er udgaven ukendt, fordi dokumentet manglede, er dette trin det eneste der står mellem projektets ændringer og en overskrivning.** Sammenlign hele filen med plugin'ets udgave, og stop ved den første forskel du ikke kan henføre til `with:`-blokken.
 
 ### 6. Skriv begge filer
 
@@ -142,6 +154,7 @@ Ikke kode. Og ikke rapporterne under `docs/` eller beslutningsloggen: de beskriv
 - Flytte et projekt mellem den kaldende og den standalone udgave af et workflow.
 - Skrive en kontrakt eller et workflow ud fra hukommelsen. Findes plugin'ets fil ikke, stopper du.
 - Opdatere når plugin'ets version ikke er højere end projektets. Det gælder både når de er ens, og når plugin'ets er lavere.
+  **Én undtagelse:** findes workflow-filen uden sit dokument i `docs/workflows/`, er udgaven ukendt, og der er ikke noget stempel at måle på. Så skrives begge filer alligevel. Se del 2, trin 3.
 
 ## Lukning
 

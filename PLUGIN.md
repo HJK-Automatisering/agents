@@ -206,6 +206,10 @@ Derfor har kontrakten `kontrakt-version` i frontmatter. Den bumpes når en regel
 
 Glemmes bumpet, sker det samme som ovenfor: projekterne kører videre på en forældet arbejdsgang, og hverken hooken eller `update` kan se det. Hvornår de to stempler skal bumpes, og hvad `node tools/validate.mjs` advarer om, står i `CLAUDE.md`.
 
+**Findes workflow-filen uden sit dokument, er der intet stempel at sammenligne**, og sammenligningen ovenfor ville tie. Derfor har hooken et tjek mere: for hver `.yaml`- og `.yml`-fil i projektets `.github/workflows/` læser den filens hoved. Henviser det til `plugins/agents/skills/workflow/assets/`, er filen vores kopi, og samme hoved siger hvilket dokument i `docs/workflows/` der hører til. Mangler det dokument, siger hooken at udgaven ikke kan aflæses — ikke at kopien er bagud, for det kan ikke vides — og peger på `/agents:update`, som lægger dokumentet på plads.
+
+Kopien kendes på henvisningen og ikke på filnavnet, så et projekts eget workflow der tilfældigvis hedder det samme som vores, ikke udløser noget. Prisen er at en kopi hvor hovedet er fjernet, forbliver usynlig. `node tools/validate.mjs` håndhæver derfor at begge stier står i hver asset under `plugins/agents/skills/workflow/assets/` — fjernes de i en oprydning, fejler kontrollen frem for at gøre hooken blind.
+
 Versionstjekket ligger i hooken og ikke i rollerne, så det findes ét sted i stedet for elleve der kan drive fra hinanden.
 
 ## Fælden: dobbelte rollefiler
