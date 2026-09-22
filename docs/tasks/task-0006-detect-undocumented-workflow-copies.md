@@ -1,7 +1,7 @@
 ---
 nummer: task-0006
 titel: En workflow-kopi uden sit dokument er usynlig for hooken
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-09-22
 ---
