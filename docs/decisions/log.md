@@ -10,6 +10,8 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-09-22 | — | Næste udgivelse hedder 1.0.0, ikke 1.0.1 | Betaserien er forhåndsudgivelser af netop det tal, og 1.0.0 er aldrig udgivet — der findes ingen git-tags. Afvist: 1.0.1, som ville rette en udgivelse der ikke findes | architect |
+| 2026-09-22 | — | kontrakt-version bumpet 18 → 19 | Tabellen over hvem der skriver hvor, er ændret, og den er en regel. Efter merge advarer kontrollen ikke længere, så beslutningen kunne ikke udskydes | architect |
 | 2026-09-22 | task-0001 | En standalone-kopi med lokale ændringer opdateres ikke af kaldet; det stopper og viser forskellen | Projektet ejer selv sine fastlåste action-versioner i den udgave. Afvist: at bevare pin-linjerne og erstatte resten — en opblødning bliver sit eget nummer hvis stoppet gør ondt | architect |
 | 2026-09-22 | task-0001 | Rækken om :main i tag-tabellen står urettet | Efterprøvet i det genbrugelige workflow, som er offentligt: type=ref,event=branch er der stadig, og manuel kørsel pusher. Beskrivelsen er altså rigtig | architect |
 | 2026-09-22 | task-0001 | Opgaven er bygget og sat afsluttet | Alle ti kriterier holder. Triggeren er tag-only i begge assets, stemplet står på 2, hooken og validate.mjs kontrollerer det, og intet versionsnummer er rørt | architect |
