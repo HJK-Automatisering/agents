@@ -245,6 +245,20 @@ hvad den næste bliver og hvorfor netop det led, vis linjerne, og spørg. Regler
 for `x.y.z`, for betaer og for rækkefølgen med `CHANGELOG.md` står i kontraktens
 `## Udgivelser og versionsnumre`. Ja'et er en engangsting, som ved push.
 
+**Bygger projektet på tags, skal tagget siges højt først.** Kig i
+`.github/workflows/` efter et workflow der kun udløses af `push:` med `tags:` —
+`docker-publish` er sådan et. Findes der et, og har repoet ingen tags i forvejen,
+så sig det **før** du tilbyder nummeret: uden et tag bygges der aldrig et image,
+og udgivelsen bliver et tal i en fil som intet kører på. Der kommer ingen fejl
+der fortæller det; jobbet udebliver bare.
+
+Er det tilfældet, hører de to linjer med i blokken, efter push:
+
+```bash
+git tag v0.2.0
+git push origin v0.2.0
+```
+
 Udrulning er stadig ikke din. Den gør mennesket.
 
 ### 9. Skriv i loggen, og luk tråden
