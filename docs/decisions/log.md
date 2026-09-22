@@ -10,6 +10,7 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-09-22 | task-0004 | Opgaven er bygget og sat afsluttet | Alle seks kriterier holder. Opregningen udløses kun af et ændret udløsningsvilkår, den siger hvor og hvad uden at rette, historik og kode er holdt ude, forbudslisten matcher nu de to trin den opsummerer, og intet versionsnummer er rørt | architect |
 | 2026-09-22 | task-0004 | Fundet om forbudslisten der kun nævner "ens", lægges i task-0004 | Samme fil, og opgaven er stadig planlagt, så definitionen kan udvides. Afvist: et femte nummer til én linje i en opsummerende liste | architect |
 | 2026-09-22 | task-0003 | Opgaven er bygget og sat afsluttet | Alle fire kriterier holder. Reglen står positivt formuleret begge steder der sammenlignes, en for gammel kontrakt standser ikke workflow-delen, hooken er urørt, og intet versionsnummer er ændret | architect |
 | 2026-09-22 | task-0004 | Kaldet skal opregne de steder der stadig beskriver det gamle udløsningsvilkår | Ingen fejl siger det, og kaldet er den eneste rolle der står i projektet med begge vilkår i hovedet. Snævert: kun når vilkåret har ændret sig, og kun som opregning. Afvist: at lede ved hver opdatering, og at lade rollen rette | architect |

@@ -1,7 +1,7 @@
 ---
 nummer: task-0004
 titel: Opdateringskaldet opregner ikke de steder der stadig beskriver det gamle vilkår
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-09-22
 ---
