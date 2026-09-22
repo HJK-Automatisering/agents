@@ -21,7 +21,6 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
-| task-0005 | Udgivelser efterlader intet spor i historikken | planlagt | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -46,6 +45,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0002 | Vedligeholdelsesdokumentet kender kun kontraktens stempel, og afprøvningsvejen er forkert | bygget |
 | task-0003 | Opdateringskaldet har ingen regel for en kilde der er ældre end projektets kopi | bygget |
 | task-0004 | Opdateringskaldet opregner ikke de steder der stadig beskriver det gamle vilkår | bygget |
+| task-0005 | Udgivelser efterlader intet spor i historikken | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.

@@ -1,7 +1,7 @@
 ---
 nummer: task-0005
 titel: Udgivelser efterlader intet spor i historikken
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-09-22
 ---
