@@ -17,6 +17,29 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## Næste udgivelse
+
+Kontrakt-version 19 → 20. **Kør `/agents:update` i hvert projekt.**
+
+### Kommandoer til mennesket står samlet i én blok
+
+Reglen fra beta.22 blev læst forkert. Den åbnede med *én kommando pr. linje*,
+og rollerne begyndte at give hver kommando sin egen blok — fem linjer til en
+merge blev til fem blokke, der skulle kopieres hver for sig.
+
+Det var aldrig meningen. Blokken var tilladt, men kun i en bisætning, og
+klienten beder selv om én kommando pr. blok. Den bisætning tabte.
+
+Sjette regel under `### Til mennesket: chatten` er skrevet om: kommandoer der
+hører sammen, står i **én blok, én pr. linje**. Blokken er ønsket, ikke bare
+tilladt — også når klienten foreslår andet. Forbuddet mod `&&`, `;` og `cd`
+står uændret.
+
+Grunden står nu konkret: mennesket arbejder i PowerShell, og Windows
+PowerShell 5.1 kender ikke `&&`. `architect`s trin 8 siger det samme.
+
+---
+
 ## 1.0.0-beta.23
 
 Kontrakt-version 18 → 19, og workflow-skabelonen `docker-publish` 1 → 2.
