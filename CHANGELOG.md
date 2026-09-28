@@ -17,7 +17,7 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
-## Næste udgivelse
+## 1.0.0-beta.24
 
 Kontrakt-version 19 → 20. **Kør `/agents:update` i hvert projekt.**
 
