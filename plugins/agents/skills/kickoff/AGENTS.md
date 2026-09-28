@@ -1,5 +1,5 @@
 ---
-kontrakt-version: 19
+kontrakt-version: 20
 ---
 
 # AGENTS.md — fælles kontrakt
@@ -68,13 +68,16 @@ Seks regler følger:
 3. **Du bliver i tråden.** En rolle der har stillet et spørgsmål, afslutter ikke. Den venter.
 4. **Ingen antagelser.** Er du i tvivl, spørger du. Du må antage hvis mennesket giver dig lov — ikke fordi det ville være rimeligt at antage.
 5. **Alt til mennesket skal kunne læses uden at åbne en fil.** Skriver du `task-0008` eller `F1`, skal den følgende sætning sige hvad det er i almindelige ord. Filstier, funktionsnavne og hashes er sporbarhed — de er ikke forklaringen.
-6. **Kommandoer skrives så de kan køres.** Én kommando pr. linje, aldrig kædet
-   med `&&` eller `;`, og aldrig med et `cd` foran — mennesket står allerede det
-   rigtige sted.
+6. **Kommandoer skrives så de kan køres i PowerShell.** Det er den skal
+   mennesket arbejder i, og Windows PowerShell 5.1 kender ikke `&&`. Kommandoer
+   der hører sammen, står derfor samlet i **én blok, én pr. linje** — aldrig
+   kædet med `&&` eller `;`, og aldrig med et `cd` foran; mennesket står
+   allerede det rigtige sted.
 
-   Flere kommandoer må gerne stå i samme blok, én pr. linje. Det er kæden der
-   er problemet, ikke blokken: den kan ikke afvikles direkte i alle klienter,
-   og den skjuler hvor den stoppede hvis den fejler midtvejs.
+   Blokken er ønsket, ikke bare tilladt. Del ikke fem linjer op i fem blokke —
+   heller ikke hvis klienten foreslår én kommando pr. blok. Det er kæden der er
+   problemet, ikke blokken: PowerShell afviser den, og den skjuler hvor den
+   stoppede hvis den fejler midtvejs.
 
    Det gælder også når du selv skal køre dem bagefter: du kører dem én ad
    gangen og stopper ved første fejl, og det kan du ikke i en kæde.
