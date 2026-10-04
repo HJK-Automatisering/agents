@@ -1,7 +1,7 @@
 ---
 nummer: task-0007
 titel: Caller-skabelon og compose-regler efter workflow v1.2.0
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-10-04
 ---
