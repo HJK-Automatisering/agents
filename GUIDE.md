@@ -331,9 +331,11 @@ For koden:
 
 Ingen roller nævner workflows af sig selv. Vil du have et, kalder du det — og det kan du gøre når som helst, også på et projekt der har kørt i et halvt år.
 
-I dag findes **`docker-publish`**: bygger og publicerer et container-image til GitHub Packages når du pusher et versionstag som `v1.2.3`, signerer det, og giver dig et immutabelt `:sha-`tag at rulle tilbage til. Almindelige commits bygger ikke — tagger du aldrig, sker der aldrig noget, og der kommer ingen fejl der siger det.
+I dag findes **`docker-publish`**, en kalder med tre jobs. *Lint* holder `deploy/docker-compose.yml` op mod et sæt faste regler i hver pull request — ingen `build:`, ingen `:latest`, ingen værdier under `environment:`, ingen åbne porte, og så videre; reglerne står i workflow-dokumentet, der lægges i `docs/workflows/`. *Build* bygger og publicerer et container-image til GitHub Packages når du pusher et versionstag som `v1.2.3`, signerer det, og nægter at bygge et versionstag der allerede findes. *Deploy* skriver den nye version ind i compose-filen på `main`, og Portainer udruller den ved næste poll. Almindelige commits bygger ikke — tagger du aldrig, sker der aldrig noget, og der kommer ingen fejl der siger det.
 
-Vælger du det: **din `Dockerfile` skal tage imod `APP_VERSION` og `GIT_SHA`** som `ARG` og logge dem ved opstart. Ellers virker workflowet, men logvisningen kan ikke fortælle hvilken build der kører.
+Vælger du det: **din `Dockerfile` skal tage imod `APP_VERSION` og `GIT_SHA`** som `ARG` og logge dem ved opstart. Ellers virker workflowet, men logvisningen kan ikke fortælle hvilken build der kører. Og **compose-filen lintes lokalt før en pull request** — scriptet ligger i det fælles workflow-repo, og dokumentet siger hvordan. En compose-fil der bryder en regel, giver en rød release, og det er lettere at se på sin egen maskine først.
+
+Tilbagerulning er `git revert` af den commit deploy-jobbet lavede. Det forrige image ligger stadig i registryet og er præcis det der kørte.
 
 ## Gennemspillet: en lille eksport-funktion
 
