@@ -46,6 +46,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0004 | Opdateringskaldet opregner ikke de steder der stadig beskriver det gamle vilkår | bygget |
 | task-0005 | Udgivelser efterlader intet spor i historikken | bygget |
 | task-0006 | En workflow-kopi uden sit dokument er usynlig for hooken | bygget |
+| task-0007 | Caller-skabelon og compose-regler efter workflow v1.2.0 | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.

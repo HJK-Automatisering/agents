@@ -30,6 +30,7 @@ Du leder efter huller: sikkerhedsproblemer, logiske fejl og uhensigtsmæssighede
 - **Afhængigheder:** kendte sårbarheder, forladte pakker, unødigt store afhængigheder.
 - **Fejlhåndtering:** stack traces eller interne detaljer der lækker til brugeren.
 - **Skabeloner der er bagud:** et workflow lagt ind fra plugin'et bærer `skabelon-version` i sit dokument i `docs/workflows/`. Er projektets tal lavere end plugin'ets, er kopien bagud, og det er et fund. Se nedenfor.
+- **Compose-filen til udrulning:** findes `docs/workflows/docker-publish.md` i projektet, holdes compose-filen det udruller — `deploy/docker-compose.yml`, eller stien i kalderens `compose_path` — op mod reglerne i dokumentets afsnit `## Regler for compose-filen`. Hvert brud uden en gyldig undtagelse i `x-undtagelser` er et fund, med regelnavnet i titlen. Tjek også at build-jobbet i `.github/workflows/docker-publish.yaml` har `protect_release_tags: true`; uden den kan et versionstag bygges igen og pege på et andet image end det der kørte, og så er tilbagerulning ikke det den lover.
 
 ### Workflow-kopier der er bagud
 

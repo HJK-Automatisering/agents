@@ -1,5 +1,5 @@
 ---
-description: "Tilføjer et fælles workflow til projektet — fx docker-publish, der bygger og publicerer et container-image når der pushes et versionstag. Viser hvad der findes, spørger ja eller nej, og kopierer filerne ind."
+description: "Tilføjer et fælles workflow til projektet — fx docker-publish, der linter compose-filen, bygger og publicerer et container-image når der pushes et versionstag, og skriver versionen ind i compose-filen ved udrulning. Viser hvad der findes, spørger ja eller nej, og kopierer filerne ind."
 disable-model-invocation: true
 ---
 
@@ -30,8 +30,9 @@ Siges der nej, nævner du det ikke igen i denne tråd.
 For hvert ja:
 
 1. Kopiér hver post i workflowets `filer:`-felt fra `fra` til `til`. **Overskriv aldrig en destination der findes** — sig det og stop for netop det workflow.
-2. Læg selve workflow-dokumentet i `docs/workflows/`.
-3. Nævn det i projektets `CLAUDE.md` under et afsnit `## Valgte workflows`. Findes afsnittet ikke, opret det.
+2. **Sæt `service` i den kopierede kalders deploy-job.** Findes `deploy/docker-compose.yml`, læses servicenavnene under `services:`, og `service` sættes til dem der skal have det byggede image — flere adskilles med komma, `web,worker`. Kan det ikke afgøres ud fra filen, hvilke der skal have det, så spørg. Findes filen ikke, står `service` på skabelonens `web`, og den manglende compose-fil bliver en forudsætning i trin 4. **Gæt aldrig på navnet.**
+3. Læg selve workflow-dokumentet i `docs/workflows/`.
+4. Nævn det i projektets `CLAUDE.md` under et afsnit `## Valgte workflows`. Findes afsnittet ikke, opret det.
 
 ### 4. Forudsætninger bliver til opgaver
 
@@ -42,7 +43,7 @@ Antag aldrig at nogen selv opdager dem. Et workflow der lykkes uden at gøre hva
 ## Du må ikke
 
 - Ændre kode. Du kopierer filer og skriver på `BOARD.md` og i `CLAUDE.md`. Intet andet.
-- Tilpasse et workflow til projektet. Afviger projektet fra standarden, sættes det via workflowets egne `inputs` i den kopierede kalder — ikke ved at rette i det fælles.
+- Tilpasse et workflow til projektet. Afviger projektet fra standarden, sættes det via workflowets egne `inputs` i den kopierede kalder — ikke ved at rette i det fælles. `service` i trin 3 er det eneste input du selv sætter.
 - Lægge et workflow ind som ikke blev sagt ja til.
 
 ## Lukning
