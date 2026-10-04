@@ -1,23 +1,26 @@
 name: Docker
 
-# Kalder det genbrugelige workflow i Workflow-repoet. Selve bygningen,
-# tagging-reglerne og de SHA-pinnede actions bor der, så de kan bumpes ét sted.
+# Kalder de genbrugelige workflows i HJK-Automatisering/workflow. Selve
+# bygningen, tagging-reglerne, signeringen og de SHA-pinnede actions bor der,
+# så de kan bumpes ét sted.
 #
-# Skal du afvige fra standarden, så kommentér `with`-blokken ind nedenfor.
+# Skal du afvige fra standarden, så kommentér `with`-blokken ind under build.
 # Ret ikke i det genbrugelige workflow for at løse et enkelt projekts behov —
 # tilføj i stedet et input der.
 #
 # Filen er en kopi fra plugin'et `agents`, lagt ind af `/agents:workflow`:
 # plugins/agents/skills/workflow/assets/docker-publish.yaml. Hvilken udgave
 # kopien er, står som `skabelon-version` i docs/workflows/docker-publish.md.
-# `/agents:update` bringer begge filer ajour og bevarer `with`-blokken —
-# ret derfor helst ikke andet end den her.
+# `/agents:update` bringer begge filer ajour og bevarer projektets egne
+# indstillinger under `with` i hvert job; `service` i deploy-jobbet er
+# projektets. Ret derfor helst ikke andet end dem her.
 
 on:
   push:
     # Kun udgivelser bygger. Et commit i en markdown-fil skal ikke koste en ny
     # digest i GHCR, en post i den offentlige Rekor-log og et tag der flytter
-    # sig uden at noget er ændret. Uden et tag bygges der aldrig.
+    # sig uden at noget er ændret. Uden et tag bygges der aldrig — og derfor
+    # kan deploy-commit'en nedenfor heller aldrig udløse en ny bygning.
     tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ "main" ]
@@ -35,7 +38,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  publish:
+  lint:
+    # Linter deploy/docker-compose.yml mod reglerne i HJK-Automatisering/workflow
+    # (README, "Regler for compose-filen"). Kører ved alle tre triggere — uden
+    # stifilter, fordi et filter pr. job kræver en tredjeparts-action, og
+    # kørslen tager sekunder. Ved tag-push er filen allerede på main; der
+    # linter deploy-jobbet den en gang til før sin commit.
+    uses: HJK-Automatisering/workflow/.github/workflows/compose-lint.yaml@v1
+
+    # Lint læser kun. Skal stå her af samme grund som under build.
+    permissions:
+      contents: read
+
+    # with:
+    #   compose_path: deploy/docker-compose.yml   # standard; ret kun hvis filen ligger et andet sted
+
+  build:
     uses: HJK-Automatisering/workflow/.github/workflows/docker-publish.yaml@v1
 
     # Skal stå her. Et genbrugeligt workflow kan ikke give sig selv flere
@@ -49,15 +67,52 @@ jobs:
     # GITHUB_TOKEN følger automatisk med. `secrets: inherit` er ikke nødvendigt
     # og bør ikke tilføjes — det giver det kaldte workflow adgang til alt.
 
-    # with:
-    #   # Kun hvis noget faktisk kører på arm. Bygger ellers under QEMU for ingenting.
-    #   platforms: linux/amd64,linux/arm64
-    #   # Hvis Dockerfilen ikke ligger i roden.
-    #   dockerfile: ./src/Dockerfile
-    #   context: ./src
-    #   # Andet imagenavn end <org>/<repo>.
-    #   image_name: hjk-automatisering/mit-image
-    #   # ADVARSEL: build-args kan læses af alle der kan pulle imaget.
-    #   # Aldrig tokens, adgangskoder eller forbindelsesstrenge her.
-    #   extra_build_args: |
-    #     FEATURE_FLAG=true
+    with:
+      # Versionstags overskrives aldrig. Findes :1.2.3 allerede i GHCR, nægter
+      # build-jobbet at bygge — tag en ny version i stedet. Compose-filen peger
+      # på tagget, og tilbagerulning hviler på at det altid er samme image.
+      protect_release_tags: true
+      # # Kun hvis noget faktisk kører på arm. Bygger ellers under QEMU for ingenting.
+      # platforms: linux/amd64,linux/arm64
+      # # Hvis Dockerfilen ikke ligger i roden.
+      # dockerfile: ./src/Dockerfile
+      # context: ./src
+      # # Andet imagenavn end <org>/<repo>.
+      # image_name: hjk-automatisering/mit-image
+      # # ADVARSEL: build-args kan læses af alle der kan pulle imaget.
+      # # Aldrig tokens, adgangskoder eller forbindelsesstrenge her.
+      # extra_build_args: |
+      #   FEATURE_FLAG=true
+
+  deploy:
+    needs: build
+    # Grov sortering: kun tags, og kun når der faktisk blev pushet et image
+    # (digest er tom på pull_request). Den præcise kontrol af vX.Y.Z ligger i
+    # deploy-update, som afslutter grønt uden ændring for fx v1.2.3-rc1.
+    if: startsWith(github.ref, 'refs/tags/v') && needs.build.outputs.digest != ''
+    uses: HJK-Automatisering/workflow/.github/workflows/deploy-update.yaml@v1
+
+    # contents: write til commit på main. packages: read fordi pakkerne er
+    # private; uden login ligner en 401 en manglende signatur. Verifikation
+    # med cosign kræver ikke id-token.
+    permissions:
+      contents: write
+      packages: read
+
+    # Én udrulning ad gangen pr. repo, og en igangværende må ikke aflyses —
+    # ellers kan en commit til main blive afbrudt midt i et push. Bemærk at
+    # GitHub kun holder én ventende kørsel i gruppen: kommer der tre releases
+    # hurtigt efter hinanden, springes den midterste over, og compose-filen
+    # ender på den sidste.
+    concurrency:
+      group: deploy-${{ github.repository }}
+      cancel-in-progress: false
+
+    with:
+      # Navnet på servicen under services: i deploy/docker-compose.yml.
+      # Flere services fra samme image skrives med komma: web,worker.
+      service: web
+      image: ${{ needs.build.outputs.image }}
+      digest: ${{ needs.build.outputs.digest }}
+      version: ${{ needs.build.outputs.version }}
+      # compose_path: deploy/docker-compose.yml   # standard; ret kun hvis filen ligger et andet sted
