@@ -164,7 +164,8 @@ function skabelonBagud(bagud) {
     'i plugin\'et — og det kan udløses af noget andet end kopien lover.',
     '',
     'Sig det til brugeren, og foreslå `/agents:update` — den bringer både',
-    'workflow-filen og dokumentet ajour og bevarer projektets egen `with`-blok.',
+    'workflow-filen og dokumentet ajour og bevarer projektets egne indstillinger',
+    'under `with` i hvert job.',
   ].join('\n');
 }
 
