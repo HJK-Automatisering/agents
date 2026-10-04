@@ -1,7 +1,7 @@
 ---
 nummer: task-0007
 titel: Caller-skabelon og compose-regler efter workflow v1.2.0
-status: planlagt
+status: i-gang
 kilde: interview
 oprettet: 2026-10-04
 ---
@@ -231,5 +231,39 @@ intet
 developer, som aldrig retter i definitionen ovenfor.>
 
 ### Hvad er lavet
+
+Gren `task-0007-workflow-v1-2-0-caller`, ni commits. Holdt op mod *Færdig når*:
+
+- **Kalderen med tre jobs** — `plugins/agents/skills/workflow/assets/docker-publish.yaml`. README-eksemplet fra `origin/main` i workflow-repoet (v1.2.0) linje for linje. `diff` mod README-blokken viser præcis to forskelle: hovedkommentaren om kilden med begge stier, og kommentarlinjen over `service` om `web,worker` (bedt om under *Kalderen*, se *Uklart*). Jobbet hedder `build`.
+- **Build nægter at bygge et eksisterende versionstag** — `protect_release_tags: true` står aktivt under `with` i build-jobbet, med README's kommentar. De valgfrie inputs står udkommenteret som før.
+- **Deploy kun ved tag og bygget image, én ad gangen, flere services** — `needs: build`, `if: startsWith(github.ref, 'refs/tags/v') && needs.build.outputs.digest != ''`, egen `concurrency` med `deploy-${{ github.repository }}` og `cancel-in-progress: false`, `permissions` `contents: write` og `packages: read`, `with` med `service`, `image`, `digest`, `version` og `compose_path` udkommenteret.
+- **Lint ved alle tre udløsere, kun læseadgang, intet `if`** — `lint`-jobbet kalder `compose-lint.yaml@v1` med `contents: read`, uden `if`, med `compose_path` udkommenteret.
+- **De seksten regler med samme navne og udfald** — `plugins/agents/skills/workflow/docker-publish.md`, nyt afsnit `## Regler for compose-filen`. Tabellen er kopieret ordret fra README (`diff` identisk), og regelnavnene i samme rækkefølge som `REGLER` i `scripts/compose_lint.py` (efterprøvet med `diff`). Forrangen `hemmelighed` over `env-vaerdi` og `docker-sock` over `bind-mount` står under tabellen. `### Undtagelser` med de fem felter, udfaldene og det generiske eksempel `<andet-system>_default`; en committet `.env`/`stack.env` kan ikke undtages.
+- **Hverken `stack.env` eller `env_file` som noget der bruges** — de tre omtaler i dokumentet siger alle at de ikke findes, ikke bruges eller ikke må committes. `.env.example` er nævnt som fint.
+- **Lint lokalt før PR, og security mod reglerne** — `### Lokal kørsel` med de tre PowerShell-linjer i én blok, ingen `&&`, scriptet i workflow-repoets eget `.venv`. `## Hvem gør hvad`: `architect` skriver services i `service` og `git revert`-tilbagerulning; `developer` kører lint lokalt før PR og skriver resultatet i noterne; `security` holder compose-filen op mod reglerne og tjekker `protect_release_tags`; `reviewer` rører ikke workflow-filer.
+- **Ingen interne navne** — pladsholdere `<org>`, `<app>`, `<alias>`, `<app-repo>`, `<andet-system>_default`. `nginx-proxy-manager_default` står fire gange som den tilladte undtagelse. `hjk-automatisering/mit-image` i kalderen er README's egen linje.
+- **Besked ved sessionsstart om en kopi der er bagud** — `skabelon-version: 3` i dokumentet. Hooken kørt mod et testprojekt i skrabemappen med kopien på version 2: beskeden *ET WORKFLOW ER BAGUD* kom med den nye tekst. Med version 3: ingen udskrift. Testprojekterne er fjernet igen.
+- **Opdateringskaldet pr. job, uden gæt på `service`, med skabelonens nye linjer** — `plugins/agents/skills/update/SKILL.md`, del 2, trin 4 omskrevet til tre punkter: pr. job bevares projektets aktive `with`-nøgler, skabelonens kommer med, projektets værdi vinder; `service` er projektets, og mangler deploy-jobbet, spørges der med forslag fra `deploy/docker-compose.yml`; jobnavne er skabelonens, `publish` bliver `build` uden stop. `permissions:` erstattes i hvert job.
+- **Stop ved jobs skabelonen ikke har** — trin 5 har fået et afsnit: `publish` er ikke et ekstra job, men to deploy-jobs med hver sin `service` på samme image er; vis dem, foreslå én `service`-liste, valget er menneskets. Rapport-afsnittet har fået et afsnit om at sige det nye højt når workflowet gør noget nyt uden at udløses af noget nyt, med `docker-publish` 2→3 som det konkrete tilfælde: commit til `main` ved release, rød release på reglerne, pegning på `## Regler for compose-filen`.
+- **Workflow-skillen sætter `service` eller spørger** — `plugins/agents/skills/workflow/SKILL.md`: `description` nævner lint og at versionen skrives ind ved udrulning; trin 3 har fået punkt 2 om at læse `services:` i `deploy/docker-compose.yml`, sætte `service` kommasepareret, spørge hvis det ikke kan afgøres, og lade `web` stå og gøre filen til en forudsætning hvis den mangler.
+- **Vejledningen passer** — `GUIDE.md`, `## Workflows`: de tre jobs, reglerne i korte træk, lint lokalt før en pull request, tilbagerulning med `git revert`.
+- **Repoets egen kontrol ren** — `node tools/validate.mjs` giver `OK` uden advarsler; `node --check plugins/agents/hooks/detect-project-zero.cjs` er stille.
+- **Kun `skabelon-version` ændret** — `git diff main..HEAD` mod begge manifester, `CHANGELOG.md`, begge `AGENTS.md`, standalone-filen, `tools/`, `PLUGIN.md` og `README.md` er tom. Stemplet er 2 → 3.
+
+Desuden i opgavens tabel: `plugins/agents/hooks/detect-project-zero.cjs` — kun teksten i `skabelonBagud`, nu "projektets egne indstillinger under `with` i hvert job". `plugins/agents/agents/security.md` — ét nyt punkt i gennemgangslisten med compose-filen mod reglerne og `protect_release_tags`.
+
+Dokumentet i øvrigt, som beskrevet under *Dokumentet*: `formål` dækker lint, bygning og udrulning; åbningen siger tre jobs og at udrulningen er en commit på `main` som Portainer opdager ved næste poll uden webhook; tag-tabellen står uændret; forudsætninger 10-12 om compose-fil, Git-stack og ubeskyttet `main` med henvisning til README-afsnittet *Hvis `main` beskyttes*; tre input-tabeller; afsnittet om stemplet under *Vedligeholdelse* uændret; referencen nederst med `<app>` og `<alias>`.
+
 ### Hvad er ikke lavet, og hvorfor
+
+- **Workflow-skillen og opdateringskaldet er ikke prøvet ved kørsel.** Begge er samtaleskills der kører i menneskets tråd og spørger undervejs; som agent kan jeg ikke køre dem. Teksten er skrevet efter opgaven og læst igennem for modsigelser mod kalderen og dokumentet, men at kaldet faktisk fletter en version 2-kalder rigtigt, er ikke efterprøvet. Det hører til en kørsel i et projekt med den gamle kopi.
+
 ### Uklart
+
+1. **Kommentarlinjen om `web,worker` i kalderen.** *Kalderen* beder om den ("kommentaren over den siger at flere services fra samme image skrives `web,worker`"), men *Efterprøvning* siger at eneste tilladte forskel fra README-eksemplet er hovedkommentaren om kilden. De to kan ikke begge holde. Jeg fulgte *Kalderen* og lod linjen stå; vejer *Efterprøvning* tungest, er det én linje at fjerne i `plugins/agents/skills/workflow/assets/docker-publish.yaml`.
+2. **To små rettelser i `update/SKILL.md` uden for trin 4, 5 og rapporten.** Trin 2-tabellens celle "kun `with:`-blokken" og punktet "eller dets `with:`-blok" i *Du må ikke* er rettet til flertal pr. job, og *Du må ikke* har fået linjen om aldrig at gætte på `service`. Uden dem modsagde filen sit eget trin 4. Står de for langt fra opgavens tabel, er de lette at tage ud igen.
+3. **Én sætning i dokumentets `## Standalone-fallback`.** Standalone-*filen* er urørt som bestemt, men dokumentafsnittet har fået tilføjet at den hverken har lint eller udrulning, så compose-filen og Portainer er projektets eget ansvar. Det står ikke under *Dokumentet*; det fulgte af at dokumentet nu lover tre jobs.
+
+### Fund
+
+1. **README-forlæggets hovedkommentar er upræcis, og kalderen arver den.** Linjen "Skal du afvige fra standarden, så kommentér `with`-blokken ind under build" passer ikke længere: `with:` under build er aktiv på grund af `protect_release_tags`, og det er de valgfrie *linjer* der er kommenteret ud. Ikke rettet, fordi kalderen skal følge README linje for linje. Hører til workflow-repoet.
