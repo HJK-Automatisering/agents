@@ -17,6 +17,46 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.0.0-beta.25
+
+Workflow-skabelonen `docker-publish` 2 → 3. Kontrakt-version uændret på 20.
+**Kør `/agents:update` i hvert projekt der har workflowet.** Kaldet spørger om
+navnet på servicen, og i et projekt med to deploy-jobs stopper det og foreslår
+at slå dem sammen.
+
+### Kalderen følger workflow-repoets v1.2.0 med tre jobs
+
+Kalderen kaldte kun build-jobbet. Nu har den tre. *Lint* holder
+`deploy/docker-compose.yml` op mod reglerne i hver pull request. *Build* bygger
+og signerer, og nægter at bygge et versionstag der allerede findes. *Deploy*
+skriver den nye version ind i compose-filen på `main` ved en release, og
+Portainer udruller den ved næste poll. Flere services fra samme image skrives
+`service: web,worker`.
+
+Det nye at vide: en release committer nu til `main`, og en compose-fil der
+bryder en regel, giver en rød release. Tilbagerulning er `git revert` af
+deploy-commit'en.
+
+### Reglerne for compose-filen står i workflow-dokumentet
+
+README og lint-scriptet henviste til "agenternes deploy-kontrakt", en tekst der
+aldrig var skrevet. Nu står den i `docs/workflows/docker-publish.md` med lintens
+seksten regler under samme navne, undtagelsesformatet `x-undtagelser` og lokal
+kørsel af lint-scriptet. Ingen `stack.env` og ingen `env_file`: variabler
+sættes på stacken i Portainer og substitueres ind hvor der står `${NØGLE}`, og
+hver værdi under `environment:` skal være præcis `${NAVN}`.
+
+`developer` kører lint lokalt før en pull request. `security` holder
+compose-filen op mod reglerne før en udrulning.
+
+### `update` bevarer indstillinger pr. job og gætter aldrig på `service`
+
+Kaldet bevarede én `with`-blok. Nu bevarer det projektets egne nøgler i hvert
+jobs `with`, tager skabelonens nye linjer med, spørger om `service` hvis
+deploy-jobbet mangler, og stopper ved jobs skabelonen ikke har.
+
+---
+
 ## 1.0.0-beta.24
 
 Kontrakt-version 19 → 20. **Kør `/agents:update` i hvert projekt.**
