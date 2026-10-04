@@ -1,7 +1,7 @@
 ---
 navn: docker-publish
-skabelon-version: 2
-formål: Bygger og publicerer et container-image til GitHub Packages når der pushes et versionstag, med signering og rollback-tags
+skabelon-version: 3
+formål: Linter compose-filen, bygger og signerer et container-image til GitHub Packages når der pushes et versionstag, og skriver den nye version ind i compose-filen på main så Portainer udruller den
 foreslå-ja-når: projektets dokument siger at projektet leveres som container-image eller kører på en Docker- eller Portainer-vært
 filer:
   - fra: assets/docker-publish.yaml
@@ -10,9 +10,11 @@ filer:
 
 # docker-publish
 
-Når der pushes et semver-tag (`v1.2.3`), bygges et image og pushes til `ghcr.io/<org>/<repo>`. **Almindelige commits bygger ikke** — heller ikke på `main`. PR-builds bygger men pusher ikke, så det kan ses at imaget overhovedet bygger, før nogen tagger.
+Når der pushes et semver-tag (`v1.2.3`), bygges et image og pushes til `ghcr.io/<org>/<repo>`, og den nye version skrives ind i `deploy/docker-compose.yml` på `main`. **Almindelige commits bygger ikke** — heller ikke på `main`. PR-builds bygger men pusher ikke, så det kan ses at imaget overhovedet bygger, før nogen tagger.
 
-Projektet får en **kalder** på ti linjer. Selve bygningen bor i `HJK-Automatisering/workflow` som et genbrugeligt workflow, så de SHA-pinnede action-versioner kan bumpes ét sted i stedet for i hvert repository.
+Projektet får en **kalder** med tre jobs: `lint`, der holder compose-filen op mod reglerne nedenfor; `build`, der bygger og signerer imaget; og `deploy`, der skriver versionen ind i compose-filen. Selve arbejdet bor i `HJK-Automatisering/workflow` som genbrugelige workflows, så de SHA-pinnede action-versioner og reglerne kan bumpes ét sted i stedet for i hvert repository.
+
+**Udrulningen er en commit på `main`.** Portainer følger `main`, læser compose-filen og udruller når den ændres — ved næste poll. Der er ingen webhook og ingen forbindelse fra GitHub til serveren; det eneste workflowet gør, er at committe den nye image-version. En grøn kørsel betyder at compose-filen er opdateret, ikke at den nye version kører endnu.
 
 ## Brug det når
 
@@ -38,7 +40,9 @@ Projektet får en **kalder** på ti linjer. Selve bygningen bor i `HJK-Automatis
 
 Imaget signeres med cosign mod sigstores Fulcio. Alle tags peger på samme digest, så der signeres én gang.
 
-Workflowet returnerer `digest`, `version` og `tags` som outputs, så et efterfølgende job kan deploye på digest frem for på et tag.
+Build-jobbet returnerer `digest`, `version`, `tags` og `image` som outputs. Deploy-jobbet tager dem og skriver `<image>:<version>` ind i compose-filen — men først efter at have tjekket at tagget er præcis `vX.Y.Z` og ligger på `main`, at imaget er signeret af det fælles build-workflow, og at versionstagget i registryet peger på den verificerede digest. Et forhåndstag som `v1.2.3-rc1` bygges, men udrulles ikke; det er ikke en fejl, og kørslen er grøn.
+
+Tilbagerulning er `git revert` af deploy-commit'en. Compose-filen peger så igen på den forrige version, og Portainer udruller den ved næste poll. Det forrige image findes stadig i GHCR og er præcis det der kørte — fordi `protect_release_tags` er slået til i kalderen, så et versionstag aldrig bygges igen.
 
 ## Forudsætninger projektet skal opfylde
 
@@ -47,26 +51,52 @@ Uden disse fejler workflowet — eller, værre, lykkes uden at gøre hvad du tro
 1. **Der skal tagges. Ellers bygges der aldrig.** Workflowet udløses kun af et push af et tag på formen `v1.2.3` — og af pull requests og manuel kørsel, som ikke pusher noget image. Et projekt der merger til `main` uden nogensinde at sætte et tag, får aldrig et image i GHCR, og der kommer ingen fejl der fortæller det. Sæt tagget når en udgivelse er besluttet: `git tag v1.2.3` og `git push origin v1.2.3`.
 2. **`./Dockerfile` skal findes i roden.** Ligger den et andet sted, sæt `dockerfile:` i kalderen. Ret ikke det genbrugelige workflow.
 3. **Dockerfilen skal tage imod `APP_VERSION` og `GIT_SHA`** som `ARG`, sætte dem som `ENV` og logge dem ved opstart. Ellers sendes de to build-args ind og forsvinder, og Portainers logvisning kan ikke fortælle hvilken build der kører. Det er hele grunden til at de er der.
-4. **`permissions`-blokken i kalderen skal stå der.** Et genbrugeligt workflow kan ikke give sig selv flere rettigheder end kalderen har. Er organisationens standard read-only, fejler push til GHCR uden den — og fejlen ser ud som et loginproblem.
+4. **`permissions`-blokkene i kalderen skal stå der — i alle tre jobs.** Et genbrugeligt workflow kan ikke give sig selv flere rettigheder end kalderen har. Er organisationens standard read-only, fejler push til GHCR og commit til `main` uden dem — og fejlen ser ud som et loginproblem.
 5. **Intet at gøre — `workflow`-repoet er offentligt**, og offentlige genbrugelige workflows kan kaldes af alle uden yderligere opsætning. Bliver det nogensinde privat igen, skal Settings → Actions → General → Access åbnes for organisationen; ellers fejler kaldet med at workflowet ikke findes, hvilket ligner en stavefejl i stien.
 6. **`@v1` skal findes i `workflow`-repoet** som et flytbart tag ved siden af de immutable `v1.x.y`. Se vedligeholdelse nedenfor. Kontrollér med `git ls-remote --tags https://github.com/HJK-Automatisering/workflow`.
 7. **Kun `linux/amd64` som standard.** Skal det køre på arm, sæt `platforms:` i kalderen. Tilføj ikke arm64 "for at være sikker": det bygger under QEMU-emulering og tager mange gange så lang tid.
 8. **Pakken oprettes ved den første bygning der pusher** — altså ved det første versionstag — og er privat. Første gang skal den kobles til repoet, så adgangen arves, og synligheden sættes bevidst.
 9. **Store bogstaver i organisationsnavnet.** GHCR kræver små. `metadata-action` konverterer sine egne tags, og cosign-trinnet konverterer i hånden — men bygger du selv en imagereference et tredje sted, skal du huske det samme.
+10. **`deploy/docker-compose.yml` skal findes og bestå lint.** Det er filen deploy-jobbet skriver i, og den lintes i hver pull request og igen før deploy-commit'en. Ligger den et andet sted, sæt `compose_path:` i både lint- og deploy-jobbet. Reglerne står nedenfor; kør scriptet lokalt før den første pull request, så den første release ikke bliver rød på en regel projektet aldrig har set.
+11. **Portainer kører stakken som Git-stack fra `main`**, med `deploy/docker-compose.yml` som compose-sti og polling slået til, og med variablerne sat på stacken. Workflowet ved intet om Portainer; det committer, og Portainer opdager det. Er stakken stadig en der redigeres i Portainers web-editor, bliver deploy-commit'en aldrig til en udrulning.
+12. **`main` må ikke være beskyttet.** Deploy-jobbet committer med `GITHUB_TOKEN`, og den kan ikke skrive til en beskyttet gren — pushet afvises, og deploy-jobbet fejler. Skal `main` beskyttes, se afsnittet *Hvis `main` beskyttes* i README for `HJK-Automatisering/workflow`; vejene står der, og ingen af dem er noget projektet løser i kalderen.
 
 ## Inputs i kalderen
 
-Alle er valgfrie. Står de kommenteret ud i skabelonen.
+### Build-jobbet
+
+Alle er valgfrie undtagen `protect_release_tags`, som skabelonen slår til. De øvrige står kommenteret ud.
 
 | Input | Standard | Hvornår |
 |---|---|---|
+| `protect_release_tags` | `false` — **skabelonen sætter `true`** | Nægter at bygge hvis versionstagget allerede findes i registryet; en ny bygning kræver et nyt nummer. Gælder kun `vX.Y.Z`. Kan opslaget ikke gennemføres, fx fordi pakken ikke findes endnu, regnes tagget som ledigt. Slå det ikke fra: tilbagerulning hviler på at et versionstag altid er samme image |
 | `platforms` | `linux/amd64` | Noget kører faktisk på arm |
 | `dockerfile` | `./Dockerfile` | Dockerfilen ligger ikke i roden |
 | `context` | `.` | Build-konteksten er en undermappe |
 | `image_name` | `<org>/<repo>` | Andet imagenavn ønskes |
-| `registry` | `ghcr.io` | Andet registry |
-| `sign` | `true` | Registryet understøtter ikke signering |
+| `registry` | `ghcr.io` | Andet registry. Bemærk at deploy-jobbet logger fast ind på `ghcr.io` og ikke kan verificere et image i et andet registry |
+| `sign` | `true` | Registryet understøtter ikke signering. Et usigneret image kan ikke udrulles |
 | `extra_build_args` | tom | Flere build-args — læs sikkerhedsafsnittet først |
+
+### Deploy-jobbet
+
+`image`, `digest` og `version` tages fra build-jobbets outputs og rettes ikke. `service` er projektets.
+
+| Input | Standard | Hvornår |
+|---|---|---|
+| `service` | `web` i skabelonen | Navnet på servicen under `services:` hvis `image:`-felt skal opdateres. Flere services fra samme image adskilles med komma, `web,worker`; de opdateres i én commit. Alle skal pege på samme image-navn — peger en af dem på et andet, stopper jobbet og intet ændres |
+| `image` | build-jobbets `image` | Rettes ikke |
+| `digest` | build-jobbets `digest` | Rettes ikke. Det er digesten der verificeres, ikke tagget |
+| `version` | build-jobbets `version` | Rettes ikke. Skrives som `<image>:<version>` |
+| `compose_path` | `deploy/docker-compose.yml` | Compose-filen ligger et andet sted. Sæt den samme i lint-jobbet |
+
+Har repoet flere images, kaldes deploy-workflowet én gang pr. image som to deploy-jobs med hver sin `service`. Rammer de hinanden på push, henter workflowet `main` igen og prøver igen, op til tre gange.
+
+### Lint-jobbet
+
+| Input | Standard | Hvornår |
+|---|---|---|
+| `compose_path` | `deploy/docker-compose.yml` | Compose-filen ligger et andet sted. Sæt den samme i deploy-jobbet |
 
 Mangler et input du har brug for, tilføjes det i det genbrugelige workflow — ikke ved at kopiere workflowet ind i projektet og rette i det.
 
@@ -74,7 +104,7 @@ Mangler et input du har brug for, tilføjes det i det genbrugelige workflow — 
 
 **Build-args ender som `ENV` i det færdige image.** Alle der kan pulle imaget kan læse dem. `APP_VERSION` og `GIT_SHA` er harmløse — men lægger nogen en token, en forbindelsesstreng eller en adgangskode i `extra_build_args`, er den offentlig, og den skal roteres. Ikke bare fjernes.
 
-Hemmeligheder der skal bruges *under* bygningen hører i `secrets:` med BuildKit-mounts, ikke i `build-args`. Hemmeligheder der skal bruges *ved kørsel* injiceres af værten.
+Hemmeligheder der skal bruges *under* bygningen hører i `secrets:` med BuildKit-mounts, ikke i `build-args`. Hemmeligheder der skal bruges *ved kørsel* sættes som stackens variabler i Portainer og substitueres ind i compose-filen — se reglerne nedenfor.
 
 Tilføj ikke `secrets: inherit` til kalderen. `GITHUB_TOKEN` følger automatisk med; `inherit` giver det kaldte workflow adgang til alt hvad repoet har.
 
@@ -82,19 +112,94 @@ Tilføj ikke `secrets: inherit` til kalderen. `GITHUB_TOKEN` følger automatisk 
 
 At andre uden for organisationen kan kalde workflowet er i sig selv ufarligt — de kører det med deres eget `GITHUB_TOKEN` og pusher til deres eget registry. Reglen ovenfor er det der holder det sådan.
 
+## Regler for compose-filen
+
+Compose-filen på `main` er det Portainer udruller. Variabler og hemmeligheder sættes på stacken i Portainer og substitueres ind i filen ved udrulning, hvor der står `${NØGLE}`. Der findes ingen `stack.env` for Git-stacks, og der bruges ingen `env_file` — filen indeholder nøgler, aldrig værdier. `.env.example` med navnene alene er fint og hører i repoet; det er `.env` og `stack.env` der ikke må committes.
+
+Reglerne håndhæves af `scripts/compose_lint.py` i `HJK-Automatisering/workflow` tre steder: lokalt før en pull request, i pull requests af lint-jobbet, og i deploy-jobbet før commit — så de ikke kan omgås ved at skrive direkte på `main`. Regelnavnene her er de samme som scriptet skriver i sine fund, så en fejl kan rettes efter listen uden at læse scriptet. Hvert fund har fil, linje, regelnavn og service:
+
+```text
+::error file=deploy/docker-compose.yml,line=12::[latest] web: imaget `ghcr.io/<org>/<app>:latest` har tagget `latest`, som flytter sig. Skriv et versionstag, fx `:1.2.3`.
+```
+
+Exit-koden er `0` uden fejl (advarsler tillades), `1` ved fejl og `2` ved forkerte argumenter.
+
+| Regel | Fejler når |
+|---|---|
+| `build` | `build:` findes. Imaget bygges og signeres af `docker-publish.yaml`; compose-filen peger kun på et image |
+| `latest` | image mangler tag, tagget indeholder intet ciffer, eller tagget er et af `latest`, `main`, `master`, `stable`, `edge`, `dev`, `nightly`, `lts`. `postgres:16` og `redis:7-alpine` er tilladt; egne images er altid `X.Y.Z` via `deploy-update.yaml` |
+| `privileged` | `privileged: true` |
+| `docker-sock` | et volume har `/var/run/docker.sock` som kilde |
+| `bind-mount` | et volume er en sti på værten (`/`, `./`, `../`) i kort form, eller `type: bind` i lang form, i stedet for et navngivet volume. `- /data` alene er et anonymt volume og er tilladt |
+| `host-adgang` | `network_mode: host`, `pid: host`, `devices`, `cap_add`, `sysctls` eller `security_opt` |
+| `hemmelighed` | en nøgle under `environment:` indeholder `PASSWORD`, `PASSWD`, `SECRET`, `TOKEN` eller `CREDENTIALS` som delstreng, eller `KEY` eller `PRIVATE` som helt led adskilt af `_` (`API_KEY` fejler, `KEYCLOAK_URL` gør ikke), og værdien ikke er præcis `${NAVN}`. `${NAVN:-standard}` og `${NAVN-standard}` fejler også |
+| `env-vaerdi` | enhver anden værdi under `environment:`, der ikke er præcis `${NAVN}`. En nøgle uden værdi fejler også. Variabelnavnet behøver ikke være lig nøglen |
+| `env-fil` | `env_file:` findes, eller en `stack.env` eller `.env` er committet i repoet. Tjekket bruger `git ls-files`; uden git springes det over med en advarsel |
+| `restart` | `restart` mangler eller er `no` |
+| `mem-limit` | `mem_limit` og `deploy.resources.limits.memory` mangler begge |
+| `logging` | `logging.options.max-size` eller `max-file` mangler |
+| `ports` | `ports:` findes. Al adgang går via Nginx Proxy Manager |
+| `container-name` | `container_name` findes. Navnet kolliderer på tværs af stacks |
+| `eksternt-netvaerk` | et netværk med `external: true` er ikke `nginx-proxy-manager_default` |
+| `alias` | en service på `nginx-proxy-manager_default` mangler et netværksalias. Ingen krav til aliasets form |
+
+`environment:` tjekkes i både mapping-form (`NØGLE: ${NØGLE}`) og listeform (`- NØGLE=${NØGLE}`). Én nøgle giver én fejl; `hemmelighed` vinder over `env-vaerdi`. Ét volume giver én fejl; `docker-sock` vinder over `bind-mount`.
+
+### Undtagelser
+
+En regel kan undtages for en service i topniveau-feltet `x-undtagelser`, som Docker Compose ignorerer. Alle fem felter skal være der:
+
+```yaml
+x-undtagelser:
+  - service: web
+    regel: bind-mount
+    begrundelse: "Leverandørens image kræver konfigurationsfil på denne sti"
+    godkendt-af: "Navn Navnesen"
+    dato: "2026-10-01"
+```
+
+- En regel dækket af en gyldig undtagelse giver en **advarsel** i stedet for en fejl, og kørslen er grøn.
+- En undtagelse uden `service`, `godkendt-af` eller `dato`, eller med et ukendt regelnavn, er **selv en fejl** og dækker intet.
+- Undtagelser udløber ikke, men en `dato` ældre end et år giver en advarsel. Afgør om den stadig gælder, og sæt en ny dato.
+- En undtagelse der ikke rammer nogen fejl, er død og giver en advarsel. Fjern den.
+- For `eksternt-netvaerk` er `service` netværkets navn — typisk en anden stacks netværk, som en service skal kunne nå:
+
+```yaml
+x-undtagelser:
+  - service: <andet-system>_default
+    regel: eksternt-netvaerk
+    begrundelse: "Servicen skal nå en database der kører i en anden stack"
+    godkendt-af: "Navn Navnesen"
+    dato: "2026-10-01"
+```
+
+- En committet `.env` eller `stack.env` kan ikke undtages. Filen fjernes fra git med `git rm --cached`, og `.gitignore` skal dække den.
+
+### Lokal kørsel
+
+Scriptet kører uden GitHub-kontekst og uden Docker. Det ligger i `workflow`-repoet og køres fra en lokal klon af det, i det repos eget `.venv` med `ruamel.yaml` fra dets `requirements.txt`. Miljøet oprettes én gang; derefter er det kun den sidste linje:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+.venv\Scripts\python.exe scripts\compose_lint.py ..\<app-repo>\deploy\docker-compose.yml
+```
+
+Findes `docker compose` ikke på maskinen, springes compose-tjekket over med en advarsel; den fulde kontrol sker i Actions. Fundene skrives på samme form som i Actions, så de kan rettes efter linjenummer.
+
 ## Hvem gør hvad
 
 Rollerne læser ikke dette dokument. Det de skal gøre, når til dem som opgaver på `BOARD.md`. Afsnittet her er til dig der skal forstå eller vedligeholde workflowet.
 
-- **`workflow`-skillen** kopierer kalderen til `.github/workflows/`, lægger dette dokument i `docs/workflows/`, nævner valget i `CLAUDE.md` under `## Valgte workflows`, og skriver hver uopfyldt forudsætning på `docs/BOARD.md` under `## Kommende` — typisk en manglende `Dockerfile`.
-- **`architect`** skriver i planen: imagenavn, hvor det deployes, og at rollback sker via `:sha-`-tagget eller digest. Uden det ved ingen hvordan man ruller tilbage klokken to om natten.
-- **`developer`** skriver `Dockerfile` med `ARG`/`ENV` for `APP_VERSION` og `GIT_SHA`, og logger dem ved opstart. Må gerne rette kalderens `with`-blok. Må **ikke** kopiere det genbrugelige workflow ind i projektet.
-- **`security`** tjekker at der ikke er hemmeligheder i build-args, at `secrets: inherit` ikke er sneget ind, og at pakkens synlighed er sat bevidst.
+- **`workflow`-skillen** kopierer kalderen til `.github/workflows/`, sætter `service` i deploy-jobbet ud fra `deploy/docker-compose.yml` eller spørger, lægger dette dokument i `docs/workflows/`, nævner valget i `CLAUDE.md` under `## Valgte workflows`, og skriver hver uopfyldt forudsætning på `docs/BOARD.md` under `## Kommende` — typisk en manglende `Dockerfile` eller compose-fil.
+- **`architect`** skriver i opgaven: imagenavn, hvilke services der står i `service`, og at tilbagerulning er `git revert` af deploy-commit'en. Uden det ved ingen hvordan man ruller tilbage klokken to om natten.
+- **`developer`** skriver `Dockerfile` med `ARG`/`ENV` for `APP_VERSION` og `GIT_SHA`, og logger dem ved opstart. Kører lint lokalt mod compose-filen før en pull request og skriver resultatet i sine noter — en rød release på en regel projektet aldrig har set, er en fejl der kunne være fanget. Må gerne rette kalderens `with`-blokke. Må **ikke** kopiere de genbrugelige workflows ind i projektet.
+- **`security`** holder compose-filen op mod reglerne ovenfor før en udrulning — hvert brud uden gyldig undtagelse er et fund — og tjekker at `protect_release_tags` er slået til i build-jobbet, at der ikke er hemmeligheder i build-args, at `secrets: inherit` ikke er sneget ind, og at pakkens synlighed er sat bevidst.
 - **`reviewer`** rører ikke workflow-filer.
 
 ## Vedligeholdelse
 
-Det genbrugelige workflow bor i `HJK-Automatisering/workflow/.github/workflows/docker-publish.yaml`. Action-versioner er pinnet til commit-SHA — det er det rigtige — og bumpes **kun der**.
+De genbrugelige workflows bor i `HJK-Automatisering/workflow/.github/workflows/`: `compose-lint.yaml`, `docker-publish.yaml` og `deploy-update.yaml`. Action-versioner er pinnet til commit-SHA — det er det rigtige — og bumpes **kun der**.
 
 Versionering følger action-konventionen:
 
@@ -110,4 +215,51 @@ Et projekt kan pinne til `@v1.0.3` hvis det skal stå helt stille. Prisen er at 
 
 `assets/docker-publish-standalone.yaml` er den gamle selvstændige udgave, der bygger uden at kalde noget. Brug den kun når projektet ikke kan nå `workflow`-repoet — et repo uden for organisationen, eller et hvor Actions-adgang på tværs af repositories er lukket.
 
-Vælger du den, arver projektet vedligeholdelsen af sine egne SHA-pins. Skriv det i projektets dokument, så det ikke bliver en overraskelse.
+Vælger du den, arver projektet vedligeholdelsen af sine egne SHA-pins, og den har hverken lint eller udrulning — compose-filen og Portainer er projektets eget ansvar. Skriv det i projektets dokument, så det ikke bliver en overraskelse.
+
+## Reference: forventet compose-format
+
+Filen nedenfor passerer alle regler. `<app>` er imagenavnet, `<alias>` det navn proxyen finder servicen på.
+
+```yaml
+services:
+  web:
+    # Sættes af deploy-update ved release. Ret ikke i hånden.
+    image: ghcr.io/<org>/<app>:1.4.2
+    restart: unless-stopped
+    # Aldrig værdier her. De sættes som stackens variabler i Portainer og
+    # substitueres ind ved udrulning — kun nøgler med ${NØGLE} som værdi.
+    environment:
+      - DB_SERVER=${DB_SERVER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    networks:
+      default:
+      nginx-proxy-manager_default:
+        aliases:
+          - <alias>
+    mem_limit: 512m
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  db:
+    image: postgres:16.4
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    mem_limit: 1g
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  db-data:
+
+networks:
+  nginx-proxy-manager_default:
+    external: true
+```
