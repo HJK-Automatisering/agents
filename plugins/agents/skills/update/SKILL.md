@@ -87,7 +87,7 @@ Et workflow kan findes i to udgaver, og de skal behandles forskelligt:
 
 | Udgave | Kendes på | Hvad projektet ejer |
 |---|---|---|
-| Den kaldende | en `uses:`-linje i projektets fil | kun `with:`-blokken |
+| Den kaldende | en `uses:`-linje i projektets fil | kun sine egne indstillinger under `with` i hvert job — se trin 4 |
 | Standalone | ingen `uses:`-linje på jobbet | hele filen, inklusive sine fastlåste action-versioner |
 
 **Et projekt flyttes aldrig fra den ene udgave til den anden.** Valget blev truffet dengang workflowet blev lagt ind, og det kan have en grund du ikke kan se — typisk at projektet ikke kan nå det repo det genbrugelige workflow bor i. Ser du at projektet har standalone, opdaterer du standalone.
@@ -110,19 +110,27 @@ Sig til brugeren at dokumentet manglede, og at udgaven derfor ikke kunne aflæse
 
 ### 4. Bevar projektets egne indstillinger
 
-**I den kaldende udgave bevares `with:`-blokken i projektets kalder ordret.** Det er der projektets egne valg står — platforme, en Dockerfile der ligger et andet sted, et andet imagenavn. Alt andet i filen erstattes af plugin'ets udgave, **også `permissions:`.**
+**I den kaldende udgave har kalderen flere jobs, og hvert job kan have en `with:`-blok.** Projektets egne indstillinger er de nøgler der står *aktive* under `with` i projektets kalder — platforme, en Dockerfile der ligger et andet sted, et andet imagenavn, navnet på servicen der udrulles. Den nye fil er plugin'ets udgave med dem lagt ind, job for job:
 
-`permissions:` erstattes hårdt med vilje. Blokken er en forudsætning for at push til registryet virker, og er den ændret, er den forkert. En bevaret fejl der viser sig som et loginproblem, koster mere end en overskrevet tilpasning.
+- **Pr. job bevares projektets egne nøgler.** Skabelonens nøgler kommer med. Står en nøgle begge steder, vinder projektets værdi. Skabelonens udkommenterede linjer tages med som de er.
+- **`service` i deploy-jobbet er projektets.** Har projektet et deploy-job, bevares dets `service` ordret. Har det intet deploy-job — fordi kopien er fra før jobbet fandtes — spørger du om navnet, og foreslår det ud fra servicenavnene under `services:` i `deploy/docker-compose.yml` hvis filen findes. Flere services fra samme image skrives med komma. **Gæt aldrig.** Du kører i menneskets tråd og må spørge; skabelonens `web` er en pladsholder, ikke et svar.
+- **Jobnavne er skabelonens.** Hedder projektets build-job `publish`, bliver det til `build`, og dets `with`-nøgler følger med over. Det er en omdøbning, ikke en rettelse der stopper noget.
+
+Alt andet i filen erstattes af plugin'ets udgave, **også `permissions:` i hvert job.**
+
+`permissions:` erstattes hårdt med vilje. Blokkene er en forudsætning for at push til registryet og commit til `main` virker, og er en af dem ændret, er den forkert. En bevaret fejl der viser sig som et loginproblem, koster mere end en overskrevet tilpasning.
 
 **I standalone-udgaven er der ingen kalder og dermed ingen `with:`-blok at bevare.** Er filen ændret i forhold til plugin'ets udgave, gælder trin 5 for hele filen.
 
 ### 5. Stop hvis der er rettet andre steder
 
-Er der ændringer uden for `with:`-blokken — et trin tilføjet, en action-version bumpet, en betingelse rettet — så **stop og vis dem.** Ét spørgsmål ad gangen: skal ændringen kasseres, eller skal opdateringen droppes for det workflow?
+Er der ændringer uden for `with:`-blokkene — et trin tilføjet, en action-version bumpet, en betingelse rettet — så **stop og vis dem.** Ét spørgsmål ad gangen: skal ændringen kasseres, eller skal opdateringen droppes for det workflow?
+
+**Har projektet jobs skabelonen ikke har, stopper du også.** Et build-job der hedder `publish`, er ikke et ekstra job — det er skabelonens eget under det gamle navn, se trin 4. Men to deploy-jobs med hver sin `service` på samme image er. Vis dem, og foreslå at slå dem sammen til ét deploy-job med servicene i én kommasepareret `service`-liste — så giver én release én commit og én udrulning. Valget er menneskets: slå sammen, eller drop opdateringen for det workflow.
 
 Overskriv den ikke i tavshed. I standalone-udgaven især: der ejer projektet sine egne pins, og en lokal bumpet version kan være svaret på noget.
 
-**Er udgaven ukendt, fordi dokumentet manglede, er dette trin det eneste der står mellem projektets ændringer og en overskrivning.** Sammenlign hele filen med plugin'ets udgave, og stop ved den første forskel du ikke kan henføre til `with:`-blokken.
+**Er udgaven ukendt, fordi dokumentet manglede, er dette trin det eneste der står mellem projektets ændringer og en overskrivning.** Sammenlign hele filen med plugin'ets udgave, og stop ved den første forskel du ikke kan henføre til en `with:`-blok.
 
 ### 6. Skriv begge filer
 
@@ -146,11 +154,14 @@ Ikke kode. Og ikke rapporterne under `docs/` eller beslutningsloggen: de beskriv
 
 **Har udløsningsvilkåret ikke ændret sig, leder du ikke, og du siger ikke noget om det.** En liste der kommer hver gang, finder tilfældigheder og lærer folk at springe den over.
 
+**Gør workflowet noget nyt uden at udløses af noget nyt, siger du det alligevel højt.** Det er det næstvigtigste. Bringer du `docker-publish` fra skabelon-version 2 til 3, bygger det stadig kun ved tag-push, så opregningen ovenfor udløses ikke — men kalderen committer nu til `main` ved hver release, og en compose-fil der bryder reglerne, giver en rød release på et projekt der ikke har ændret andet end et tag. Sig begge dele, og peg på `## Regler for compose-filen` i det dokument du lige har skrevet til `docs/workflows/`. Foreslå at compose-filen lintes lokalt før næste release; hvordan står i samme dokument.
+
 ## Du må ikke
 
 - Røre andet end de to slags kopier: projektets `AGENTS.md`, de installerede workflow-filer, og deres dokumenter i `docs/workflows/`. Ikke `BOARD.md`, ikke beslutningsloggen, ikke `CLAUDE.md`, ikke kode.
 - **Flytte, omdøbe eller oprette mapper under `docs/`.** Se del 1, trin 4. Du opdager forskellen og lægger vejene frem; valget er menneskets.
-- Kaste projektets afvigelser væk, eller dets `with:`-blok.
+- Kaste projektets afvigelser væk, eller dets egne indstillinger under `with` i noget job — heller ikke `service`.
+- Gætte på `service`. Har projektet intet deploy-job, spørger du.
 - Flytte et projekt mellem den kaldende og den standalone udgave af et workflow.
 - Skrive en kontrakt eller et workflow ud fra hukommelsen. Findes plugin'ets fil ikke, stopper du.
 - Opdatere når plugin'ets version ikke er højere end projektets. Det gælder både når de er ens, og når plugin'ets er lavere.
