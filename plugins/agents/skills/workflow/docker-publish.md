@@ -58,7 +58,7 @@ Uden disse fejler workflowet — eller, værre, lykkes uden at gøre hvad du tro
 8. **Pakken oprettes ved den første bygning der pusher** — altså ved det første versionstag — og er privat. Første gang skal den kobles til repoet, så adgangen arves, og synligheden sættes bevidst.
 9. **Store bogstaver i organisationsnavnet.** GHCR kræver små. `metadata-action` konverterer sine egne tags, og cosign-trinnet konverterer i hånden — men bygger du selv en imagereference et tredje sted, skal du huske det samme.
 10. **`deploy/docker-compose.yml` skal findes og bestå lint.** Det er filen deploy-jobbet skriver i, og den lintes i hver pull request og igen før deploy-commit'en. Ligger den et andet sted, sæt `compose_path:` i både lint- og deploy-jobbet. Reglerne står nedenfor; kør scriptet lokalt før den første pull request, så den første release ikke bliver rød på en regel projektet aldrig har set.
-11. **Portainer kører stakken som Git-stack fra `main`**, med `deploy/docker-compose.yml` som compose-sti og polling slået til, og med variablerne sat på stacken. Workflowet ved intet om Portainer; det committer, og Portainer opdager det. Er stakken stadig en der redigeres i Portainers web-editor, bliver deploy-commit'en aldrig til en udrulning.
+11. **Portainer kører stakken som Git-stack fra `main`**, med `deploy/docker-compose.yml` som compose-sti og polling slået til, og med variablerne sat på stacken. Workflowet ved intet om Portainer; det committer, og Portainer opdager det. Er stakken stadig en der redigeres i Portainers web-editor, bliver deploy-commit'en aldrig til en udrulning. Opsætningen står trin for trin under *Opsætning af stacken i Portainer* nedenfor.
 12. **`main` må ikke være beskyttet.** Deploy-jobbet committer med `GITHUB_TOKEN`, og den kan ikke skrive til en beskyttet gren — pushet afvises, og deploy-jobbet fejler. Skal `main` beskyttes, se afsnittet *Hvis `main` beskyttes* i README for `HJK-Automatisering/workflow`; vejene står der, og ingen af dem er noget projektet løser i kalderen.
 
 ## Inputs i kalderen
@@ -187,6 +187,93 @@ python -m venv .venv
 
 Findes `docker compose` ikke på maskinen, springes compose-tjekket over med en advarsel; den fulde kontrol sker i Actions. Fundene skrives på samme form som i Actions, så de kan rettes efter linjenummer.
 
+## Opsætning af stacken i Portainer
+
+Det her gør et menneske i Portainers webflade, én gang pr. app. Rollerne rører ikke Portainer, og intet workflow prøver. Når det er gjort, er hver release en commit på `main` som Portainer selv opdager; ingen rører stacken igen bortset fra variablerne.
+
+Rækkefølgen er: compose-filen på `main` først, så registry og Git-adgang, så stacken, så første release. Opretter du stacken før compose-filen består lint, får du en stack der ikke kan starte, og fejlen ser ud som et Portainer-problem.
+
+### 0. Før du går i Portainer
+
+- `deploy/docker-compose.yml` ligger på `main` og består lint. Imaget står med den version der skal køre først — ved en migrering den version der kører i dag, så første udrulning fra Git ikke ændrer noget.
+- Hver variabel compose-filen bruger som `${NØGLE}` er kendt med navn og værdi. `.env.example` i repoet har navnene; værdierne har den der driver appen i dag.
+- Imaget findes i GHCR i den version compose-filen peger på. Det gør det efter det første versionstag; se forudsætning 8 om at pakken skal kobles til repoet.
+- Du kender navnet på den stack der eventuelt kører i dag. Det skal genbruges; se trin 3.
+
+### 1. Registry — GHCR skal kunne pulles
+
+Gøres af den der administrerer Portainer, én gang for organisationen; findes registryet allerede, springes trinnet over. Pakkerne er private, så Portainer skal logge ind på `ghcr.io` for at pulle.
+
+I Portainer: **Registries → Add registry → GitHub.** Felterne:
+
+| Felt | Værdi |
+|---|---|
+| Name | Et navn, fx `GHCR` |
+| Username | GitHub-brugernavnet tokenet er udstedt til |
+| Personal Access Token | Et **klassisk** token; Portainers GitHub-registry tager ikke fine-grained tokens. Mindst `read:packages`. Tokenet skal tilhøre en bruger med adgang til organisationens pakker |
+| Use organisation registry | Slået til |
+| Organisation name | Organisationens GitHub-navn, som det står i `ghcr.io/<org>/...` |
+
+Registryet skal derefter have adgang til det miljø stacken kører på; i Business Edition gives adgangen pr. miljø. På stacken vælges det under *Select registries*, og det er det valg der lader Portainer logge ind på `ghcr.io` når imaget pulles. Står der intet at vælge, mangler adgangen til miljøet.
+
+Et registry-token udløber. Når det gør, fejler pull ved næste release med en loginfejl i stackens log, og ingen i GitHub ser noget. Skriv udløbsdatoen ned et sted mennesker kigger.
+
+### 2. Git-adgang — Portainer skal kunne læse app-repoet
+
+App-repoet er privat, så Portainer skal have et token til at hente det. Tokenet sidder på en **Git-kilde** under *App Delivery → Sources*, én pr. app, og bruges kun til at læse, aldrig til at skrive.
+
+- Lav et token i GitHub med **læseadgang til app-repoets indhold** og intet andet: et fine-grained token med *Contents: Read-only* på netop det repo, med organisationen som resource owner. Et klassisk token med `repo` giver langt mere end nødvendigt. Kald det `portainer-<app>`, så kilde og token kan findes ud fra hinanden.
+- Opret kilden med app-repoets adresse på formen `https://github.com/<org>/<app-repo>`, *GitHub* som provider, dit GitHub-brugernavn og tokenet som adgangskode. Slå polling til på kilden med `5m`; stacken arver det.
+- Klikkene står i `PORTAINER.md` i plugin-repoet, med GitHubs tokenformular trin for trin.
+
+Tokenet udløber, og når det gør, stopper polling stille. Stacken kører videre på den version den har, men nye releases udrulles ikke, og Actions er grøn. Sæt en påmindelse i kalenderen når tokenet laves, og noter datoen sammen med registry-tokenets.
+
+### 3. Stacken
+
+**Stacks → Add stack.** Build method er **Repository** — ikke web-editoren og ikke upload.
+
+| Felt | Værdi | Hvorfor |
+|---|---|---|
+| Name | **Samme navn som den stack der kører i dag**, hvis der er en | Docker præfikser navngivne volumes med stacknavnet. Et nyt navn giver tomme volumes, og databasen ser ud til at være væk |
+| Source | Git-kilden fra trin 2 | Polling med `5m` følger med fra kilden. Webhook er ikke en mulighed: GitHub kan ikke nå serveren |
+| Repository reference | `refs/heads/main` | Det er `main` deploy-jobbet committer til. Peg aldrig på et tag eller en anden gren |
+| Compose path | `deploy/docker-compose.yml` | Samme sti som `compose_path` i kalderen. Afviger den, afviger begge. Standardværdien er en anden |
+| Additional paths | tom | Én fil. Lint kender kun den ene |
+| Environment variables | Én post pr. `${NØGLE}` i compose-filen | Se nedenfor |
+| Select registries | Organisationens GHCR-registry fra trin 1 | Uden det kan imaget ikke pulles, og fejlen ligner et loginproblem |
+| Re-pull image | Slået fra, hvis feltet vises | Versionstags flytter sig aldrig, så der er intet at hente igen. Hver release ændrer tagget, og det pulles alligevel |
+| Force redeployment | Slået fra, hvis feltet vises | Ellers genstartes containerne hvert interval, også uden ændringer |
+| Enable relative path volumes | Slået fra | Reglen `bind-mount` tillader ingen stier på værten |
+
+**Variablerne.** Compose-filen indeholder nøgler, aldrig værdier; værdierne lever kun her. Tilføj hver variabel compose-filen bruger, med samme navn som i `${NØGLE}` og den rigtige værdi. Du kan taste dem én ad gangen eller indlæse en `.env`-fil fra din egen maskine med *Load variables from .env file* — den fil må aldrig ind i repoet. En variabel der mangler, giver ingen fejl ved udrulningen: Docker Compose sætter den til tom og advarer i en log ingen læser, og appen starter med en tom forbindelsesstreng. Tjek listen mod `.env.example`, før du udruller.
+
+Portainer læser variablerne ind i compose-filen ved hver udrulning. Filen i repoet røres ikke, så den forbliver i takt med Git. Der oprettes ingen `stack.env`, og compose-filen må ikke bede om en; se reglen `env-fil`.
+
+Kører den gamle stack endnu: **stop den, før den nye udrulles.** To stacks med samme containere og samme alias på proxyens netværk kører ellers side om side, og proxyen rammer tilfældigt.
+
+Klik **Deploy the stack**. Udrulningen kører i baggrunden; at knappen svarer, betyder at anmodningen er modtaget, ikke at containerne kører.
+
+### 4. Tjek at det virker
+
+1. **Stacken står som kørende**, og hver service har en container i *running*. Står en i *created* eller genstarter den, så se containerens log først og stackens log dernæst.
+2. **Containerens log viser `APP_VERSION`** ved opstart, og det er den version compose-filen peger på. Det er hele grunden til forudsætning 3.
+3. **Proxyen finder servicen** på aliaset fra compose-filen. Netværket `nginx-proxy-manager_default` er eksternt og skal findes i forvejen; mangler det, siger stackens log det tydeligt.
+4. **Polling virker.** Lav en ufarlig ændring i compose-filen på `main` — en kommentar — og vent intervallet ud. Portainer skal vise den nye commit på stacken. Vil du ikke vente, gør **Pull and redeploy** på stacken det samme med det samme; det er også den knap du bruger, når en release skal ud før næste poll.
+5. **Første release.** Tag og push en version, følg kørslen i Actions, og vent intervallet ud. Compose-filen på `main` viser den nye version, stacken viser den nye commit, og containerens log viser den nye `APP_VERSION`. Så er stacken i drift fra Git, og web-editoren bruges ikke mere.
+
+### Når noget ikke sker
+
+Portainer melder ikke tilbage til GitHub. Udebliver en udrulning, er det altid stacken man kigger på.
+
+| Symptom | Se efter |
+|---|---|
+| Compose-filen på `main` er opdateret, stacken ikke — også efter intervallet | Polling slået fra på kilden, *Repository reference* peger ikke på `refs/heads/main`, eller Git-tokenet er udløbet. Stackens log siger det sidste |
+| Stacken viser den nye commit, men containeren kører den gamle version | Pull fejlede. Registry-tokenet er udløbet, eller pakken er privat uden at tokenets bruger har adgang — se forudsætning 8. Stackens log viser loginfejlen |
+| Appen starter, men fejler på databasen eller en ekstern tjeneste | En variabel mangler på stacken eller er stavet anderledes end i `${NØGLE}`. Sammenlign med `.env.example` |
+| Databasen er tom efter skiftet til Git-stack | Stacken fik et nyt navn, og volumes blev oprettet forfra. Stop den, og opret den igen med det gamle navn; de gamle volumes står der stadig |
+| Stacken kan ikke starte, og loggen nævner et netværk | `nginx-proxy-manager_default` findes ikke på den vært, eller aliaset mangler. Lint fanger det sidste; det første er værtens opsætning |
+| Containeren genstartes hvert femte minut uden ændringer | *Force redeployment* er slået til. Slå det fra |
+
 ## Hvem gør hvad
 
 Rollerne læser ikke dette dokument. Det de skal gøre, når til dem som opgaver på `BOARD.md`. Afsnittet her er til dig der skal forstå eller vedligeholde workflowet.
@@ -196,6 +283,7 @@ Rollerne læser ikke dette dokument. Det de skal gøre, når til dem som opgaver
 - **`developer`** skriver `Dockerfile` med `ARG`/`ENV` for `APP_VERSION` og `GIT_SHA`, og logger dem ved opstart. Kører lint lokalt mod compose-filen før en pull request og skriver resultatet i sine noter — en rød release på en regel projektet aldrig har set, er en fejl der kunne være fanget. Må gerne rette kalderens `with`-blokke. Må **ikke** kopiere de genbrugelige workflows ind i projektet.
 - **`security`** holder compose-filen op mod reglerne ovenfor før en udrulning — hvert brud uden gyldig undtagelse er et fund — og tjekker at `protect_release_tags` er slået til i build-jobbet, at der ikke er hemmeligheder i build-args, at `secrets: inherit` ikke er sneget ind, og at pakkens synlighed er sat bevidst.
 - **`reviewer`** rører ikke workflow-filer.
+- **Et menneske** sætter stacken op i Portainer efter afsnittet ovenfor og holder øje med at de to tokens ikke udløber. Det er ikke en opgave til en rolle; det står på `BOARD.md` som en forudsætning, til det er gjort.
 
 ## Vedligeholdelse
 
