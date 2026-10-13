@@ -44,7 +44,11 @@ Typisk en tom mappe på konsulentens maskine, åbnet til mødet.
 
 - Opret **kun** de mapper du selv skal bruge: `docs/mockups/` og skitsens egen mappe. Ingen kontrakt, ingen `CLAUDE.md`, ingen `.gitignore`, ingen `git init`, ingen commits.
 - Ligger der andet i mappen, lader du det være. Du læser det ikke og rører det ikke.
-- Sessionen er måske startet med beskeden **`PROJEKT NUL`**, som beder om ikke at skrive filer og om at køre `kickoff`. **Det er forventet under en skitse** — beskeden kender ikke skitser. Arbejd videre, og sig én gang til konsulenten at projektet sættes op med `/agents:kickoff` bagefter, når der skal bygges noget. Skitsen ligger klar til den.
+- Sessionen er måske startet med en besked om at mappen ikke er et projekt endnu. Hvilken afhænger af om der allerede ligger en skitse:
+  - **Første session, før den første skitse:** beskeden **`PROJEKT NUL`**, som beder om ikke at skrive filer og om at køre `kickoff`. **Det er forventet under en skitse** — der ligger ingen skitse endnu, så beskeden kan ikke vide at et møde er i gang. Arbejd videre.
+  - **Senere sessioner, når der ligger en skitse med noter:** beskeden **`SKITSER, INTET PROJEKT ENDNU`**. Den lister skitserne og siger selv at det er forventet. Arbejd videre.
+
+  I begge tilfælde siger du én gang til konsulenten at projektet sættes op med `/agents:kickoff` bagefter, når der skal bygges noget. Skitsen ligger klar til den.
 
 At skitsen ligger før der findes en `.gitignore`, er forsvarligt: der er ingen git, så intet kan committes, og skitsen rummer ingen hemmeligheder. `.gitignore` lægges ind før den første commit, når projektet sættes op.
 
