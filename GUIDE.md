@@ -105,11 +105,17 @@ claude plugin install agents@hjk-agents --scope user
 
 `--scope user` er det vigtige — så gælder rollerne i alle dine projekter.
 
-**Ved hver ny version — begge, hver gang:**
+**Ved hver ny version — begge, hver gang.** Aflæs først scope'et med `claude plugin list`, og kør `update` med det scope der står der:
 
 ```
 claude plugin marketplace update hjk-agents
 claude plugin update agents@hjk-agents --scope user
+```
+
+Står der `Scope: managed`, er plugin'et leveret centralt, og den anden linje er i stedet:
+
+```
+claude plugin update agents@hjk-agents --scope managed
 ```
 
 **`install` opgraderer ikke.** Er plugin'et installeret, svarer den `already installed` og gør ingenting — med et flueben og uden en fejl. Det er `update` der flytter versionen, og klienten skal genstartes bagefter, før den nye udgave er i brug.

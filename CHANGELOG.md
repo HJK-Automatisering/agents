@@ -5,11 +5,20 @@ Nyeste øverst. Én sektion pr. udgivelse.
 Posten skrives **før** versionen bumpes — den er teksten der skal i mailen til
 udviklerne. Se `PLUGIN.md`.
 
-Ved hver ny version skal begge køres — `plugin update`, ikke `plugin install`:
+Ved hver ny version skal begge køres — `plugin update`, ikke `plugin install`.
+Aflæs først scope'et med `claude plugin list`, og kør `update` med det scope der
+står der:
 
 ```
 claude plugin marketplace update hjk-agents
 claude plugin update agents@hjk-agents --scope user
+```
+
+Står der `Scope: managed`, er plugin'et leveret centralt, og den anden linje er i
+stedet:
+
+```
+claude plugin update agents@hjk-agents --scope managed
 ```
 
 `install` er en no-op på et plugin der allerede er installeret, og `update` beder
