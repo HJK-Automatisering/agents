@@ -10,6 +10,11 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-10-13 | task-0011 | Opgaven er bygget og sat afsluttet | Alle syv kriterier holder. Jeg gennemgik selv diff'en: de fem steder beder om at aflæse scope'et, managed-linjen står i sin egen blok, installationslinjerne er urørte. Kontrollen er ren | architect |
+| 2026-10-13 | task-0011 | To korte sætninger i stedet for én accepteres | Managed-linjen skal have en indledning og stå i sin egen blok, så den ikke køres sammen med user-linjen | architect |
+| 2026-10-13 | task-0011 | Stavefejlen "katalogget" i PLUGIN.md bliver ikke et eget nummer | Én bogstavfejl bærer ikke en opgave. Rettes ved næste ændring af afsnittet | architect |
+| 2026-10-13 | task-0011 | Ændringen udgives ikke som et nyt versionsnummer | Kun dokumentation i repoet; ingen rolle, regel eller hook er ændret, og vejledningen læses på GitHub. Et push er nok | architect |
+| 2026-10-13 | — | Opdateringslinjen med `--scope user` fejler på en maskine hvor plugin'et er leveret via managed settings; `--scope managed` virker. Emne på BOARD | Efterprøvet ved udrulningen af 1.0.0-beta.26: `claude plugin list` viste scope `managed`, og `update --scope managed` løftede til den nye udgave. `PLUGIN.md`, `GUIDE.md` og `CHANGELOG.md` siger alle `--scope user` | architect |
 | 2026-10-13 | — | Udgivelsen hedder 1.0.0-beta.26 og sker uden forudgående afprøvning i en lokal kopi | Ny rolle og ændrede regler i kontrakten. Mennesket valgte at udgive nu og rette hvis første brug viser fejl. Anbefalet og afvist: én afprøvning med `--plugin-dir` først. Posten i `CHANGELOG.md` skrevet først, begge manifester bumpet, kontrollen ren | architect |
 | 2026-10-13 | — | kontrakt-version bumpet 20 → 21 | `mockup` er en undtagelse fra tre grundprincipper, og kontrakten har fået en ny mappe, en ny gren og en ny push-undtagelse. Uden bumpet opdager projekterne aldrig ændringen | architect |
 | 2026-10-13 | task-0010 | Opgaven er bygget og sat afsluttet | Alle ni kriterier holder. Jeg gennemgik selv diff'en: `status` læser skitser også på deres gren, `update` undtager mapper der oprettes efter behov og stopper stadig ved omdøbte, skillen og GUIDE kender hookens nye besked. Kontrollen er ren | architect |

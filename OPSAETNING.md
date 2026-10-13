@@ -206,11 +206,19 @@ opretter opgaverne og sender de øvrige roller af sted. Resten står i `GUIDE.md
 ## 9. Ved hver ny version — begge, hver gang
 
 *Almindelig PowerShell.* Også hvis du kun bruger appen: automatiske
-marketplace-opdateringer virker ikke der.
+marketplace-opdateringer virker ikke der. Aflæs først scope'et med
+`claude plugin list`, og kør `update` med det scope der står der:
 
 ```
 claude plugin marketplace update hjk-agents
 claude plugin update agents@hjk-agents --scope user
+```
+
+Står der `Scope: managed`, er plugin'et leveret centralt, og den anden linje er
+i stedet:
+
+```
+claude plugin update agents@hjk-agents --scope managed
 ```
 
 **`install` opgraderer ikke.** Er plugin'et installeret, svarer den

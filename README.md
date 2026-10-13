@@ -29,11 +29,17 @@ claude plugin marketplace add HJK-Automatisering/agents
 claude plugin install agents@hjk-agents --scope user
 ```
 
-**Ved hver ny version skal begge køres igen** — og bemærk at det er `plugin update`, ikke `plugin install`:
+**Ved hver ny version skal begge køres igen** — og bemærk at det er `plugin update`, ikke `plugin install`. Aflæs først scope'et med `claude plugin list`, og kør `update` med det scope der står der:
 
 ```
 claude plugin marketplace update hjk-agents
 claude plugin update agents@hjk-agents --scope user
+```
+
+Står der `Scope: managed`, er plugin'et leveret centralt, og den anden linje er i stedet:
+
+```
+claude plugin update agents@hjk-agents --scope managed
 ```
 
 `install` opgraderer ikke: er plugin'et installeret, svarer den `already installed` og gør ingenting — med et flueben og uden en fejl. `update` flytter versionen og beder om en genstart af klienten.
