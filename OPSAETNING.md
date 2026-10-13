@@ -69,7 +69,7 @@ står åbent:
 node --version
 ```
 
-Mangler Node, virker alt andet: alle elleve kald, alle roller, kontrakten. Du
+Mangler Node, virker alt andet: alle tolv kald, alle roller, kontrakten. Du
 mister kun de tre tjek ved sessionsstart, **og det meldes ikke.** Så skal du selv
 huske `/agents:update` når plugin'et er opdateret.
 
