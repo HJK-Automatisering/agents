@@ -51,6 +51,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0008 | En mockup-rolle til møder med slutbrugere | bygget |
 | task-0009 | Hooken og kickoff kender en mappe der kun har skitser | bygget |
 | task-0010 | Resten af plugin'et kender ikke skitserne | bygget |
+| task-0011 | Opdateringsvejledningen dækker ikke et plugin leveret centralt | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.
