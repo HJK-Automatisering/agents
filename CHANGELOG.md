@@ -26,6 +26,41 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.0.0-beta.28
+
+Kontrakten er uændret. `docker-publish` er bumpet fra skabelon-version 3 til 4,
+så hooken siger at kopien er bagud i projekter der har workflowet.
+**Kør `/agents:update` i de projekter.** Kalderen er den samme; det er
+dokumentet i `docs/workflows/` der bliver rettet.
+
+### Kun én udgave af `docker-publish`: den der kalder `HJK-Automatisering/workflow`
+
+Plugin'et havde en selvstændig udgave, `docker-publish-standalone.yaml`, der
+byggede uden at kalde workflow-repoet. Den var en kopi fra før lint, udrulning
+og beskyttede versionstags, og den fulgte ikke med: ældre actions, kun amd64,
+ingen `protect_release_tags`, ingen lint og ingen udrulning. Den er fjernet.
+Workflow-repoet er offentligt, så også repos uden for organisationen kan kalde
+det. Mangler et projekt noget, tilføjes et input i workflow-repoet.
+
+### `/agents:update` overskriver ikke længere et projekts eget workflow
+
+En fil på skabelonens sti blev regnet som plugin'ets kopi alene på navnet. Et
+projekt med sit eget `docker-publish.yaml` — med test-job, arm64 og egen
+udrulning — fik det erstattet af standalone-udgaven, fordi filen ikke havde en
+`uses:`-linje og dokumentet i `docs/workflows/` manglede.
+
+Nu er en fil kun plugin'ets, hvis den kalder `HJK-Automatisering/workflow`.
+Gør den ikke det, rører `/agents:update` hverken filen eller dokumentet, siger
+at projektet har sit eget workflow, og peger på `/agents:workflow` hvis det
+skal skifte.
+
+### `env-fil`-reglen som i workflow v1.3.0
+
+Dokumentets regeltabel siger nu det samme som workflow-repoets README: en
+committet `.env` eller `stack.env` fejler kun i compose-filens egen mappe.
+
+---
+
 ## 1.0.0-beta.27
 
 Kontrakten er uændret; `/agents:update` er ikke nødvendig.
