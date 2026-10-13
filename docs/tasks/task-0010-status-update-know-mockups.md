@@ -1,7 +1,7 @@
 ---
 nummer: task-0010
 titel: Resten af plugin'et kender ikke skitserne
-status: i-gang
+status: afsluttet
 kilde: task-0008, task-0009
 oprettet: 2026-10-13
 ---

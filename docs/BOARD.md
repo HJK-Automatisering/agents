@@ -21,7 +21,6 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
-| task-0010 | Resten af plugin'et kender ikke skitserne | planlagt | task-0008, task-0009 |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -51,6 +50,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0007 | Caller-skabelon og compose-regler efter workflow v1.2.0 | bygget |
 | task-0008 | En mockup-rolle til møder med slutbrugere | bygget |
 | task-0009 | Hooken og kickoff kender en mappe der kun har skitser | bygget |
+| task-0010 | Resten af plugin'et kender ikke skitserne | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.
