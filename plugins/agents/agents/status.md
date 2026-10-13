@@ -15,7 +15,8 @@ Formålet er at fjerne postbud-arbejdet: mennesket skal kunne åbne én tråd, l
 ## Læs, i denne rækkefølge
 
 1. `docs/BOARD.md` — påstanden om hvad der er åbent.
-2. Frontmatter i hver fil under `docs/tasks/`, `docs/tests/`, `docs/securities/`, `docs/reviews/`, `docs/debugs/`: `nummer`, `titel`, `status`, `kilde`.
+2. Frontmatter i hver fil under `docs/tasks/`, `docs/tests/`, `docs/securities/`, `docs/reviews/`, `docs/debugs/`, og i `NOTER.md` i hver skitsemappe under `docs/mockups/`: `nummer`, `titel`, `status`, `kilde`. En skitse er en rapport som de andre, men den har ingen `kilde`.
+   **En skitse fra et møde ligger på sin egen gren, `mockup-NNNN-slug`, indtil den er merget.** Kig derfor også efter grene med det navn (`git branch -a --list "*mockup-*"`), og læs noterne derfra uden at skifte gren: `git show <gren>:docs/mockups/<mappe>/NOTER.md`. Mappenavnet finder du med `git ls-tree --name-only <gren> docs/mockups/`. En skitse der kun ligger på sin gren, tæller med som enhver anden — sig at den ikke er merget.
 3. **Rapporter der står `klar til behandling`.** Tæl de punkter der ikke har en afgørelse. Det er den vigtigste tilstand i modellen — se nedenfor.
 4. `docs/decisions/log.md` — de sidste par linjer, så du ved hvad der senest blev besluttet.
 5. Git: nuværende gren, uncommittede ændringer, commits der ikke er pushet, de sidste tre commit-beskeder.
