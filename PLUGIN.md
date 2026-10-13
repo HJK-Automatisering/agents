@@ -172,14 +172,34 @@ Hooken bruger `args` i exec-form. På en CLI der er ældre end feltet, køres `n
 
 ### Hvad hver bruger kører ved hver udgivelse
 
+Aflæs først scope'et med `claude plugin list`, og kør `update` med det scope der står der.
+
 ```
 claude plugin marketplace update hjk-agents
 claude plugin update agents@hjk-agents --scope user
 ```
 
+Står plugin'et med `Scope: managed` — leveret centralt — er den anden linje i stedet:
+
+```
+claude plugin update agents@hjk-agents --scope managed
+```
+
 To kommandoer, hver gang versionen bumpes. Den første henter katalogget, så klienten overhovedet ved at der findes en nyere version; den anden flytter den installerede version.
 
 Springer man den første over, sker der ingenting — og der kommer ingen fejl. Klienten ved bare ikke bedre.
+
+#### `update` skal have det scope plugin'et står med
+
+`update` opdaterer kun i det scope den får. Scope'et afhænger af hvordan maskinen er sat op, så det aflæses først: `claude plugin list` viser det ud for plugin'et, i feltet `Scope`. Opdateringen køres med det scope der står der.
+
+Får den et andet scope end det plugin'et står med, fejler den:
+
+```
+Failed to update plugin "agents@hjk-agents": Plugin "agents" is not installed at scope user
+```
+
+Beskeden betyder ikke at plugin'et mangler — kun at det ikke står med det scope kommandoen fik. Efterprøvet på en maskine hvor plugin'et er leveret via managed settings: `claude plugin list` viste `Scope: managed`, og `claude plugin update agents@hjk-agents --scope managed` svarede `updated from … to … for scope managed`.
 
 #### `install` opgraderer ikke
 
@@ -193,7 +213,7 @@ Springer man den første over, sker der ingenting — og der kommer ingen fejl. 
 
 Alternativt via Intune eller Group Policy: `HKLM\SOFTWARE\Policies\ClaudeCode`, eller filen `C:\Program Files\ClaudeCode\managed-settings.json`. Bemærk at `C:\ProgramData\ClaudeCode\managed-settings.json` er **udgået** fra v2.1.75 og stadig optræder i ældre vejledninger.
 
-Om managed settings også fjerner `install`-kommandoen er dokumentationen ikke entydig om. Indtil det er efterprøvet på en rigtig maskine, er udgangspunktet én kommando pr. udvikler.
+Efterprøvet: et plugin leveret via managed settings står med `Scope: managed` i `claude plugin list`, og `update` skal have `--scope managed` — se *`update` skal have det scope plugin'et står med* ovenfor. Ikke efterprøvet: om managed settings på hver maskine også installerer plugin'et eller blot registrerer kataloget, og dermed om `install`-kommandoen kan undværes. Indtil det er afklaret, er udgangspunktet én `install` pr. udvikler.
 
 ## Kontrakten driver
 
