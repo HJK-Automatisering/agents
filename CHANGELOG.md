@@ -17,6 +17,52 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.0.0-beta.26
+
+En ny rolle, `mockup`. Kontrakt-version 20 → 21.
+**Kør `/agents:update` i hvert projekt.** Kontrakten har fået regler for
+skitser, og hooken siger at kopien er bagud, indtil den er opdateret.
+
+### `/agents:mockup` — en klikbar skitse i mødet med slutbrugeren
+
+Til projektkonsulenter der sidder med en slutbruger og vil vise *"kunne det
+her være en løsning?"*. Rollen viser en skitse med fiktive data med det samme
+og retter den til mens I ser på. Den gætter frem for at spørge, og skriver
+hvert gæt og hver reaktion ned undervejs.
+
+Skitsen er én HTML-fil der åbnes direkte: ingen installation, intet netværk,
+og et bånd øverst der siger at data er fiktive. Den viser aldrig rigtige data,
+heller ikke i et projekt der kører — der låner den kun datamodellens form.
+
+- **I en tom mappe** opretter den kun `docs/mockups/`. Ingen git, ingen
+  kontrakt. Kør `/agents:kickoff` bagefter, når der skal bygges noget.
+- **I et projekt sat op med metoden** arbejder den på sin egen gren,
+  `mockup-NNNN-slug`, committer kun skitsemappen, og pusher kun efter et ja.
+
+Afsnittet *Til konsulenter* i `GUIDE.md` beskriver resten.
+
+### Skitsen bliver til arbejde for de andre roller
+
+En skitse er en rapport. `architect` læser dens noter og gør hver reaktion,
+hvert fravalg og hvert åbent punkt til en opgave — eller afviser det med en
+begrundelse. Skitsen selv bygges aldrig videre på; opgaverne bygges forfra.
+`status` viser skitser der ikke er behandlet, også dem der kun ligger på
+deres egen gren.
+
+Starter projektet fra en skitse, læser `kickoff` noterne før første spørgsmål
+og lægger dem frem som udkast, du bekræfter eller retter.
+
+### Hooken og `update`
+
+I en mappe hvor der kun ligger skitser, siger hooken nu
+`SKITSER, INTET PROJEKT ENDNU` i stedet for at bede om ikke at skrive filer.
+
+`update` stopper ikke længere fordi et projekt mangler en mappe som en rolle
+selv opretter første gang den bruges — `docs/mockups/`, `docs/workflows/` og
+`docs/map.md`.
+
+---
+
 ## 1.0.0-beta.25
 
 Workflow-skabelonen `docker-publish` 2 → 3. Kontrakt-version uændret på 20.

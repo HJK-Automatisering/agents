@@ -10,6 +10,8 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-10-13 | — | Udgivelsen hedder 1.0.0-beta.26 og sker uden forudgående afprøvning i en lokal kopi | Ny rolle og ændrede regler i kontrakten. Mennesket valgte at udgive nu og rette hvis første brug viser fejl. Anbefalet og afvist: én afprøvning med `--plugin-dir` først. Posten i `CHANGELOG.md` skrevet først, begge manifester bumpet, kontrollen ren | architect |
+| 2026-10-13 | — | kontrakt-version bumpet 20 → 21 | `mockup` er en undtagelse fra tre grundprincipper, og kontrakten har fået en ny mappe, en ny gren og en ny push-undtagelse. Uden bumpet opdager projekterne aldrig ændringen | architect |
 | 2026-10-13 | task-0010 | Opgaven er bygget og sat afsluttet | Alle ni kriterier holder. Jeg gennemgik selv diff'en: `status` læser skitser også på deres gren, `update` undtager mapper der oprettes efter behov og stopper stadig ved omdøbte, skillen og GUIDE kender hookens nye besked. Kontrollen er ren | architect |
 | 2026-10-13 | task-0010 | Developers to ekstra rettelser i `kickoff`-skillen — mandatet og Output-listen — accepteres | Uden dem modsagde skillen den nye linje om `Afledte numre` | architect |
 | 2026-10-13 | task-0010 | Developer stoppede alle `python.exe`-processer med `taskkill` for at standse en hængende heredoc; én var muligvis ikke dens. Sagt til mennesket | Ikke et fund i koden, men en handling uden for opgaven på maskinen. Ikke et eget nummer | architect |

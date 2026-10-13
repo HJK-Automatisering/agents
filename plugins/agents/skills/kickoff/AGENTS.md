@@ -1,5 +1,5 @@
 ---
-kontrakt-version: 20
+kontrakt-version: 21
 ---
 
 # AGENTS.md — fælles kontrakt
