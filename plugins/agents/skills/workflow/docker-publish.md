@@ -1,6 +1,6 @@
 ---
 navn: docker-publish
-skabelon-version: 3
+skabelon-version: 4
 formål: Linter compose-filen, bygger og signerer et container-image til GitHub Packages når der pushes et versionstag, og skriver den nye version ind i compose-filen på main så Portainer udruller den
 foreslå-ja-når: projektets dokument siger at projektet leveres som container-image eller kører på en Docker- eller Portainer-vært
 filer:
@@ -134,7 +134,7 @@ Exit-koden er `0` uden fejl (advarsler tillades), `1` ved fejl og `2` ved forker
 | `host-adgang` | `network_mode: host`, `pid: host`, `devices`, `cap_add`, `sysctls` eller `security_opt` |
 | `hemmelighed` | en nøgle under `environment:` indeholder `PASSWORD`, `PASSWD`, `SECRET`, `TOKEN` eller `CREDENTIALS` som delstreng, eller `KEY` eller `PRIVATE` som helt led adskilt af `_` (`API_KEY` fejler, `KEYCLOAK_URL` gør ikke), og værdien ikke er præcis `${NAVN}`. `${NAVN:-standard}` og `${NAVN-standard}` fejler også |
 | `env-vaerdi` | enhver anden værdi under `environment:`, der ikke er præcis `${NAVN}`. En nøgle uden værdi fejler også. Variabelnavnet behøver ikke være lig nøglen |
-| `env-fil` | `env_file:` findes, eller en `stack.env` eller `.env` er committet i repoet. Tjekket bruger `git ls-files`; uden git springes det over med en advarsel |
+| `env-fil` | `env_file:` findes, eller en `stack.env` eller `.env` er committet i **compose-filens egen mappe** — den eneste mappe, hvis `.env` docker compose (og dermed stakken) læser. En committet `.env` andre steder i repoet (fx roden, som nogle upstream-projekter kræver) rammes ikke. Tjekket bruger `git ls-files`; uden git springes det over med en advarsel |
 | `restart` | `restart` mangler eller er `no` |
 | `mem-limit` | `mem_limit` og `deploy.resources.limits.memory` mangler begge |
 | `logging` | `logging.options.max-size` eller `max-file` mangler |
@@ -173,7 +173,7 @@ x-undtagelser:
     dato: "2026-10-01"
 ```
 
-- En committet `.env` eller `stack.env` kan ikke undtages. Filen fjernes fra git med `git rm --cached`, og `.gitignore` skal dække den.
+- En committet `.env` eller `stack.env` i compose-filens mappe kan ikke undtages. Filen fjernes fra git med `git rm --cached`, og `.gitignore` skal dække den.
 
 ### Lokal kørsel
 
@@ -299,11 +299,11 @@ Et projekt kan pinne til `@v1.0.3` hvis det skal stå helt stille. Prisen er at 
 
 **`skabelon-version` i frontmatter er kopiens udgave.** Bumpes den i plugin'et, siger hooken ved sessionsstart at projektets kopi er bagud, og `/agents:update` bringer både kalderen og dette dokument ajour. Rør den ikke i hånden.
 
-## Standalone-fallback
+## Kun én udgave
 
-`assets/docker-publish-standalone.yaml` er den gamle selvstændige udgave, der bygger uden at kalde noget. Brug den kun når projektet ikke kan nå `workflow`-repoet — et repo uden for organisationen, eller et hvor Actions-adgang på tværs af repositories er lukket.
+Der findes ingen selvstændig udgave. Skabelonen og `HJK-Automatisering/workflow` er én leverance: kalderen bruger de jobs, inputs og outputs workflow-repoet tilbyder, og intet andet. Workflow-repoet er offentligt, så også et repo uden for organisationen kan kalde det.
 
-Vælger du den, arver projektet vedligeholdelsen af sine egne SHA-pins, og den har hverken lint eller udrulning — compose-filen og Portainer er projektets eget ansvar. Skriv det i projektets dokument, så det ikke bliver en overraskelse.
+Har et projekt et behov kalderen ikke dækker, tilføjes et input i workflow-repoet. Der laves ikke en kopi af bygningen i projektet — en kopi følger ikke med, når workflow-repoet får rettelser, nye regler eller bumpede actions.
 
 ## Reference: forventet compose-format
 

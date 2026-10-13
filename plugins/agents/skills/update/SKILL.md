@@ -75,22 +75,21 @@ Gør det i denne rækkefølge, ét workflow ad gangen.
 
 ### 1. Find ud af hvad der er lagt ind
 
-For hvert af plugin'ets workflow-dokumenter: læs `filer:`-feltet. Hver post har et `til:` — det er stien i projektet. Findes den fil, er workflowet lagt ind.
+For hvert af plugin'ets workflow-dokumenter: læs `filer:`-feltet. Hver post har et `til:` — det er stien i projektet. Findes den fil, er der *noget* på stien. Om det er vores kopi, afgør trin 2.
 
-**Kig også i projektets `.github/workflows/`.** Bærer en fil dér en henvisning til `plugins/agents/skills/workflow/assets/` i sit hoved, er den vores kopi — også selv om den ikke står i noget `til:`. Det er sådan den fritstående udgave findes, for den kopieres ikke automatisk og har derfor ingen post i `filer:`. Samme hoved siger hvilket dokument i `docs/workflows/` der hører til filen.
+**Gæt ikke på stier.** `til:` er det eneste sted der ved hvor kopien havnede. Findes filen ikke, har projektet ikke workflowet, og der er intet at gøre.
 
-**Gæt ikke på stier.** `til:` og henvisningen i filens hoved er de eneste steder der ved hvor kopien havnede og hvad dens dokument hedder. En fil uden den henvisning er ikke vores, uanset hvad den hedder. Findes der ingen af filerne, har projektet ikke workflowet, og der er intet at gøre.
+### 2. Afgør om filen er vores
 
-### 2. Afgør hvilken udgave projektet har
+Plugin'et har **én** udgave af hvert workflow: kalderen, der bruger de genbrugelige workflows i `HJK-Automatisering/workflow`. Skabelonen og workflow-repoet er én leverance — kalderens jobs, inputs og outputs er dem workflow-repoet tilbyder, og intet andet.
 
-Et workflow kan findes i to udgaver, og de skal behandles forskelligt:
+**Filen er kun vores, hvis mindst ét job har `uses: HJK-Automatisering/workflow/.github/workflows/`.** Navnet beviser intet; et projekt kan have skrevet sit eget `docker-publish.yaml` med egne jobs, tests og platforme. Har filen ingen sådan `uses:`-linje:
 
-| Udgave | Kendes på | Hvad projektet ejer |
-|---|---|---|
-| Den kaldende | en `uses:`-linje i projektets fil | kun sine egne indstillinger under `with` i hvert job — se trin 4 |
-| Standalone | ingen `uses:`-linje på jobbet | hele filen, inklusive sine fastlåste action-versioner |
+- **Rør den ikke.** Hverken workflow-filen eller dokumentet skrives — heller ikke når dokumentet mangler.
+- Sig til brugeren at projektet har sit eget workflow under skabelonens navn, og hvilke jobs det har.
+- Skal projektet over på kalderen, er det `/agents:workflow`, og kun efter et ja. Peg på det; gør det ikke.
 
-**Et projekt flyttes aldrig fra den ene udgave til den anden.** Valget blev truffet dengang workflowet blev lagt ind, og det kan have en grund du ikke kan se — typisk at projektet ikke kan nå det repo det genbrugelige workflow bor i. Ser du at projektet har standalone, opdaterer du standalone.
+En fil hvis hoved nævner `docker-publish-standalone.yaml`, er en kopi af en tidligere udgave af plugin'et, der byggede uden workflow-repoet. Den udgave er fjernet, fordi den ikke fulgte det workflow-repoet tilbyder. Behandl filen som projektets egen efter reglen ovenfor, og nævn at den er et levn.
 
 ### 3. Sammenlign versionerne
 
@@ -100,7 +99,7 @@ Projektets kopi af dokumentet ligger i `docs/workflows/<navn>.md`. Sammenlign de
 - **Der skrives kun når plugin'ets stempel er højere end projektets.** Er de ens, eller er plugin'ets lavere, sker der ingenting med det workflow. Sig hvilke to versioner du så, og gå videre til det næste.
 - **Et lavere stempel i plugin'et er ikke en fejl.** Projektets kopi kan komme fra en nyere udgave af plugin'et end den der er installeret nu. Du ruller den ikke tilbage.
 
-**Findes workflow-filen, men ikke dokumentet, er udgaven ukendt.** Så er der intet stempel at sammenligne med, og du regner den ikke for version 1 — et manglende dokument betyder at ingen ved hvad kopien er, ikke at den er gammel. I det tilfælde:
+**Findes workflow-filen, men ikke dokumentet, er udgaven ukendt** — forudsat at trin 2 har fastslået at filen er vores. Så er der intet stempel at sammenligne med, og du regner den ikke for version 1 — et manglende dokument betyder at ingen ved hvad kopien er, ikke at den er gammel. I det tilfælde:
 
 - **Versionsporten springes over.** Der skrives, uanset hvad plugin'ets stempel står på.
 - **Begge filer skrives**, som i trin 6: workflow-filen og dokumentet, der lægges på plads for første gang.
@@ -110,7 +109,7 @@ Sig til brugeren at dokumentet manglede, og at udgaven derfor ikke kunne aflæse
 
 ### 4. Bevar projektets egne indstillinger
 
-**I den kaldende udgave har kalderen flere jobs, og hvert job kan have en `with:`-blok.** Projektets egne indstillinger er de nøgler der står *aktive* under `with` i projektets kalder — platforme, en Dockerfile der ligger et andet sted, et andet imagenavn, navnet på servicen der udrulles. Den nye fil er plugin'ets udgave med dem lagt ind, job for job:
+**Kalderen har flere jobs, og hvert job kan have en `with:`-blok.** Projektets egne indstillinger er de nøgler der står *aktive* under `with` i projektets kalder — platforme, en Dockerfile der ligger et andet sted, et andet imagenavn, navnet på servicen der udrulles. Den nye fil er plugin'ets udgave med dem lagt ind, job for job:
 
 - **Pr. job bevares projektets egne nøgler.** Skabelonens nøgler kommer med. Står en nøgle begge steder, vinder projektets værdi. Skabelonens udkommenterede linjer tages med som de er.
 - **`service` i deploy-jobbet er projektets.** Har projektet et deploy-job, bevares dets `service` ordret. Har det intet deploy-job — fordi kopien er fra før jobbet fandtes — spørger du om navnet, og foreslår det ud fra servicenavnene under `services:` i `deploy/docker-compose.yml` hvis filen findes. Flere services fra samme image skrives med komma. **Gæt aldrig.** Du kører i menneskets tråd og må spørge; skabelonens `web` er en pladsholder, ikke et svar.
@@ -120,15 +119,13 @@ Alt andet i filen erstattes af plugin'ets udgave, **også `permissions:` i hvert
 
 `permissions:` erstattes hårdt med vilje. Blokkene er en forudsætning for at push til registryet og commit til `main` virker, og er en af dem ændret, er den forkert. En bevaret fejl der viser sig som et loginproblem, koster mere end en overskrevet tilpasning.
 
-**I standalone-udgaven er der ingen kalder og dermed ingen `with:`-blok at bevare.** Er filen ændret i forhold til plugin'ets udgave, gælder trin 5 for hele filen.
-
 ### 5. Stop hvis der er rettet andre steder
 
 Er der ændringer uden for `with:`-blokkene — et trin tilføjet, en action-version bumpet, en betingelse rettet — så **stop og vis dem.** Ét spørgsmål ad gangen: skal ændringen kasseres, eller skal opdateringen droppes for det workflow?
 
 **Har projektet jobs skabelonen ikke har, stopper du også.** Et build-job der hedder `publish`, er ikke et ekstra job — det er skabelonens eget under det gamle navn, se trin 4. Men to deploy-jobs med hver sin `service` på samme image er. Vis dem, og foreslå at slå dem sammen til ét deploy-job med servicene i én kommasepareret `service`-liste — så giver én release én commit og én udrulning. Valget er menneskets: slå sammen, eller drop opdateringen for det workflow.
 
-Overskriv den ikke i tavshed. I standalone-udgaven især: der ejer projektet sine egne pins, og en lokal bumpet version kan være svaret på noget.
+Overskriv den ikke i tavshed. En lokal ændring kan være svaret på noget.
 
 **Er udgaven ukendt, fordi dokumentet manglede, er dette trin det eneste der står mellem projektets ændringer og en overskrivning.** Sammenlign hele filen med plugin'ets udgave, og stop ved den første forskel du ikke kan henføre til en `with:`-blok.
 
@@ -162,7 +159,7 @@ Ikke kode. Og ikke rapporterne under `docs/` eller beslutningsloggen: de beskriv
 - **Flytte, omdøbe eller oprette mapper under `docs/`.** Se del 1, trin 4. Du opdager forskellen og lægger vejene frem; valget er menneskets.
 - Kaste projektets afvigelser væk, eller dets egne indstillinger under `with` i noget job — heller ikke `service`.
 - Gætte på `service`. Har projektet intet deploy-job, spørger du.
-- Flytte et projekt mellem den kaldende og den standalone udgave af et workflow.
+- Skrive til en workflow-fil der ikke kalder `HJK-Automatisering/workflow`, eller til dens dokument. Den er projektets egen, også når den hedder det samme som skabelonen. Se del 2, trin 2.
 - Skrive en kontrakt eller et workflow ud fra hukommelsen. Findes plugin'ets fil ikke, stopper du.
 - Opdatere når plugin'ets version ikke er højere end projektets. Det gælder både når de er ens, og når plugin'ets er lavere.
   **Én undtagelse:** findes workflow-filen uden sit dokument i `docs/workflows/`, er udgaven ukendt, og der er ikke noget stempel at måle på. Så skrives begge filer alligevel. Se del 2, trin 3.

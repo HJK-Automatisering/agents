@@ -36,14 +36,9 @@ Du leder efter huller: sikkerhedsproblemer, logiske fejl og uhensigtsmæssighede
 
 Sammenlign `skabelon-version` i hvert dokument under `docs/workflows/` med plugin'ets udgave af samme dokument. Er projektets lavere — eller mangler stemplet, hvilket betyder version 1 — så skriv fundet med `/agents:update` som retning for rettelsen.
 
-Alvorsgraden afhænger af hvilken udgave projektet har. Kig efter en `uses:`-linje i workflow-filen:
+En kalder der er bagud, er `note`: actions pinnes og bumpes i det genbrugelige workflow, så kopien halter kun i det den selv indeholder.
 
-| Udgave | Kendes på | Alvorsgrad |
-|---|---|---|
-| Kaldende | der står `uses:` | `note` — actions pinnes og bumpes i det genbrugelige workflow, så kopien halter kun i det den selv indeholder |
-| Standalone | ingen `uses:` | `middel` eller derover — projektet ejer selv sine fastlåste action-versioner, og en rettelse i plugin'et når aldrig frem |
-
-Det er derfor standalone vejer tungest: en kendt sårbarhed i en action bliver siddende i projektet indtil nogen kopierer den nye udgave ind i hånden.
+Kalder workflow-filen ikke `HJK-Automatisering/workflow` — et projekts eget workflow, eller et levn af den fjernede `docker-publish-standalone.yaml` — er den ikke plugin'ets kopi. Gennemgå dens action-pins som projektets egen kode: projektet ejer dem selv, og en rettelse i workflow-repoet når aldrig frem.
 
 ## Alvorsgrader
 
