@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 // SessionStart-hook. Fem tjek:
 //   1. Er dette projekt nul? Udelukker de fire andre — beskeden beder
-//      allerede selv om .gitignore.
+//      allerede selv om .gitignore. Ligger der skitser under docs/mockups/,
+//      er det stadig projekt nul, men beskeden er en anden: et møde er i gang
+//      eller overstået, og der skal ikke stå at man ikke må skrive filer.
 //   2. Er projektets AGENTS.md bagud i forhold til plugin'ets?
 //   3. Er en kopi af et workflow i docs/workflows/ bagud?
 //   4. Ligger der en workflow-fil fra plugin'et uden det dokument der bærer
@@ -72,6 +74,23 @@ function mdFiler(mappe) {
   }
 }
 
+// Navnene på de skitsemapper der ligger i docs/mockups/: hver mappe med en
+// NOTER.md. Tom liste hvis mappen ikke findes — det er det normale. Enhver
+// anden fejl kastes videre, så hooken tier i stedet for at gætte på projekt nul.
+function skitser(mappe) {
+  let poster;
+  try {
+    poster = fs.readdirSync(mappe, { withFileTypes: true });
+  } catch (fejl) {
+    if (fejl && (fejl.code === 'ENOENT' || fejl.code === 'ENOTDIR')) return [];
+    throw fejl;
+  }
+  return poster
+    .filter((e) => e.isDirectory() && findes(path.join(mappe, e.name, 'NOTER.md')))
+    .map((e) => e.name)
+    .sort();
+}
+
 // Navnene på de workflow-filer der ligger i en mappe. Tom liste hvis mappen
 // ikke findes — et projekt uden .github/workflows er ikke en fejl.
 function yamlFiler(mappe) {
@@ -136,6 +155,23 @@ const PROJEKT_NUL = [
   'projekt, bed om opgaven i prosa hvis den ikke er givet, og kør så kickoff-processen:',
   'ét spørgsmål ad gangen, derefter git init og .gitignore FØR nogen anden fil oprettes.',
 ].join('\n');
+
+function skitseUdenProjekt(navne) {
+  const linjer = navne.map((n) => `  - docs/mockups/${n}/`);
+  return [
+    'SKITSER, INTET PROJEKT ENDNU. Denne mappe har ingen dokumenter, ingen CLAUDE.md,',
+    'ingen kontrakt og ingen commits — men der ligger skitser fra et møde med slutbrugere:',
+    '',
+    ...linjer,
+    '',
+    'Det er forventet, og der er intet at rette. Arbejder brugeren videre på en skitse,',
+    'så gør det. Sig én gang at projektet sættes op med `/agents:kickoff`, når brugeren',
+    'er klar til at bygge noget; den læser skitsernes noter og bygger videre på dem.',
+    'Pres det ikke midt i et møde.',
+    '',
+    'Når projektet sættes op, kommer git init og .gitignore stadig før den første commit.',
+  ].join('\n');
+}
 
 function kontraktBagud(vProjekt, vPlugin) {
   return [
@@ -224,7 +260,9 @@ try {
 
   if (!hasDocs && !hasClaude && !hasKontrakt && commits === 0) {
     // Projekt nul udelukker resten: beskeden beder allerede selv om .gitignore.
-    beskeder.push(PROJEKT_NUL);
+    // Skitser gør ikke mappen til et projekt; de ændrer kun beskedens tone.
+    const fundne = skitser(path.join(cwd, 'docs', 'mockups'));
+    beskeder.push(fundne.length > 0 ? skitseUdenProjekt(fundne) : PROJEKT_NUL);
   } else {
     if (hasKontrakt) {
       // Plugin'ets kontrakt ligger i kickoff-skillen ved siden af denne hook.

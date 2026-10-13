@@ -10,6 +10,9 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-10-13 | task-0009 | Opgaven er bygget og sat afsluttet | Alle elleve kriterier holder. Jeg efterprøvede selv hooken: en tom mappe giver `PROJEKT NUL` som før, en mappe med en skitse giver den nye besked. Kontrollen og `node --check` er rene | architect |
+| 2026-10-13 | task-0009 | Developers to fund og uklarheden om `Afledte numre` lægges i task-0010 | Alle er løse ender efter skitserollen, og task-0010 er ikke sendt af sted endnu | architect |
+| 2026-10-13 | task-0009 | Henvisningen til "trin 6" i opgaven var forkert; developer skrev reglen i trin 3, hvor rækkefølgen står | Fejlen var min. Placeringen er rigtig | architect |
 | 2026-10-13 | task-0008 | Opgaven er bygget og sat afsluttet | Alle atten kriterier holder. Jeg efterprøvede selv skillen og kontraktens diff linje for linje; kontrollen er ren med den forventede advarsel om `kontrakt-version`, og begge manifester står på `1.0.0-beta.25` | architect |
 | 2026-10-13 | task-0008 | Developers to fund bliver task-0010 | `status` ser ikke en ubehandlet skitse, og `update` ville stoppe i alle projekter fordi `docs/mockups/` mangler. Begge skal være på plads før udgivelsen | architect |
 | 2026-10-13 | task-0008 | En skitsegren merges af `architect` under samme gate som trin 8; indtil da læses noterne fra grenen | Konsulenten må kun pushe sin egen gren. Afvist: at konsulenten merger — metoden har én rolle der merger | architect |

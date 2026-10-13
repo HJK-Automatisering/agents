@@ -1,7 +1,7 @@
 ---
 nummer: task-0009
 titel: Hooken og kickoff kender en mappe der kun har skitser
-status: planlagt
+status: afsluttet
 kilde: interview
 oprettet: 2026-10-13
 ---
@@ -82,5 +82,26 @@ task-0008
 developer, som aldrig retter i definitionen ovenfor.>
 
 ### Hvad er lavet
+
+- **Skitser i en mappe der ellers er projekt nul** — `plugins/agents/hooks/detect-project-zero.cjs`. Ny hjælper `skitser()` lister mapper under `docs/mockups/` med en `NOTER.md`. Inden for projekt nul-grenen skrives den nye besked `skitseUdenProjekt()` (overskrift `SKITSER, INTET PROJEKT ENDNU`, liste over skitserne, at det er forventet, at `/agents:kickoff` kan køres når brugeren er klar, og at `git init` og `.gitignore` stadig kommer før første commit). Ingen sætning om ikke at skrive filer. `hasDocs` er urørt, så `docs/mockups/` tæller stadig ikke. Kommentaren øverst nævner varianten under tjek 1; antallet af tjek er urørt.
+- **Helt tom mappe** — afprøvet: output er byte for byte identisk med hooken på `main`. Det samme gælder en mappe hvor `docs/mockups/` findes uden en `NOTER.md`, og hvor `docs/mockups` er en fil.
+- **Opsat projekt med en skitse** (AGENTS.md, CLAUDE.md, docs/projekt.md, .gitignore, én commit) — afprøvet: intet output, identisk med `main`.
+- **Fejl giver stilhed** — `skitser()` returnerer kun tom liste ved `ENOENT`/`ENOTDIR`; alle andre fejl kastes til den yderste `catch`, som tier. Afprøvet ved at lade `readdirSync` kaste `EACCES` og ved at lade `isDirectory()` kaste: 0 bytes, exit 0. Ugyldig stdin falder tilbage til `process.cwd()` som før.
+- Desuden afprøvet: to skitser (listes sorteret), og `git init` uden commits plus skitse (ny besked).
+- **kickoff regner skitser som tomt projekt** — `plugins/agents/skills/kickoff/SKILL.md`, *Afgør situationen først* og *A. Tomt projekt*: skitser tæller ikke med, og en mappe med kun skitser er tilfælde A med hele processen.
+- **kickoff læser noterne før interviewet** — nyt afsnit *Ligger der skitser* under tilfælde A: læs hver `NOTER.md` før første spørgsmål; det de besvarer er udkast der bekræftes eller rettes; ubekræftede gæt er ikke svar; resten interviewes som i dag. Bekræftelsen følger kontraktens spørgeform.
+- **kickoff sætter skitserne til behandlet** — samme afsnit: når hver reaktion, hvert fravalg og hvert åbent punkt står i `docs/projekt.md` eller er blevet et emne under `## Kommende`. Kun `status`-feltet rettes. Skrevet ind under *Mandat* som det eneste sted kickoff skriver i en rapport. Tilføjet til *Output*, og under *Commits* at ændringen kommer med i den sidste commit sammen med `docs/BOARD.md`.
+- **`.gitignore` før commit, skitser i første commit** — under tilfælde A og under punkt 6 i trin 3 (*Rækkefølgen når du først skriver*): skitserne ligger på disken, men intet committes før `.gitignore`, og skitserne kommer med i `kickoff: initialiser projekt`. Rækkefølgen er ikke ændret.
+- **Vedligeholdelsesdokumentet** — `PLUGIN.md`, nyt afsnit *Projekt nul, og projekt nul med skitser* efter *Kontrakten driver*: hvad projekt nul er, hvornår den nye besked kommer, hvad den siger, at den første session før skitsen findes stadig får `PROJEKT NUL`, og at hooken tier ved læsefejl.
+- **Kontrollen** — `node tools/validate.mjs`: OK, én advarsel om at `plugins/agents/skills/kickoff/AGENTS.md` er ændret siden `origin/main` uden bump af `kontrakt-version`. Den skyldes task-0008 (merget lokalt, ikke pushet); denne opgave rører ikke kontrakten. `node --check` på hooken: OK.
+- **Versionsnumre** — ingen ændret: `git diff main` er tom for begge manifester og kontrakten.
+
 ### Hvad er ikke lavet, og hvorfor
+
+- Sætningen i `plugins/agents/skills/mockup/SKILL.md` under *Nej: en mappe uden metoden* — at `PROJEKT NUL` er forventet fordi "beskeden kender ikke skitser" — er ikke rettet. Uden for opgaven. Den er stadig rigtig for den første session (før skitsen findes), men begrundelsen holder ikke længere: fra næste session kender hooken skitser og siger noget andet. Ingen af opgavens kriterier afhænger af at den rettes.
+- `GUIDE.md` linje 367 (*En tom mappe* i konsulentafsnittet) nævner kun `PROJEKT NUL`. Den er ikke forkert, men nævner ikke den nye besked. Ikke rørt — uden for opgaven.
+
 ### Uklart
+
+- Opgaven siger "Rækkefølgen i trin 6 — `git init`, så `.gitignore`, så resten". I kickoff-skillen står rækkefølgen i trin 3 (*Rækkefølgen når du først skriver*); trin 6 er *Kontrakt og overblik*. Jeg har læst det som trin 3, hvor punkt 6 er den første commit, og skrevet tilføjelsen der.
+- Skitsens `## Afledte numre` siger "Udfyldes af architect". Når kickoff sætter `behandlet`, bliver afsnittet stående med pladsholderen, fordi opgaven kun giver kickoff lov til `status`-feltet. Skal kickoff skrive noget der — fx at skitsen blev brugt i `docs/projekt.md` og på BOARD — er det et nyt nummer.
