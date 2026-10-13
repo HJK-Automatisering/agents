@@ -1,7 +1,7 @@
 ---
 nummer: task-0009
 titel: Hooken og kickoff kender en mappe der kun har skitser
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-10-13
 ---
