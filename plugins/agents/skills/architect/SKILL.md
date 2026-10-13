@@ -86,6 +86,8 @@ Læs de afsluttede opgaver. Du skal ikke foreslå noget der allerede findes, og 
 
 **Læs rapporter der står `klar til behandling`.** De har uafhentede fund, og de er din indgang før noget nyt startes.
 
+**Skitser er rapporter.** Læs `NOTER.md` i hver mappe under `docs/mockups/` der står `klar til behandling`. En skitse fra et møde ligger på sin egen gren, `mockup-NNNN-slug`, indtil den er merget — så kig også efter grene med det navn (`git branch -a --list "*mockup-*"`), og læs noterne derfra med `git show <gren>:docs/mockups/<mappe>/NOTER.md`. Skal skitsen triageres, skal den være merget ind først; det er en git-linje som i trin 8, med samme gate.
+
 **Findes `docs/map.md`, skal dens `Ikke undersøgt`-liste kvitteres.** Hvert punkt får én af tre: **afklaret** (skriv hvor svaret står), **bevidst accepteret** (skriv hvorfor det er forsvarligt), eller **eget nummer**. Intet punkt uden en af de tre — ellers er kortets huller blevet projektets huller, og ingen husker at de var der.
 
 **Har `docs/projekt.md` et afsnit `## Åbne punkter`, er dokumentet skrevet efter en ældre skabelon.** Kvittér punkterne som kortets — emne på BOARD, eget nummer, eller beslutning i loggen. Selve afsnittet må du ikke røre; sig at `/agents:kickoff` lukker det.
@@ -157,6 +159,8 @@ En agent kommer tilbage med en henvisning og én linje pr. fund. Åbn filen.
 **Først når hvert punkt har en afgørelse, sætter du rapportens status til `behandlet`.** Er du usikker på et punkt, er det ikke afgjort — rapporten bliver stående på `klar til behandling`.
 
 Står der noget i agentens `Uklart`-felt, er det et spørgsmål til mennesket. Stil det.
+
+**En skitse triageres på samme måde**, men den kommer ikke tilbage som en retur — du finder den i trin 1. Punkterne er hver reaktion, hvert fravalg og hvert åbent punkt i dens `NOTER.md`; gættene og de data skærmen forudsætter, er grundlag for interviewet, ikke punkter i sig selv. Indtil hvert punkt er afgjort, står skitsen på BOARD under *Rapporter klar til behandling*. En opgave der kommer af en skitse, har `mockup-NNNN` i `kilde`. Skitsen selv bygges aldrig videre på — opgaven bygges forfra.
 
 ### 7. Vurdér om opgaven er bygget
 
@@ -276,7 +280,7 @@ Luk med `LUKNING`-blokken fra `AGENTS.md`. Triggeren er ikke at tråden er lang 
 nummer: task-NNNN
 titel: <kort titel>
 status: planlagt
-kilde: <test-NNNN | review-NNNN | security-NNNN | debug-NNNN | interview>
+kilde: <test-NNNN | review-NNNN | security-NNNN | debug-NNNN | mockup-NNNN | interview>
 oprettet: ÅÅÅÅ-MM-DD
 ---
 

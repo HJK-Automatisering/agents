@@ -11,13 +11,14 @@ agents/
   plugins/agents/
     .claude-plugin/
       plugin.json             plugin-manifestet
-    skills/                   de elleve kald
+    skills/                   de tolv kald
       kickoff/
         SKILL.md
         AGENTS.md             kontrakten, kopieres ind i projekter
         BOARD.md
         beslutningslog.md
-      architect/              navet — den eneste samtalerolle i drift
+      architect/              navet — den eneste rolle der interviewer i drift
+      mockup/                 skitser til møder med slutbrugere — gætter, spørger ikke
       update/                 opdaterer projektets kopier: kontrakt og workflows
       workflow/               valgfrie arbejdsgange, med assets/
       developer/  tester/  security/           ← tynde dispatch-skills
@@ -35,7 +36,7 @@ agents/
 
 ## De to mekanismer
 
-**Skills** er indgangene. Alle elleve har `disable-model-invocation: true`, hvilket betyder at de **kun** kan udløses ved at nogen skriver kaldet. Aldrig af modellen ud fra brugerens prosa.
+**Skills** er indgangene. Alle tolv har `disable-model-invocation: true`, hvilket betyder at de **kun** kan udløses ved at nogen skriver kaldet. Aldrig af modellen ud fra brugerens prosa.
 
 **Agenter** er implementeringerne bag de syv rapportroller. De kører i deres eget kontekstvindue, og deres `tools:`-felt afgør hvad de har med.
 
@@ -45,7 +46,7 @@ agents/
 
 Agenternes `description` er skrevet som anti-trigger: *"INTERN. Kaldes kun af skillen. Vælg aldrig denne agent ud fra brugerens prosa."* Det er beskrivelsen der styrer automatisk valg, så det er dér det slås fra.
 
-**Kun rapportroller kan overhovedet få en værktøjsliste.** En samtalerolle kører i brugerens tråd og har de værktøjer tråden har. Det er en bevidst afvejning: man kan ikke både tale med en rolle og begrænse den. Det er også grunden til at kun `architect` og `kickoff` er samtaleroller — de skal kunne spørge, og prisen er at de er ubegrænsede.
+**Kun rapportroller kan overhovedet få en værktøjsliste.** En samtalerolle kører i brugerens tråd og har de værktøjer tråden har. Det er en bevidst afvejning: man kan ikke både tale med en rolle og begrænse den. Det er også grunden til at kun `architect`, `kickoff` og `mockup` er samtaleroller — de to første skal kunne spørge, `mockup` skal kunne rette til mens nogen ser på, og prisen er at de er ubegrænsede.
 
 ## Stjernemodellen
 
@@ -91,7 +92,7 @@ claude --plugin-dir "<sti uden for repoet>/agents-preview"
 
 Kaldene bærer det nye navn: `/agents-preview:architect` i stedet for `/agents:architect`. Det er samtidig kvitteringen for at det er kopien der læses.
 
-Inde i sessionen skal `/context` vise de syv agenter under **Custom Agents**, og `/help` skal vise de elleve skills.
+Inde i sessionen skal `/context` vise de syv agenter under **Custom Agents**, og `/help` skal vise de tolv skills.
 
 **Ret i repoet, ikke i kopien.** Har du rettet noget undervejs, kopierer du mappen ud igen og kører `/reload-plugins`. Kopien slettes bagefter; den er et prøveeksemplar, ikke et arbejdstræ.
 
@@ -210,7 +211,7 @@ Glemmes bumpet, sker det samme som ovenfor: projekterne kører videre på en for
 
 Kopien kendes på henvisningen og ikke på filnavnet, så et projekts eget workflow der tilfældigvis hedder det samme som vores, ikke udløser noget. Prisen er at en kopi hvor hovedet er fjernet, forbliver usynlig. `node tools/validate.mjs` håndhæver derfor at begge stier står i hver asset under `plugins/agents/skills/workflow/assets/` — fjernes de i en oprydning, fejler kontrollen frem for at gøre hooken blind.
 
-Versionstjekket ligger i hooken og ikke i rollerne, så det findes ét sted i stedet for elleve der kan drive fra hinanden.
+Versionstjekket ligger i hooken og ikke i rollerne, så det findes ét sted i stedet for tolv der kan drive fra hinanden.
 
 ## Fælden: dobbelte rollefiler
 

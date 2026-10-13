@@ -21,6 +21,8 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
+| task-0009 | Hooken og kickoff kender en mappe der kun har skitser | planlagt | interview |
+| task-0010 | status og update kender ikke skitsemappen | planlagt | task-0008 |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -31,6 +33,7 @@ eller nummeret på den rapport opgaven kom af.>
 |---|
 | Hookens navn og tællingen af dens tjek passer ikke til hvad den gør |
 | Runtime-version står ikke i CLAUDE.md |
+| Projektdokumentet tæller ni roller og nævner ikke projektkonsulenterne |
 
 <Den grove liste: hvad architect kan se der skal laves. **Ingen numre.**
 Et emne får først et nummer når interviewet har gjort det udførbart —
@@ -47,6 +50,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0005 | Udgivelser efterlader intet spor i historikken | bygget |
 | task-0006 | En workflow-kopi uden sit dokument er usynlig for hooken | bygget |
 | task-0007 | Caller-skabelon og compose-regler efter workflow v1.2.0 | bygget |
+| task-0008 | En mockup-rolle til møder med slutbrugere | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.

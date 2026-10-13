@@ -2,7 +2,7 @@
 
 ## Hvad dette repo er
 
-Kildekode til Claude Code-plugin'et `agents`: elleve skills, syv agenter, en
+Kildekode til Claude Code-plugin'et `agents`: tolv skills, syv agenter, en
 SessionStart-hook og to manifester. Repoet er **både marketplace og plugin** —
 brugerne peger deres klient direkte på det.
 
@@ -69,7 +69,7 @@ echo '{"cwd":"<sti til et testprojekt>"}' | node plugins/agents/hooks/detect-pro
 
 | Sti | Hvad |
 |---|---|
-| `plugins/agents/skills/<navn>/SKILL.md` | De elleve kald |
+| `plugins/agents/skills/<navn>/SKILL.md` | De tolv kald |
 | `plugins/agents/agents/<navn>.md` | De syv rapportroller |
 | `plugins/agents/skills/kickoff/` | Kontrakt, BOARD og beslutningslog der kopieres ind i projekter |
 | `plugins/agents/hooks/` | SessionStart-hook |
@@ -77,11 +77,12 @@ echo '{"cwd":"<sti til et testprojekt>"}' | node plugins/agents/hooks/detect-pro
 
 ## Ord
 
-- **Rolle** — hvad det er. Der er ni, plus to hjælpekald.
+- **Rolle** — hvad det er. Der er ti, plus to hjælpekald.
 - **Skill** / **agent** — hvordan rollen leveres. En skill kører i brugerens
   tråd; en agent kører isoleret i sit eget kontekstvindue.
-- **Samtalerolle** — arbejder sammen med mennesket, ét spørgsmål ad gangen.
-  Der er **to**: `architect` og `kickoff`. Kun de to kan spørge.
+- **Samtalerolle** — arbejder sammen med mennesket, i dets tråd.
+  Der er **tre**: `architect`, `kickoff` og `mockup`. Kun de to første
+  spørger, ét spørgsmål ad gangen; `mockup` viser en skitse og gætter.
 - **Rapportrolle** — sendes af sted, kommer tilbage med en henvisning og
   én linje pr. fund. De syv øvrige, inklusive `developer`.
 - **Navet** — `architect`. Den eneste rolle der opretter opgaver og sender de

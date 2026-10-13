@@ -1,6 +1,6 @@
 {
   "name": "hjk-agents",
-  "description": "Ni roller med skarpe mandater, kaldt eksplicit: kickoff, architect, developer, tester, debugger, security, reviewer, scout, status.",
+  "description": "Ti roller med skarpe mandater, kaldt eksplicit: kickoff, architect, developer, tester, debugger, security, reviewer, scout, status, mockup.",
   "owner": {
     "name": "HJK-Automatisering",
     "url": "https://github.com/HJK-Automatisering"
@@ -9,7 +9,7 @@
     {
       "name": "agents",
       "source": "./plugins/agents",
-      "description": "Ni roller med skarpe mandater, kaldt eksplicit: kickoff, architect, developer, tester, debugger, security, reviewer, scout, status.",
+      "description": "Ti roller med skarpe mandater, kaldt eksplicit: kickoff, architect, developer, tester, debugger, security, reviewer, scout, status, mockup.",
       "version": "1.0.0-beta.25",
       "author": {
         "name": "HJK-Automatisering"
