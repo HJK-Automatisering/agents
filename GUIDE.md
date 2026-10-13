@@ -4,7 +4,7 @@ Til dig der skal bruge det. Læs den én gang, brug snydearket bagefter.
 
 ## Idéen på fem linjer
 
-Vi bruger ikke én AI-assistent til alt. Vi bruger **ni roller**, der hver kan én ting og har forbud mod resten.
+Vi bruger ikke én AI-assistent til alt. Vi bruger **ti roller**, der hver kan én ting og har forbud mod resten.
 
 **Du sidder hos én af dem.** `architect` er navet: den interviewer dig, opretter opgaverne, og sender de andre roller af sted. De kommer tilbage med en rapport. Alt vender tilbage til navet.
 
@@ -16,13 +16,15 @@ Rollerne taler ikke sammen — de afleverer markdown i `docs/`, og `architect` l
 
 Sproget kolliderer let, så hold de to fra hinanden:
 
-- **Rolle** — hvad det er. Der er ni. Det er dem du taler om.
+- **Rolle** — hvad det er. Der er ti. Det er dem du taler om.
 - **Mekanisme** — hvordan den leveres. Enten en *skill* eller en *agent*.
 
 Og de to slags roller, som er den skelnen du bruger i praksis:
 
 **Samtalerolle** — du arbejder *sammen med* den. Den kører i din tråd, spørger ét spørgsmål ad gangen, og venter på svaret.
-`architect` · `kickoff`
+`architect` · `kickoff` · `mockup`
+
+`mockup` er den tredje, og den er anderledes: den spørger ikke, den viser. Se *Til konsulenter*.
 
 **Rapportrolle** — du sender den *af sted* og får et svar tilbage. Den kører i sit eget vindue.
 `developer` · `tester` · `security` · `reviewer` · `debugger` · `scout` · `status`
@@ -56,7 +58,7 @@ Det er den regel der bærer resten. Rollerne skriver to steder, og de skriver fo
 
 Derfor skal du **aldrig åbne en fil for at svare på noget.** `architect` viser hvad der skal afgøres, du svarer i chatten, og den skriver det ind.
 
-**Kun `architect` og `kickoff` kan spørge.** En agent sidder ikke i din tråd. Er noget uklart for den, skriver den det ned og returnerer det — og `architect` læser det som et spørgsmål til dig. Det er derfor interviewet skal være ordentligt: en dårligt defineret opgave betales i genudsendelser.
+**Kun `architect` og `kickoff` spørger.** `mockup` gætter i stedet og skriver gættet ned. En agent sidder ikke i din tråd. Er noget uklart for den, skriver den det ned og returnerer det — og `architect` læser det som et spørgsmål til dig. Det er derfor interviewet skal være ordentligt: en dårligt defineret opgave betales i genudsendelser.
 
 ## Hvorfor ikke bare én lang tråd til alt
 
@@ -86,7 +88,7 @@ node --version
 
 ### Hvis Node mangler
 
-Så gør hooken ingenting, og **den siger det ikke.** Alt andet virker: alle elleve kald, alle roller, kontrakten. Du mister kun de tre automatiske tjek.
+Så gør hooken ingenting, og **den siger det ikke.** Alt andet virker: alle tolv kald, alle roller, kontrakten. Du mister kun de tre automatiske tjek.
 
 Det betyder i praksis at du selv skal huske at køre `/agents:update` når plugin'et er blevet opdateret. Uden hooken er der ingen der gør opmærksom på at projektets kontrakt er blevet forældet.
 
@@ -124,7 +126,7 @@ Den finder selv ud af hvad der mangler: er projektet tomt, kører den hele inter
 
 **Kopiér aldrig rollerne ind i et projekt.** En `.claude/agents/`-mappe i projektet overskriver plugin-rollerne, så centrale rettelser ikke virker. Det er den fejl der er sværest at se, fordi alt *ser* ud til at fungere.
 
-## De ni roller
+## De ti roller
 
 | Kald | Kører | Laver | Svarer til |
 |---|---|---|---|
@@ -137,6 +139,7 @@ Den finder selv ud af hvad der mangler: er projektet tomt, kører den hele inter
 | `/agents:debugger` | eget vindue | Rapport: årsagen til én fejl | `architect` |
 | `/agents:scout` | eget vindue | Kort over en ukendt kodebase | `architect` |
 | `/agents:status` | eget vindue | Læser projektet som helhed og vurderer næste skridt | dig |
+| `/agents:mockup` | din tråd | En klikbar skitse med fiktive data, og noter om hvad slutbrugeren sagde | dig — noterne bagefter til `architect` |
 
 Plus to hjælpekald: `/agents:workflow` tilføjer et fælles workflow, og `/agents:update` bringer projektets kontrakt ajour.
 
@@ -174,7 +177,7 @@ Der er to niveauer, og kun det ene er nummereret:
 
 Og modsat: en opgave skal være stor nok til at bære en tråd. *"Lav en `.dockerignore`"* er ikke en opgave. *"Hemmeligheder ude af det byggede image"* er.
 
-### Fem mapper, fem tællere
+### Seks mapper, seks tællere
 
 | Mappe | Fil | Skrevet af |
 |---|---|---|
@@ -183,6 +186,7 @@ Og modsat: en opgave skal være stor nok til at bære en tråd. *"Lav en `.docke
 | `docs/securities/` | `security-NNNN-slug.md` | `security` |
 | `docs/reviews/` | `review-NNNN-slug.md` | `reviewer` |
 | `docs/debugs/` | `debug-NNNN-slug.md` | `debugger` |
+| `docs/mockups/` | `mockup-NNNN-slug/` — en mappe | `mockup` |
 
 Hver mappe tæller for sig. `task-0001` og `security-0001` findes samtidig og har intet med hinanden at gøre — **derfor er præfikset obligatorisk.** Et bart `0001` betyder ikke noget.
 
@@ -339,6 +343,34 @@ Tilbagerulning er `git revert` af den commit deploy-jobbet lavede. Det forrige i
 
 Stacken i Portainer sætter et menneske op én gang pr. app — som Git-stack på `main` med polling, registry og variabler. Hvordan står i workflow-dokumentet under *Opsætning af stacken i Portainer*, med en tabel over hvad man kigger efter når en udrulning udebliver — og klik for klik i `PORTAINER.md`.
 
+## Til konsulenter: en skitse i mødet
+
+```
+/agents:mockup
+
+Vis en oversigt over de sager en sagsbehandler har i dag, med filter på status.
+```
+
+**Hvornår.** Du sidder med en slutbruger og vil vise *"kunne det her være en løsning?"* — før der er en opgave, og ofte før der er et projekt. Alle andre roller kræver interview, opgave og gren før noget vises. `mockup` viser først.
+
+**Hvad den gør.** Den laver én HTML-fil med fiktive data og retter den til efter dine ord, mens slutbrugeren ser på. Er noget uklart, gætter den og skriver gættet ned i stedet for at spørge — du styrer, og slutbrugeren skal se en skærm, ikke en afvejning.
+
+- **Du åbner selv skitsen.** Den giver dig stien; du dobbeltklikker, og bagefter genindlæser du. Den starter aldrig selv en browser.
+- **Skitsen virker uden installation og uden netværk**, og der står *SKITSE — fiktive data* øverst. Mødelaptoppen kan ikke fejle på en pakke.
+- **Ingen rigtige data, heller ikke i et projekt der kører.** Den låner højst datamodellens form — hvilke felter der findes — og læser ingen hemmeligheder.
+- **Noterne er det vigtigste.** Undervejs skriver den hvad der blev vist, hvad slutbrugeren reagerede på, hvad der blev valgt fra, hvilke data skærmen forudsætter, hvilke gæt den tog, og hvad der stadig er åbent.
+
+**De to tilfælde.**
+
+| Du står i | Hvad der sker |
+|---|---|
+| En tom mappe | Den opretter kun `docs/mockups/` og skitsens mappe. Ingen git, ingen kontrakt, ingen `.gitignore`. Siger sessionen `PROJEKT NUL` ved start, er det forventet — kør `/agents:kickoff` bagefter, når der skal bygges noget |
+| Et projekt sat op med metoden | Den laver sin egen gren, `mockup-0003-case-overview`, ud fra default-grenen. Har du ucommittede ændringer, stopper den og siger det. Den committer kun skitsemappen, når du siger at noget er vist — og pusher kun hvis du siger ja |
+
+**Bagefter.** Skitsen er en rapport. Den står `klar til behandling`, til `/agents:architect` har gjort hver reaktion i noterne til en opgave eller afvist den med en begrundelse. Opgaven bærer skitsens nummer i sit `Kilde`-felt.
+
+**En skitse flyttes aldrig ind i løsningen.** Den er bygget til at blive vist, ikke til at køre. Skal den bygges, bliver den til opgaver, og `developer` bygger forfra.
+
 ## Gennemspillet: en lille eksport-funktion
 
 Alt herunder sker i **én** tråd, bortset fra det du selv gør til sidst.
@@ -387,6 +419,7 @@ Alt arbejde                /agents:architect     ← her sidder du
 Hvor er vi                 /agents:status        (eget vindue)
 Tilføj docker-publish      /agents:workflow
 Kontrakten er bagud        /agents:update
+Skitse til et møde         /agents:mockup        (gætter, spørger ikke)
 
 Sendes af sted af architect:
   developer   bygger én opgave
@@ -400,13 +433,14 @@ Overblik      docs/BOARD.md
 Projektet     docs/projekt.md
 Opgaver       docs/tasks/task-NNNN-slug.md
 Rapporter     docs/{tests,securities,reviews,debugs}/
+Skitser       docs/mockups/mockup-NNNN-slug/
 Beslutninger  docs/decisions/log.md
 Kontrakt      AGENTS.md
 
 Opgavestatus  planlagt · i-gang · afsluttet
 Rapportstatus klar til behandling · behandlet
 
-Ændrer kode            kun developer
+Ændrer kode            kun developer (mockup skriver kun skitser)
 Opretter opgaver        kun architect
 Afgør hvad der testes   kun dig
 Merge og push           architect spørger, du svarer — hver gang
