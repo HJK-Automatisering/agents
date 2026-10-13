@@ -213,6 +213,14 @@ Kopien kendes på henvisningen og ikke på filnavnet, så et projekts eget workf
 
 Versionstjekket ligger i hooken og ikke i rollerne, så det findes ét sted i stedet for tolv der kan drive fra hinanden.
 
+## Projekt nul, og projekt nul med skitser
+
+Hookens første tjek er projekt nul: ingen markdown i `docs/tasks/` eller `docs/plans/`, ingen `docs/projekt.md`, ingen `CLAUDE.md`, ingen `AGENTS.md` og ingen commits. Så siger den `PROJEKT NUL` — gå ikke i gang med at skrive filer, kør `kickoff`, `git init` og `.gitignore` før alt andet — og tier om resten.
+
+`mockup` kan lægge en skitse i netop sådan en mappe, midt i et møde. `docs/mockups/` tæller derfor ikke som dokumenter: en mappe med kun skitser er stadig projekt nul, og `kickoff` kører hele processen. Men beskeden er en anden. Ligger der mindst én mappe under `docs/mockups/` med en `NOTER.md`, siger hooken `SKITSER, INTET PROJEKT ENDNU`: den lister skitserne, siger at det er forventet, og at projektet sættes op med `/agents:kickoff` når brugeren er klar — ikke at der ikke må skrives filer. Den minder om at `git init` og `.gitignore` stadig kommer før den første commit.
+
+Den første session i en tom mappe, før skitsen findes, får stadig `PROJEKT NUL`. Kan `docs/mockups/` ikke læses af anden grund end at den mangler, tier hooken helt frem for at gætte.
+
 ## Fælden: dobbelte rollefiler
 
 Et projekts eller en brugers `.claude/agents/` **overskriver** plugin-agenter med samme navn. Ligger en rolle begge steder, rammer en rettelse i plugin'et ingenting.
