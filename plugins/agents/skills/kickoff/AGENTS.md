@@ -246,7 +246,7 @@ Er noget uklart, er noten stedet det siges. `developer` kan ikke spørge — den
 
 **Den skrives af `architect`**, som er den eneste rolle der opretter opgaver, sætter statusser og triagerer rapporter — og derfor den eneste der kender hele tilstanden. Ingen agent opdaterer den; de skriver i deres egen fil og returnerer.
 
-**`status` skriver den ikke.** Den læser de fem mapper, holder dem op mod BOARD og rapporterer afvigelser. Er BOARD uenig med en fil, er **filen** rigtig — og `architect` retter BOARD næste gang den er i tråden.
+**`status` skriver den ikke.** Den læser opgaverne, rapporterne og skitsernes noter — også skitser der kun ligger på deres egen gren — holder dem op mod BOARD og rapporterer afvigelser. Er BOARD uenig med en fil, er **filen** rigtig — og `architect` retter BOARD næste gang den er i tråden.
 
 Fire afsnit:
 

@@ -364,7 +364,7 @@ Vis en oversigt over de sager en sagsbehandler har i dag, med filter på status.
 
 | Du står i | Hvad der sker |
 |---|---|
-| En tom mappe | Den opretter kun `docs/mockups/` og skitsens mappe. Ingen git, ingen kontrakt, ingen `.gitignore`. Siger sessionen `PROJEKT NUL` ved start, er det forventet — kør `/agents:kickoff` bagefter, når der skal bygges noget |
+| En tom mappe | Den opretter kun `docs/mockups/` og skitsens mappe. Ingen git, ingen kontrakt, ingen `.gitignore`. Siger sessionen `PROJEKT NUL` ved start, er det forventet: der ligger ingen skitse endnu. Ligger der en, siger den i stedet `SKITSER, INTET PROJEKT ENDNU` og lister dem — også det er forventet. Kør `/agents:kickoff` bagefter, når der skal bygges noget; den læser skitsernes noter |
 | Et projekt sat op med metoden | Den laver sin egen gren, `mockup-0003-case-overview`, ud fra default-grenen. Har du ucommittede ændringer, stopper den og siger det. Den committer kun skitsemappen, når du siger at noget er vist — og pusher kun hvis du siger ja |
 
 **Bagefter.** Skitsen er en rapport. Den står `klar til behandling`, til `/agents:architect` har gjort hver reaktion i noterne til en opgave eller afvist den med en begrundelse. Opgaven bærer skitsens nummer i sit `Kilde`-felt.

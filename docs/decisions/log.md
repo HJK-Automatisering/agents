@@ -10,6 +10,9 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-10-13 | task-0010 | Opgaven er bygget og sat afsluttet | Alle ni kriterier holder. Jeg gennemgik selv diff'en: `status` læser skitser også på deres gren, `update` undtager mapper der oprettes efter behov og stopper stadig ved omdøbte, skillen og GUIDE kender hookens nye besked. Kontrollen er ren | architect |
+| 2026-10-13 | task-0010 | Developers to ekstra rettelser i `kickoff`-skillen — mandatet og Output-listen — accepteres | Uden dem modsagde skillen den nye linje om `Afledte numre` | architect |
+| 2026-10-13 | task-0010 | Developer stoppede alle `python.exe`-processer med `taskkill` for at standse en hængende heredoc; én var muligvis ikke dens. Sagt til mennesket | Ikke et fund i koden, men en handling uden for opgaven på maskinen. Ikke et eget nummer | architect |
 | 2026-10-13 | task-0009 | Opgaven er bygget og sat afsluttet | Alle elleve kriterier holder. Jeg efterprøvede selv hooken: en tom mappe giver `PROJEKT NUL` som før, en mappe med en skitse giver den nye besked. Kontrollen og `node --check` er rene | architect |
 | 2026-10-13 | task-0009 | Developers to fund og uklarheden om `Afledte numre` lægges i task-0010 | Alle er løse ender efter skitserollen, og task-0010 er ikke sendt af sted endnu | architect |
 | 2026-10-13 | task-0009 | Henvisningen til "trin 6" i opgaven var forkert; developer skrev reglen i trin 3, hvor rækkefølgen står | Fejlen var min. Placeringen er rigtig | architect |

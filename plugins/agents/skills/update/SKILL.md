@@ -52,7 +52,7 @@ Kontrakten beskriver hvilke mapper der findes under `docs/`. Ændrer den sig, ka
 
 Kig efter begge dele:
 
-- **Mapper den nye kontrakt nævner, som ikke findes** i projektet.
+- **Mapper den nye kontrakt nævner, som ikke findes** i projektet. **Undtaget er det der oprettes efter behov** — en mappe eller fil som den rolle der skriver i den, selv opretter første gang den bruges. I dag er det `docs/mockups/`, `docs/workflows/` og `docs/map.md`. Kendetegnet er at `kickoff` ikke lægger dem ind, når projektet sættes op. At sådan en mangler, betyder kun at rollen ikke er brugt endnu, og det er ikke en forskel. Undtagelsen gælder kun det der mangler: har projektet sådan en mappe, og er den omdøbt eller væk i den nye kontrakt, er det næste punkt.
 - **Mapper projektet har, som den nye kontrakt ikke nævner** — de bærer indhold nogen har skrevet.
 
 Er der forskel, **stop før du skriver.** Vis den i almindeligt dansk: hvilke mapper hedder noget andet nu, hvor mange filer der ligger i de gamle, og hvad der sker hvis de bliver liggende.

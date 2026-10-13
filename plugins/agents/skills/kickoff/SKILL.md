@@ -11,7 +11,7 @@ Du gør løs prosa til et projekt de andre roller kan arbejde i. Du er også den
 
 Du er den eneste rolle der både må spørge om produktet og vælge stak fra bunden. Det er fordi begge beslutninger tages samtidig ved projekt nul, og det er derfor du kun findes her.
 
-Ligger der skitser fra et møde med slutbrugere i et tomt projekt, er du også den der sætter dem til `behandlet`, når deres indhold er brugt. Det er det eneste sted du skriver i en rapport, og kun i dens `status`-felt. Der findes ingen `architect`-tråd endnu til at gøre det. Se *Ligger der skitser* under tilfælde A.
+Ligger der skitser fra et møde med slutbrugere i et tomt projekt, er du også den der sætter dem til `behandlet`, når deres indhold er brugt. Det er det eneste sted du skriver i en rapport, og kun i dens `status`-felt og under dens `## Afledte numre`. Der findes ingen `architect`-tråd endnu til at gøre det. Se *Ligger der skitser* under tilfælde A.
 
 ## Du må ikke
 
@@ -45,7 +45,13 @@ En skitse er en mappe `docs/mockups/mockup-NNNN-slug/` med en klikbar side, `ind
 
 Bekræftelsen er et spørgsmål som ethvert andet: ét ad gangen, med for og imod. Det der taler imod, er ofte at én slutbrugers reaktion ikke er hele projektets.
 
-**Når en skitses indhold er brugt, sætter du den til `behandlet`.** Brugt betyder: hver reaktion, hvert fravalg og hvert åbent punkt står i `docs/projekt.md` eller er blevet et emne under `## Kommende` på `docs/BOARD.md`. Ret kun `status`-feltet i frontmatter — resten af noterne og `index.html` rører du ikke. Står et punkt tilbage, er skitsen ikke behandlet; gør det til et emne, eller spørg.
+**Når en skitses indhold er brugt, sætter du den til `behandlet`.** Brugt betyder: hver reaktion, hvert fravalg og hvert åbent punkt står i `docs/projekt.md` eller er blevet et emne under `## Kommende` på `docs/BOARD.md`. Ret `status`-feltet i frontmatter, og erstat pladsholderen under `## Afledte numre` med én linje:
+
+```markdown
+Brugt af `kickoff` ved projektstart, ÅÅÅÅ-MM-DD: i `docs/projekt.md` og som emner under `## Kommende` på `docs/BOARD.md`. Ingen opgaver — skitsen blev ikke triageret af `architect`.
+```
+
+Resten af noterne og `index.html` rører du ikke. Står et punkt tilbage, er skitsen ikke behandlet; gør det til et emne, eller spørg.
 
 Skitserne ligger på disken før `.gitignore`. Det ændrer ikke rækkefølgen i trin 3: intet committes før `.gitignore` findes, og skitserne kommer med i den første commit.
 
@@ -295,7 +301,7 @@ Sættes skitser til `behandlet`, kommer ændringen med i den sidste commit, samm
 
 ## Output
 
-`.gitignore` · `.gitattributes` · evt. `.env.example` · evt. `.editorconfig` · `AGENTS.md` · `CLAUDE.md` · `docs/projekt.md` · `docs/BOARD.md` · `docs/decisions/log.md` · de fem tomme docs-mapper · evt. `status: behandlet` i skitsernes `NOTER.md`
+`.gitignore` · `.gitattributes` · evt. `.env.example` · evt. `.editorconfig` · `AGENTS.md` · `CLAUDE.md` · `docs/projekt.md` · `docs/BOARD.md` · `docs/decisions/log.md` · de fem tomme docs-mapper · evt. `status: behandlet` og linjen under `## Afledte numre` i skitsernes `NOTER.md`
 
 **Dokumentet bærer ikke status.** Det er hverken en opgave eller en rapport, og de to statussæt i kontrakten gælder ikke for det. Det der siger om dit arbejde er færdigt, er interviewet: er der et blokerende spørgsmål tilbage, er du ikke færdig. Spørgsmålet stilles i tråden — det skrives ikke ned som et punkt i dokumentet.
 
