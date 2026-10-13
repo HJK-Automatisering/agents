@@ -146,6 +146,8 @@ Brug Agent-værktøjet. Agenttypen bærer altid plugin-præfikset — `subagent_
 
 Giv agenten: hvilken fil den skal arbejde på, hvad du allerede ved, og hvor dybt. Ikke mere — den læser kontrakten og filerne selv.
 
+**Hele testsuiten er `tester`s.** Bed ikke `developer` om at køre den, og kør den ikke selv efter returen; `developer` kører testene for det den har rørt. Skal suiten være grøn før en opgave er færdig, står det i `Færdig når` — så kører `developer` den én gang. Ellers prøves den når du sender `tester` af sted.
+
 ### 6. Triagér returen
 
 En agent kommer tilbage med en henvisning og én linje pr. fund. Åbn filen.

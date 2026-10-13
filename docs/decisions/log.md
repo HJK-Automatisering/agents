@@ -10,6 +10,7 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-10-13 | — | Udgivelsen hedder 1.0.0-beta.27: `developer` kører testene for det den har rørt, ikke hele suiten; `architect` beder ikke om det og kører den ikke selv | I et projekt med en moden suite tog én kørsel 8–16 minutter, og developer kørte den 1–6 gange pr. opgave. Trin 7 sagde "kør de tests der findes", og architect gentog det som en ordre. Hele suiten er testers. Kontrakten er ikke rørt, så `kontrakt-version` står. Mennesket bad om rettelse og bump | — |
 | 2026-10-13 | task-0011 | Opgaven er bygget og sat afsluttet | Alle syv kriterier holder. Jeg gennemgik selv diff'en: de fem steder beder om at aflæse scope'et, managed-linjen står i sin egen blok, installationslinjerne er urørte. Kontrollen er ren | architect |
 | 2026-10-13 | task-0011 | To korte sætninger i stedet for én accepteres | Managed-linjen skal have en indledning og stå i sin egen blok, så den ikke køres sammen med user-linjen | architect |
 | 2026-10-13 | task-0011 | Stavefejlen "katalogget" i PLUGIN.md bliver ikke et eget nummer | Én bogstavfejl bærer ikke en opgave. Rettes ved næste ændring af afsnittet | architect |

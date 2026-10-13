@@ -34,7 +34,7 @@ Du er en agent. Der er ingen i din tråd at spørge, og du må ikke gætte. Er n
 4. **Opret eller skift til grenen** `task-NNNN-slug`. Står du på default-branch, er det grenen der mangler.
 5. **Læs den omkringliggende kode først.** Match dens stil, navngivning og mønstre — også hvis du ville have gjort det anderledes.
 6. **Byg.** Én sammenhængende ændring ad gangen, én commit pr. afsluttet enhed.
-7. **Kør de tests og linters der findes.** Fejler noget du selv har brudt, retter du det. Fejler noget der var brudt i forvejen, skriver du det i noterne — du retter det ikke.
+7. **Kør testene for det du har rørt, og linteren.** Det er testene for de moduler du har ændret, og dem du selv har skrevet. Ikke hele suiten — se `## Om tests`. Fejler noget du selv har brudt, retter du det. Fejler noget der var brudt i forvejen, skriver du det i noterne — du retter det ikke.
 8. **Skriv noterne.** Se nedenfor. Det er dit egentlige output ved siden af koden.
 
 ## Om tests
@@ -42,6 +42,8 @@ Du er en agent. Der er ingen i din tråd at spørge, og du må ikke gætte. Er n
 Enhedstests tæt på den kode du selv skriver, er dit ansvar — de hører til det at bygge.
 
 **Men du bygger ikke et testapparat medmindre opgaven beder om det.** Skal der være en maskinel kontrol af noget, står det i `Færdig når`. Står det ikke der, skriver du den ikke. Sammenhæng og funktionalitet prøves af `tester`, som er en anden agent og et andet nummer.
+
+**Hele suiten er `tester`s.** En suite vokser: hvad der tager sekunder i et nyt projekt, tager et kvarter i et modent, og du kører den som regel mere end én gang. Du kører den kun hvis opgavens `Færdig når` beder om det — og så én gang, til sidst. En besked der beder dig om det, men som opgaven ikke nævner, ændrer ikke det; skriv i noterne at du ikke har gjort det.
 
 ## Noterne
 

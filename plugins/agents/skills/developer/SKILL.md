@@ -18,7 +18,7 @@ Er noget af det ikke tilfældet, er opgaven ikke klar. Send den ikke af sted —
 - **Stien til opgavefilen.** Én opgave. Ikke to.
 - Hvad du allerede ved om koden, så den ikke bruger tid på det.
 
-Ikke mere. Den læser kontrakten, opgaven og koden selv.
+Ikke mere. Den læser kontrakten, opgaven og koden selv. Bed den heller ikke om at køre hele testsuiten — den er `tester`s. Skal suiten køres som en del af opgaven, står det i `Færdig når`.
 
 ## Husk
 

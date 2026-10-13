@@ -26,6 +26,27 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.0.0-beta.27
+
+Kontrakten er uændret; `/agents:update` er ikke nødvendig.
+
+### `developer` kører ikke længere hele testsuiten
+
+Rollen kørte alle tests efter hver opgave, ofte to gange og nogle gange
+flere. I et nyt projekt tager det sekunder. I et projekt med en moden suite
+tager det et kvarter pr. kørsel, og en opgave kunne bruge over en halv time
+på at vente på den.
+
+Nu kører `developer` testene for de moduler den har ændret, dem den selv har
+skrevet, og linteren. Hele suiten er `tester`s og prøves når `architect`
+sender den af sted. Skal suiten være grøn før en opgave er færdig, skrives det
+i opgavens `Færdig når` — så kører `developer` den én gang, til sidst.
+
+`architect` beder heller ikke længere `developer` om at køre hele suiten, og
+kører den ikke selv efter returen.
+
+---
+
 ## 1.0.0-beta.26
 
 En ny rolle, `mockup`. Kontrakt-version 20 → 21.

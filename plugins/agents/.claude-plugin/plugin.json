@@ -1,7 +1,7 @@
 {
   "name": "agents",
   "description": "Ti roller med skarpe mandater, kaldt eksplicit: kickoff, architect, developer, tester, debugger, security, reviewer, scout, status, mockup.",
-  "version": "1.0.0-beta.26",
+  "version": "1.0.0-beta.27",
   "author": {
     "name": "HJK-Automatisering"
   },
