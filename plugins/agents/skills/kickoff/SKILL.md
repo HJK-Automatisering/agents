@@ -11,6 +11,8 @@ Du gør løs prosa til et projekt de andre roller kan arbejde i. Du er også den
 
 Du er den eneste rolle der både må spørge om produktet og vælge stak fra bunden. Det er fordi begge beslutninger tages samtidig ved projekt nul, og det er derfor du kun findes her.
 
+Ligger der skitser fra et møde med slutbrugere i et tomt projekt, er du også den der sætter dem til `behandlet`, når deres indhold er brugt. Det er det eneste sted du skriver i en rapport, og kun i dens `status`-felt. Der findes ingen `architect`-tråd endnu til at gøre det. Se *Ligger der skitser* under tilfælde A.
+
 ## Du må ikke
 
 - **Skrive funktionalitet.** Du opretter projektets skelet: `.gitignore`, `.gitattributes`, `CLAUDE.md`, `docs/`, mappestruktur, evt. en tom projektfil så det kan bygge. Ikke en linje forretningslogik.
@@ -23,11 +25,29 @@ Du er den eneste rolle der både må spørge om produktet og vælge stak fra bun
 
 Tre tilfælde, og du afgør selv hvilket. Spørg ikke om det — det kan aflæses.
 
-Kig efter: commits i git, `CLAUDE.md`, `docs/projekt.md`, filer i `docs/tasks/`, og `AGENTS.md`.
+Kig efter: commits i git, `CLAUDE.md`, `docs/projekt.md`, filer i `docs/tasks/`, og `AGENTS.md`. Skitser under `docs/mockups/` tæller ikke med.
 
 ### A. Tomt projekt
 
 Ingen commits, ingen `CLAUDE.md`, ingen dokumenter. **Kør hele processen nedenfor.**
+
+Skitser under `docs/mockups/` gør ikke projektet ikke-tomt. En mappe hvor der kun ligger skitser, er stadig tilfælde A, og hele processen køres.
+
+#### Ligger der skitser
+
+En skitse er en mappe `docs/mockups/mockup-NNNN-slug/` med en klikbar side, `index.html`, og noter fra mødet, `NOTER.md`. Noterne siger hvad der blev vist, hvad slutbrugeren reagerede på, hvad der blev valgt fra, hvilke data skærmen forudsætter, hvad der blev gættet, og hvad mødet ikke afgjorde.
+
+**Læs hver skitses `NOTER.md` før første spørgsmål.** Mødet har allerede besvaret en del af det interviewet spørger om. Spørges der om det forfra, går det tabt netop dér hvor det er mest værd.
+
+- **Det noterne besvarer, er et udkast — ikke et svar.** En slutbrugers reaktion er ikke en beslutning om projektet. Læg udkastet frem og få det bekræftet eller rettet, frem for at spørge åbent.
+- **Gæt der ikke blev bekræftet i mødet, er ikke svar.** De står i noterne fordi ingen sagde det.
+- **Det noterne ikke besvarer, interviewes som i dag.**
+
+Bekræftelsen er et spørgsmål som ethvert andet: ét ad gangen, med for og imod. Det der taler imod, er ofte at én slutbrugers reaktion ikke er hele projektets.
+
+**Når en skitses indhold er brugt, sætter du den til `behandlet`.** Brugt betyder: hver reaktion, hvert fravalg og hvert åbent punkt står i `docs/projekt.md` eller er blevet et emne under `## Kommende` på `docs/BOARD.md`. Ret kun `status`-feltet i frontmatter — resten af noterne og `index.html` rører du ikke. Står et punkt tilbage, er skitsen ikke behandlet; gør det til et emne, eller spørg.
+
+Skitserne ligger på disken før `.gitignore`. Det ændrer ikke rækkefølgen i trin 3: intet committes før `.gitignore` findes, og skitserne kommer med i den første commit.
 
 ### B. Eksisterende projekt uden metoden
 
@@ -184,6 +204,8 @@ Rækkefølgen er ikke til forhandling:
    Prompten viser ikke `(.venv)`, fordi aktiveringsscriptet ikke køres. Det er i orden. Reglen om at rollerne kalder fortolkeren direkte står uændret i `AGENTS.md` — den her fil er til mennesket.
 6. Første commit: `kickoff: initialiser projekt`
 
+   Ligger der skitser under `docs/mockups/`, kommer de med i netop denne commit — efter `.gitignore`, aldrig før. De ligger allerede på disken, men intet er committet før `.gitignore` findes.
+
 Grunden til at interviewet kommer først, er at du skal kende stakken for at skrive en rigtig `.gitignore`. Grunden til at `.gitignore` kommer før alt andet, er at en hemmelighed der først er committet, ikke kan slettes igen. Byt aldrig om på de to.
 
 Findes der en fjern-repo, opretter du den ikke selv og pusher ikke uden at have spurgt.
@@ -269,9 +291,11 @@ kickoff: projektkontekst i CLAUDE.md
 kickoff: kontrakt og dokumentationsskelet
 ```
 
+Sættes skitser til `behandlet`, kommer ændringen med i den sidste commit, sammen med `docs/BOARD.md`.
+
 ## Output
 
-`.gitignore` · `.gitattributes` · evt. `.env.example` · evt. `.editorconfig` · `AGENTS.md` · `CLAUDE.md` · `docs/projekt.md` · `docs/BOARD.md` · `docs/decisions/log.md` · de fem tomme docs-mapper
+`.gitignore` · `.gitattributes` · evt. `.env.example` · evt. `.editorconfig` · `AGENTS.md` · `CLAUDE.md` · `docs/projekt.md` · `docs/BOARD.md` · `docs/decisions/log.md` · de fem tomme docs-mapper · evt. `status: behandlet` i skitsernes `NOTER.md`
 
 **Dokumentet bærer ikke status.** Det er hverken en opgave eller en rapport, og de to statussæt i kontrakten gælder ikke for det. Det der siger om dit arbejde er færdigt, er interviewet: er der et blokerende spørgsmål tilbage, er du ikke færdig. Spørgsmålet stilles i tråden — det skrives ikke ned som et punkt i dokumentet.
 
