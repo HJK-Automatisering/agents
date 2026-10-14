@@ -136,8 +136,8 @@ Den finder selv ud af hvad der mangler: er projektet tomt, kører den hele inter
 
 | Kald | Kører | Laver | Svarer til |
 |---|---|---|---|
-| `/agents:kickoff` | din tråd | Projektets dokument, `.gitignore`, `CLAUDE.md`, kontrakten | dig |
-| `/agents:architect` | **din tråd** | Opgaverne. Sender alle andre af sted | dig |
+| `/agents:kickoff` | din tråd | Projektets dokument, `.gitignore`, `CLAUDE.md`, den første `README.md`, kontrakten | dig |
+| `/agents:architect` | **din tråd** | Opgaverne. Sender alle andre af sted. Holder `README.md` i takt med det der er bygget | dig |
 | `/agents:developer` | eget vindue | Koden, plus noter i opgavefilen | `architect` |
 | `/agents:tester` | eget vindue | Rapport: holder sammenhængen | `architect` |
 | `/agents:security` | eget vindue | Rapport: huller og logiske fejl | `architect` |

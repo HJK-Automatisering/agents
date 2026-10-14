@@ -26,6 +26,42 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.0.0
+
+Første udgivelse uden beta. Kontrakt-version 21 → 22.
+**Kør `/agents:update` i hvert projekt.** Kontrakten har fået en regel om
+README, og hooken siger at kopien er bagud, indtil den er opdateret.
+
+### Tallet betyder noget fra nu af
+
+Der kommer ikke flere betaer. Et patch-nummer (`1.0.1`) er en rettelse. Et
+minor-nummer (`1.1.0`) er en ny regel eller rolle — og når kontrakten er
+ændret, siger posten her at `/agents:update` skal køres. Et major-nummer
+(`2.0.0`) betyder at noget du gør i dag, holder op med at virke.
+
+### `architect` ejer projektets README
+
+Indtil nu ejede ingen rolle `README.md`. Den blev skrevet af den der kom
+forbi, oftest `developer` midt i en opgave — og så blev den teknisk og fulgte
+ikke med.
+
+Kontrakten siger nu hvad en README er: til mennesker der skal bruge, drive
+eller overtage projektet, på dansk og i almindeligt sprog. Den siger hvad
+projektet gør, hvordan man kommer i gang, hvilke indstillinger der skal sættes,
+og hvor man læser mere. Hvordan koden er bygget op, hører ikke til der.
+
+- **`kickoff`** skriver den første udgave. I et projekt der allerede kører,
+  rører den ikke en eksisterende README, men sætter den på BOARD hvis den ikke
+  lever op til kontrakten.
+- **`architect`** ejer den og retter den på opgavens gren, før grenen lukkes,
+  når opgaven har ændret noget en bruger mærker.
+- **`developer`** rører den ikke, men skriver nye kommandoer og indstillinger
+  i sine noter.
+- **`reviewer`** melder den som et fund, når den er bagud, ikke er på dansk,
+  eller er skrevet til en udvikler.
+
+---
+
 ## 1.0.0-beta.28
 
 Kontrakten er uændret. `docker-publish` er bumpet fra skabelon-version 3 til 4,

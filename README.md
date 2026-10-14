@@ -57,7 +57,7 @@ Almindelig prosa i Claude Code udløser **ingenting**. Rollerne kaldes eksplicit
 | Kald | Mekanisme | Kører | Må rette filer |
 |---|---|---|---|
 | `/agents:kickoff` | skill | din tråd | ja, projektets skelet |
-| `/agents:architect` | skill | **din tråd** | kun `docs/tasks/`, BOARD og loggen |
+| `/agents:architect` | skill | **din tråd** | kun `docs/tasks/`, BOARD, loggen og projektets `README.md` |
 | `/agents:developer` | skill → agent | eget vindue | **ja — den eneste** |
 | `/agents:tester` | skill → agent | eget vindue | kun `docs/tests/` |
 | `/agents:security` | skill → agent | eget vindue | kun `docs/securities/` |

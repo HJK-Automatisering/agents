@@ -262,6 +262,24 @@ En udgivelse er en bevidst handling, ikke noget der følger med hver commit. Sam
 6. Kør `node tools/validate.mjs`.
 7. Commit og push.
 
+### Hvilket nummer
+
+Fra 1.0.0 siger tallet brugerne hvad de skal gøre. Ingen betaer; en udgivelse
+er en udgivelse.
+
+| Ændring | Led | Eksempel |
+|---|---|---|
+| Rettelse uden ny regel: en rolle der gjorde noget forkert, en tekst der var uklar | patch | `1.0.0` → `1.0.1` |
+| Ny regel, ny rolle, eller `kontrakt-version` / `skabelon-version` bumpet | minor | `1.0.1` → `1.1.0` |
+| Rollerne skal kaldes anderledes, eller en rolle forsvinder | major | `1.4.2` → `2.0.0` |
+
+**Et bump af `kontrakt-version` er minor, ikke major.** Det kræver at projekterne
+kører `/agents:update`, men `update` bevarer projektets egne afvigelser, og hooken
+siger til af sig selv. Det er en handling, ikke et brud. Major er når noget
+brugerne gør i dag, holder op med at virke.
+
+Er du i tvivl mellem to led, er det det højeste.
+
 Kontrollen i `.github/workflows/validate.yaml` sætter selv mærket `v<version>`
 på det push der bragte det nye nummer ind — for eksempel `v1.0.0-beta.23`.
 **Sæt det ikke i hånden.** Er versionen uændret, eller fejler kontrollen, sker

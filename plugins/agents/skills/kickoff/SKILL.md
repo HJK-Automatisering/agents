@@ -1,5 +1,5 @@
 ---
-description: "Sætter et projekt op. Interviewer dig ét spørgsmål ad gangen og skriver projektets dokument, .gitignore, CLAUDE.md og kontrakten — eller lægger kontrakt, projektkontekst og skelet ind, hvis projektet allerede kører."
+description: "Sætter et projekt op. Interviewer dig ét spørgsmål ad gangen og skriver projektets dokument, .gitignore, CLAUDE.md, README og kontrakten — eller lægger kontrakt, projektkontekst og skelet ind, hvis projektet allerede kører."
 disable-model-invocation: true
 ---
 
@@ -15,7 +15,7 @@ Ligger der skitser fra et møde med slutbrugere i et tomt projekt, er du også d
 
 ## Du må ikke
 
-- **Skrive funktionalitet.** Du opretter projektets skelet: `.gitignore`, `.gitattributes`, `CLAUDE.md`, `docs/`, mappestruktur, evt. en tom projektfil så det kan bygge. Ikke en linje forretningslogik.
+- **Skrive funktionalitet.** Du opretter projektets skelet: `.gitignore`, `.gitattributes`, `CLAUDE.md`, `README.md`, `docs/`, mappestruktur, evt. en tom projektfil så det kan bygge. Ikke en linje forretningslogik.
 - **Antage.** Er du i tvivl, spørger du — ét spørgsmål, i chatten, og så venter du. Du må antage hvis mennesket giver dig lov.
 - **Interviewe om scope på et projekt der allerede kører.** Se tilfælde B. Er projektet i gang og har en kontrakt, hører nye emner hos `architect`.
   **Men:** har `docs/projekt.md` et afsnit `## Åbne punkter`, er den skrevet efter en ældre skabelon, og du er den eneste rolle der må lukke det. Se *Et forældet `## Åbne punkter`* nedenfor.
@@ -63,6 +63,7 @@ Der er kode og commits, men ingen `AGENTS.md`. Projektet findes allerede og har 
 - **Skriv `CLAUDE.md`** — trin 5, i den udgave der står under *I et projekt der allerede kører*. Fem roller læser den i hver eneste tråd, og de læser den også i et projekt du ikke selv har sat op.
 - Interview ikke om scope. Projektet er ikke til forhandling; det kører.
 - Tilbyd ét `docs/projekt.md` bagudrettet, hvis nogen vil have projektets formål skrevet ned. Pres det ikke. Siges der nej, er du færdig.
+- **`README.md`:** findes den, rører du den ikke. Lever den ikke op til kontraktens `## README` — er den på engelsk, bagud eller skrevet til en udvikler — skriver du det som et emne på `docs/BOARD.md` under `## Kommende`; den er `architect`s fra nu af. Findes den ikke, skriver du den efter trin 5b, på samme grundlag som `CLAUDE.md`.
 - Er kodebasen ukendt, foreslå `/agents:scout` først. Et dokument skrevet uden at kende koden er gætteri — og kortet er samtidig det bedste grundlag for `CLAUDE.md`.
 
 Det er alt du skal.
@@ -260,6 +261,17 @@ Findes `docs/map.md`, er den dit grundlag. `scout` har læst projektet for netop
 
 Kan du ikke få dem, skriver du det du fandt og lader resten stå som `ÅBENT`. Gæt ikke. En kommando der ikke virker, koster mere end en der mangler.
 
+### 5b. Projektets `README.md`
+
+Til mennesker — dem der skal bruge, drive eller overtage projektet. Hvad den siger og ikke siger, står i kontraktens `## README`; læs det og følg det. Kort:
+
+- **Dansk, almindeligt sprog**, til en kollega der ikke har været med. Ingen navne fra koden.
+- Hvad projektet gør, og for hvem — fra `docs/projekt.md`, men ikke en kopi af det.
+- Hvordan man kommer i gang og kører det. I et tomt projekt er det de kommandoer der blev besluttet i interviewet, og det der skal sættes i `.env` — nøglerne, aldrig værdierne.
+- Hvor man læser mere: `docs/projekt.md`.
+
+Er der intet at køre endnu, siger den det. Den skal ikke love noget der ikke er bygget. Fra nu af ejer `architect` den.
+
 ### 6. Kontrakt og overblik
 
 Tre filer ligger i denne skill-mappe. Kopiér dem **ordret** — skriv dem ikke om, og tilpas dem ikke. Kontrakten er fælles; afviger den fra projekt til projekt, er den ikke længere en kontrakt.
@@ -294,6 +306,7 @@ Er noget stadig uafklaret uden at blokere, hører det også her — omformuleret
 kickoff: initialiser projekt
 kickoff: projektdokument for <projekt>
 kickoff: projektkontekst i CLAUDE.md
+kickoff: README
 kickoff: kontrakt og dokumentationsskelet
 ```
 
@@ -301,7 +314,7 @@ Sættes skitser til `behandlet`, kommer ændringen med i den sidste commit, samm
 
 ## Output
 
-`.gitignore` · `.gitattributes` · evt. `.env.example` · evt. `.editorconfig` · `AGENTS.md` · `CLAUDE.md` · `docs/projekt.md` · `docs/BOARD.md` · `docs/decisions/log.md` · de fem tomme docs-mapper · evt. `status: behandlet` og linjen under `## Afledte numre` i skitsernes `NOTER.md`
+`.gitignore` · `.gitattributes` · evt. `.env.example` · evt. `.editorconfig` · `AGENTS.md` · `CLAUDE.md` · `README.md` · `docs/projekt.md` · `docs/BOARD.md` · `docs/decisions/log.md` · de fem tomme docs-mapper · evt. `status: behandlet` og linjen under `## Afledte numre` i skitsernes `NOTER.md`
 
 **Dokumentet bærer ikke status.** Det er hverken en opgave eller en rapport, og de to statussæt i kontrakten gælder ikke for det. Det der siger om dit arbejde er færdigt, er interviewet: er der et blokerende spørgsmål tilbage, er du ikke færdig. Spørgsmålet stilles i tråden — det skrives ikke ned som et punkt i dokumentet.
 

@@ -29,7 +29,7 @@ Fordi du ikke selv retter, er kravet til dit output højt: **et fund skal kunne 
 - **Redundans:** død kode, ubrugte imports og parametre, efterladte debug-linjer, duplikeret kode hvor begge steder gør præcis det samme.
 - **Unødig kompleksitet:** kontrolflow der kan forenkles, indpakning uden formål, abstraktioner med én bruger, betingelser der altid er sande.
 - **Stil:** navngivning, formatering og struktur der afviger fra resten af projektet.
-- **Dokumentation:** manglende docstrings på offentlige funktioner, docstrings der ikke længere passer til koden, README der er bagud, kommentarer der lyver.
+- **Dokumentation:** manglende docstrings på offentlige funktioner, docstrings der ikke længere passer til koden, README der er bagud, ikke er på dansk, eller er skrevet til en udvikler frem for en bruger (se kontraktens `## README`), kommentarer der lyver.
 - **Krav opgaven stiller til en tekst:** står der i en opgaves `Færdig når` at en fil skal sige noget bestemt — en datakontrakt, en advarsel, en beskrivelse nogen skal kunne læse — er det dit at afgøre. `tester` må ikke måle det: en kontrol der leder efter ord i en tekst måler formulering og ikke adfærd.
   Afgør om filen siger hvad opgaven beder om. Ikke om den siger det med bestemte ord; om det kan læses. Er kravet opfyldt, skriv det, så nogen kan se at det blev afgjort. Er det ikke, er det et fund: under **Oprydning** når du selv kan skrive teksten, ellers under **Adfærd**.
 

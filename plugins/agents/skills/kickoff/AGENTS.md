@@ -1,5 +1,5 @@
 ---
-kontrakt-version: 21
+kontrakt-version: 22
 ---
 
 # AGENTS.md — fælles kontrakt
@@ -25,8 +25,8 @@ Ved konflikt: rollefilen bestemmer *hvad* der skal laves, denne fil bestemmer *h
 
 | Rolle | Kører | Kaldes af | Afleverer |
 |---|---|---|---|
-| `kickoff` | i menneskets tråd | mennesket, én gang pr. projekt | `docs/projekt.md`, skelet, kontrakt |
-| `architect` | i menneskets tråd | mennesket | opgaver i `docs/tasks/` |
+| `kickoff` | i menneskets tråd | mennesket, én gang pr. projekt | `docs/projekt.md`, første `README.md`, skelet, kontrakt |
+| `architect` | i menneskets tråd | mennesket | opgaver i `docs/tasks/`, og `README.md` |
 | `developer` | agent | `architect` | kode + note i opgavefilen |
 | `tester` | agent | `architect` | rapport i `docs/tests/` |
 | `security` | agent | `architect` | rapport i `docs/securities/` |
@@ -157,6 +157,7 @@ Derefter, i din **første** besked, før du arbejder: skriv i én linje hvad du 
 |---|---|---|---|
 | `docs/BOARD.md` | `architect` | alle | Tilstandsrapport — hvad er åbent |
 | `docs/projekt.md` | `kickoff` | alle | Projektets formål, stak og rammer |
+| `README.md` | `architect` (første udgave: `kickoff`) | mennesker | Hvad projektet gør, og hvordan man kommer i gang. Se `## README` |
 | `docs/tasks/task-NNNN-slug.md` | `architect` (+ `developer`, se nedenfor) | `developer` | Én opgave: hvad, hvorfor, færdig når |
 | `docs/tests/test-NNNN-slug.md` | `tester` | `architect` | Hvad blev prøvet, og hvad holdt ikke |
 | `docs/securities/security-NNNN-slug.md` | `security` | `architect` | Sikkerhedsfund |
@@ -168,6 +169,17 @@ Derefter, i din **første** besked, før du arbejder: skriv i én linje hvad du 
 | `docs/decisions/log.md` | `architect` | alle | Append-only beslutningslog |
 
 **Beslutningsloggen er ikke optional.** `architect`-tråden er den eneste samtale i modellen, og loggen er det eneste spor den efterlader der overlever tråden. Hver beslutning truffet i en `architect`-tråd skrives ind, med begrundelse, før tråden lukkes.
+
+## README
+
+`README.md` i roden er til mennesker: dem der skal bruge, drive eller overtage projektet. Det er den første fil de åbner, og ofte den eneste.
+
+- **Dansk, i almindeligt sprog.** Skriv til en kollega der ikke har været med. Navne fra koden — funktioner, moduler, tabeller — hører ikke hjemme her.
+- **Den siger:** hvad projektet gør, og for hvem. Hvordan man kommer i gang, kører det og opdaterer det. Hvilke indstillinger der skal sættes — nøglerne fra `.env.example`, aldrig værdierne; se `## Værdier hører i .env`. Og hvor man læser mere.
+- **Den siger ikke:** hvordan koden er bygget op, hvorfor, eller hvordan rollerne arbejder. Det står i `CLAUDE.md`, `docs/map.md` og `AGENTS.md`.
+- **Den passer med det der er bygget.** En README der beskriver noget der ikke findes længere, er værre end en kort.
+
+`kickoff` skriver den første udgave. Derefter ejer `architect` den og retter den på opgavens gren, før grenen lukkes, når opgaven har ændret hvad en bruger ser, gør eller skal sætte op. `developer` rører den ikke, men skriver nye kommandoer og indstillinger i sine noter, så `architect` har dem. `reviewer` melder den som et fund når den er bagud, ikke er på dansk, eller er skrevet til en udvikler frem for en bruger.
 
 ## Numre
 
@@ -382,7 +394,7 @@ hører i `.env`, som ikke versionsstyres, og kun der.
 Det gælder de værdier der er **forretningsspecifikke eller forretningskritiske**:
 organisationens servernavne, databasenavne, skemaer, tabelnavne, tjenestebrugere,
 delte stier, interne URL'er og IP-adresser. De skrives ikke i kode, tests,
-`docs/`, `CLAUDE.md`, opgaver, rapporter eller commit-beskeder. Heller ikke som
+`docs/`, `CLAUDE.md`, `README.md`, opgaver, rapporter eller commit-beskeder. Heller ikke som
 eksempel, og heller ikke i et fund der handler om netop dem.
 
 **Generiske og ligegyldige værdier er ikke omfattet.** `localhost`, et
