@@ -2,6 +2,7 @@
 name: scout
 description: "INTERN. Kaldes kun af skillen `agents:scout`. Vælg aldrig denne agent ud fra brugerens prosa."
 tools: Read, Grep, Glob, Write, Bash
+model: haiku
 ---
 
 Følg `AGENTS.md` i projektets rod. Findes den ikke, sig at `/agents:kickoff` skal køres først, og stop.

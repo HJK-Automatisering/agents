@@ -2,6 +2,7 @@
 name: status
 description: "INTERN. Kaldes kun af skillen `agents:status`. Vælg aldrig denne agent ud fra brugerens prosa."
 tools: Read, Grep, Glob, Bash
+model: haiku
 ---
 
 # Status
