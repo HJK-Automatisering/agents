@@ -1,6 +1,6 @@
 ---
 navn: docker-publish
-skabelon-version: 4
+skabelon-version: 5
 formål: Linter compose-filen, bygger og signerer et container-image til GitHub Packages når der pushes et versionstag, og skriver den nye version ind i compose-filen på main så Portainer udruller den
 foreslå-ja-når: projektets dokument siger at projektet leveres som container-image eller kører på en Docker- eller Portainer-vært
 filer:
@@ -142,6 +142,7 @@ Exit-koden er `0` uden fejl (advarsler tillades), `1` ved fejl og `2` ved forker
 | `container-name` | `container_name` findes. Navnet kolliderer på tværs af stacks |
 | `eksternt-netvaerk` | et netværk med `external: true` er ikke `nginx-proxy-manager_default` |
 | `alias` | en service på `nginx-proxy-manager_default` mangler et netværksalias. Ingen krav til aliasets form |
+| `unoedigt-netvaerk` | et netværk stacken selv opretter, har kun én service på sig. Det gælder også `default`, som en service står på, når den ikke har `networks:` eller `network_mode`. Hvert netværk optager et adresseområde på værten, og der er kun plads til omkring 31. Står servicen på andre netværk, fjernes det overflødige; står den kun på det ene, sættes `network_mode: bridge` |
 
 `environment:` tjekkes i både mapping-form (`NØGLE: ${NØGLE}`) og listeform (`- NØGLE=${NØGLE}`). Én nøgle giver én fejl; `hemmelighed` vinder over `env-vaerdi`. Ét volume giver én fejl; `docker-sock` vinder over `bind-mount`.
 
@@ -162,7 +163,7 @@ x-undtagelser:
 - En undtagelse uden `service`, `godkendt-af` eller `dato`, eller med et ukendt regelnavn, er **selv en fejl** og dækker intet.
 - Undtagelser udløber ikke, men en `dato` ældre end et år giver en advarsel. Afgør om den stadig gælder, og sæt en ny dato.
 - En undtagelse der ikke rammer nogen fejl, er død og giver en advarsel. Fjern den.
-- For `eksternt-netvaerk` er `service` netværkets navn — typisk en anden stacks netværk, som en service skal kunne nå:
+- For `eksternt-netvaerk` og `unoedigt-netvaerk` er `service` netværkets navn — typisk en anden stacks netværk, som en service skal kunne nå:
 
 ```yaml
 x-undtagelser:
@@ -272,6 +273,7 @@ Portainer melder ikke tilbage til GitHub. Udebliver en udrulning, er det altid s
 | Appen starter, men fejler på databasen eller en ekstern tjeneste | En variabel mangler på stacken eller er stavet anderledes end i `${NØGLE}`. Sammenlign med `.env.example` |
 | Databasen er tom efter skiftet til Git-stack | Stacken fik et nyt navn, og volumes blev oprettet forfra. Stop den, og opret den igen med det gamle navn; de gamle volumes står der stadig |
 | Stacken kan ikke starte, og loggen nævner et netværk | `nginx-proxy-manager_default` findes ikke på den vært, eller aliaset mangler. Lint fanger det sidste; det første er værtens opsætning |
+| Stacken kan ikke starte: *could not find an available, non-overlapping IPv4 address pool* | Værten har ikke flere adresseområder til netværk; Dockers standardpuljer giver omkring 31. Lint-reglen `unoedigt-netvaerk` stopper spildet, men pladsen kommer først tilbage når de stacks der har et overflødigt netværk, er udrullet igen. Varig løsning er `default-address-pools` i værtens `daemon.json`, med et adresseområde der ikke overlapper organisationens egne net |
 | Containeren genstartes hvert femte minut uden ændringer | *Force redeployment* er slået til. Slå det fra |
 
 ## Hvem gør hvad
@@ -321,6 +323,8 @@ services:
       - DB_SERVER=${DB_SERVER}
       - DB_PASSWORD=${DB_PASSWORD}
     networks:
+      # `default` er her kun fordi `db` også står på det. Har stacken én
+      # service, fjernes linjen - ellers fejler `unoedigt-netvaerk`.
       default:
       nginx-proxy-manager_default:
         aliases:
