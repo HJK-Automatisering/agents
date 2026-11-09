@@ -26,6 +26,33 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.1.0
+
+Kontrakten er uændret. `docker-publish` er bumpet fra skabelon-version 4 til 5,
+så hooken siger at kopien er bagud i projekter der har workflowet.
+**Kør `/agents:update` i de projekter.** Kalderen er den samme; det er
+dokumentet i `docs/workflows/` der bliver rettet.
+
+### Ingen netværk uden grund i compose-filen
+
+Docker-værten har kun plads til omkring 31 netværk, og Portainer løb tør. En
+stack opretter sit eget `default`-netværk, så snart én service står på det —
+også uden at det er skrevet. Med én service forbinder det ingenting.
+
+`HJK-Automatisering/workflow` v1.4.0 har en ny lint-regel,
+`unoedigt-netvaerk`: et netværk stacken selv opretter, må ikke have kun én
+service på sig. Står servicen også på proxy-netværket, fjernes `default:`;
+står den alene, sættes `network_mode: bridge`. Reglen kører i pull requests
+og før hver udrulning, så en stack der bryder den, bliver rød på næste
+release. Den kan undtages som de andre.
+
+`docs/workflows/docker-publish.md` har reglen, en kommentar i referencen om
+hvorfor `default:` står der, og en linje i fejlsøgningen om Portainers fejl.
+Pladsen på værten kommer først tilbage, når de stacks der har et overflødigt
+netværk, er rettet og udrullet igen.
+
+---
+
 ## 1.0.0
 
 Første udgivelse uden beta. Kontrakt-version 21 → 22.
