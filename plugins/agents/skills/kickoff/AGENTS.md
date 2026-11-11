@@ -433,8 +433,9 @@ som for `docs/securities/`.
 
 Gælder en app der ikke har sit eget login, men står bag Authentik som *forward
 auth* i Nginx Proxy Manager. Proxyen spørger Authentik før hver forespørgsel og
-sender kun videre ved et ja. Kendetegnet er at koden læser `X-authentik-*`-
-headerne, eller at projektets dokumenter siger at appen står bag Authentik.
+sender kun videre ved et ja. Kendetegnet er at koden læser
+`X-authentik-*`-headerne, eller at projektets dokumenter siger at appen står
+bag Authentik.
 
 **Proxyens netværk er delt.** Alle stakke bag proxyen står på det, og enhver
 container på det kan kalde appen direkte: uden om proxyen, uden om Authentik,
