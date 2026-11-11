@@ -32,6 +32,8 @@ eller nummeret på den rapport opgaven kom af.>
 | Hookens navn og tællingen af dens tjek passer ikke til hvad den gør |
 | Runtime-version står ikke i CLAUDE.md |
 | Projektdokumentet tæller ni roller og nævner ikke projektkonsulenterne |
+| Rollerne kender ikke hvad en app bag Authentik selv skal gøre: kræve proxyens nøgle, nægte at starte uden, forbyde rammer |
+| Træet i vedligeholdelsesdokumentet mangler Portainer-guiden |
 
 <Den grove liste: hvad architect kan se der skal laves. **Ingen numre.**
 Et emne får først et nummer når interviewet har gjort det udførbart —
@@ -52,6 +54,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0009 | Hooken og kickoff kender en mappe der kun har skitser | bygget |
 | task-0010 | Resten af plugin'et kender ikke skitserne | bygget |
 | task-0011 | Opdateringsvejledningen dækker ikke et plugin leveret centralt | bygget |
+| task-0012 | En app bag Nginx Proxy Manager og Authentik, klik for klik | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.
