@@ -4,7 +4,7 @@ Agent-roller og arbejdsmetode til HJK-Automatiserings projekter. Distribueres so
 
 **Start her: [GUIDE.md](GUIDE.md)** — den praktiske guide til dem der skal bruge det.
 **Ny maskine: [OPSAETNING.md](OPSAETNING.md)** — fra bar pc til første `/agents:kickoff`.
-**App i drift: [PORTAINER.md](PORTAINER.md)** — fra repo til kørende Git-stack i Portainer, klik for klik.
+**App i drift: [PORTAINER.md](PORTAINER.md)** — fra repo til kørende Git-stack i Portainer, klik for klik. Derefter [AUTHENTIK.md](AUTHENTIK.md) og [NGINX-PROXY-MANAGER.md](NGINX-PROXY-MANAGER.md) — appen bag login, så kun én gruppe kan åbne den.
 **Vedligeholdelse og udrulning: [PLUGIN.md](PLUGIN.md)**
 
 ## Installation
@@ -87,7 +87,7 @@ Begrænsningerne i tabellen er mandater, ikke låse. Se `GUIDE.md`.
 | `.claude-plugin/marketplace.json` | Kataloget |
 | `CLAUDE.md` | Reglerne der gælder når nogen redigerer *dette* repo med Claude |
 | `CHANGELOG.md` | Hvad der ændrede sig ved hver udgivelse. Teksten til mailen |
-| `OPSAETNING.md` · `GUIDE.md` · `PORTAINER.md` · `PLUGIN.md` | Til mennesker: opsætning, brug, Portainer, vedligeholdelse |
+| `OPSAETNING.md` · `GUIDE.md` · `PORTAINER.md` · `AUTHENTIK.md` · `NGINX-PROXY-MANAGER.md` · `PLUGIN.md` | Til mennesker: opsætning, brug, Portainer, login og proxy, vedligeholdelse |
 
 Bemærk at `AGENTS.md` ikke ligger i roden. Den ville være en kopi, og en kopi driver.
 
