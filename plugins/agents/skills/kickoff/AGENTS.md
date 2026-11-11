@@ -429,6 +429,58 @@ ikke i tavshed, og omskriv ikke kode der virker for at flytte en værdi. Værdie
 står også i historikken, og den kan ikke gøres privat bagefter — samme forbehold
 som for `docs/securities/`.
 
+## En app bag Authentik
+
+Gælder en app der ikke har sit eget login, men står bag Authentik som *forward
+auth* i Nginx Proxy Manager. Proxyen spørger Authentik før hver forespørgsel og
+sender kun videre ved et ja. Kendetegnet er at koden læser `X-authentik-*`-
+headerne, eller at projektets dokumenter siger at appen står bag Authentik.
+
+**Proxyens netværk er delt.** Alle stakke bag proxyen står på det, og enhver
+container på det kan kalde appen direkte: uden om proxyen, uden om Authentik,
+og med de `X-authentik-*`-headere den selv vil. Derfor sender proxyen en delt
+nøgle med hvert kald i headeren `X-Proxy-Secret`, og appen svarer kun på kald
+der bærer den.
+
+Appen skal:
+
+1. **Afvise ethvert kald uden den rigtige nøgle.** Det gælder alle stier, også
+   statiske filer. Afvisningen er `401` eller `403` uden indhold.
+2. **Sammenligne nøglen i konstant tid**, med sprogets egen funktion til det.
+3. **Nægte at starte når nøglen ikke er sat eller er tom.** Loggen siger hvilken
+   nøgle der mangler, aldrig en værdi. Der er ingen standardværdi.
+4. **Aldrig skrive nøglen** i loggen, i en fejlbesked eller i et svar. Det
+   gælder også det der blev sendt ved en afvisning.
+5. **Først læse `X-authentik-*`-headerne når nøglen er tjekket.** Før det kan de
+   indeholde hvad som helst.
+6. **Forbyde at siderne vises i en ramme.** Hvert svar, også afvisningerne,
+   bærer `Content-Security-Policy: frame-ancestors 'none'` og
+   `X-Frame-Options: DENY`.
+7. **Give hver formular der ændrer noget, et token** der er bundet til brugeren.
+   Så kan en side et andet sted ikke sende formularen i brugerens navn.
+
+Projektet vælger selv hvad nøglen hedder på stakken. Navnet står i
+`.env.example` uden værdi og i compose-filen som `${NØGLE}`. Værdien står kun
+på stakken og i proxy-værten. Se `## Værdier hører i .env`.
+
+**Hvem gør hvad:**
+
+- `architect` skriver de syv punkter ind i `Færdig når` i den opgave der sætter
+  appen bag Authentik. Er det uklart om appen står bag Authentik, spørger den.
+- `developer` bygger dem og efterprøver dem med HTTP-kald efter
+  `## Efterprøvning af en webflade`: uden nøgle, med forkert nøgle, med rigtig
+  nøgle, og med et forfalsket brugernavn uden nøgle.
+- `security` holder appen op mod listen før en udrulning. Hvert punkt der ikke
+  holder, er et fund. Stoler appen på `X-authentik-*` uden at tjekke nøglen, er
+  fundet `kritisk`.
+
+**Står der en app i drift der ikke opfylder det:** sig det, og lad det blive en
+opgave. Ret det ikke i tavshed.
+
+Klikkene i Authentik og proxyen står i `AUTHENTIK.md` og
+`NGINX-PROXY-MANAGER.md` i plugin-repoet. Dem udfører et menneske, ikke
+rollerne.
+
 ## Versionering
 
 Alt versionsstyres, også rollernes papirspor. `AGENTS.md`, `docs/` og `.claude/settings.json` hører i repoet, så kontrakten koden blev skrevet under rejser sammen med koden.
