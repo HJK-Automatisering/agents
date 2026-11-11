@@ -26,6 +26,38 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.2.0
+
+Kontrakten er bumpet fra version 22 til 23, så hooken siger at kontrakten er
+bagud i alle projekter. **Kør `/agents:update` i hvert projekt.** Projekter
+uden en app bag Authentik mærker ikke andet end selve opdateringen.
+
+### En app bag Authentik
+
+Kontrakten har et nyt afsnit, *En app bag Authentik*. Det gælder en app der
+ikke har sit eget login, men står bag Authentik som forward auth i Nginx Proxy
+Manager. Proxyens netværk er delt, så enhver container på det kan kalde appen
+direkte og udgive sig for at være en hvilken som helst bruger.
+
+Appen skal derfor kræve en delt nøgle fra proxyen og nægte at starte uden den.
+Den må først læse `X-authentik-*`-headerne, når nøglen er tjekket. Den skal
+også forbyde at blive vist i en ramme og give formularer et token.
+
+Når en opgave sætter en app bag Authentik, skrives de syv punkter ind i
+opgaven. Sikkerhedsgennemgangen holder appen op mod dem før en udrulning. En
+app der stoler på headerne uden en nøgle, er et kritisk fund.
+
+**Står der en app i drift bag Authentik, der ikke tjekker en nøgle, så bed om
+en opgave på den.**
+
+### To guider til mennesker
+
+`AUTHENTIK.md` og `NGINX-PROXY-MANAGER.md` i roden af plugin-repoet fortsætter
+hvor `PORTAINER.md` slutter. De tager en kørende stack hele vejen til en app
+som kun én gruppe kan åbne, klik for klik og med et tjek til sidst.
+
+---
+
 ## 1.1.0
 
 Kontrakten er uændret. `docker-publish` er bumpet fra skabelon-version 4 til 5,
