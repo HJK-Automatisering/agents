@@ -62,23 +62,31 @@ Proxyen og Authentik kan ikke gøre det her for appen. Listen kan gives videre
 som krav til den opgave der bygger eller retter appen. Er et punkt ikke
 opfyldt, skal appen ikke bag proxyen endnu.
 
+De samme krav står i kontrakten, `AGENTS.md`, i afsnittet *En app bag
+Authentik*. Det er dem rollerne bygger og tjekker appen efter. Er listen her og
+kontrakten uenige, er det kontrakten der gælder.
+
 1. **Afvise ethvert kald uden den rigtige nøgle**, på alle stier — også
    stylesheets, billeder og andet der ser harmløst ud. Afvisningen er `401`
-   eller `403` og viser intet af appens indhold.
+   eller `403` uden indhold, så den viser intet af appen.
 2. **Sammenligne nøglen på en måde der tager lige lang tid**, uanset hvor
-   meget af den der passer. Ellers kan den gættes et tegn ad gangen.
-3. **Nægte at starte når nøglen ikke er sat.** Loggen siger hvorfor, med
-   nøglens navn og aldrig med en værdi. Så kan appen aldrig stå åben ved en
-   fejl.
-4. **Aldrig skrive nøglen i loggen**, heller ikke ved en afvisning.
+   meget af den der passer. Ellers kan den gættes et tegn ad gangen. Brug
+   sprogets egen funktion til det, ikke en hjemmelavet.
+3. **Nægte at starte når nøglen ikke er sat eller er tom.** Loggen siger
+   hvorfor, med nøglens navn og aldrig med en værdi. Der er ingen
+   standardværdi. Så kan appen aldrig stå åben ved en fejl.
+4. **Aldrig skrive nøglen** i loggen, i en fejlbesked eller i et svar. Heller
+   ikke den nøgle der blev sendt med et kald der blev afvist.
 5. **Kun stole på brugeroplysningerne fra Authentik når nøglen er rigtig.**
    Headerne der begynder med `X-authentik-` læses først, når nøglen er tjekket.
 6. **Forbyde at siderne vises i en ramme på en anden side.** Ellers kan en
    fremmed side lægge appen under sin egen og lokke brugeren til et klik
-   brugeren ikke ser.
+   brugeren ikke ser. Hvert svar, også afvisningerne, bærer
+   `Content-Security-Policy: frame-ancestors 'none'` og
+   `X-Frame-Options: DENY`.
 7. **Give hver formular der ændrer noget, et token mod forfalskede kald.**
-   Brugeren er logget ind i Authentik, så en side et andet sted kunne ellers
-   sende formularen i brugerens navn.
+   Tokenet er bundet til brugeren. Brugeren er logget ind i Authentik, så en
+   side et andet sted kunne ellers sende formularen i brugerens navn.
 
 Proxyen sender nøglen i headeren `X-Proxy-Secret`. Det er den appen skal læse.
 

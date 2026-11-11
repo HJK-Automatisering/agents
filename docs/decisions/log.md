@@ -10,6 +10,14 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-11-11 | task-0013 | `kontrakt-version` bumpet 22 → 23 på opgavens gren | Afsnittet er en ny regel; uden bumpet opdager projekterne den aldrig. Imod: også projekter uden Authentik skal opdatere. Mennesket valgte | — |
+| 2026-11-11 | task-0013 | Opgaven er bygget og sat afsluttet | Alle fire kriterier holder. Afsnittet er ordret som godkendt, bortset fra én ombrydning der er besluttet i opgaven; kontrollen er grøn med den ventede advarsel | architect |
+| 2026-11-11 | task-0013 | Ombrydningen midt i `X-authentik-*`-headerne flyttes; `${NØGLE}` bliver stående | Markdown gjorde linjeskiftet til et mellemrum. `${NØGLE}` er repoets pladsholder i forvejen. Ordene er uændrede | architect |
+| 2026-11-11 | task-0013 | `kontrakt-version` bumpes ikke i opgaven, men tilbydes når grenen lukkes | CLAUDE.md gør bumpet til menneskets beslutning. Kontrollens advarsel i mellemtiden er ventet | architect |
+| 2026-11-11 | task-0013 | Headernavnet `X-Proxy-Secret` står fast i kontrakten; nøglens navn på stakken er projektets | Samme header i alle apps gør proxy-værtens blok ens fra app til app | architect |
+| 2026-11-11 | task-0013 | Afsnittet gælder kun en app bag Authentik | Faren er størst hvor appen ikke har eget login og stoler på headerne. Afvist for nu: rammeforbud og formulartokens for alle webapps. Mennesket valgte | — |
+| 2026-11-11 | task-0013 | Afsnittets ordlyd er godkendt af mennesket før opgaven blev skrevet, og developer indsætter den ordret | Mennesket bad om at se teksten først | — |
+| 2026-11-11 | task-0013 | Kravene til en app bag Authentik står i kontrakten som afsnittet *En app bag Authentik*, og guiden henviser dertil | Ét sted, arvet af alle roller, synligt i projektets repo, efter mønstret fra reglen om `.env`. Afvist: rollefilerne alene. Mennesket valgte | — |
 | 2026-11-11 | task-0012 | Opgaven er bygget og sat afsluttet. Ingen udgivelse | Alle ti kriterier holder; ingen navne fra kilderne, validate.mjs grøn. Dokumentation alene kalder ikke på et nummer | architect |
 | 2026-11-11 | task-0012 | Fundet om at PLUGIN.md-træet mangler PORTAINER.md, bliver et emne på BOARD | En opgave genåbnes ikke, og én linje bærer ikke sit eget nummer. Den tages med næste gang PLUGIN.md rettes | architect |
 | 2026-11-11 | task-0012 | README-rettelsen lavet af developer på architects bestilling godkendes som den står | Kun de to steder opgaven nævnte, i egen commit, og læst igennem af architect. Uklart 2 er dermed afgjort | architect |
