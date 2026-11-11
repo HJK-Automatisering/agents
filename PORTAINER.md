@@ -129,6 +129,9 @@ Det er den mindste adgang der virker, og det er med vilje.
 Så er appen i drift fra Git. Ret aldrig image-linjen i Portainers editor
 eller i hånden derefter; næste release overskriver den.
 
+Skal appen bag login, så kun én gruppe kan åbne den, fortsætter du i
+`AUTHENTIK.md` og derefter `NGINX-PROXY-MANAGER.md`.
+
 ## Når tokenet skal fornys
 
 Det er det der kommer til at ske om et år, og det er derfor påmindelsen

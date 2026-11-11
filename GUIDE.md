@@ -347,7 +347,7 @@ Vælger du det: **din `Dockerfile` skal tage imod `APP_VERSION` og `GIT_SHA`** s
 
 Tilbagerulning er `git revert` af den commit deploy-jobbet lavede. Det forrige image ligger stadig i registryet og er præcis det der kørte.
 
-Stacken i Portainer sætter et menneske op én gang pr. app — som Git-stack på `main` med polling, registry og variabler. Hvordan står i workflow-dokumentet under *Opsætning af stacken i Portainer*, med en tabel over hvad man kigger efter når en udrulning udebliver — og klik for klik i `PORTAINER.md`.
+Stacken i Portainer sætter et menneske op én gang pr. app — som Git-stack på `main` med polling, registry og variabler. Hvordan står i workflow-dokumentet under *Opsætning af stacken i Portainer*, med en tabel over hvad man kigger efter når en udrulning udebliver — og klik for klik i `PORTAINER.md`. Skal appen bagefter bag login, så kun én gruppe kan åbne den, står klikkene i `AUTHENTIK.md` og derefter `NGINX-PROXY-MANAGER.md`, med det appen selv skal gøre og et tjek til sidst.
 
 ## Til konsulenter: en skitse i mødet
 
