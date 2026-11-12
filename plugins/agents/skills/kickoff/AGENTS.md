@@ -407,7 +407,7 @@ har `docs/design/`.
 
 ### Bundlinjen er fast
 
-**Hver webløsning viser bundlinjen nederst på hver side.** Den siger hvem der har lavet løsningen, hvem man kontakter ved udfordringer, og hvilken version der kører. Teksten er præcis denne, i alle løsninger:
+**Hver webløsning viser bundlinjen centreret, nederst på hver side.** Den siger hvem der har lavet løsningen, hvem man kontakter ved udfordringer, og hvilken version der kører. Teksten er præcis denne, i alle løsninger:
 
 > Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL. Version X.Y.Z
 
