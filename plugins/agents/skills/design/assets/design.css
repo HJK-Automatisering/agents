@@ -1,0 +1,501 @@
+/*
+ * hjk-designstandard
+ *
+ * Kilde: plugins/agents/skills/design/assets/design.css i plugin'et agents.
+ * Standardens dokument ligger ved siden af kopien: docs/design/design.md.
+ *
+ * Ret ikke i denne fil i et projekt. Projektets egne regler skrives i en fil
+ * for sig, der indlaeses efter denne.
+ *
+ * Alle variabler og klasser har praefikset hjk-. Komponenterne rammer kun
+ * elementer der baerer standardens egne klasser - aldrig button, input eller
+ * table direkte. Intet hentes udefra.
+ *
+ * Lys tilstand er standard. Moerk foelger maskinens indstilling. En side
+ * overstyrer med data-theme="light" eller data-theme="dark" paa <html>.
+ * Farverne skrives som hex, fordi kontrollen i plugin'et laeser dem.
+ */
+
+/* ------------------------------------------------------------ Lys tilstand */
+:root {
+  --hjk-color-scheme: light;
+
+  --hjk-color-bg: #f4f5f7;
+  --hjk-color-surface: #ffffff;
+  --hjk-color-surface-alt: #e9ecf0;
+  --hjk-color-text: #1b2028;
+  --hjk-color-text-muted: #4d5663;
+  --hjk-color-border: #79828f;
+  --hjk-color-divider: #d3d8de;
+
+  --hjk-color-primary: #1d5b87;
+  --hjk-color-primary-hover: #164769;
+  --hjk-color-on-primary: #ffffff;
+  --hjk-color-danger: #b42318;
+  --hjk-color-danger-hover: #8e1b12;
+  --hjk-color-on-danger: #ffffff;
+
+  --hjk-color-focus: #1d5b87;
+
+  --hjk-color-disabled-bg: #e4e7eb;
+  --hjk-color-disabled-text: #6f7782;
+  --hjk-color-disabled-border: #c4c9d0;
+
+  --hjk-color-error-text: #8a1c14;
+  --hjk-color-error-bg: #fdecea;
+  --hjk-color-error-border: #c0362c;
+  --hjk-color-warning-text: #6a4700;
+  --hjk-color-warning-bg: #fff3d1;
+  --hjk-color-success-text: #1d5a2c;
+  --hjk-color-success-bg: #e5f3e9;
+  --hjk-color-info-text: #1c4d78;
+  --hjk-color-info-bg: #e6eff8;
+
+  --hjk-color-topbar-bg: #1f2d3d;
+  --hjk-color-topbar-text: #ffffff;
+  --hjk-color-topbar-focus: #9ecbff;
+
+  /* Skrift: systemets egne skrifttyper. */
+  --hjk-font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --hjk-font-family-mono: ui-monospace, "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+  --hjk-font-size-sm: 0.875rem;
+  --hjk-font-size-base: 1rem;
+  --hjk-font-size-lg: 1.25rem;
+  --hjk-font-size-xl: 1.5rem;
+  --hjk-font-size-xxl: 2rem;
+  --hjk-font-weight-normal: 400;
+  --hjk-font-weight-bold: 600;
+  --hjk-line-height: 1.5;
+  --hjk-line-height-tight: 1.25;
+
+  /* Afstande. */
+  --hjk-space-1: 0.25rem;
+  --hjk-space-2: 0.5rem;
+  --hjk-space-3: 0.75rem;
+  --hjk-space-4: 1rem;
+  --hjk-space-5: 1.5rem;
+  --hjk-space-6: 2rem;
+  --hjk-space-7: 3rem;
+
+  /* Hjoerner og kanter. */
+  --hjk-radius-sm: 4px;
+  --hjk-radius-md: 6px;
+  --hjk-border-width: 1px;
+  --hjk-border-width-strong: 2px;
+
+  /* Fokusmarkering. */
+  --hjk-focus-width: 3px;
+  --hjk-focus-offset: 2px;
+}
+
+/* ------------------------------------------------------------ Moerk tilstand
+ * De to blokke herunder skal have de samme vaerdier. Den foerste foelger
+ * maskinen, den anden er overstyringen. Kontrollen fejler hvis de skilles ad.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --hjk-color-scheme: dark;
+
+    --hjk-color-bg: #121417;
+    --hjk-color-surface: #1b1e23;
+    --hjk-color-surface-alt: #252a31;
+    --hjk-color-text: #e6e8eb;
+    --hjk-color-text-muted: #a8afb9;
+    --hjk-color-border: #7d8796;
+    --hjk-color-divider: #353b44;
+
+    --hjk-color-primary: #7fb8e6;
+    --hjk-color-primary-hover: #a6cef0;
+    --hjk-color-on-primary: #0c1a26;
+    --hjk-color-danger: #f09a92;
+    --hjk-color-danger-hover: #f5bab4;
+    --hjk-color-on-danger: #2a0b08;
+
+    --hjk-color-focus: #8fc6ff;
+
+    --hjk-color-disabled-bg: #2a2e35;
+    --hjk-color-disabled-text: #8a929d;
+    --hjk-color-disabled-border: #3d434c;
+
+    --hjk-color-error-text: #ffb3ab;
+    --hjk-color-error-bg: #3a1613;
+    --hjk-color-error-border: #e8695f;
+    --hjk-color-warning-text: #ffd98a;
+    --hjk-color-warning-bg: #372a0a;
+    --hjk-color-success-text: #9fd8ad;
+    --hjk-color-success-bg: #132e1b;
+    --hjk-color-info-text: #a9cdf0;
+    --hjk-color-info-bg: #11273b;
+
+    --hjk-color-topbar-bg: #0b0d10;
+    --hjk-color-topbar-text: #e6e8eb;
+    --hjk-color-topbar-focus: #8fc6ff;
+  }
+}
+
+:root[data-theme="dark"] {
+  --hjk-color-scheme: dark;
+
+  --hjk-color-bg: #121417;
+  --hjk-color-surface: #1b1e23;
+  --hjk-color-surface-alt: #252a31;
+  --hjk-color-text: #e6e8eb;
+  --hjk-color-text-muted: #a8afb9;
+  --hjk-color-border: #7d8796;
+  --hjk-color-divider: #353b44;
+
+  --hjk-color-primary: #7fb8e6;
+  --hjk-color-primary-hover: #a6cef0;
+  --hjk-color-on-primary: #0c1a26;
+  --hjk-color-danger: #f09a92;
+  --hjk-color-danger-hover: #f5bab4;
+  --hjk-color-on-danger: #2a0b08;
+
+  --hjk-color-focus: #8fc6ff;
+
+  --hjk-color-disabled-bg: #2a2e35;
+  --hjk-color-disabled-text: #8a929d;
+  --hjk-color-disabled-border: #3d434c;
+
+  --hjk-color-error-text: #ffb3ab;
+  --hjk-color-error-bg: #3a1613;
+  --hjk-color-error-border: #e8695f;
+  --hjk-color-warning-text: #ffd98a;
+  --hjk-color-warning-bg: #372a0a;
+  --hjk-color-success-text: #9fd8ad;
+  --hjk-color-success-bg: #132e1b;
+  --hjk-color-info-text: #a9cdf0;
+  --hjk-color-info-bg: #11273b;
+
+  --hjk-color-topbar-bg: #0b0d10;
+  --hjk-color-topbar-text: #e6e8eb;
+  --hjk-color-topbar-focus: #8fc6ff;
+}
+
+/* ------------------------------------------------------------------- Side
+ * Valgfri. Saet klassen paa <body> for at give siden standardens baggrund,
+ * tekstfarve og skrift.
+ */
+.hjk-page {
+  margin: 0;
+  color-scheme: var(--hjk-color-scheme);
+  background: var(--hjk-color-bg);
+  color: var(--hjk-color-text);
+  font-family: var(--hjk-font-family);
+  font-size: var(--hjk-font-size-base);
+  line-height: var(--hjk-line-height);
+}
+
+/* ------------------------------------------------------------------- Knap
+ * <button class="hjk-button">                       primaer
+ * <button class="hjk-button hjk-button--secondary">  sekundaer
+ * <button class="hjk-button hjk-button--danger">     fare
+ * Deaktiveret med disabled-attributten.
+ */
+.hjk-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--hjk-space-2);
+  min-height: 2.5rem;
+  margin: 0;
+  padding: var(--hjk-space-2) var(--hjk-space-4);
+  border: var(--hjk-border-width) solid var(--hjk-color-primary);
+  border-radius: var(--hjk-radius-md);
+  background: var(--hjk-color-primary);
+  color: var(--hjk-color-on-primary);
+  color-scheme: var(--hjk-color-scheme);
+  font-family: var(--hjk-font-family);
+  font-size: var(--hjk-font-size-base);
+  font-weight: var(--hjk-font-weight-bold);
+  line-height: var(--hjk-line-height-tight);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.hjk-button:hover {
+  border-color: var(--hjk-color-primary-hover);
+  background: var(--hjk-color-primary-hover);
+}
+
+.hjk-button--secondary {
+  border-color: var(--hjk-color-primary);
+  background: var(--hjk-color-surface);
+  color: var(--hjk-color-primary);
+}
+
+.hjk-button--secondary:hover {
+  border-color: var(--hjk-color-primary);
+  background: var(--hjk-color-surface-alt);
+}
+
+.hjk-button--danger {
+  border-color: var(--hjk-color-danger);
+  background: var(--hjk-color-danger);
+  color: var(--hjk-color-on-danger);
+}
+
+.hjk-button--danger:hover {
+  border-color: var(--hjk-color-danger-hover);
+  background: var(--hjk-color-danger-hover);
+}
+
+.hjk-button:focus-visible {
+  outline: var(--hjk-focus-width) solid var(--hjk-color-focus);
+  outline-offset: var(--hjk-focus-offset);
+}
+
+.hjk-button:disabled,
+.hjk-button:disabled:hover {
+  border-color: var(--hjk-color-disabled-border);
+  background: var(--hjk-color-disabled-bg);
+  color: var(--hjk-color-disabled-text);
+  cursor: not-allowed;
+}
+
+/* ----------------------------------------------------------- Formularfelt
+ * <div class="hjk-field">
+ *   <label class="hjk-label" for="x">Navn</label>
+ *   <span class="hjk-hint" id="x-hint">Valgfri hjaelpetekst</span>
+ *   <input class="hjk-input" id="x" aria-describedby="x-hint">
+ * </div>
+ * Fejl: aria-invalid="true" paa feltet, og en .hjk-field-error med teksten,
+ * bundet til feltet med aria-describedby. Deaktiveret med disabled.
+ * .hjk-input bruges ogsaa paa <select> og <textarea>.
+ */
+.hjk-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hjk-space-1);
+  margin: 0 0 var(--hjk-space-4);
+}
+
+.hjk-label {
+  color: var(--hjk-color-text);
+  font-family: var(--hjk-font-family);
+  font-size: var(--hjk-font-size-base);
+  font-weight: var(--hjk-font-weight-bold);
+  line-height: var(--hjk-line-height-tight);
+}
+
+.hjk-hint {
+  color: var(--hjk-color-text-muted);
+  font-family: var(--hjk-font-family);
+  font-size: var(--hjk-font-size-sm);
+  line-height: var(--hjk-line-height);
+}
+
+.hjk-input {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 32rem;
+  min-height: 2.5rem;
+  margin: 0;
+  padding: var(--hjk-space-2) var(--hjk-space-3);
+  border: var(--hjk-border-width) solid var(--hjk-color-border);
+  border-radius: var(--hjk-radius-sm);
+  background: var(--hjk-color-surface);
+  color: var(--hjk-color-text);
+  color-scheme: var(--hjk-color-scheme);
+  font-family: var(--hjk-font-family);
+  font-size: var(--hjk-font-size-base);
+  line-height: var(--hjk-line-height);
+}
+
+.hjk-input:focus-visible {
+  outline: var(--hjk-focus-width) solid var(--hjk-color-focus);
+  outline-offset: var(--hjk-focus-offset);
+}
+
+.hjk-input[aria-invalid="true"] {
+  border-width: var(--hjk-border-width-strong);
+  border-color: var(--hjk-color-error-border);
+}
+
+.hjk-input:disabled {
+  border-color: var(--hjk-color-disabled-border);
+  background: var(--hjk-color-disabled-bg);
+  color: var(--hjk-color-disabled-text);
+  cursor: not-allowed;
+}
+
+.hjk-field-error {
+  color: var(--hjk-color-error-text);
+  font-family: var(--hjk-font-family);
+  font-size: var(--hjk-font-size-sm);
+  font-weight: var(--hjk-font-weight-bold);
+  line-height: var(--hjk-line-height);
+}
+
+/* ------------------------------------------------------------------ Tabel
+ * <div class="hjk-table-wrap" tabindex="0" role="region" aria-label="...">
+ *   <table class="hjk-table">
+ *     <caption class="hjk-table__caption">...</caption>
+ *     <thead><tr><th class="hjk-table__header" scope="col">...</th></tr></thead>
+ *     <tbody><tr><td class="hjk-table__cell">...</td></tr></tbody>
+ *   </table>
+ * </div>
+ * Hver celle baerer sin klasse; standarden rammer ikke en th eller td uden.
+ * Paa en smal skaerm ruller tabellen vandret inden i rammen, saa
+ * kolonnerne og tabellens betydning for skaermlaesere bliver staaende.
+ */
+.hjk-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  border: var(--hjk-border-width) solid var(--hjk-color-divider);
+  border-radius: var(--hjk-radius-md);
+  background: var(--hjk-color-surface);
+}
+
+.hjk-table-wrap:focus-visible {
+  outline: var(--hjk-focus-width) solid var(--hjk-color-focus);
+  outline-offset: var(--hjk-focus-offset);
+}
+
+.hjk-table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  background: var(--hjk-color-surface);
+  color: var(--hjk-color-text);
+  font-family: var(--hjk-font-family);
+  font-size: var(--hjk-font-size-base);
+  line-height: var(--hjk-line-height);
+}
+
+.hjk-table__caption {
+  padding: var(--hjk-space-3) var(--hjk-space-4);
+  color: var(--hjk-color-text);
+  font-weight: var(--hjk-font-weight-bold);
+  text-align: left;
+}
+
+.hjk-table__header,
+.hjk-table__cell {
+  padding: var(--hjk-space-2) var(--hjk-space-4);
+  border-bottom: var(--hjk-border-width) solid var(--hjk-color-divider);
+  text-align: left;
+  vertical-align: top;
+}
+
+.hjk-table__header {
+  background: var(--hjk-color-surface-alt);
+  color: var(--hjk-color-text);
+  font-weight: var(--hjk-font-weight-bold);
+  white-space: nowrap;
+}
+
+.hjk-table__cell {
+  color: var(--hjk-color-text);
+}
+
+tr:last-child > .hjk-table__cell {
+  border-bottom: 0;
+}
+
+/* ----------------------------------------------------------------- Besked
+ * <div class="hjk-message hjk-message--error" role="alert">
+ *   <p class="hjk-message__title">Fejl</p>
+ *   <p class="hjk-message__body">Hvad der gik galt, og hvad man kan goere.</p>
+ * </div>
+ * Varianter: --error, --warning, --success, --info. Beskedens art skal staa
+ * i teksten - farven alene er ikke nok.
+ */
+.hjk-message {
+  box-sizing: border-box;
+  margin: 0 0 var(--hjk-space-4);
+  padding: var(--hjk-space-3) var(--hjk-space-4);
+  border-left: 4px solid currentColor;
+  border-radius: var(--hjk-radius-sm);
+  font-family: var(--hjk-font-family);
+  font-size: var(--hjk-font-size-base);
+  line-height: var(--hjk-line-height);
+}
+
+.hjk-message__title {
+  margin: 0;
+  font-weight: var(--hjk-font-weight-bold);
+}
+
+.hjk-message__body {
+  margin: var(--hjk-space-1) 0 0;
+}
+
+.hjk-message--error {
+  background: var(--hjk-color-error-bg);
+  color: var(--hjk-color-error-text);
+}
+
+.hjk-message--warning {
+  background: var(--hjk-color-warning-bg);
+  color: var(--hjk-color-warning-text);
+}
+
+.hjk-message--success {
+  background: var(--hjk-color-success-bg);
+  color: var(--hjk-color-success-text);
+}
+
+.hjk-message--info {
+  background: var(--hjk-color-info-bg);
+  color: var(--hjk-color-info-text);
+}
+
+/* -------------------------------------------------------------- Topbjaelke
+ * <header class="hjk-topbar">
+ *   <a class="hjk-topbar__name" href="/">Appens navn</a>
+ *   <nav class="hjk-topbar__nav" aria-label="Hovedmenu">
+ *     <a class="hjk-topbar__link" href="/" aria-current="page">Oversigt</a>
+ *     <a class="hjk-topbar__link" href="/x">Andet</a>
+ *   </nav>
+ * </header>
+ */
+.hjk-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hjk-space-2) var(--hjk-space-6);
+  padding: var(--hjk-space-3) var(--hjk-space-5);
+  background: var(--hjk-color-topbar-bg);
+  color: var(--hjk-color-topbar-text);
+  color-scheme: var(--hjk-color-scheme);
+  font-family: var(--hjk-font-family);
+  font-size: var(--hjk-font-size-base);
+  line-height: var(--hjk-line-height-tight);
+}
+
+.hjk-topbar__name {
+  color: var(--hjk-color-topbar-text);
+  font-size: var(--hjk-font-size-lg);
+  font-weight: var(--hjk-font-weight-bold);
+  text-decoration: none;
+}
+
+.hjk-topbar__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hjk-space-1) var(--hjk-space-4);
+}
+
+.hjk-topbar__link {
+  padding: var(--hjk-space-2) 0;
+  border-bottom: 3px solid transparent;
+  color: var(--hjk-color-topbar-text);
+  text-decoration: none;
+}
+
+.hjk-topbar__link:hover {
+  text-decoration: underline;
+}
+
+.hjk-topbar__link[aria-current="page"] {
+  border-bottom-color: var(--hjk-color-topbar-text);
+  font-weight: var(--hjk-font-weight-bold);
+}
+
+.hjk-topbar__name:focus-visible,
+.hjk-topbar__link:focus-visible {
+  outline: var(--hjk-focus-width) solid var(--hjk-color-topbar-focus);
+  outline-offset: var(--hjk-focus-offset);
+  border-radius: var(--hjk-radius-sm);
+}

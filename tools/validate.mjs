@@ -231,6 +231,150 @@ if (existsSync(WF)) {
   }
 }
 
+// ------------------------------------- 13. Designstandard: kontrasten holder
+// Standardens dokument lover et kontrastforhold for hvert farvepar i tabellen
+// under ## Farvepar. Her beregnes forholdet efter WCAG 2.1 ud fra vaerdierne i
+// design.css, for lys og moerk. Ellers er loeftet en paastand, der brydes i
+// tavshed ved naeste farveaendring.
+const DESIGN = join(SKILLS, 'design');
+let farvepar = 0;
+if (existsSync(DESIGN)) {
+  const dokSti = join(DESIGN, 'design.md');
+  const cssSti = join(DESIGN, 'assets', 'design.css');
+  const mangler = [dokSti, cssSti].filter((s) => !existsSync(s));
+  for (const s of mangler) sig(fejl, relativ(s), 'findes ikke');
+
+  if (!mangler.length) {
+    const css = laes(cssSti).replace(/\/\*[\s\S]*?\*\//g, '');
+    const blok = (re) => {
+      const m = css.match(re);
+      return m ? m[1] : null;
+    };
+    const variabler = (tekst) => {
+      const ud = new Map();
+      for (const m of tekst.matchAll(/(--hjk-[a-z0-9-]+)\s*:\s*([^;]+);/g)) {
+        ud.set(m[1], m[2].trim().toLowerCase());
+      }
+      return ud;
+    };
+
+    // Lys er :root. Moerk staar to gange: den der foelger maskinen, og
+    // overstyringen med data-theme. De skal vaere ens, ellers er det kun den
+    // ene af dem kontrollen har efterproevet.
+    const lysTekst = blok(/(?:^|\})\s*:root\s*\{([^}]*)\}/);
+    const maskineTekst = blok(
+      /@media\s*\(\s*prefers-color-scheme\s*:\s*dark\s*\)\s*\{\s*:root:not\(\[data-theme="light"\]\)\s*\{([^}]*)\}/);
+    const overstyringTekst = blok(/:root\[data-theme="dark"\]\s*\{([^}]*)\}/);
+    const r = relativ(cssSti);
+    if (lysTekst === null) sig(fejl, r, 'har ingen :root-blok med den lyse tilstand');
+    if (maskineTekst === null) {
+      sig(fejl, r, 'har ingen moerk blok under prefers-color-scheme: dark med ' +
+        ':root:not([data-theme="light"])');
+    }
+    if (overstyringTekst === null) sig(fejl, r, 'har ingen :root[data-theme="dark"]-blok');
+
+    if (lysTekst !== null && maskineTekst !== null && overstyringTekst !== null) {
+      const lys = variabler(lysTekst);
+      const maskine = variabler(maskineTekst);
+      const moerk = variabler(overstyringTekst);
+      const noegler = new Set([...maskine.keys(), ...moerk.keys()]);
+      for (const n of noegler) {
+        if (maskine.get(n) !== moerk.get(n)) {
+          sig(fejl, r,
+            n + ' er ' + (maskine.get(n) || 'ikke sat') + ' naar maskinen er moerk, men ' +
+            (moerk.get(n) || 'ikke sat') + ' med data-theme="dark". De to moerke blokke skal ' +
+            'vaere ens.');
+        }
+      }
+
+      const HEX = /^#([0-9a-f]{3}|[0-9a-f]{6})$/;
+      const kanal = (c) => {
+        const s = c / 255;
+        return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+      };
+      const luminans = (hex) => {
+        let h = hex.slice(1);
+        if (h.length === 3) h = h.split('').map((x) => x + x).join('');
+        const [rr, gg, bb] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
+        return 0.2126 * kanal(rr) + 0.7152 * kanal(gg) + 0.0722 * kanal(bb);
+      };
+      const forhold = (a, b) => {
+        const la = luminans(a);
+        const lb = luminans(b);
+        return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+      };
+      // Tabellen viser to decimaler, rundet ned, saa den aldrig lover mere end
+      // farven holder.
+      const nedrundet = (x) => Math.floor(x * 100 + 1e-9) / 100;
+      const tal = (celle) => {
+        const t = celle.replace(',', '.');
+        return /^[0-9]+(\.[0-9]+)?$/.test(t) ? Number(t) : NaN;
+      };
+      const vis = (x) => x.toFixed(2).replace('.', ',');
+
+      const dr = relativ(dokSti);
+      const dokLinjer = laes(dokSti).split('\n');
+      const start = dokLinjer.findIndex((l) => l.trim() === '## Farvepar');
+      if (start < 0) {
+        sig(fejl, dr, 'har intet afsnit ## Farvepar med tabellen kontrollen laeser');
+      } else {
+        for (let i = start + 1; i < dokLinjer.length; i++) {
+          const linje = dokLinjer[i];
+          if (linje.startsWith('## ')) break;
+          if (!linje.trim().startsWith('|')) continue;
+          const celler = linje.trim().replace(/^\||\|$/g, '').split('|').map((c) => c.trim());
+          const fg = (celler[0] || '').match(/^`(--hjk-[a-z0-9-]+)`$/);
+          const bg = (celler[1] || '').match(/^`(--hjk-[a-z0-9-]+)`$/);
+          if (!fg || !bg) continue;
+          farvepar++;
+          const navn = fg[1] + ' mod ' + bg[1] + ' (linje ' + (i + 1) + ')';
+
+          const krav = tal(celler[2] || '');
+          if (krav !== 4.5 && krav !== 3) {
+            sig(fejl, dr, navn + ': kravet skal vaere 4,5 for tekst eller 3 for kanter og ' +
+              'fokus, ikke ' + (celler[2] || 'tomt'));
+            continue;
+          }
+
+          const tilstande = [
+            { navn: 'lys', kort: lys, celle: celler[3] },
+            { navn: 'moerk', kort: moerk, celle: celler[4] },
+          ];
+          for (const t of tilstande) {
+            const vaerdi = (v) => (t.kort.has(v) ? t.kort.get(v) : lys.get(v));
+            const a = vaerdi(fg[1]);
+            const b = vaerdi(bg[1]);
+            const ukendt = [[fg[1], a], [bg[1], b]].filter(([, v]) => v === undefined);
+            for (const [v] of ukendt) {
+              sig(fejl, dr, navn + ': variablen ' + v + ' findes ikke i ' + r);
+            }
+            if (ukendt.length) break;
+            const ikkeHex = [[fg[1], a], [bg[1], b]].filter(([, v]) => !HEX.test(v));
+            for (const [v, x] of ikkeHex) {
+              sig(fejl, r, v + ' er ' + x + ' i ' + t.navn + ' tilstand. Farver skrives som hex, ' +
+                'ellers kan kontrollen ikke laese dem.');
+            }
+            if (ikkeHex.length) continue;
+
+            const beregnet = forhold(a, b);
+            const vist = nedrundet(beregnet);
+            if (beregnet < krav) {
+              sig(fejl, dr, navn + ': ' + vis(vist) + ':1 i ' + t.navn + ' tilstand er under ' +
+                'kravet paa ' + String(krav).replace('.', ',') + ':1 i WCAG 2.1 AA.');
+            }
+            const iTabel = tal(t.celle || '');
+            if (Number.isNaN(iTabel) || Math.abs(iTabel - vist) > 0.001) {
+              sig(fejl, dr, navn + ': tabellen siger ' + (t.celle || 'intet') + ' i ' + t.navn +
+                ' tilstand, men det beregnede forhold er ' + vis(vist) + '.');
+            }
+          }
+        }
+        if (!farvepar) sig(fejl, dr, 'afsnittet ## Farvepar har ingen farvepar');
+      }
+    }
+  }
+}
+
 // ------------------------------ 6+7. Alle markdown-filer: ord og kodeblokke
 const AA = String.fromCharCode(229);
 const AE = String.fromCharCode(230);
@@ -377,4 +521,5 @@ if (fejl.length) {
 }
 
 console.log('OK. ' + skillNavne.length + ' skills, ' + agentFiler.length + ' agenter, ' +
-  mdListe.length + ' markdown-filer, begge manifester paa version ' + (pl ? pl.version : '?') + '.');
+  mdListe.length + ' markdown-filer, ' + farvepar + ' farvepar, begge manifester paa version ' +
+  (pl ? pl.version : '?') + '.');

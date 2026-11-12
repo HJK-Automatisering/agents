@@ -48,7 +48,7 @@ Auto-update virker ikke i skrivebordsappen. Se `PLUGIN.md`.
 
 Derefter, i hvert projekt: `/agents:kickoff`
 
-## De ti roller, tolv kald
+## De ti roller, tretten kald
 
 Almindelig prosa i Claude Code udløser **ingenting**. Rollerne kaldes eksplicit.
 
@@ -68,6 +68,7 @@ Almindelig prosa i Claude Code udløser **ingenting**. Rollerne kaldes eksplicit
 | `/agents:workflow` | skill | din tråd | kun workflow-filer |
 | `/agents:update` | skill | din tråd | kun `AGENTS.md` |
 | `/agents:mockup` | skill | din tråd | kun sin egen skitsemappe under `docs/mockups/` |
+| `/agents:design` | skill | din tråd | kun `docs/design/`, plus én linje i `CLAUDE.md` og på BOARD |
 
 **Samtaleroller** — `architect`, `kickoff` og `mockup` — kører i din tråd, så du kan tale med dem. De to første spørger ét spørgsmål ad gangen og venter på svaret; `mockup` viser en skitse og gætter frem for at spørge. **Rapportroller** sendes af sted, kører isoleret, og kommer tilbage med en henvisning og én linje pr. fund.
 
@@ -79,10 +80,11 @@ Begrænsningerne i tabellen er mandater, ikke låse. Se `GUIDE.md`.
 
 | Sti | Hvad |
 |---|---|
-| `plugins/agents/skills/` | De tolv kald. Fem kører i din tråd, syv er dispatch-skills |
+| `plugins/agents/skills/` | De tretten kald. Seks kører i din tråd, syv er dispatch-skills |
 | `plugins/agents/agents/` | De syv rapportroller. Værktøjslisten står her |
 | `plugins/agents/skills/kickoff/AGENTS.md` | Kontrakten med `kontrakt-version`. Kopieres ind af `kickoff`, opdateres af `/agents:update` |
 | `plugins/agents/skills/workflow/` | Valgfrie arbejdsgange. Kaldes eksplicit — ingen rolle foreslår dem |
+| `plugins/agents/skills/design/` | Den fælles designstandard til webløsninger, i lys og mørk tilstand, med en eksempelside. Lægges ind af `/agents:design` |
 | `plugins/agents/hooks/` | SessionStart-hook der genkender projekt nul |
 | `.claude-plugin/marketplace.json` | Kataloget |
 | `CLAUDE.md` | Reglerne der gælder når nogen redigerer *dette* repo med Claude |
