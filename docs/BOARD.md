@@ -21,6 +21,7 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
+| task-0014 | En fælles designstandard for webløsninger, og et kald der lægger den ind | planlagt | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -33,6 +34,7 @@ eller nummeret på den rapport opgaven kom af.>
 | Runtime-version står ikke i CLAUDE.md |
 | Projektdokumentet tæller ni roller og nævner ikke projektkonsulenterne |
 | Træet i vedligeholdelsesdokumentet mangler Portainer-guiden |
+| Kontrakten, skitserne og gennemgangen følger designstandarden, og hooken og opdateringen kender dens stempel |
 
 <Den grove liste: hvad architect kan se der skal laves. **Ingen numre.**
 Et emne får først et nummer når interviewet har gjort det udførbart —
