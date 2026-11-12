@@ -20,6 +20,8 @@ ikke her.
 
 - **Udviklere i HJK-Automatisering** der arbejder i Claude Code. De kalder
   rollerne; `GUIDE.md` er skrevet til dem.
+- **Projektkonsulenter** i møder med slutbrugere. De viser en klikbar skitse
+  med `/agents:mockup` og bruger ikke navet.
 - **Dem der vedligeholder og udruller plugin'et.** `PLUGIN.md` er deres.
 
 Uden det har hver udvikler sin egen arbejdsmåde, og der findes ingen fælles
@@ -31,7 +33,7 @@ og deres behov styrer ikke hvad der kommer i.
 
 ### Ikke-mål
 
-- **Ikke en generel agent-ramme.** Der er ni bestemte roller med hvert sit
+- **Ikke en generel agent-ramme.** Der er ti bestemte roller med hvert sit
   mandat — ikke byggeklodser andre kan sætte sammen til noget andet.
 - **Ingen automatisk rollevalg.** Prosa udløser ingenting. Alle skills har
   `disable-model-invocation`, og agenternes beskrivelser er skrevet som
