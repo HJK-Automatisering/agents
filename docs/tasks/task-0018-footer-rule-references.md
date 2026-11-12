@@ -1,7 +1,7 @@
 ---
 nummer: task-0018
 titel: Henvisningerne til bundlinjens regel peger stadig på standardens dokument
-status: planlagt
+status: i-gang
 kilde: interview
 oprettet: 2026-11-12
 ---
