@@ -167,28 +167,7 @@ Den aktuelle side markeres med `aria-current="page"`. Topbjælken folder sig på
 
 - **Nederst på hver side**, som sidste element i `<body>` og uden for `<main>`. Så er den sidens `contentinfo` for skærmlæsere.
 - Lille, dæmpet tekst med en tynd linje over. Adressen er et understreget link i primærfarven.
-- **Teksten og værdierne er faste.** `TEAMNAVN`, `EMAIL`, `APPNAVN` og `X.Y.Z` står for værdier der sættes ind; hvor de kommer fra, og hvordan, står i `## Bundlinjen er fast`.
-
-## Bundlinjen er fast
-
-**Hver webløsning viser bundlinjen nederst på hver side.** Den siger hvem der har lavet løsningen, hvem man kontakter ved udfordringer, og hvilken version der kører. Teksten er præcis denne, i alle løsninger:
-
-> Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL. Version X.Y.Z
-
-Skriv den ikke om, og tilføj intet. Markup står under `### Bundlinje`.
-
-| I teksten | Nøgle | Hvor værdien kommer fra |
-|---|---|---|
-| `TEAMNAVN` | `TEAM_NAME` | Påkrævet indstilling på stakken |
-| `EMAIL` | `CONTACT_EMAIL` | Påkrævet indstilling på stakken |
-| `X.Y.Z` | `APP_VERSION` | Bygget ind i imaget af `docker-publish` |
-
-- **`TEAM_NAME` og `CONTACT_EMAIL` er påkrævede.** De står i `.env.example` uden værdi og i compose-filen som `${TEAM_NAME}` og `${CONTACT_EMAIL}`. Værdierne sættes kun på stakken — aldrig i koden, i compose-filen eller i repoet.
-- **Appen nægter at starte** når en af de to mangler eller er tom. Loggen siger hvilken nøgle der mangler — aldrig en værdi.
-- **Versionen er `APP_VERSION`**, som `docker-publish` bygger ind i imaget. Den skrives aldrig fast i koden. Er den tom, fx ved lokal kørsel, udelades *. Version X.Y.Z*, og teksten slutter efter adressen: *Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL*.
-- **Værdierne læses på serveren.** Hvordan de når siden, afhænger af stakken. De bages aldrig ind i en statisk fil ved build.
-- **Værdierne sættes ind som tekst, aldrig som HTML.** Brug stakkens almindelige escaping — både i teksten og i linkets `href`. Ingen af de tre værdier må kunne blive til markup.
-- **Adressen er et `mailto:`-link**, der åbner en ny mail med emnet *Angående <appens navn>*. Emnet procentkodes, fx `?subject=Ang%C3%A5ende%20Eksempelappen`. Appens navn er tekst i koden, ikke en indstilling.
+- **Teksten og værdierne er faste.** `TEAMNAVN`, `EMAIL`, `APPNAVN` og `X.Y.Z` står for værdier der sættes ind. Reglen — teksten, nøglerne, og hvor værdierne kommer fra — står i projektets `AGENTS.md`, under `### Bundlinjen er fast` i `## Webflader og designstandarden`.
 
 ## Tilgængelighed
 

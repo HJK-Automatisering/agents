@@ -92,6 +92,14 @@ Læs de afsluttede opgaver. Du skal ikke foreslå noget der allerede findes, og 
 
 **Har `docs/projekt.md` et afsnit `## Åbne punkter`, er dokumentet skrevet efter en ældre skabelon.** Kvittér punkterne som kortets — emne på BOARD, eget nummer, eller beslutning i loggen. Selve afsnittet må du ikke røre; sig at `/agents:kickoff` lukker det.
 
+**Har projektet en webflade, holder du det op mod kontraktens `## Webflader og designstandarden`.** Om projektet er nyt, aflæser du uden at spørge: det er nyt så længe der hverken findes et versionsnummer eller et versionstag. Hvert hul bliver et emne på BOARD — står det der allerede, skriver du det ikke igen:
+
+- **Nyt, og `docs/design/` findes ikke:** et emne om at lægge standarden ind med `/agents:design`.
+- **I drift, uden standarden:** et emne der foreslår standarden. Mennesket afgør. Du bygger intet om af dig selv, og du gør det ikke til en opgave uden et ja.
+- **Ingen bundlinje**, med eller uden standarden: et emne.
+
+Skriver du en opgave om bundlinjen, står reglerne fra kontraktens `### Bundlinjen er fast` i `Færdig når`, ét punkt pr. regel.
+
 ### 2. Hold den grove liste
 
 Hvad kan du se i projektet der skal laves? Emnelinjer, ingen numre, ingen filer. De står under `Kommende` på BOARD.

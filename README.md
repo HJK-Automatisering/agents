@@ -84,7 +84,7 @@ Begrænsningerne i tabellen er mandater, ikke låse. Se `GUIDE.md`.
 | `plugins/agents/agents/` | De syv rapportroller. Værktøjslisten står her |
 | `plugins/agents/skills/kickoff/AGENTS.md` | Kontrakten med `kontrakt-version`. Kopieres ind af `kickoff`, opdateres af `/agents:update` |
 | `plugins/agents/skills/workflow/` | Valgfrie arbejdsgange. Kaldes eksplicit — ingen rolle foreslår dem |
-| `plugins/agents/skills/design/` | Den fælles designstandard til webløsninger, i lys og mørk tilstand, med en eksempelside. Lægges ind af `/agents:design` |
+| `plugins/agents/skills/design/` | Den fælles designstandard til webløsninger, i lys og mørk tilstand, med en eksempelside. Lægges ind af `/agents:design`. Nye projekter med en webflade bruger den fra start; bundlinjens regel står i kontrakten og gælder alle webløsninger |
 | `plugins/agents/hooks/` | SessionStart-hook der genkender projekt nul |
 | `.claude-plugin/marketplace.json` | Kataloget |
 | `CLAUDE.md` | Reglerne der gælder når nogen redigerer *dette* repo med Claude |

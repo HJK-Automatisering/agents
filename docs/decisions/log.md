@@ -10,6 +10,11 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-11-12 | task-0017 | Opgaven er bygget og sat afsluttet | Alle ni kriterier holder. Bundlinjens tekst er flyttet ordret, efterprøvet med diff; kontrollen er grøn med de to ventede advarsler om stemplerne | architect |
+| 2026-11-12 | task-0017 | Developers tre fund og den forkerte henvisning *"Markup står under `### Bundlinje`"* bliver task-0018 | Alle er henvisninger til bundlinjens gamle placering, i filer opgaven ikke måtte røre. To af dem kopieres ud i projekterne, så de skal rettes før udgivelsen | architect |
+| 2026-11-12 | task-0017 | Bundlinjens regel står som underafsnit `###` i kontrakten, og `mockup` læser plugin'ets `design.css` | Reglen hører til afsnittet om webflader. Skitsen skal virke uden et opsat projekt, og en kopi der er bagud, siger hooken til om | architect |
+| 2026-11-12 | task-0017 | `README.md` rettet på opgavens gren: standardens række siger at nye projekter bruger den, og at bundlinjens regel står i kontrakten | Opgaven har ændret hvad brugerne skal vide om standarden | architect |
+| 2026-11-12 | task-0017 | Bumpene af `kontrakt-version` og `design-version` tilbydes når task-0018 lukkes, ikke nu | task-0018 ændrer begge filer igen. Ét bump pr. stempel, når ændringen er hel | architect |
 | 2026-11-12 | task-0016 | Opgaven er bygget og sat afsluttet | Alle otte kriterier holder. Hooken er prøvet mod engangsmapper med lavere, ens og højere stempel; kontrollens advarsel er prøvet med og uden bump. `node --check` og kontrollen er grønne | architect |
 | 2026-11-12 | task-0016 | `README.md` rettet på opgavens gren: `/agents:update` skriver projektets kopier af kontrakten, workflows og designstandarden | Rækken sagde kun `AGENTS.md`, hvilket allerede var bagud for workflowene | architect |
 | 2026-11-12 | task-0016 | Developers fund 1 — kontraktens tabeller kender ikke `docs/design/` — lægges i task-0017 som et ekstra kriterium | Det er en kontraktændring, og task-0017 bumper kontrakten i forvejen. Opgaven er ikke sendt af sted endnu | architect |

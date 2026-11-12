@@ -35,7 +35,7 @@ Ved konflikt: rollefilen bestemmer *hvad* der skal laves, denne fil bestemmer *h
 | `scout` | agent | `architect` | `docs/map.md` |
 | `status` | agent | mennesket eller `architect` | tilstandsrapport i chatten. Skriver intet |
 | `workflow` | i menneskets tråd | mennesket | `docs/workflows/<navn>.md` |
-| `update` | i menneskets tråd | mennesket | opdateret kontrakt og opdaterede workflow-kopier |
+| `update` | i menneskets tråd | mennesket | opdateret kontrakt, opdaterede workflow-kopier og opdateret designstandard i `docs/design/` |
 | `mockup` | i menneskets tråd | en konsulent, i et møde med slutbrugere | skitse og noter i `docs/mockups/` |
 
 **Der er én slags tråd.** Mennesket sidder hos `architect`; alt andet sendes af sted derfra og kommer tilbage. Der findes ikke længere et `ny tråd →`/`her →`-valg, fordi der ikke er noget at vælge imellem. `mockup` kaldes uden om navet, men dens noter ender samme sted: hos `architect`, som en rapport.
@@ -166,6 +166,7 @@ Derefter, i din **første** besked, før du arbejder: skriv i én linje hvad du 
 | `docs/map.md` | `scout` | `architect` | Kort over en eksisterende kodebase |
 | `docs/mockups/mockup-NNNN-slug/` | `mockup` | `architect` | Én skitse: `index.html` med fiktive data, og `NOTER.md` med hvad slutbrugeren reagerede på |
 | `docs/workflows/<navn>.md` | `workflow` (+ `update`) | alle | Beskrivelse af et valgt fælles workflow. `skabelon-version` i frontmatter siger hvilken udgave kopien er |
+| `docs/design/` | `design` (+ `update`) | alle | Den fælles designstandard: `design.md`, `design.css` og `eksempel.html`. Rettes aldrig i projektet. `design-version` i frontmatter i `design.md` siger hvilken udgave kopien er |
 | `docs/decisions/log.md` | `architect` | alle | Append-only beslutningslog |
 
 **Beslutningsloggen er ikke optional.** `architect`-tråden er den eneste samtale i modellen, og loggen er det eneste spor den efterlader der overlever tråden. Hver beslutning truffet i en `architect`-tråd skrives ind, med begrundelse, før tråden lukkes.
@@ -367,6 +368,63 @@ henvendelse fra IT.
 Grunden gælder også `mockup`, selv om den kører i menneskets tråd og ikke er en
 agent. Den starter aldrig en browser fra kommandolinjen. Mennesket åbner selv
 skitsen, eller den vises i en browser klienten selv stiller til rådighed.
+
+## Webflader og designstandarden
+
+Gælder hvert projekt med en webflade.
+
+**Et nyt projekt med en webflade bruger den fælles designstandard fra start.**
+Den lægges ind med `/agents:design` og ligger i `docs/design/`. Reglerne for
+udseendet står i `docs/design/design.md`, og kopien rettes aldrig i projektet.
+
+**Et projekt er nyt indtil sin første udgivelse** — så længe der hverken findes
+et versionsnummer eller et versionstag. Derefter er det i drift. Se
+`## Udgivelser og versionsnumre`.
+
+**En løsning i drift får standarden kun gennem en opgave mennesket har sagt ja
+til.** Ingen rolle bygger udseendet om i forbifarten.
+
+**Bundlinjen gælder hver webløsning**, med eller uden standarden. Reglen står
+herunder, i `### Bundlinjen er fast`, så den kan læses i et projekt der ikke
+har `docs/design/`.
+
+**Hvem gør hvad:**
+
+- `architect` holder et projekt med en webflade op mod dette afsnit i sit første
+  trin. Er projektet nyt og mangler `docs/design/`, bliver det et emne at lægge
+  standarden ind. Er det i drift uden standarden, bliver det et emne der
+  foreslår den, og mennesket afgør. Mangler bundlinjen, bliver det et emne. En
+  opgave om bundlinjen har reglen i `Færdig når`.
+- `developer` bygger webfladen med standardens variabler og klasser, når
+  projektet har den, og skriver projektets egne regler i appens eget
+  stylesheet — aldrig i `docs/design/`. Bundlinjen efterprøves efter
+  `## Efterprøvning af en webflade`.
+- `reviewer` melder det som fund når en webflade går uden om standarden, når
+  kopien i `docs/design/` er rettet, og når bundlinjen mangler eller afviger fra
+  reglen.
+- `mockup` giver skitsen standardens udseende og viser bundlinjen med opdigtede
+  værdier. Skitsen er stadig én fil der virker uden netværk.
+
+### Bundlinjen er fast
+
+**Hver webløsning viser bundlinjen nederst på hver side.** Den siger hvem der har lavet løsningen, hvem man kontakter ved udfordringer, og hvilken version der kører. Teksten er præcis denne, i alle løsninger:
+
+> Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL. Version X.Y.Z
+
+Skriv den ikke om, og tilføj intet. Markup står under `### Bundlinje`.
+
+| I teksten | Nøgle | Hvor værdien kommer fra |
+|---|---|---|
+| `TEAMNAVN` | `TEAM_NAME` | Påkrævet indstilling på stakken |
+| `EMAIL` | `CONTACT_EMAIL` | Påkrævet indstilling på stakken |
+| `X.Y.Z` | `APP_VERSION` | Bygget ind i imaget af `docker-publish` |
+
+- **`TEAM_NAME` og `CONTACT_EMAIL` er påkrævede.** De står i `.env.example` uden værdi og i compose-filen som `${TEAM_NAME}` og `${CONTACT_EMAIL}`. Værdierne sættes kun på stakken — aldrig i koden, i compose-filen eller i repoet.
+- **Appen nægter at starte** når en af de to mangler eller er tom. Loggen siger hvilken nøgle der mangler — aldrig en værdi.
+- **Versionen er `APP_VERSION`**, som `docker-publish` bygger ind i imaget. Den skrives aldrig fast i koden. Er den tom, fx ved lokal kørsel, udelades *. Version X.Y.Z*, og teksten slutter efter adressen: *Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL*.
+- **Værdierne læses på serveren.** Hvordan de når siden, afhænger af stakken. De bages aldrig ind i en statisk fil ved build.
+- **Værdierne sættes ind som tekst, aldrig som HTML.** Brug stakkens almindelige escaping — både i teksten og i linkets `href`. Ingen af de tre værdier må kunne blive til markup.
+- **Adressen er et `mailto:`-link**, der åbner en ny mail med emnet *Angående <appens navn>*. Emnet procentkodes, fx `?subject=Ang%C3%A5ende%20Eksempelappen`. Appens navn er tekst i koden, ikke en indstilling.
 
 ## Stak og biblioteker
 
