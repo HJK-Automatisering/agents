@@ -21,6 +21,8 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
+| task-0016 | Hooken, opdateringen og kontrollen kender ikke designstandardens stempel | planlagt | interview |
+| task-0017 | Kontrakten og rollerne kender ikke designstandarden | planlagt | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -33,7 +35,6 @@ eller nummeret på den rapport opgaven kom af.>
 | Runtime-version står ikke i CLAUDE.md |
 | Projektdokumentet tæller ni roller og nævner ikke projektkonsulenterne |
 | Træet i vedligeholdelsesdokumentet mangler Portainer-guiden |
-| Kontrakten, skitserne og gennemgangen følger designstandarden, og hooken, opdateringen og kontrollen kender dens stempel |
 
 <Den grove liste: hvad architect kan se der skal laves. **Ingen numre.**
 Et emne får først et nummer når interviewet har gjort det udførbart —
