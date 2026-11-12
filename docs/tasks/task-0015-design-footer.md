@@ -96,5 +96,54 @@ task-0014
 developer, som aldrig retter i definitionen ovenfor.>
 
 ### Hvad er lavet
+
+Grenen er `task-0015-design-footer`, oprettet fra `main` med de ucommittede filer: opgaven, BOARD og loggen. Afkrydsningerne under `Færdig når` er ikke rørt. Kriterierne punkt for punkt:
+
+- **Sjette komponent, bundlinjen.** `plugins/agents/skills/design/assets/design.css` har en ny blok, `hjk-footer`, efter topbjælken og efter samme mønster. Den indeholder:
+  - `--hjk-font-size-sm`, standardens mindste skriftstørrelse, i `--hjk-color-text-muted`
+  - `--hjk-color-divider` som tynd linje over, og `--hjk-color-bg` som baggrund, så parrene *mod siden* holder
+  - linket `hjk-footer__link` i `--hjk-color-primary`, understreget, med tykkere understregning ved mus over
+  - fokus med `:focus-visible` i `--hjk-color-focus`, som de andre komponenter
+
+  Ingen JavaScript, ingen nye farver og ingen selektor uden `hjk-`-klasse.
+- **Farvepar.** Tabellen under `## Farvepar` i `plugins/agents/skills/design/design.md` har to nye rækker. Begge er tekstpar med krav 4,5:
+  - `--hjk-color-text-muted` mod `--hjk-color-bg`: 6,80 i lys og 8,34 i mørk. Bundlinjens tekst.
+  - `--hjk-color-primary` mod `--hjk-color-bg`: 6,64 i lys og 8,69 i mørk. Adressen.
+
+  Fokus på linket dækkes af den eksisterende række `--hjk-color-focus` mod `--hjk-color-bg`. Kontrollen regner nu 29 farvepar efter, før 27. Se `Uklart` 1.
+- **Teksten.** `design.md` har et nyt afsnit, `## Bundlinjen er fast`, mellem `## Komponenter` og `## Tilgængelighed`. Det siger at hver webløsning viser bundlinjen nederst på hver side, med præcis *Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL. Version X.Y.Z*.
+- **Hvor værdierne kommer fra.** Samme afsnit har en tabel der binder hver pladsholder til sin nøgle: `TEAM_NAME`, `CONTACT_EMAIL` og `APP_VERSION`. Derefter står reglerne:
+  - De to første er påkrævede. De står i `.env.example` uden værdi og i compose-filen som `${NØGLE}`, og de sættes kun på stakken.
+  - Appen nægter at starte når en af dem mangler eller er tom. Loggen siger hvilken nøgle, aldrig værdien.
+  - `APP_VERSION` bygges ind i imaget af `docker-publish` og skrives aldrig fast. Er den tom, udelades *. Version X.Y.Z*. Den resulterende tekst står der også.
+  - Værdierne læses på serveren og bages aldrig ind i en statisk fil ved build.
+- **Tekst, ikke HTML, og mailto.** Afsnittet siger at værdierne sættes ind som tekst og aldrig som HTML, både i teksten og i linkets `href`. Adressen er et `mailto:`-link med emnet *Angående <appens navn>*, procentkodet, med et eksempel. Appens navn er tekst i koden.
+- **Komponentafsnittet.** `design.md` har `### Bundlinje` under `## Komponenter`, med markup som de andre. Pladsholderne er `TEAMNAVN`, `EMAIL`, `APPNAVN` og `X.Y.Z`. Det siger også at bundlinjen står som sidste element i `<body>` uden for `<main>`, så den er sidens `contentinfo`. Afsnittet `## Tilgængelighed` nævner at linket er understreget, så farven ikke bærer betydningen alene.
+- **Eksempelsiden.** `plugins/agents/skills/design/assets/eksempel.html` har et nyt afsnit, `Bundlinje`, med tre udgaver: med version, uden version og med fokus på adressen. Den rigtige bundlinje står nederst på siden, uden for `<main>`. Topbjælkens menu har fået et link til afsnittet. Værdierne er opdigtede:
+  - team: *Team Eksempel*
+  - adresse: `team@example.org`, med emnet *Angående Eksempelappen*
+  - version: `1.4.2`
+
+  Sidens egen `<style>` har en regel, så den stillestående fokusmarkering får linkets runde hjørner. Lys og mørk følger med gennem standardens variabler, men siden er ikke set; se `Hvad er ikke lavet`.
+- **`/agents:design`** i `plugins/agents/skills/design/SKILL.md`:
+  - Beskrivelsen og visningen i trin 2 siger seks komponenter og nævner bundlinjen. Visningen har et nyt punkt med den faste tekst og de to indstillinger.
+  - Blokken til projektets `CLAUDE.md` har en fjerde linje: bundlinjen er fast, med tekst og indstillinger fra `docs/design/design.md`.
+  - Trin 3 skriver to emner på BOARD: stylesheetet som før, og bundlinjen med `TEAM_NAME` og `CONTACT_EMAIL`. Der står en sætning om hvorfor bundlinjen er sit eget emne.
+  - `## Du må ikke` siger også at kaldet ikke bygger bundlinjen. `LUKNING` siger to emner.
+- **Tællingen.** Der står nu seks komponenter, og bundlinjen nævnes ved navn i `design.md`, i `SKILL.md` to steder, i `eksempel.html` og i `GUIDE.md`. `GUIDE.md` under `## Designstandard` siger nu også at kaldet skriver to emner på BOARD. Den har et kort afsnit om at bundlinjen er fast, med de to nøgler. Ingen andre filer uden for `docs/` tæller komponenterne.
+- **Kontrollen er grøn.** `node tools/validate.mjs` svarer `OK. 13 skills, 7 agenter, 53 markdown-filer, 29 farvepar, begge manifester paa version 1.2.0.` Både `claude plugin validate ./plugins/agents` og `claude plugin validate .` består.
+- **Til README** (architect): ingen nye kommandoer. `/agents:design` skriver nu to emner på BOARD og en linje mere i `CLAUDE.md`. `README.md` linje 71 siger *én linje i `CLAUDE.md` og på BOARD*. Kaldet skriver stadig ét afsnit i `CLAUDE.md`, men nu to linjer på BOARD. Komponenterne er ikke talt i README.
+
+Intet versionsnummer er rørt: hverken manifesterne, `kontrakt-version` eller `design-version`.
+
 ### Hvad er ikke lavet, og hvorfor
+
+- **Visuel efterprøvning.** Ingen browser er startet, så eksempelsiden er ikke set i nogen af tilstandene. Kriteriet *ser rigtig ud i begge tilstande* er derfor ikke efterprøvet; det er menneskets eller architects. Kontrasten er regnet, ikke set.
+- **`/agents:design` er ikke kørt** mod et testprojekt, af samme grund som i task-0014. Kaldet kan kun prøves i en klient med en engangskopi af plugin'et.
+
 ### Uklart
+
+1. **Ét par står nu to gange.** `--hjk-color-text-muted` mod `--hjk-color-bg` fandtes i forvejen som *Hjælpetekst på siden*. Opgaven siger at tabellen får bundlinjens par, så jeg tilføjede en ny række i stedet for at rette brugen i den gamle. De gamle rækker hører til de fem komponenter, som opgaven ikke rører. Kontrollen tæller dem som to par. Det samme gælder `--hjk-color-primary` mod `--hjk-color-bg`, som før kun stod med krav 3 som knappernes kant; nu står parret også med krav 4,5 som tekst. Begge holder 4,5 i begge tilstande. Ingen nye farver var nødvendige.
+2. **Bundlinjen har sin egen baggrund**, `--hjk-color-bg`. Opgaven nævner ingen baggrund, men parrene er *mod siden*. Uden baggrund ville bundlinjen arve fladen under sig, og så gjaldt tabellens tal ikke. Lægges den på en flade, er kontrasten stadig over 4,5 (`text-muted` 7,42 og `primary` 7,24 mod `surface` i lys), men det par står ikke i tabellen.
+3. **Linket har ingen farve ved mus over.** `--hjk-color-primary-hover` ville kræve et par mere i tabellen, og opgaven nævner kun linket i primærfarven. Mus over vises i stedet med en tykkere understregning.
+4. **Escaping i `href`.** Opgaven siger *som tekst, aldrig som HTML*. Jeg har skrevet at det også gælder linkets `href`, fordi adressen står begge steder. Om adressen selv skal procentkodes i `mailto:`, siger dokumentet ikke. Det er kun nødvendigt for usædvanlige tegn i adressen.
