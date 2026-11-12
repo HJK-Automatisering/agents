@@ -504,6 +504,39 @@ for (const doku of workflowDokumenter) {
   }
 }
 
+// ------------ 14. ADVARSEL: designstandarden aendret uden bump af stemplet
+// Et projekt opdager kun en ny standard gennem design-version. Det der
+// kopieres ind, er design.md og alt under assets/; SKILL.md kopieres ikke og
+// taeller ikke med.
+const designDok = join(DESIGN, 'design.md');
+if (existsSync(designDok)) {
+  const r = relativ(designDok);
+  const foer = fraBase(r);
+  const nu = laes(designDok);
+  const vFoer = foer === null ? null : felt(frontmatter(foer), 'design-version') || '1';
+  const vNu = felt(frontmatter(nu), 'design-version') || '1';
+  if (foer !== null && vFoer === vNu) {
+    const aendrede = [];
+    if (foer !== nu) aendrede.push(r);
+    const assetMappe = join(DESIGN, 'assets');
+    if (existsSync(assetMappe)) {
+      for (const e of readdirSync(assetMappe, { withFileTypes: true })) {
+        if (!e.isFile()) continue;
+        const asset = join(assetMappe, e.name);
+        const assetFoer = fraBase(relativ(asset));
+        if (assetFoer === null || assetFoer !== laes(asset)) aendrede.push(relativ(asset));
+      }
+    }
+    if (aendrede.length) {
+      sig(advarsler, r,
+        'standarden er aendret siden ' + base + ' (' + aendrede.join(', ') + '), men ' +
+        'design-version staar stadig paa ' + vNu + '. Aendrer den hvad standarden lover, skal ' +
+        'den bumpes - ellers faar projekterne aldrig besked om at deres kopi er foraeldet. Er ' +
+        'det kun en omformulering, er alt som det skal vaere.');
+    }
+  }
+}
+
 // ------------------------------------------------------------------ Rapport
 const skriv = (liste, maerke) => {
   for (const p of liste) console.log(maerke + ' ' + p.hvor + '\n   ' + p.hvad + '\n');
