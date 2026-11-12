@@ -1,7 +1,7 @@
 ---
 nummer: task-0017
 titel: Kontrakten og rollerne kender ikke designstandarden
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-11-12
 ---
@@ -18,15 +18,15 @@ uden standarden ikke har.
 
 ## Færdig når
 
-- [ ] Kontrakten siger at et nyt projekt med en webflade bruger designstandarden fra start, og at en løsning i drift kun får den gennem en opgave mennesket har sagt ja til
-- [ ] Kontrakten siger hvornår et projekt er nyt, så en rolle kan afgøre det uden at spørge
-- [ ] Kontraktens tabeller over roller og filer kender `docs/design/`: hvem der lægger den ind, at `update` også bringer den ajour, og hvad stemplet er
-- [ ] Reglen om bundlinjen står i kontrakten og gælder hver webløsning, med eller uden standarden. Standardens dokument viser kun komponenten og henviser til kontrakten
-- [ ] `architect` gør det til et emne på BOARD, når et projekt med en webflade mangler standarden og er nyt, eller mangler bundlinjen. For en løsning i drift foreslår den standarden som et emne og bygger intet om af sig selv
-- [ ] `reviewer` melder det som fund når en webflade går uden om standarden, når projektets kopi af standarden er rettet, og når bundlinjen mangler eller afviger
-- [ ] En skitse fra `mockup` bruger standardens udseende og viser bundlinjen med opdigtede værdier, og virker stadig åbnet direkte fra disken uden netværk
-- [ ] Dokumenterne til mennesker siger hvad rollerne nu gør med standarden
-- [ ] Repoets kontrol er grøn. Advarslerne om at kontrakten og standarden er ændret uden bump, er ventede og står i noterne
+- [x] Kontrakten siger at et nyt projekt med en webflade bruger designstandarden fra start, og at en løsning i drift kun får den gennem en opgave mennesket har sagt ja til
+- [x] Kontrakten siger hvornår et projekt er nyt, så en rolle kan afgøre det uden at spørge
+- [x] Kontraktens tabeller over roller og filer kender `docs/design/`: hvem der lægger den ind, at `update` også bringer den ajour, og hvad stemplet er
+- [x] Reglen om bundlinjen står i kontrakten og gælder hver webløsning, med eller uden standarden. Standardens dokument viser kun komponenten og henviser til kontrakten
+- [x] `architect` gør det til et emne på BOARD, når et projekt med en webflade mangler standarden og er nyt, eller mangler bundlinjen. For en løsning i drift foreslår den standarden som et emne og bygger intet om af sig selv
+- [x] `reviewer` melder det som fund når en webflade går uden om standarden, når projektets kopi af standarden er rettet, og når bundlinjen mangler eller afviger
+- [x] En skitse fra `mockup` bruger standardens udseende og viser bundlinjen med opdigtede værdier, og virker stadig åbnet direkte fra disken uden netværk
+- [x] Dokumenterne til mennesker siger hvad rollerne nu gør med standarden
+- [x] Repoets kontrol er grøn. Advarslerne om at kontrakten og standarden er ændret uden bump, er ventede og står i noterne
 
 ## Sådan bygger vi det
 

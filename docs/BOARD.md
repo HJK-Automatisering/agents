@@ -21,7 +21,7 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
-| task-0017 | Kontrakten og rollerne kender ikke designstandarden | planlagt | interview |
+| task-0018 | Henvisningerne til bundlinjens regel peger stadig på standardens dokument | planlagt | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -59,6 +59,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0014 | En fælles designstandard for webløsninger, og et kald der lægger den ind | bygget |
 | task-0015 | Designstandarden har ingen fast bundlinje med team, kontaktadresse og version | bygget |
 | task-0016 | Hooken, opdateringen og kontrollen kender ikke designstandardens stempel | bygget |
+| task-0017 | Kontrakten og rollerne kender ikke designstandarden | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.
