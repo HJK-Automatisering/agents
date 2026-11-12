@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Designstandard — eksempelside</title>
+<!--
+  Eksempelside for hjk-designstandarden.
+  Kilde: plugins/agents/skills/design/assets/eksempel.html i plugin'et agents.
+  Henter design.css fra samme mappe. Intet hentes fra netvaerket.
+  Alle data paa siden er opdigtede. Ret ikke i denne fil i et projekt.
+-->
+<link rel="stylesheet" href="design.css">
+<style>
+  /* Kun til eksempelsidens egen opstilling. Ikke en del af standarden. */
+  .eksempel-main {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: var(--hjk-space-5) var(--hjk-space-4) var(--hjk-space-7);
+  }
+  .eksempel-main h1 {
+    margin: 0 0 var(--hjk-space-2);
+    font-size: var(--hjk-font-size-xxl);
+    line-height: var(--hjk-line-height-tight);
+  }
+  .eksempel-main h2 {
+    margin: var(--hjk-space-7) 0 var(--hjk-space-4);
+    font-size: var(--hjk-font-size-xl);
+    line-height: var(--hjk-line-height-tight);
+  }
+  .eksempel-main h3 {
+    margin: var(--hjk-space-5) 0 var(--hjk-space-3);
+    font-size: var(--hjk-font-size-lg);
+    line-height: var(--hjk-line-height-tight);
+  }
+  .eksempel-main p {
+    max-width: 44rem;
+  }
+  .eksempel-noter {
+    color: var(--hjk-color-text-muted);
+    font-size: var(--hjk-font-size-sm);
+  }
+  .eksempel-raekke {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--hjk-space-3);
+  }
+  .eksempel-flade {
+    padding: var(--hjk-space-5);
+    border: var(--hjk-border-width) solid var(--hjk-color-divider);
+    border-radius: var(--hjk-radius-md);
+    background: var(--hjk-color-surface);
+  }
+  .eksempel-gitter {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: var(--hjk-space-5);
+  }
+  .eksempel-smal {
+    max-width: 20rem;
+  }
+  .eksempel-tema {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--hjk-space-3);
+    margin: var(--hjk-space-5) 0 0;
+  }
+  .eksempel-tema [aria-pressed="true"] {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+  /* Viser fokusmarkeringen stillestaaende, saa den kan ses uden tastatur.
+     Samme vaerdier som standardens :focus-visible. */
+  .eksempel-fokus {
+    outline: var(--hjk-focus-width) solid var(--hjk-color-focus);
+    outline-offset: var(--hjk-focus-offset);
+  }
+  .eksempel-fokus-topbar {
+    outline: var(--hjk-focus-width) solid var(--hjk-color-topbar-focus);
+    outline-offset: var(--hjk-focus-offset);
+    border-radius: var(--hjk-radius-sm);
+  }
+  .eksempel-farver {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    gap: var(--hjk-space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .eksempel-farve {
+    display: flex;
+    align-items: center;
+    gap: var(--hjk-space-3);
+    font-size: var(--hjk-font-size-sm);
+  }
+  .eksempel-farve span:first-child {
+    flex: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: var(--hjk-border-width) solid var(--hjk-color-border);
+    border-radius: var(--hjk-radius-sm);
+  }
+  .eksempel-farve code {
+    font-family: var(--hjk-font-family-mono);
+  }
+</style>
+</head>
+<body class="hjk-page">
+
+<header class="hjk-topbar">
+  <a class="hjk-topbar__name" href="#">Eksempelappen</a>
+  <nav class="hjk-topbar__nav" aria-label="Hovedmenu">
+    <a class="hjk-topbar__link" href="#" aria-current="page">Oversigt</a>
+    <a class="hjk-topbar__link" href="#knap">Knap</a>
+    <a class="hjk-topbar__link" href="#formularfelt">Formularfelt</a>
+    <a class="hjk-topbar__link" href="#tabel">Tabel</a>
+    <a class="hjk-topbar__link" href="#besked">Besked</a>
+  </nav>
+</header>
+
+<main class="eksempel-main">
+  <h1>Designstandard</h1>
+  <p>Alle fem komponenter i alle deres tilstande. Siden henter kun <code>design.css</code> fra samme mappe og virker uden netværk. Alle data er opdigtede.</p>
+
+  <div class="eksempel-tema" role="group" aria-label="Tilstand">
+    <button type="button" class="hjk-button hjk-button--secondary" data-vaelg-tema="system" aria-pressed="true">Følg maskinen</button>
+    <button type="button" class="hjk-button hjk-button--secondary" data-vaelg-tema="light" aria-pressed="false">Lys</button>
+    <button type="button" class="hjk-button hjk-button--secondary" data-vaelg-tema="dark" aria-pressed="false">Mørk</button>
+    <span id="eksempel-viser" class="eksempel-noter" aria-live="polite"></span>
+  </div>
+  <p class="eksempel-noter">Skiftet sætter <code>data-theme</code> på <code>&lt;html&gt;</code> og kræver JavaScript. Komponenterne gør ikke. Tryk Tab for at se den rigtige fokusmarkering.</p>
+
+  <h2 id="farver">Farver</h2>
+  <ul class="eksempel-farver">
+    <li class="eksempel-farve"><span style="background: var(--hjk-color-bg)"></span><span><code>bg</code><br><span data-farve="--hjk-color-bg"></span></span></li>
+    <li class="eksempel-farve"><span style="background: var(--hjk-color-surface)"></span><span><code>surface</code><br><span data-farve="--hjk-color-surface"></span></span></li>
+    <li class="eksempel-farve"><span style="background: var(--hjk-color-surface-alt)"></span><span><code>surface-alt</code><br><span data-farve="--hjk-color-surface-alt"></span></span></li>
+    <li class="eksempel-farve"><span style="background: var(--hjk-color-text)"></span><span><code>text</code><br><span data-farve="--hjk-color-text"></span></span></li>
+    <li class="eksempel-farve"><span style="background: var(--hjk-color-text-muted)"></span><span><code>text-muted</code><br><span data-farve="--hjk-color-text-muted"></span></span></li>
+    <li class="eksempel-farve"><span style="background: var(--hjk-color-border)"></span><span><code>border</code><br><span data-farve="--hjk-color-border"></span></span></li>
+    <li class="eksempel-farve"><span style="background: var(--hjk-color-primary)"></span><span><code>primary</code><br><span data-farve="--hjk-color-primary"></span></span></li>
+    <li class="eksempel-farve"><span style="background: var(--hjk-color-danger)"></span><span><code>danger</code><br><span data-farve="--hjk-color-danger"></span></span></li>
+    <li class="eksempel-farve"><span style="background: var(--hjk-color-focus)"></span><span><code>focus</code><br><span data-farve="--hjk-color-focus"></span></span></li>
+    <li class="eksempel-farve"><span style="background: var(--hjk-color-error-text)"></span><span><code>error-text</code><br><span data-farve="--hjk-color-error-text"></span></span></li>
+    <li class="eksempel-farve"><span style="background: var(--hjk-color-warning-text)"></span><span><code>warning-text</code><br><span data-farve="--hjk-color-warning-text"></span></span></li>
+    <li class="eksempel-farve"><span style="background: var(--hjk-color-success-text)"></span><span><code>success-text</code><br><span data-farve="--hjk-color-success-text"></span></span></li>
+    <li class="eksempel-farve"><span style="background: var(--hjk-color-info-text)"></span><span><code>info-text</code><br><span data-farve="--hjk-color-info-text"></span></span></li>
+    <li class="eksempel-farve"><span style="background: var(--hjk-color-topbar-bg)"></span><span><code>topbar-bg</code><br><span data-farve="--hjk-color-topbar-bg"></span></span></li>
+  </ul>
+
+  <h2 id="knap">Knap</h2>
+  <div class="eksempel-raekke">
+    <button type="button" class="hjk-button">Primær</button>
+    <button type="button" class="hjk-button hjk-button--secondary">Sekundær</button>
+    <button type="button" class="hjk-button hjk-button--danger">Fare</button>
+    <button type="button" class="hjk-button" disabled>Deaktiveret</button>
+    <button type="button" class="hjk-button hjk-button--secondary" disabled>Deaktiveret</button>
+    <button type="button" class="hjk-button hjk-button--danger" disabled>Deaktiveret</button>
+  </div>
+  <h3>Med fokus</h3>
+  <div class="eksempel-raekke">
+    <button type="button" class="hjk-button eksempel-fokus" tabindex="-1">Primær</button>
+    <button type="button" class="hjk-button hjk-button--secondary eksempel-fokus" tabindex="-1">Sekundær</button>
+    <button type="button" class="hjk-button hjk-button--danger eksempel-fokus" tabindex="-1">Fare</button>
+  </div>
+  <h3>På en flade</h3>
+  <div class="eksempel-flade eksempel-raekke">
+    <button type="button" class="hjk-button">Gem</button>
+    <button type="button" class="hjk-button hjk-button--secondary">Fortryd</button>
+    <button type="button" class="hjk-button hjk-button--danger">Slet</button>
+    <button type="button" class="hjk-button eksempel-fokus" tabindex="-1">Med fokus</button>
+  </div>
+  <p class="eksempel-noter">Hold musen over en knap for at se dens tilstand ved mus over.</p>
+
+  <h2 id="formularfelt">Formularfelt</h2>
+  <div class="eksempel-gitter">
+    <div>
+      <h3>Normal</h3>
+      <div class="hjk-field">
+        <label class="hjk-label" for="felt-normal">Lokale</label>
+        <span class="hjk-hint" id="felt-normal-hint">Fx Mødelokale 2</span>
+        <input class="hjk-input" id="felt-normal" aria-describedby="felt-normal-hint" value="Mødelokale 2">
+      </div>
+      <div class="hjk-field">
+        <label class="hjk-label" for="felt-valg">Antal pladser</label>
+        <select class="hjk-input" id="felt-valg">
+          <option>4</option>
+          <option selected>8</option>
+          <option>12</option>
+        </select>
+      </div>
+      <div class="hjk-field">
+        <label class="hjk-label" for="felt-tekst">Bemærkning</label>
+        <textarea class="hjk-input" id="felt-tekst" rows="3">Kaffe til otte.</textarea>
+      </div>
+    </div>
+    <div>
+      <h3>Fokus</h3>
+      <div class="hjk-field">
+        <label class="hjk-label" for="felt-fokus">Dato</label>
+        <input class="hjk-input eksempel-fokus" id="felt-fokus" value="14-03-2031" tabindex="-1">
+      </div>
+      <h3>Fejl med tekst</h3>
+      <div class="hjk-field">
+        <label class="hjk-label" for="felt-fejl">Tidspunkt</label>
+        <input class="hjk-input" id="felt-fejl" aria-invalid="true" aria-describedby="felt-fejl-tekst" value="25:00">
+        <span class="hjk-field-error" id="felt-fejl-tekst">Skriv tidspunktet som tt:mm, fx 09:30.</span>
+      </div>
+      <h3>Deaktiveret</h3>
+      <div class="hjk-field">
+        <label class="hjk-label" for="felt-deaktiveret">Bestillingsnummer</label>
+        <input class="hjk-input" id="felt-deaktiveret" value="1042" disabled>
+      </div>
+    </div>
+    <div class="eksempel-flade">
+      <h3>På en flade</h3>
+      <div class="hjk-field">
+        <label class="hjk-label" for="flade-normal">Lokale</label>
+        <span class="hjk-hint" id="flade-normal-hint">Fx Mødelokale 2</span>
+        <input class="hjk-input" id="flade-normal" aria-describedby="flade-normal-hint">
+      </div>
+      <div class="hjk-field">
+        <label class="hjk-label" for="flade-fejl">Tidspunkt</label>
+        <input class="hjk-input" id="flade-fejl" aria-invalid="true" aria-describedby="flade-fejl-tekst" value="25:00">
+        <span class="hjk-field-error" id="flade-fejl-tekst">Skriv tidspunktet som tt:mm, fx 09:30.</span>
+      </div>
+    </div>
+  </div>
+
+  <h2 id="tabel">Tabel</h2>
+  <div class="hjk-table-wrap" tabindex="0" role="region" aria-label="Bestillinger, bred">
+    <table class="hjk-table">
+      <caption class="hjk-table__caption">Bestillinger</caption>
+      <thead>
+        <tr>
+          <th class="hjk-table__header" scope="col">Nummer</th>
+          <th class="hjk-table__header" scope="col">Lokale</th>
+          <th class="hjk-table__header" scope="col">Dato</th>
+          <th class="hjk-table__header" scope="col">Tidsrum</th>
+          <th class="hjk-table__header" scope="col">Pladser</th>
+          <th class="hjk-table__header" scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="hjk-table__cell" scope="row">1040</th>
+          <td class="hjk-table__cell">Mødelokale 1</td>
+          <td class="hjk-table__cell">12-03-2031</td>
+          <td class="hjk-table__cell">09:00–10:00</td>
+          <td class="hjk-table__cell">6</td>
+          <td class="hjk-table__cell">Bekræftet</td>
+        </tr>
+        <tr>
+          <th class="hjk-table__cell" scope="row">1041</th>
+          <td class="hjk-table__cell">Mødelokale 3</td>
+          <td class="hjk-table__cell">13-03-2031</td>
+          <td class="hjk-table__cell">13:00–15:30</td>
+          <td class="hjk-table__cell">12</td>
+          <td class="hjk-table__cell">Afventer</td>
+        </tr>
+        <tr>
+          <th class="hjk-table__cell" scope="row">1042</th>
+          <td class="hjk-table__cell">Mødelokale 2</td>
+          <td class="hjk-table__cell">14-03-2031</td>
+          <td class="hjk-table__cell">10:00–11:00</td>
+          <td class="hjk-table__cell">8</td>
+          <td class="hjk-table__cell">Aflyst</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>Smal skærm</h3>
+  <p class="eksempel-noter">Samme tabel i en smal ramme. Den ruller vandret, og kolonnerne bliver stående.</p>
+  <div class="eksempel-smal">
+    <div class="hjk-table-wrap" tabindex="0" role="region" aria-label="Bestillinger, smal">
+      <table class="hjk-table">
+        <thead>
+          <tr>
+            <th class="hjk-table__header" scope="col">Nummer</th>
+            <th class="hjk-table__header" scope="col">Lokale</th>
+            <th class="hjk-table__header" scope="col">Dato</th>
+            <th class="hjk-table__header" scope="col">Tidsrum</th>
+            <th class="hjk-table__header" scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="hjk-table__cell" scope="row">1040</th>
+            <td class="hjk-table__cell">Mødelokale 1</td>
+            <td class="hjk-table__cell">12-03-2031</td>
+            <td class="hjk-table__cell">09:00–10:00</td>
+            <td class="hjk-table__cell">Bekræftet</td>
+          </tr>
+          <tr>
+            <th class="hjk-table__cell" scope="row">1041</th>
+            <td class="hjk-table__cell">Mødelokale 3</td>
+            <td class="hjk-table__cell">13-03-2031</td>
+            <td class="hjk-table__cell">13:00–15:30</td>
+            <td class="hjk-table__cell">Afventer</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <h2 id="besked">Besked</h2>
+  <div class="hjk-message hjk-message--error" role="alert">
+    <p class="hjk-message__title">Fejl</p>
+    <p class="hjk-message__body">Bestillingen blev ikke gemt. Prøv igen om lidt.</p>
+  </div>
+  <div class="hjk-message hjk-message--warning">
+    <p class="hjk-message__title">Advarsel</p>
+    <p class="hjk-message__body">Lokalet er bestilt i tidsrummet lige før. Der kan være travlt ved døren.</p>
+  </div>
+  <div class="hjk-message hjk-message--success" role="status">
+    <p class="hjk-message__title">Gemt</p>
+    <p class="hjk-message__body">Bestilling 1042 er gemt.</p>
+  </div>
+  <div class="hjk-message hjk-message--info">
+    <p class="hjk-message__title">Info</p>
+    <p class="hjk-message__body">Bestillinger kan ændres indtil dagen før.</p>
+  </div>
+
+  <h2 id="topbjaelke">Topbjælke</h2>
+  <p class="eksempel-noter">Øverst på siden. Herunder med fokus på et link, og i en smal ramme hvor den folder sig.</p>
+  <header class="hjk-topbar">
+    <a class="hjk-topbar__name" href="#" tabindex="-1">Eksempelappen</a>
+    <nav class="hjk-topbar__nav" aria-label="Eksempel på menu med fokus">
+      <a class="hjk-topbar__link" href="#" aria-current="page" tabindex="-1">Oversigt</a>
+      <a class="hjk-topbar__link eksempel-fokus-topbar" href="#" tabindex="-1">Bestillinger</a>
+      <a class="hjk-topbar__link" href="#" tabindex="-1">Indstillinger</a>
+    </nav>
+  </header>
+  <div class="eksempel-smal" style="margin-top: var(--hjk-space-4)">
+    <header class="hjk-topbar">
+      <a class="hjk-topbar__name" href="#" tabindex="-1">Eksempelappen</a>
+      <nav class="hjk-topbar__nav" aria-label="Eksempel på smal menu">
+        <a class="hjk-topbar__link" href="#" aria-current="page" tabindex="-1">Oversigt</a>
+        <a class="hjk-topbar__link" href="#" tabindex="-1">Bestillinger</a>
+        <a class="hjk-topbar__link" href="#" tabindex="-1">Indstillinger</a>
+      </nav>
+    </header>
+  </div>
+</main>
+
+<script>
+  // Kun til eksempelsidens tilstandsskift. Komponenterne bruger ikke JavaScript.
+  (function () {
+    var rod = document.documentElement;
+    var knapper = document.querySelectorAll('[data-vaelg-tema]');
+    var viser = document.getElementById('eksempel-viser');
+    var maskine = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function opdater() {
+      var valg = rod.getAttribute('data-theme') || 'system';
+      knapper.forEach(function (k) {
+        k.setAttribute('aria-pressed', String(k.getAttribute('data-vaelg-tema') === valg));
+      });
+      var moerk = valg === 'dark' || (valg === 'system' && maskine.matches);
+      viser.textContent = 'Viser: ' + (moerk ? 'mørk' : 'lys');
+      var stil = getComputedStyle(rod);
+      document.querySelectorAll('[data-farve]').forEach(function (e) {
+        e.textContent = stil.getPropertyValue(e.getAttribute('data-farve')).trim();
+      });
+    }
+
+    knapper.forEach(function (k) {
+      k.addEventListener('click', function () {
+        var valg = k.getAttribute('data-vaelg-tema');
+        if (valg === 'system') rod.removeAttribute('data-theme');
+        else rod.setAttribute('data-theme', valg);
+        opdater();
+      });
+    });
+    if (maskine.addEventListener) maskine.addEventListener('change', opdater);
+    opdater();
+  })();
+</script>
+</body>
+</html>
