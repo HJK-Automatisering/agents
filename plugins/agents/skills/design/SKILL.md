@@ -57,7 +57,8 @@ Ved ja:
    Webfladen følger den fælles designstandard i `docs/design/`. Læs `docs/design/design.md`
    før der laves noget på webfladen, og åbn `docs/design/eksempel.html` for at se den.
    Ret aldrig i filerne i `docs/design/` — projektets egne regler står i appens eget stylesheet.
-   Bundlinjen er fast på hver side, med den tekst og de indstillinger `docs/design/design.md` siger.
+   Bundlinjen er fast på hver side. Dens tekst og indstillinger står i kontrakten, `AGENTS.md`,
+   under `### Bundlinjen er fast`.
    ```
 
 3. **Skriv to emner på `docs/BOARD.md`** under `## Kommende`. Som de andre emner: én linje hver, uden filsti og uden nummer.

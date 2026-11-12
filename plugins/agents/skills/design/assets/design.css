@@ -505,7 +505,8 @@ tr:last-child > .hjk-table__cell {
  *   Udviklet af TEAMNAVN. Ved udfordringer kontakt
  *   <a class="hjk-footer__link" href="mailto:...">EMAIL</a>. Version X.Y.Z
  * </footer>
- * Nederst paa hver side. Teksten er fast; se Bundlinjen er fast i design.md.
+ * Nederst paa hver side. Teksten er fast; se Bundlinjen er fast i projektets
+ * AGENTS.md.
  */
 .hjk-footer {
   box-sizing: border-box;

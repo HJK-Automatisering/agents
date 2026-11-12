@@ -10,6 +10,9 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-11-12 | task-0018 | `kontrakt-version` bumpet 23 → 24 og `design-version` 1 → 2 på opgavens gren | Kontrakten har fået afsnittet om webflader og bundlinjens regel; standardens dokument har mistet reglen. Uden bumpene opdager projekterne ingen af delene. Imod: alle projekter skal køre `/agents:update`. Mennesket valgte | — |
+| 2026-11-12 | task-0018 | Opgaven er bygget og sat afsluttet | Alle fem kriterier holder. De fire henvisninger peger på kontraktens `### Bundlinjen er fast`; kontrollen er grøn med de to ventede advarsler om stemplerne | architect |
+| 2026-11-12 | task-0018 | Skitse-skillens henvisning til "markup og tekst" under `### Bundlinje` i standardens dokument bliver stående | Markup-eksemplet dér indeholder tekstskabelonen, og en skitse i en tom mappe har ingen kontrakt at læse den i. Reglen om tekst og nøgler står stadig kun i kontrakten | architect |
 | 2026-11-12 | task-0017 | Opgaven er bygget og sat afsluttet | Alle ni kriterier holder. Bundlinjens tekst er flyttet ordret, efterprøvet med diff; kontrollen er grøn med de to ventede advarsler om stemplerne | architect |
 | 2026-11-12 | task-0017 | Developers tre fund og den forkerte henvisning *"Markup står under `### Bundlinje`"* bliver task-0018 | Alle er henvisninger til bundlinjens gamle placering, i filer opgaven ikke måtte røre. To af dem kopieres ud i projekterne, så de skal rettes før udgivelsen | architect |
 | 2026-11-12 | task-0017 | Bundlinjens regel står som underafsnit `###` i kontrakten, og `mockup` læser plugin'ets `design.css` | Reglen hører til afsnittet om webflader. Skitsen skal virke uden et opsat projekt, og en kopi der er bagud, siger hooken til om | architect |
