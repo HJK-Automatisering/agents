@@ -21,7 +21,6 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
-| task-0015 | Designstandarden har ingen fast bundlinje med team, kontaktadresse og version | planlagt | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -58,6 +57,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0012 | En app bag Nginx Proxy Manager og Authentik, klik for klik | bygget |
 | task-0013 | Kontrakten kender ikke de krav en app bag Authentik selv skal opfylde | bygget |
 | task-0014 | En fælles designstandard for webløsninger, og et kald der lægger den ind | bygget |
+| task-0015 | Designstandarden har ingen fast bundlinje med team, kontaktadresse og version | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.

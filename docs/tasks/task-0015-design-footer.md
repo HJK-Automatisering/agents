@@ -1,7 +1,7 @@
 ---
 nummer: task-0015
 titel: Designstandarden har ingen fast bundlinje med team, kontaktadresse og version
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-11-12
 ---
@@ -17,15 +17,15 @@ nøgler overalt, før standarden udgives første gang.
 
 ## Færdig når
 
-- [ ] Standarden har en sjette komponent, bundlinjen: lille, dæmpet tekst med en tynd linje over, kontaktadressen som link i primærfarven, og synligt fokus på linket. Ren CSS, kun standardens egne klassenavne
-- [ ] Bundlinjens farvepar står i standardens tabel med kontrasten i begge tilstande, og kontrollen regner dem efter
-- [ ] Standardens dokument siger at hver webløsning viser bundlinjen nederst på hver side, med præcis teksten *Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL. Version X.Y.Z*
-- [ ] Dokumentet siger hvor værdierne kommer fra: team og adresse er påkrævede indstillinger på stakken, versionen er den der er bygget ind i imaget. Appen starter ikke uden de to indstillinger, og står versionen tom, udelades versionsdelen
-- [ ] Dokumentet siger at værdierne sættes ind som tekst, aldrig som HTML, og at adressen er et link der åbner en ny mail med appens navn i emnet
-- [ ] Eksempelsiden viser bundlinjen med opdigtede værdier, og den ser rigtig ud i begge tilstande
-- [ ] `/agents:design` nævner bundlinjen, når den viser standarden, i afsnittet i projektets `CLAUDE.md`, og med sit eget emne på projektets BOARD
-- [ ] Alle steder der tæller standardens komponenter, siger seks
-- [ ] Repoets kontrol er grøn
+- [x] Standarden har en sjette komponent, bundlinjen: lille, dæmpet tekst med en tynd linje over, kontaktadressen som link i primærfarven, og synligt fokus på linket. Ren CSS, kun standardens egne klassenavne
+- [x] Bundlinjens farvepar står i standardens tabel med kontrasten i begge tilstande, og kontrollen regner dem efter
+- [x] Standardens dokument siger at hver webløsning viser bundlinjen nederst på hver side, med præcis teksten *Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL. Version X.Y.Z*
+- [x] Dokumentet siger hvor værdierne kommer fra: team og adresse er påkrævede indstillinger på stakken, versionen er den der er bygget ind i imaget. Appen starter ikke uden de to indstillinger, og står versionen tom, udelades versionsdelen
+- [x] Dokumentet siger at værdierne sættes ind som tekst, aldrig som HTML, og at adressen er et link der åbner en ny mail med appens navn i emnet
+- [x] Eksempelsiden viser bundlinjen med opdigtede værdier, og den ser rigtig ud i begge tilstande
+- [x] `/agents:design` nævner bundlinjen, når den viser standarden, i afsnittet i projektets `CLAUDE.md`, og med sit eget emne på projektets BOARD
+- [x] Alle steder der tæller standardens komponenter, siger seks
+- [x] Repoets kontrol er grøn
 
 ## Sådan bygger vi det
 

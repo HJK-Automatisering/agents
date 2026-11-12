@@ -10,6 +10,9 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-11-12 | task-0015 | Opgaven er bygget og sat afsluttet | Alle ni kriterier holder. Mennesket har set bundlinjen i begge tilstande; kontrollen er grøn med 29 farvepar. Kaldet er ikke afprøvet i en klient | architect |
+| 2026-11-12 | task-0015 | `README.md` rettet på opgavens gren: kaldet skriver et afsnit i `CLAUDE.md` og to emner på BOARD | Tabellen sagde én linje, som ikke længere passer | architect |
+| 2026-11-12 | task-0015 | Developers fire uklare punkter accepteres: bundlinjens par står for sig i tabellen, bundlinjen har sidens baggrund, linket får tykkere understregning frem for ny farve ved mus over, og mailadressen escapes som tekst uden at procentkodes | Ingen nye farver, og tabellens tal holder. Adressen sættes af drift, ikke af brugeren, og stakkens escaping dækker `href` — samme afgørelse som i projektet der har bundlinjen i dag | architect |
 | 2026-11-12 | task-0015 | Nøglerne er `TEAM_NAME` og `CONTACT_EMAIL` på stakken og `APP_VERSION` fra imaget; mailen får emnet *Angående <appens navn>* | Samme navne og mønster som projektet der har bundlinjen i dag; `APP_VERSION` sendes allerede ind af `docker-publish` | architect |
 | 2026-11-12 | task-0015 | Kravet til bundlinjen står i standardens dokument, ikke i kontrakten, og `design-version` bliver på 1 | Det gælder præcis projekter med en webflade og kræver intet kontraktbump. Standarden er aldrig udgivet, så ingen projekter har en kopi der kan være bagud | architect |
 | 2026-11-12 | — | Udgivelsen af designstandarden venter til bundlinjen er bygget | Bundlinjen er en fast del af standarden og skal være med i den første udgave projekterne kan hente | architect |
