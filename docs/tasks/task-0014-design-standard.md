@@ -121,5 +121,91 @@ intet
 ## Developers noter
 
 ### Hvad er lavet
+
+Grenen er `task-0014-design-standard`, oprettet fra `main` med de ucommittede opgavefiler. Afkrydsningerne under `Færdig når` er ikke rørt; de står over delelinjen. Her er kriterierne punkt for punkt:
+
+- **Standarden med grundværdier og fem komponenter.** `plugins/agents/skills/design/assets/design.css` har farver, skriftstørrelser, afstande, hjørner, kantbredder og fokus som CSS-variabler, og komponenterne knap, formularfelt, tabel, besked og topbjælke. Tilstandene er dem opgaven nævner:
+  - knap: primær, sekundær, fare og deaktiveret
+  - felt: normal, fokus, fejl med tekst og deaktiveret
+  - tabel: hoved, rækker og smal skærm
+  - besked: fejl, advarsel, succes og info
+  - topbjælke: appnavn og navigation med `aria-current`
+- **Lys og mørk.** Lys står på `:root`. Mørk står under `@media (prefers-color-scheme: dark)` på `:root:not([data-theme="light"])`, og igen på `:root[data-theme="dark"]`. `data-theme` vinder derfor i begge retninger. Variablen `--hjk-color-scheme` sætter `color-scheme` på standardens egne klasser og på `.hjk-page`, ikke på `:root`.
+- **Ren CSS, kun egne klasser.** Ingen selektor har et element uden `hjk-`-klasse som mål. Tabellens celler har derfor `hjk-table__header`, `hjk-table__cell` og `hjk-table__caption`; se `Uklart` 1. Der er intet `@import`, ingen `url()` og ingen skrifttyper udefra, kun systemets skrifttyper. Fokus vises med `:focus-visible`.
+- **Farvepar med kontrastforhold.** `plugins/agents/skills/design/design.md` har `design-version: 1` i frontmatter. Dokumentet siger at kopien aldrig rettes, og at projektets egne regler står i appens eget stylesheet. Det forklarer også lys og mørk, med en tabel over de tre tilfælde, og har grundværdier, komponenter med markup og et afsnit om tilgængelighed. Tabellen under `## Farvepar` har 27 par: 18 tekstpar med krav 4,5 og 9 par for kanter og fokus med krav 3. Hvert par har sit forhold i lys og mørk, med to decimaler, rundet ned. Det laveste er formularfeltets kant mod siden i lys: 3,56.
+- **Kontrollen beregner kontrasten.** Der er et nyt afsnit 13 i `tools/validate.mjs`. Det læser tabellen, finder værdierne i `design.css` og regner luminans efter WCAG 2.1 med tærsklen 0,03928. Det fejler i seks tilfælde:
+  - et par under kravet
+  - en variabel der ikke findes
+  - et tal i tabellen der ikke passer med det beregnede
+  - en farve der ikke er hex
+  - et krav der hverken er 4,5 eller 3
+  - to mørke blokke der ikke er ens; se `Uklart` 4
+
+  OK-linjen tæller nu også farvepar. Kontrollen er prøvet på en engangskopi med alle seks fejl lagt ind, og hver gav sin fejl.
+- **Eksempelsiden** er `plugins/agents/skills/design/assets/eksempel.html`. Den henter `design.css` med den relative sti `design.css`, så den virker både i plugin'et og i `docs/design/` i et projekt. Den indeholder:
+  - alle fem komponenter i alle deres tilstande, også på en flade
+  - en tabel og en topbjælke i en smal ramme
+  - en farveoversigt der viser hex-værdien for den tilstand der vises
+  - et skift mellem *Følg maskinen*, *Lys* og *Mørk*
+
+  Skiftet og hex-visningen er et lille indlejret script; komponenterne bruger ikke JavaScript. Fokus vises også stillestående, med en klasse der kun findes i sidens egen `<style>`. Appnavnet er *Eksempelappen*. Data er opdigtede lokalebestillinger uden navne på personer eller steder, og der er intet logo.
+- **Mennesket godkender paletten.** Ikke afkrydset; det er menneskets. Åbn `plugins/agents/skills/design/assets/eksempel.html` direkte fra disken. Paletten er foreslået sådan:
+
+  | Variabel `--hjk-color-` | Lys | Mørk |
+  |---|---|---|
+  | `bg` | `#f4f5f7` | `#121417` |
+  | `surface` | `#ffffff` | `#1b1e23` |
+  | `surface-alt` | `#e9ecf0` | `#252a31` |
+  | `text` | `#1b2028` | `#e6e8eb` |
+  | `text-muted` | `#4d5663` | `#a8afb9` |
+  | `border` | `#79828f` | `#7d8796` |
+  | `divider` | `#d3d8de` | `#353b44` |
+  | `primary` | `#1d5b87` | `#7fb8e6` |
+  | `primary-hover` | `#164769` | `#a6cef0` |
+  | `on-primary` | `#ffffff` | `#0c1a26` |
+  | `danger` | `#b42318` | `#f09a92` |
+  | `danger-hover` | `#8e1b12` | `#f5bab4` |
+  | `on-danger` | `#ffffff` | `#2a0b08` |
+  | `focus` | `#1d5b87` | `#8fc6ff` |
+  | `error-text` / `-bg` / `-border` | `#8a1c14` / `#fdecea` / `#c0362c` | `#ffb3ab` / `#3a1613` / `#e8695f` |
+  | `warning-text` / `-bg` | `#6a4700` / `#fff3d1` | `#ffd98a` / `#372a0a` |
+  | `success-text` / `-bg` | `#1d5a2c` / `#e5f3e9` | `#9fd8ad` / `#132e1b` |
+  | `info-text` / `-bg` | `#1c4d78` / `#e6eff8` | `#a9cdf0` / `#11273b` |
+  | `topbar-bg` / `-text` / `-focus` | `#1f2d3d` / `#ffffff` / `#9ecbff` | `#0b0d10` / `#e6e8eb` / `#8fc6ff` |
+  | `disabled-bg` / `-text` / `-border` | `#e4e7eb` / `#6f7782` / `#c4c9d0` | `#2a2e35` / `#8a929d` / `#3d434c` |
+
+  Primærfarven er en dæmpet stålblå. Fladerne er neutrale grå med et strejf af blå. Topbjælken er mørk skifer i lys tilstand.
+- **`/agents:design`** er `plugins/agents/skills/design/SKILL.md`, bygget efter `workflow` og med `disable-model-invocation: true`. Kaldet gør dette:
+  - Mangler `AGENTS.md`, siger det `kør /agents:kickoff først` og stopper.
+  - Findes en af de tre filer i `docs/design/` allerede, stopper det før spørgsmålet og igen før kopieringen.
+  - Det viser standarden i fem linjer og spørger ja eller nej. Ja foreslås kun når projektet har en webflade.
+  - Det kopierer filerne uændret med en filkopi.
+  - Det opretter `## Designstandard` i `CLAUDE.md` hvis afsnittet mangler, med en fast tekst på tre linjer.
+  - Det skriver ét emne under `## Kommende` på BOARD.
+  - Det ændrer ingen kode, kobler ikke standarden på appen og lukker med `LUKNING`.
+- **Dokumenterne:**
+  - `CLAUDE.md`: tretten skills, tretten kald, tre hjælpekald.
+  - `PLUGIN.md`: `design/` står i træet med sine fire filer. Tællingen er rettet fire steder, og listen over hvad `validate.mjs` kontrollerer, nævner nu kontrasten.
+  - `GUIDE.md`: tællingen er rettet, kaldet står blandt hjælpekaldene, der er et nyt afsnit `## Designstandard`, og snydearket har en linje.
+  - `OPSAETNING.md`: tællingen "alle tolv kald" er rettet til tretten. Filen står ikke på opgavens liste, men den tæller kaldene.
+- **Kontrollen er grøn.** `node tools/validate.mjs` svarer `OK. 13 skills, 7 agenter, 52 markdown-filer, 27 farvepar, begge manifester paa version 1.2.0.` Både `claude plugin validate ./plugins/agents` og `claude plugin validate .` består.
+- **Til README** (architect): der er et nyt kald, `/agents:design`. `README.md` siger stadig "tolv kald" i overskriften `## De ti roller, tolv kald` på linje 51. Linje 82 siger "De tolv kald. Fem kører i din tråd, syv er dispatch-skills"; med `design` er det tretten kald, og seks kører i brugerens tråd.
+
+Intet versionsnummer er rørt, hverken i manifesterne eller i kontrakten.
+
 ### Hvad er ikke lavet, og hvorfor
+
+- **Godkendelsen af paletten** er menneskets og er ikke afkrydset.
+- **Visuel efterprøvning.** Ingen browser er startet, så farver, layout og skiftet mellem lys og mørk er ikke set med øjne. Kontrasten er regnet, ikke set. Eksempelsiden er ikke åbnet.
+- **`/agents:design` er ikke kørt** mod et testprojekt. Kaldet er tekst til en model og kan kun prøves i en klient med en engangskopi af plugin'et, som `PLUGIN.md` beskriver. Det er uden for hvad en agent kan uden at starte en klientsession.
+- **Hooken, `update` og en advarsel om `design-version`** er ikke lavet; opgaven udskyder dem til næste emne. Se fundet under `Uklart` 7.
+
 ### Uklart
+
+1. **Tabellens celler har egne klasser.** Kriteriet siger at komponenterne kun rammer elementer med standardens egne klassenavne. Jeg har læst det bogstaveligt: hver `th` og `td` bærer `hjk-table__header` eller `hjk-table__cell`. Det koster en klasse pr. celle i markup. Alternativet var `.hjk-table td`, som kun rammer celler inde i en `hjk-table` og er lettere at skrive, men ikke opfylder kriteriet ordret. Den eneste selektor med et element uden klasse er `tr:last-child > .hjk-table__cell`; målet er stadig cellen med klassen.
+2. **BOARD-emnet har ingen filsti.** Opgaven formulerer emnet med `docs/design/design.css`, men BOARD tillader ikke filstier i tabellerne. Kaldet skriver derfor "designstandardens stylesheet" og siger udtrykkeligt: uden filsti.
+3. **Kaldet stopper hvis `CLAUDE.md` mangler.** Opgaven siger ikke hvad der skal ske. Jeg valgte at stoppe før kopieringen i stedet for at oprette en fil `kickoff` ejer.
+4. **Mørk tilstand står to gange i `design.css`,** fordi både maskinens indstilling og `data-theme="dark"` skal give mørk. Ren CSS kan ikke det uden gentagelse, medmindre man bruger `light-dark()`, som først kom i browserne i 2024. Kontrollen fejler derfor også når de to mørke blokke er uens. Ellers ville den kun efterprøve den ene. Det er en fejlregel mere end opgaven nævner.
+5. **Smal skærm løses med vandret rulning** inden i `hjk-table-wrap`, ikke med rækker der stables til kort. Stabling bryder tabelbetydningen for skærmlæsere i nogle browsere og kræver en `data-label` på hver celle.
+6. **Deaktiverede farver står ikke i tabellen,** fordi WCAG 2.1 undtager inaktive komponenter fra kontrastkravet. Det står i `design.md`. Skal de alligevel loves, er det tre par mere.
+7. **Fund.** Der er ingen advarsel i `tools/validate.mjs`, og ingen regel i `CLAUDE.md`, når standardens filer ændres uden at `design-version` bumpes, sådan som der er for `skabelon-version`. Opgaven nævner kun hooken og `update` som næste emne. Om advarslen hører med dér, eller er sit eget emne, er architects afgørelse.
