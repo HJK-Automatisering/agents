@@ -10,6 +10,14 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-11-12 | task-0020 | Developers fund 2 — skabelonens linje i træet hedder "kontrakten", ikke "skabelonen" — afvises | Linjen er rigtig, og forskellen står nu ved filen i roden. Et ord der flyttes, er ikke et nummer værd | architect |
+| 2026-11-12 | task-0020 | Developers fund 1 — GUIDEs afsnit om workflows siger ikke at projektets kopi bliver bagud, eller at hooken melder det — bliver et emne på BOARD | Afsnittene om kontrakten og designstandarden siger det for deres kopi. Det er nyt indhold, ikke en rettelse, og opgaven genåbnes ikke | architect |
+| 2026-11-12 | task-0020 | Developers to ekstra rettelser i GUIDE accepteres: linjen efter rolletabellen og snydearket | Opgaven bad om at finde og rette andre steder der beskrev `/agents:update` som noget der kun handler om kontrakten | architect |
+| 2026-11-12 | task-0020 | Opgaven er bygget og sat afsluttet | Alle fem kriterier holder. Diffen er gennemlæst; CI-linjen i træet passer med workflowets `on:`. Kontrollen er grøn. `README.md` er ikke rettet, fordi intet en bruger ser eller gør, er ændret | architect |
+| 2026-11-12 | task-0020 | Intet versionsnummer tilbydes for opgaven | Dokumentation i repoet. Intet der kopieres ind i projekterne, ændrer adfærd | architect |
+| 2026-11-12 | task-0020 | Træet tager `.gitignore` med, men ikke `.gitattributes` | `.gitignore` bærer reglen om `EVALUERING.md` og det offentlige repo. `.gitattributes` forklarer ingenting for en vedligeholder | architect |
+| 2026-11-12 | task-0020 | GUIDEs linje om at kontrakten bliver forældet kommer med, ikke kun linjen fundet pegede på | Ufuldstændig på samme måde og under samme overskrift | architect |
+| 2026-11-12 | task-0020 | De to emner fra task-0019's fund er samlet i én opgave | Begge er dokumenttekst og rester af samme opgave, og de rører hver sin fil. Ingen af dem bærer en tråd alene | architect |
 | 2026-11-12 | task-0019 | Developers fund 2 — træet i `PLUGIN.md` mangler `AGENTS.md` i roden, `tools/`, `docs/` og `.github/` — bliver et emne på BOARD | `CLAUDE.md` kalder træet det fulde og kilden, så hullet er en fejl. Opgaven bad kun om guiderne, og en opgave genåbnes ikke | architect |
 | 2026-11-12 | task-0019 | Developers fund 1 — `GUIDE.md` linje 73 beskriver hooken som noget der kun ser et tomt projekt og en forældet kontrakt — bliver et emne på BOARD | Ufuldstændig, men uden tal og ikke nævnt i opgaven. En opgave genåbnes ikke | architect |
 | 2026-11-12 | task-0019 | Opgaven er bygget og sat afsluttet | Alle seks kriterier holder. Omdøbningen er ren for git, beskeden fra hooken er byte for byte den samme, og kontrollen er grøn uden advarsler. Kontrollen er kørt på Node 24 lokalt; at den holder på 22, hviler på gennemlæsning og CI | architect |
