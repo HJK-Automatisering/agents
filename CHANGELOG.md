@@ -26,6 +26,26 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.5.0
+
+Kontrakten er bumpet fra version 24 til 25, og designstandarden fra version 2
+til 3. **Kør `/agents:update` i hvert projekt.**
+
+### Bundlinjen står centreret
+
+Bundlinjen står nu centreret nederst på hver side, i alle webløsninger. Reglen
+står i kontrakten, så den gælder også løsninger der ikke bruger standarden.
+Standardens stylesheet centrerer den af sig selv. Teksten og indstillingerne er
+de samme som før. **Står bundlinjen i venstre side i en løsning uden
+standarden, så bed `architect` om en opgave på den.**
+
+### Guiden
+
+`GUIDE.md` siger nu at kopierne af kontrakten, workflows og designstandarden
+alle kan blive bagud, og hvad `/agents:update` gør ved hver af dem.
+
+---
+
 ## 1.4.0
 
 Kontrakten er bumpet fra version 23 til 24, og designstandarden fra version 1

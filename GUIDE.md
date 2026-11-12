@@ -373,7 +373,7 @@ Alt i standarden hedder `hjk-` noget, og den rammer kun elementer med dens egne 
 
 Kaldet viser hvad standarden er og spørger ja eller nej. Ved ja lægger det tre filer i `docs/design/`: standardens dokument, stylesheetet, og en eksempelside du kan åbne direkte fra disken for at se alle komponenter i lys og mørk. Det overskriver aldrig en fil der findes, nævner standarden i projektets `CLAUDE.md`, og skriver to emner på BOARD: at appen skal bruge den, og at den skal vise bundlinjen.
 
-**Bundlinjen er fast, i hver webløsning** — også dem der ikke bruger standarden. Hver side slutter med *Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL. Version X.Y.Z*. Team og adresse er påkrævede indstillinger på stakken, `TEAM_NAME` og `CONTACT_EMAIL`, og appen starter ikke uden dem. Versionen er den der er bygget ind i imaget. Reglen står i kontrakten, `AGENTS.md`, så den gælder i ethvert projekt. Mangler bundlinjen, gør `/agents:architect` det til et emne, og `/agents:reviewer` melder det når den mangler eller afviger.
+**Bundlinjen er fast, i hver webløsning** — også dem der ikke bruger standarden. Hver side slutter med *Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL. Version X.Y.Z*, centreret nederst. Team og adresse er påkrævede indstillinger på stakken, `TEAM_NAME` og `CONTACT_EMAIL`, og appen starter ikke uden dem. Versionen er den der er bygget ind i imaget. Reglen står i kontrakten, `AGENTS.md`, så den gælder i ethvert projekt. Mangler bundlinjen, gør `/agents:architect` det til et emne, og `/agents:reviewer` melder det når den mangler eller afviger.
 
 **Kaldet kobler ikke selv standarden på appen.** Hvordan stylesheetet når appen — direkte eller kopieret ind ved build — afhænger af stakken, så det bliver en opgave hos `/agents:architect`.
 

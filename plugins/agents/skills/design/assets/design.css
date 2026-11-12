@@ -519,6 +519,7 @@ tr:last-child > .hjk-table__cell {
   font-family: var(--hjk-font-family);
   font-size: var(--hjk-font-size-sm);
   line-height: var(--hjk-line-height);
+  text-align: center;
 }
 
 .hjk-footer__link {

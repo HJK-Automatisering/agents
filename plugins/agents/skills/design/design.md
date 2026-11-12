@@ -1,5 +1,5 @@
 ---
-design-version: 2
+design-version: 3
 ---
 
 # Designstandard for webløsninger
@@ -166,7 +166,7 @@ Den aktuelle side markeres med `aria-current="page"`. Topbjælken folder sig på
 ```
 
 - **Nederst på hver side**, som sidste element i `<body>` og uden for `<main>`. Så er den sidens `contentinfo` for skærmlæsere.
-- Lille, dæmpet tekst med en tynd linje over. Adressen er et understreget link i primærfarven.
+- Lille, dæmpet og centreret tekst med en tynd linje over. Adressen er et understreget link i primærfarven.
 - **Teksten og værdierne er faste.** `TEAMNAVN`, `EMAIL`, `APPNAVN` og `X.Y.Z` står for værdier der sættes ind. Reglen — teksten, nøglerne, og hvor værdierne kommer fra — står i projektets `AGENTS.md`, under `### Bundlinjen er fast` i `## Webflader og designstandarden`.
 
 ## Tilgængelighed

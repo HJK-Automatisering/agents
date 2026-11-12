@@ -59,6 +59,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0019 | Hooken og dokumenterne beskriver et mindre plugin end det der findes | bygget |
 | task-0020 | GUIDE kender kun hookens kontrakttjek, og træet i PLUGIN.md mangler repoets egne filer | bygget |
 | task-0021 | GUIDE siger ikke at projektets workflow-kopi bliver bagud | bygget |
+| task-0022 | Bundlinjen står i venstre side, men skal stå centreret | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.
