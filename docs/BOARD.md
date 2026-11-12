@@ -29,7 +29,6 @@ eller nummeret på den rapport opgaven kom af.>
 
 | Emne |
 |---|
-| GUIDEs afsnit om workflows siger ikke at projektets kopi bliver bagud, eller at hooken melder det |
 
 <Den grove liste: hvad architect kan se der skal laves. **Ingen numre.**
 Et emne får først et nummer når interviewet har gjort det udførbart —
@@ -59,6 +58,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0018 | Henvisningerne til bundlinjens regel peger stadig på standardens dokument | bygget |
 | task-0019 | Hooken og dokumenterne beskriver et mindre plugin end det der findes | bygget |
 | task-0020 | GUIDE kender kun hookens kontrakttjek, og træet i PLUGIN.md mangler repoets egne filer | bygget |
+| task-0021 | GUIDE siger ikke at projektets workflow-kopi bliver bagud | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.
