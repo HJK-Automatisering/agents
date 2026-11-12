@@ -411,7 +411,7 @@ har `docs/design/`.
 
 > Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL. Version X.Y.Z
 
-Skriv den ikke om, og tilføj intet. Markup står under `### Bundlinje`.
+Skriv den ikke om, og tilføj intet. Markup står under `### Bundlinje` i `docs/design/design.md`, når projektet har standarden.
 
 | I teksten | Nøgle | Hvor værdien kommer fra |
 |---|---|---|
