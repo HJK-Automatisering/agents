@@ -11,7 +11,7 @@ agents/
   plugins/agents/
     .claude-plugin/
       plugin.json             plugin-manifestet
-    skills/                   de tolv kald
+    skills/                   de tretten kald
       kickoff/
         SKILL.md
         AGENTS.md             kontrakten, kopieres ind i projekter
@@ -21,6 +21,12 @@ agents/
       mockup/                 skitser til møder med slutbrugere — gætter, spørger ikke
       update/                 opdaterer projektets kopier: kontrakt og workflows
       workflow/               valgfrie arbejdsgange, med assets/
+      design/                 designstandard til webflader
+        SKILL.md
+        design.md             standardens dokument, med farveparrene kontrollen læser
+        assets/
+          design.css          grundværdier og komponenter
+          eksempel.html       eksempelsiden, åbnes direkte fra disken
       developer/  tester/  security/           ← tynde dispatch-skills
       reviewer/   debugger/  scout/  status/    ← tynde dispatch-skills
     agents/                   de syv rapportroller
@@ -37,7 +43,7 @@ agents/
 
 ## De to mekanismer
 
-**Skills** er indgangene. Alle tolv har `disable-model-invocation: true`, hvilket betyder at de **kun** kan udløses ved at nogen skriver kaldet. Aldrig af modellen ud fra brugerens prosa.
+**Skills** er indgangene. Alle tretten har `disable-model-invocation: true`, hvilket betyder at de **kun** kan udløses ved at nogen skriver kaldet. Aldrig af modellen ud fra brugerens prosa.
 
 **Agenter** er implementeringerne bag de syv rapportroller. De kører i deres eget kontekstvindue, og deres `tools:`-felt afgør hvad de har med.
 
@@ -73,7 +79,7 @@ claude plugin validate ./plugins/agents
 claude plugin validate .
 ```
 
-`node tools/validate.mjs` er den samme kontrol som CI kører ved hvert push: manifesternes versioner, frontmatter i alle roller, agentnavne, kodeblokke og hooken. Den skal køres før versionen bumpes.
+`node tools/validate.mjs` er den samme kontrol som CI kører ved hvert push: manifesternes versioner, frontmatter i alle roller, agentnavne, kodeblokke, hooken, og kontrasten i designstandardens farvepar. Den skal køres før versionen bumpes.
 
 ### Kør en uudgivet udgave i en session
 
@@ -93,7 +99,7 @@ claude --plugin-dir "<sti uden for repoet>/agents-preview"
 
 Kaldene bærer det nye navn: `/agents-preview:architect` i stedet for `/agents:architect`. Det er samtidig kvitteringen for at det er kopien der læses.
 
-Inde i sessionen skal `/context` vise de syv agenter under **Custom Agents**, og `/help` skal vise de tolv skills.
+Inde i sessionen skal `/context` vise de syv agenter under **Custom Agents**, og `/help` skal vise de tretten skills.
 
 **Ret i repoet, ikke i kopien.** Har du rettet noget undervejs, kopierer du mappen ud igen og kører `/reload-plugins`. Kopien slettes bagefter; den er et prøveeksemplar, ikke et arbejdstræ.
 
@@ -232,7 +238,7 @@ Glemmes bumpet, sker det samme som ovenfor: projekterne kører videre på en for
 
 Kopien kendes på henvisningen og ikke på filnavnet, så et projekts eget workflow der tilfældigvis hedder det samme som vores, ikke udløser noget. Prisen er at en kopi hvor hovedet er fjernet, forbliver usynlig. `node tools/validate.mjs` håndhæver derfor at begge stier står i hver asset under `plugins/agents/skills/workflow/assets/` — fjernes de i en oprydning, fejler kontrollen frem for at gøre hooken blind.
 
-Versionstjekket ligger i hooken og ikke i rollerne, så det findes ét sted i stedet for tolv der kan drive fra hinanden.
+Versionstjekket ligger i hooken og ikke i rollerne, så det findes ét sted i stedet for tretten der kan drive fra hinanden.
 
 ## Projekt nul, og projekt nul med skitser
 

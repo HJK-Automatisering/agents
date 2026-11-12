@@ -88,7 +88,7 @@ node --version
 
 ### Hvis Node mangler
 
-Så gør hooken ingenting, og **den siger det ikke.** Alt andet virker: alle tolv kald, alle roller, kontrakten. Du mister kun de tre automatiske tjek.
+Så gør hooken ingenting, og **den siger det ikke.** Alt andet virker: alle tretten kald, alle roller, kontrakten. Du mister kun de tre automatiske tjek.
 
 Det betyder i praksis at du selv skal huske at køre `/agents:update` når plugin'et er blevet opdateret. Uden hooken er der ingen der gør opmærksom på at projektets kontrakt er blevet forældet.
 
@@ -147,7 +147,7 @@ Den finder selv ud af hvad der mangler: er projektet tomt, kører den hele inter
 | `/agents:status` | eget vindue | Læser projektet som helhed og vurderer næste skridt | dig |
 | `/agents:mockup` | din tråd | En klikbar skitse med fiktive data, og noter om hvad slutbrugeren sagde | dig — noterne bagefter til `architect` |
 
-Plus to hjælpekald: `/agents:workflow` tilføjer et fælles workflow, og `/agents:update` bringer projektets kontrakt ajour.
+Plus tre hjælpekald: `/agents:workflow` tilføjer et fælles workflow, `/agents:update` bringer projektets kontrakt ajour, og `/agents:design` lægger den fælles designstandard ind i et projekt med en webflade.
 
 **Du behøver ikke kalde dem selv.** `architect` sender dem af sted. Du kan gøre det direkte — `/agents:security` før en udrulning, `/agents:status` når du vil vide hvor du står — men det normale er at arbejdet går gennem navet.
 
@@ -349,6 +349,22 @@ Tilbagerulning er `git revert` af den commit deploy-jobbet lavede. Det forrige i
 
 Stacken i Portainer sætter et menneske op én gang pr. app — som Git-stack på `main` med polling, registry og variabler. Hvordan står i workflow-dokumentet under *Opsætning af stacken i Portainer*, med en tabel over hvad man kigger efter når en udrulning udebliver — og klik for klik i `PORTAINER.md`. Skal appen bagefter bag login, så kun én gruppe kan åbne den, står klikkene i `AUTHENTIK.md` og derefter `NGINX-PROXY-MANAGER.md`, med det appen selv skal gøre og et tjek til sidst.
 
+## Designstandard
+
+```
+/agents:design
+```
+
+Har projektet en webflade, kan du lægge den fælles designstandard ind. Den giver farver, skrift, afstande og fem komponenter — knap, formularfelt, tabel, besked og topbjælke — som ren CSS uden JavaScript. Den følger maskinens lyse eller mørke tilstand, en side kan overstyre, og kontrasten lever op til WCAG 2.1 AA. Det er ikke en påstand: kontrollen i `agents`-repoet regner hvert farvepar efter ved hver ændring.
+
+Alt i standarden hedder `hjk-` noget, og den rammer kun elementer med dens egne klasser. Den kan derfor stå ved siden af et framework uden at ændre dets knapper og tabeller.
+
+Kaldet viser hvad standarden er og spørger ja eller nej. Ved ja lægger det tre filer i `docs/design/`: standardens dokument, stylesheetet, og en eksempelside du kan åbne direkte fra disken for at se alle komponenter i lys og mørk. Det overskriver aldrig en fil der findes, nævner standarden i projektets `CLAUDE.md`, og skriver et emne på BOARD om at appen skal bruge den.
+
+**Kaldet kobler ikke selv standarden på appen.** Hvordan stylesheetet når appen — direkte eller kopieret ind ved build — afhænger af stakken, så det bliver en opgave hos `/agents:architect`.
+
+**Ret aldrig i filerne i `docs/design/`.** De er en kopi af det fælles. Projektets egne regler står i appens eget stylesheet, og mangler standarden noget, rettes det i `agents`-repoet. `/agents:update` henter endnu ikke en nyere udgave af kopien.
+
 ## Til konsulenter: en skitse i mødet
 
 ```
@@ -425,6 +441,7 @@ Alt arbejde                /agents:architect     ← her sidder du
 Hvor er vi                 /agents:status        (eget vindue)
 Tilføj docker-publish      /agents:workflow
 Kontrakten er bagud        /agents:update
+Designstandard, webflade   /agents:design
 Skitse til et møde         /agents:mockup        (gætter, spørger ikke)
 
 Sendes af sted af architect:

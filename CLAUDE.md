@@ -2,7 +2,7 @@
 
 ## Hvad dette repo er
 
-Kildekode til Claude Code-plugin'et `agents`: tolv skills, syv agenter, en
+Kildekode til Claude Code-plugin'et `agents`: tretten skills, syv agenter, en
 SessionStart-hook og to manifester. Repoet er **både marketplace og plugin** —
 brugerne peger deres klient direkte på det.
 
@@ -69,7 +69,7 @@ echo '{"cwd":"<sti til et testprojekt>"}' | node plugins/agents/hooks/detect-pro
 
 | Sti | Hvad |
 |---|---|
-| `plugins/agents/skills/<navn>/SKILL.md` | De tolv kald |
+| `plugins/agents/skills/<navn>/SKILL.md` | De tretten kald |
 | `plugins/agents/agents/<navn>.md` | De syv rapportroller |
 | `plugins/agents/skills/kickoff/` | Kontrakt, BOARD og beslutningslog der kopieres ind i projekter |
 | `plugins/agents/hooks/` | SessionStart-hook |
@@ -77,7 +77,7 @@ echo '{"cwd":"<sti til et testprojekt>"}' | node plugins/agents/hooks/detect-pro
 
 ## Ord
 
-- **Rolle** — hvad det er. Der er ti, plus to hjælpekald.
+- **Rolle** — hvad det er. Der er ti, plus tre hjælpekald.
 - **Skill** / **agent** — hvordan rollen leveres. En skill kører i brugerens
   tråd; en agent kører isoleret i sit eget kontekstvindue.
 - **Samtalerolle** — arbejder sammen med mennesket, i dets tråd.
