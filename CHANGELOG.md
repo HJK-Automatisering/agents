@@ -26,6 +26,48 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.3.0
+
+Intet skal opdateres i projekterne. Kontrakten står uændret på version 23, og
+intet af det I gør i dag, holder op med at virke.
+
+### Et fælles udseende for webløsninger
+
+Der er et nyt kald, `/agents:design`. Det lægger en fælles designstandard ind
+i et projekt med en webflade: farver, skriftstørrelser, afstande, hjørner og
+fokusmarkering, og seks komponenter — knap, formularfelt, tabel, besked,
+topbjælke og bundlinje. Det hele er ren CSS uden JavaScript, og alle navne
+begynder med `hjk-`, så standarden kan stå ved siden af et framework uden at
+ændre dets elementer.
+
+Standarden følger maskinens lyse eller mørke tilstand, og en side kan
+overstyre den. Hvert farvepar lever op til WCAG 2.1 AA i begge tilstande. Det
+er ikke en påstand: kontrollen i plugin-repoet regner kontrasten efter ved
+hver ændring.
+
+Kaldet lægger tre filer i `docs/design/`, heriblandt en eksempelside, der kan
+åbnes direkte fra disken. Det kobler ikke selv standarden på appen. I stedet
+skriver det to emner på projektets BOARD, som `architect` gør til opgaver.
+
+### En fast bundlinje
+
+Hver webløsning viser nederst på hver side:
+
+> Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL. Version X.Y.Z
+
+`TEAM_NAME` og `CONTACT_EMAIL` er påkrævede indstillinger på stakken, og
+appen starter ikke uden dem. Versionen er `APP_VERSION`, som `docker-publish`
+allerede bygger ind i imaget. Er den tom, fx ved lokal kørsel, udelades
+versionsdelen.
+
+**Har projektet en webflade, så kør `/agents:design`, og bed `architect` om
+opgaverne på BOARD.**
+
+Rollerne kender ikke standarden endnu. Skitser og gennemgange følger den ikke
+af sig selv; det kommer i en senere udgave.
+
+---
+
 ## 1.2.0
 
 Kontrakten er bumpet fra version 22 til 23, så hooken siger at kontrakten er

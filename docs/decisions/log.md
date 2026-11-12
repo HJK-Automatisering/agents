@@ -10,6 +10,7 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-11-12 | — | Udgivelsen hedder 1.3.0: designstandarden med bundlinjen og kaldet `/agents:design`; `kontrakt-version` står på 23 | Minor efter reglen i PLUGIN.md, fordi der er et nyt kald. Intet holder op med at virke, og kontrakten er uændret. Posten i `CHANGELOG.md` skrevet først, begge manifester bumpet, kontrollen ren. Mennesket bad om det | architect |
 | 2026-11-12 | task-0015 | Opgaven er bygget og sat afsluttet | Alle ni kriterier holder. Mennesket har set bundlinjen i begge tilstande; kontrollen er grøn med 29 farvepar. Kaldet er ikke afprøvet i en klient | architect |
 | 2026-11-12 | task-0015 | `README.md` rettet på opgavens gren: kaldet skriver et afsnit i `CLAUDE.md` og to emner på BOARD | Tabellen sagde én linje, som ikke længere passer | architect |
 | 2026-11-12 | task-0015 | Developers fire uklare punkter accepteres: bundlinjens par står for sig i tabellen, bundlinjen har sidens baggrund, linket får tykkere understregning frem for ny farve ved mus over, og mailadressen escapes som tekst uden at procentkodes | Ingen nye farver, og tabellens tal holder. Adressen sættes af drift, ikke af brugeren, og stakkens escaping dækker `href` — samme afgørelse som i projektet der har bundlinjen i dag | architect |
