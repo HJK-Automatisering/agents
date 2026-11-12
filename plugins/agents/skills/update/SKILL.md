@@ -1,18 +1,19 @@
 ---
-description: "Bringer projektets kopier fra plugin'et ajour: AGENTS.md og de workflows der er lagt ind. Bevarer projektets afvigelser og dets egne indstillinger. Brug når hooken siger at noget er bagud, eller efter en plugin-opdatering."
+description: "Bringer projektets kopier fra plugin'et ajour: AGENTS.md, de workflows der er lagt ind, og designstandarden i docs/design/. Bevarer projektets afvigelser og dets egne indstillinger. Brug når hooken siger at noget er bagud, eller efter en plugin-opdatering."
 disable-model-invocation: true
 ---
 
 # update
 
-Projektet har **kopier** fra plugin'et. De følger ikke med når plugin'et opdateres, og du er den eneste vej tilbage. Der er to slags:
+Projektet har **kopier** fra plugin'et. De følger ikke med når plugin'et opdateres, og du er den eneste vej tilbage. Der er tre slags:
 
 | Kopi | Lagt ind af | Bærer versionen |
 |---|---|---|
 | `AGENTS.md` i projektets rod | `kickoff` | `kontrakt-version` i frontmatter |
 | Et workflow i `.github/workflows/` med sit dokument i `docs/workflows/` | `workflow` | `skabelon-version` i dokumentets frontmatter |
+| Designstandarden: tre filer i `docs/design/` | `design` | `design-version` i frontmatter i `docs/design/design.md` |
 
-Du rører kun de filer. Tag kontrakten først, workflows bagefter — begge dele kan være ajour, og så siger du det og stopper med netop den del.
+Du rører kun de filer. Tag kontrakten først, så workflows, og designstandarden til sidst — hver del kan være ajour, og så siger du det og stopper med netop den del.
 
 ## Find plugin'ets filer
 
@@ -20,7 +21,9 @@ Kontrakten ligger i søsterskillen `kickoff`, i samme plugin: filen `AGENTS.md` 
 
 Workflow-dokumenterne ligger i søsterskillen `workflow`: hver `.md`-fil i dens mappe undtagen `SKILL.md`. Fra denne mappe er det `../workflow/*.md`.
 
-Kan du ikke finde dem ad den vej, så søg efter `*/skills/kickoff/AGENTS.md` og `*/skills/workflow/*.md` under plugin-mappen. **Gæt ikke på indholdet, og skriv det ikke selv** — findes en fil ikke, siger du det og springer den del over.
+Designstandarden ligger i søsterskillen `design`, fra denne mappe `../design/`. Hvilke tre filer det er, og hvor hver af dem skal hen i projektet, står i tabellen i `../design/SKILL.md`. Læs dem dér; skriv dem ikke af herfra.
+
+Kan du ikke finde dem ad den vej, så søg efter `*/skills/kickoff/AGENTS.md`, `*/skills/workflow/*.md` og `*/skills/design/SKILL.md` under plugin-mappen. **Gæt ikke på indholdet, og skriv det ikke selv** — findes en fil ikke, siger du det og springer den del over.
 
 ## Del 1 — kontrakten
 
@@ -52,7 +55,7 @@ Kontrakten beskriver hvilke mapper der findes under `docs/`. Ændrer den sig, ka
 
 Kig efter begge dele:
 
-- **Mapper den nye kontrakt nævner, som ikke findes** i projektet. **Undtaget er det der oprettes efter behov** — en mappe eller fil som den rolle der skriver i den, selv opretter første gang den bruges. I dag er det `docs/mockups/`, `docs/workflows/` og `docs/map.md`. Kendetegnet er at `kickoff` ikke lægger dem ind, når projektet sættes op. At sådan en mangler, betyder kun at rollen ikke er brugt endnu, og det er ikke en forskel. Undtagelsen gælder kun det der mangler: har projektet sådan en mappe, og er den omdøbt eller væk i den nye kontrakt, er det næste punkt.
+- **Mapper den nye kontrakt nævner, som ikke findes** i projektet. **Undtaget er det der oprettes efter behov** — en mappe eller fil som den rolle der skriver i den, selv opretter første gang den bruges. I dag er det `docs/mockups/`, `docs/workflows/`, `docs/design/` og `docs/map.md`. Kendetegnet er at `kickoff` ikke lægger dem ind, når projektet sættes op. At sådan en mangler, betyder kun at rollen ikke er brugt endnu, og det er ikke en forskel. Undtagelsen gælder kun det der mangler: har projektet sådan en mappe, og er den omdøbt eller væk i den nye kontrakt, er det næste punkt.
 - **Mapper projektet har, som den nye kontrakt ikke nævner** — de bærer indhold nogen har skrevet.
 
 Er der forskel, **stop før du skriver.** Vis den i almindeligt dansk: hvilke mapper hedder noget andet nu, hvor mange filer der ligger i de gamle, og hvad der sker hvis de bliver liggende.
@@ -133,6 +136,35 @@ Overskriv den ikke i tavshed. En lokal ændring kan være svaret på noget.
 
 Kalderen i `.github/workflows/` **og** dokumentet i `docs/workflows/`. Skrives kun den ene, lyver den anden — og næste gang står der et stempel der ikke passer til det filen gør.
 
+## Del 3 — designstandarden
+
+### 1. Find ud af hvad der er lagt ind
+
+Kig efter de tre destinationer fra tabellen i `../design/SKILL.md`.
+
+- **Findes ingen af dem**, har projektet ikke standarden, og der er intet at gøre.
+- **Findes `docs/design/design.md` ikke, men en af de andre gør**, er udgaven ukendt. Der er intet stempel at sammenligne med. Sig hvilke filer der findes, og at udgaven derfor ikke kan aflæses, og stop med denne del. Du skriver ingenting i `docs/design/`.
+
+### 2. Sammenlign versionerne
+
+Sammenlign `design-version` i projektets `docs/design/design.md` med plugin'ets `design.md`.
+
+- **Mangler stemplet** i projektets kopi, er den version 1.
+- **Der skrives kun når plugin'ets stempel er højere end projektets.** Er de ens, eller er plugin'ets lavere, rører du ingen af de tre filer. Sig hvilke to versioner du så, og stop med denne del.
+- **Et lavere stempel i plugin'et er ikke en fejl.** Projektets kopi kan komme fra en nyere udgave af plugin'et end den der er installeret nu. Du ruller den ikke tilbage.
+
+### 3. Stop hvis der er ucommittede ændringer
+
+Kør `git status --porcelain -- docs/design/`. Står der noget — en rettet, slettet eller ny fil — så **stop før du skriver, og vis det.** Sig hvilke filer det er, og at opdateringen af standarden først kan køre når de er committet eller kasseret. Valget er menneskets.
+
+Committede ændringer stopper ikke opdateringen. Kopien rettes aldrig, ifølge standardens eget dokument; projektets egne regler står i appens eget stylesheet. Har nogen alligevel committet en rettelse i kopien, bliver den overskrevet — den står i git-historikken, og det siger du i rapporten.
+
+### 4. Kopiér alle tre filer
+
+Kopiér hver af de tre filer fra plugin'et til sin destination, **med en filkopi, uændret** — ikke ved at skrive dem igen. Alle tre kopieres, også dem der ikke er ændret; så passer de til stemplet i `design.md`.
+
+Fordi trin 3 sikrede at `docs/design/` var ren, viser `git diff -- docs/design/design.md` bagefter præcis hvad der er nyt i standarden. Det er grundlaget for rapporten.
+
 ## Rapportér hvad der ændrede sig
 
 I almindeligt dansk, ikke som en diff. Hvilke afsnit i kontrakten er nye, hvilke regler er ændret, hvad workflowet gør anderledes nu, og hvad det betyder for den måde der arbejdes. Mennesket skal kunne læse det uden at åbne filen.
@@ -151,11 +183,14 @@ Ikke kode. Og ikke rapporterne under `docs/` eller beslutningsloggen: de beskriv
 
 **Har udløsningsvilkåret ikke ændret sig, leder du ikke, og du siger ikke noget om det.** En liste der kommer hver gang, finder tilfældigheder og lærer folk at springe den over.
 
+**Er designstandarden bragt ajour, siger du hvad der er nyt i den**, ud fra forskellen mellem det gamle og det nye `design.md` — en ny komponent, en ændret farve, en ny regel for bundlinjen. Og om projektet skal gøre noget: peg på hvad appens eget stylesheet eller bundlinje skal have rettet for at følge den nye udgave. Ret det ikke selv; det er kode. Sig også at hele kopien er erstattet, så en rettelse nogen måtte have committet i den, nu kun findes i git-historikken.
+
 **Gør workflowet noget nyt uden at udløses af noget nyt, siger du det alligevel højt.** Det er det næstvigtigste. Bringer du `docker-publish` fra skabelon-version 2 til 3, bygger det stadig kun ved tag-push, så opregningen ovenfor udløses ikke — men kalderen committer nu til `main` ved hver release, og en compose-fil der bryder reglerne, giver en rød release på et projekt der ikke har ændret andet end et tag. Sig begge dele, og peg på `## Regler for compose-filen` i det dokument du lige har skrevet til `docs/workflows/`. Foreslå at compose-filen lintes lokalt før næste release; hvordan står i samme dokument.
 
 ## Du må ikke
 
-- Røre andet end de to slags kopier: projektets `AGENTS.md`, de installerede workflow-filer, og deres dokumenter i `docs/workflows/`. Ikke `BOARD.md`, ikke beslutningsloggen, ikke `CLAUDE.md`, ikke kode.
+- Røre andet end de tre slags kopier: projektets `AGENTS.md`, de installerede workflow-filer og deres dokumenter i `docs/workflows/`, og designstandardens tre filer i `docs/design/` — `design.md`, `design.css` og `eksempel.html`. Ikke `BOARD.md`, ikke beslutningsloggen, ikke `CLAUDE.md`, ikke kode.
+- Skrive i `docs/design/` når der er ucommittede ændringer i mappen, eller når `design.md` mangler. Se del 3, trin 1 og 3.
 - **Flytte, omdøbe eller oprette mapper under `docs/`.** Se del 1, trin 4. Du opdager forskellen og lægger vejene frem; valget er menneskets.
 - Kaste projektets afvigelser væk, eller dets egne indstillinger under `with` i noget job — heller ikke `service`.
 - Gætte på `service`. Har projektet intet deploy-job, spørger du.
