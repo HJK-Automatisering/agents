@@ -10,6 +10,12 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-11-12 | task-0021 | Developers uklare punkt om den fritstående udgave afgøres til developers fordel | Opgavens "egen regel" byggede på task-0001. Den udgave er siden fjernet, og opdateringskaldet behandler en kopi af den som projektets egen og rører den ikke. Guiden siger det kaldet gør | architect |
+| 2026-11-12 | task-0021 | Opgaven er bygget og sat afsluttet | Alle seks kriterier holder. Hver påstand er holdt op mod opdateringskaldets trin 2 og hookens besked. Citatet er ikke set i hookens egen udskrift, men står ordret i koden. Kontrollen er grøn. `README.md` er ikke rettet, fordi intet en bruger gør, er ændret | architect |
+| 2026-11-12 | task-0021 | Intet versionsnummer tilbydes for opgaven | Dokumentation i repoet | architect |
+| 2026-11-12 | task-0021 | Eksempeltallene i citatet af hookens besked er opdigtede | Det nuværende stempel ville gøre citatet forkert ved næste bump | architect |
+| 2026-11-12 | task-0021 | En workflow-fil uden sit dokument kommer med i én sætning | Det er den eneste måde en udvikler kan gøre hooken blind på, og ingen steder i guiden står det at dokumentet ikke må slettes | architect |
+| 2026-11-12 | task-0021 | Workflow-kopien beskrives i et stykke sidst i `## Workflows`, i samme form som designstandardens | Guiden skal læses ens for alle tre kopier. Afvist: et eget afsnit | architect |
 | 2026-11-12 | task-0020 | Developers fund 2 — skabelonens linje i træet hedder "kontrakten", ikke "skabelonen" — afvises | Linjen er rigtig, og forskellen står nu ved filen i roden. Et ord der flyttes, er ikke et nummer værd | architect |
 | 2026-11-12 | task-0020 | Developers fund 1 — GUIDEs afsnit om workflows siger ikke at projektets kopi bliver bagud, eller at hooken melder det — bliver et emne på BOARD | Afsnittene om kontrakten og designstandarden siger det for deres kopi. Det er nyt indhold, ikke en rettelse, og opgaven genåbnes ikke | architect |
 | 2026-11-12 | task-0020 | Developers to ekstra rettelser i GUIDE accepteres: linjen efter rolletabellen og snydearket | Opgaven bad om at finde og rette andre steder der beskrev `/agents:update` som noget der kun handler om kontrakten | architect |
