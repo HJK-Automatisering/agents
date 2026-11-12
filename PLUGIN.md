@@ -8,6 +8,8 @@
 agents/
   .claude-plugin/
     marketplace.json          kataloget — skal ligge i repo-roden
+  .github/workflows/
+    validate.yaml             CI — kører kontrollen ved push til main og ved pull requests
   plugins/agents/
     .claude-plugin/
       plugin.json             plugin-manifestet
@@ -35,7 +37,13 @@ agents/
     hooks/
       hooks.json              bruger ${CLAUDE_PLUGIN_ROOT}
       check-project-state.cjs
+  tools/
+    validate.mjs              kontrollen — den samme som CI kører
+  docs/                     repoets egne opgaver, rapporter, BOARD og beslutningslog
+  AGENTS.md                 repoets egen kontrakt, som rollerne arbejder under her —
+                            ikke skabelonen i skills/kickoff/, der kopieres ud i projekter
   CLAUDE.md                 reglerne for at redigere dette repo
+  .gitignore                holder bl.a. EVALUERING.md ude, fordi repoet er offentligt
   CHANGELOG.md              hvad der ændrede sig ved hver udgivelse
   GUIDE.md  README.md  PLUGIN.md  OPSAETNING.md
   PORTAINER.md  AUTHENTIK.md  NGINX-PROXY-MANAGER.md
