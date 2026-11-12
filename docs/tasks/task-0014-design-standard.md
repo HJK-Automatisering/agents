@@ -1,7 +1,7 @@
 ---
 nummer: task-0014
 titel: En fælles designstandard for webløsninger, og et kald der lægger den ind
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-11-12
 ---
@@ -18,16 +18,16 @@ standarden, er sit eget emne bagefter.
 
 ## Færdig når
 
-- [ ] Der findes én standard med grundværdier — farver, skriftstørrelser, afstande, hjørner og fokusmarkering — og fem komponenter: knap, formularfelt, tabel, besked og topbjælke
-- [ ] Standarden virker i lys og mørk tilstand. Den følger maskinens indstilling, og en side kan overstyre den
-- [ ] Komponenterne er ren CSS. De virker uden JavaScript, og de rammer kun elementer der har standardens egne klassenavne
-- [ ] Hvert farvepar standarden lover, står i dens dokument med sit kontrastforhold i begge tilstande, og alle lever op til WCAG 2.1 AA
-- [ ] Repoets kontrol beregner selv kontrasten for de par og fejler hvis ét falder under kravet
-- [ ] Der findes en eksempelside med alle fem komponenter i alle deres tilstande, som virker åbnet direkte fra disken uden netværk, og som kan skifte mellem lys og mørk
-- [ ] Mennesket har set eksempelsiden i begge tilstande og godkendt paletten
-- [ ] `/agents:design` lægger standarden ind i et projekt der er sat op, overskriver aldrig noget, nævner den i projektets `CLAUDE.md`, og sætter et emne på projektets BOARD om at appen skal kobles på
-- [ ] Dokumenterne der tæller kaldene eller viser træet, passer med det nye kald
-- [ ] Repoets kontrol er grøn
+- [x] Der findes én standard med grundværdier — farver, skriftstørrelser, afstande, hjørner og fokusmarkering — og fem komponenter: knap, formularfelt, tabel, besked og topbjælke
+- [x] Standarden virker i lys og mørk tilstand. Den følger maskinens indstilling, og en side kan overstyre den
+- [x] Komponenterne er ren CSS. De virker uden JavaScript, og de rammer kun elementer der har standardens egne klassenavne
+- [x] Hvert farvepar standarden lover, står i dens dokument med sit kontrastforhold i begge tilstande, og alle lever op til WCAG 2.1 AA
+- [x] Repoets kontrol beregner selv kontrasten for de par og fejler hvis ét falder under kravet
+- [x] Der findes en eksempelside med alle fem komponenter i alle deres tilstande, som virker åbnet direkte fra disken uden netværk, og som kan skifte mellem lys og mørk
+- [x] Mennesket har set eksempelsiden i begge tilstande og godkendt paletten
+- [x] `/agents:design` lægger standarden ind i et projekt der er sat op, overskriver aldrig noget, nævner den i projektets `CLAUDE.md`, og sætter et emne på projektets BOARD om at appen skal kobles på
+- [x] Dokumenterne der tæller kaldene eller viser træet, passer med det nye kald
+- [x] Repoets kontrol er grøn
 
 ## Sådan bygger vi det
 
