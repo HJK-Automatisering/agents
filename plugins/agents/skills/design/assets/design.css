@@ -499,3 +499,39 @@ tr:last-child > .hjk-table__cell {
   outline-offset: var(--hjk-focus-offset);
   border-radius: var(--hjk-radius-sm);
 }
+
+/* -------------------------------------------------------------- Bundlinje
+ * <footer class="hjk-footer">
+ *   Udviklet af TEAMNAVN. Ved udfordringer kontakt
+ *   <a class="hjk-footer__link" href="mailto:...">EMAIL</a>. Version X.Y.Z
+ * </footer>
+ * Nederst paa hver side. Teksten er fast; se Bundlinjen er fast i design.md.
+ */
+.hjk-footer {
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--hjk-space-4) var(--hjk-space-5);
+  border-top: var(--hjk-border-width) solid var(--hjk-color-divider);
+  background: var(--hjk-color-bg);
+  color: var(--hjk-color-text-muted);
+  color-scheme: var(--hjk-color-scheme);
+  font-family: var(--hjk-font-family);
+  font-size: var(--hjk-font-size-sm);
+  line-height: var(--hjk-line-height);
+}
+
+.hjk-footer__link {
+  color: var(--hjk-color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.hjk-footer__link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.hjk-footer__link:focus-visible {
+  outline: var(--hjk-focus-width) solid var(--hjk-color-focus);
+  outline-offset: var(--hjk-focus-offset);
+  border-radius: var(--hjk-radius-sm);
+}
