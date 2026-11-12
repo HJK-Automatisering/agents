@@ -19,7 +19,7 @@ agents/
         beslutningslog.md
       architect/              navet — den eneste rolle der interviewer i drift
       mockup/                 skitser til møder med slutbrugere — gætter, spørger ikke
-      update/                 opdaterer projektets kopier: kontrakt og workflows
+      update/                 opdaterer projektets kopier: kontrakt, workflows og designstandard
       workflow/               valgfrie arbejdsgange, med assets/
       design/                 designstandard til webflader
         SKILL.md
@@ -232,7 +232,11 @@ Derfor har kontrakten `kontrakt-version` i frontmatter. Den bumpes når en regel
 
 **Workflows er kopier på samme måde.** `workflow` lægger dokumentet i `docs/workflows/` og selve filen i `.github/workflows/`, og de følger heller ikke med når plugin'et opdateres. Deres stempel hedder `skabelon-version` og står i workflow-dokumentets frontmatter. Hooken sammenligner det pr. fil, som den gør med kontrakten, og `update` henter den nye udgave ind.
 
-Glemmes bumpet, sker det samme som ovenfor: projekterne kører videre på en forældet arbejdsgang, og hverken hooken eller `update` kan se det. Hvornår de to stempler skal bumpes, og hvad `node tools/validate.mjs` advarer om, står i `CLAUDE.md`.
+Glemmes bumpet, sker det samme som ovenfor: projekterne kører videre på en forældet arbejdsgang, og hverken hooken eller `update` kan se det.
+
+**Designstandarden er også en kopi.** `design` lægger tre filer i `docs/design/`, og de følger heller ikke med. Stemplet hedder `design-version` og står i frontmatter i `design.md`. Hooken sammenligner projektets `docs/design/design.md` med plugin'ets og siger til når kopien er bagud; har projektet ingen `docs/design/design.md`, tier den. `update` kopierer alle tre filer ind igen når plugin'ets stempel er højere, men stopper hvis der er ucommittede ændringer i `docs/design/`, eller hvis `design.md` mangler mens de andre filer findes.
+
+Hvornår de tre stempler skal bumpes, og hvad `node tools/validate.mjs` advarer om, står i `CLAUDE.md`.
 
 **Findes workflow-filen uden sit dokument, er der intet stempel at sammenligne**, og sammenligningen ovenfor ville tie. Derfor har hooken et tjek mere: for hver `.yaml`- og `.yml`-fil i projektets `.github/workflows/` læser den filens hoved. Henviser det til `plugins/agents/skills/workflow/assets/`, er filen vores kopi, og samme hoved siger hvilket dokument i `docs/workflows/` der hører til. Mangler det dokument, siger hooken at udgaven ikke kan aflæses — ikke at kopien er bagud, for det kan ikke vides — og peger på `/agents:update`, som lægger dokumentet på plads.
 
@@ -277,7 +281,7 @@ er en udgivelse.
 | Ændring | Led | Eksempel |
 |---|---|---|
 | Rettelse uden ny regel: en rolle der gjorde noget forkert, en tekst der var uklar | patch | `1.0.0` → `1.0.1` |
-| Ny regel, ny rolle, eller `kontrakt-version` / `skabelon-version` bumpet | minor | `1.0.1` → `1.1.0` |
+| Ny regel, ny rolle, eller `kontrakt-version` / `skabelon-version` / `design-version` bumpet | minor | `1.0.1` → `1.1.0` |
 | Rollerne skal kaldes anderledes, eller en rolle forsvinder | major | `1.4.2` → `2.0.0` |
 
 **Et bump af `kontrakt-version` er minor, ikke major.** Det kræver at projekterne

@@ -53,6 +53,12 @@ echo '{"cwd":"<sti til et testprojekt>"}' | node plugins/agents/hooks/detect-pro
   ændring på. Ændrer du hvad et workflow gør, skal den bumpes — men bumpet er,
   som `kontrakt-version`, menneskets beslutning. `node tools/validate.mjs`
   advarer når filerne har flyttet sig uden at stemplet fulgte med.
+- **Designstandarden under `plugins/agents/skills/design/` har også sit eget stempel.**
+  `design-version` i `design.md` er det eneste et projekt kan se en ny standard
+  på. Ændrer du hvad standarden lover, skal den bumpes — og bumpet er, som de to
+  andre, menneskets beslutning. `node tools/validate.mjs` advarer når `design.md`
+  eller en fil under `assets/` har flyttet sig uden at stemplet fulgte med;
+  `SKILL.md` kopieres ikke ind i projekter og tæller ikke med.
 - **Repoet er offentligt.** Alle kan læse det, og historik kan ikke gøres privat
   bagefter. Ingen kundenavne, systemnavne, logudskrifter, fund eller persondata i
   eksempler — heller ikke opdigtede der ligner rigtige. `EVALUERING.md` er
