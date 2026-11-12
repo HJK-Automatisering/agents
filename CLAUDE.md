@@ -20,6 +20,12 @@ claude --plugin-dir "<sti>/agents-preview"  # prøv af uden at udgive, se nedenf
 node --check plugins/agents/hooks/check-project-state.cjs
 ```
 
+Kontrollen kører på Node 22 i CI (`.github/workflows/validate.yaml`), og
+`tools/validate.mjs` bruger intet der kræver en nyere. Brugerne får den
+LTS-udgave af Node som `winget` installerer, og hooken skal virke på den.
+Hooken bruger kun Nodes egne moduler og ingen pakker, så den kører uden
+`npm install`. Sådan skal det blive ved.
+
 Afprøvning uden at udgive kræver en engangskopi af `plugins/agents` uden for
 repoet med et andet `name` i manifestet. `--plugin-dir` mod arbejdstræet selv
 rammer den installerede udgave, uden at klienten siger det: kaldet svarer, men
