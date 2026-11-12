@@ -75,6 +75,10 @@ At skitsen ligger før der findes en `.gitignore`, er forsvarligt: der er ingen 
 - **Den siger selv at den er en skitse.** Et bånd øverst, synligt på hver visning: *SKITSE — fiktive data*. Det kan ikke lukkes, og det ruller ikke væk.
 - Klikbar hvor det betyder noget: knapper skifter visning, filtre filtrerer, formularer kan udfyldes. Intet gemmes; en genindlæsning starter forfra.
 - Teksten på skærmen er på dansk. Navne i koden er på engelsk.
+- **Skitsen bruger den fælles designstandard.** Læs `../design/assets/design.css` fra denne skills mappe, og skriv indholdet ind i en `<style>` i `index.html`. Henvis ikke til filen med `<link>` — skitsen er stadig én fil uden netværk. Brug standardens `hjk-`-klasser og -variabler; hvilke der findes, står i `../design/design.md`. Skitsens egne regler står efter standardens.
+- **Bundlinjen står nederst**, med markup og tekst som under `### Bundlinje` i `../design/design.md`, og med opdigtede værdier: et team der tydeligt er opdigtet, en adresse på `example.org` og et versionsnummer. Adressen er et `mailto:`-link og henter intet.
+- **Båndet *SKITSE — fiktive data* er skitsens eget** og bliver, også med standarden.
+- **Findes `../design/assets/design.css` ikke**, laver skitsen sit eget udseende, og du skriver det under `## Gæt` i noterne. Et møde må ikke gå i stå på en manglende fil.
 - Hellere én skærm der ser rigtig ud end ti der halvt gør. Byg det konsulenten beder om, ikke det næste.
 
 ## Data
