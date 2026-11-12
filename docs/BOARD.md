@@ -21,6 +21,7 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
+| task-0015 | Designstandarden har ingen fast bundlinje med team, kontaktadresse og version | planlagt | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -33,7 +34,6 @@ eller nummeret på den rapport opgaven kom af.>
 | Runtime-version står ikke i CLAUDE.md |
 | Projektdokumentet tæller ni roller og nævner ikke projektkonsulenterne |
 | Træet i vedligeholdelsesdokumentet mangler Portainer-guiden |
-| Bundlinje med team, kontaktadresse og version i hver webløsning |
 | Kontrakten, skitserne og gennemgangen følger designstandarden, og hooken, opdateringen og kontrollen kender dens stempel |
 
 <Den grove liste: hvad architect kan se der skal laves. **Ingen numre.**
