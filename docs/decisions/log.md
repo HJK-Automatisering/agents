@@ -10,6 +10,11 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-11-12 | task-0016 | Opgaven er bygget og sat afsluttet | Alle otte kriterier holder. Hooken er prøvet mod engangsmapper med lavere, ens og højere stempel; kontrollens advarsel er prøvet med og uden bump. `node --check` og kontrollen er grønne | architect |
+| 2026-11-12 | task-0016 | `README.md` rettet på opgavens gren: `/agents:update` skriver projektets kopier af kontrakten, workflows og designstandarden | Rækken sagde kun `AGENTS.md`, hvilket allerede var bagud for workflowene | architect |
+| 2026-11-12 | task-0016 | Developers fund 1 — kontraktens tabeller kender ikke `docs/design/` — lægges i task-0017 som et ekstra kriterium | Det er en kontraktændring, og task-0017 bumper kontrakten i forvejen. Opgaven er ikke sendt af sted endnu | architect |
+| 2026-11-12 | task-0016 | Developers fund 2 — GUIDE.md siger "de tre automatiske tjek", hooken har nu seks — hører til emnet om hookens navn og tælling | Samme fejl som emnet allerede beskriver | architect |
+| 2026-11-12 | task-0016 | Developers tre uklare punkter accepteres: også beskrivelsen og indledningen i `update` er rettet, valget mellem at committe og kassere er menneskets, og et manglende `design-version` regnes som 1 | Følger mønstret fra de to andre stempler | architect |
 | 2026-11-12 | task-0017 | Et projekt er nyt indtil sin første udgivelse; derefter er det i drift | Kan aflæses uden at spørge, og kontrakten har allerede reglerne for versionsnumre | architect |
 | 2026-11-12 | task-0017 | Bundlinjens regel flyttes fra standardens dokument til kontrakten; standarden viser kun komponenten og henviser dertil | Reglen gælder også projekter uden standarden, og `reviewer` kan ikke læse plugin'ets filer. Afvist: teksten begge steder, som driver. Koster et bump af både `kontrakt-version` og `design-version`, som er menneskets | architect |
 | 2026-11-12 | task-0017 | `mockup` skriver standarden ind i skitsen og falder tilbage på eget udseende, skrevet som et gæt, hvis den mangler | Skitsen skal være én fil uden netværk, og et møde må ikke gå i stå | architect |

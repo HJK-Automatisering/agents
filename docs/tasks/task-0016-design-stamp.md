@@ -1,7 +1,7 @@
 ---
 nummer: task-0016
 titel: Hooken, opdateringen og kontrollen kender ikke designstandardens stempel
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-11-12
 ---
@@ -18,14 +18,14 @@ dele i forvejen; standarden skal have det samme, før den ændres første gang.
 
 ## Færdig når
 
-- [ ] Starter en session i et projekt hvis kopi af standarden har et lavere stempel end plugin'ets, siger hooken det, med begge numre og `/agents:update` som vejen videre
-- [ ] Hooken siger intet om standarden i et projekt uden `docs/design/`, eller når stemplerne er ens, eller når plugin'ets er lavere
-- [ ] `/agents:update` bringer projektets tre filer i `docs/design/` ajour når plugin'ets stempel er højere, med en filkopi, og rører dem ikke ellers
-- [ ] `/agents:update` stopper og viser det, før den skriver, hvis der er ucommittede ændringer i `docs/design/`, eller hvis `design.md` mangler mens de andre filer findes
-- [ ] `/agents:update` fortæller i almindeligt dansk hvad der er ændret i standarden, og om projektet skal gøre noget
-- [ ] Kontrollen i dette repo advarer når standardens kopierede filer er ændret siden sidste udgivelse uden at `design-version` er bumpet, på samme måde som for workflowenes stempel
-- [ ] Dokumenterne der forklarer stemplerne, nævner standardens
-- [ ] Hooken består `node --check`, og repoets kontrol er grøn
+- [x] Starter en session i et projekt hvis kopi af standarden har et lavere stempel end plugin'ets, siger hooken det, med begge numre og `/agents:update` som vejen videre
+- [x] Hooken siger intet om standarden i et projekt uden `docs/design/`, eller når stemplerne er ens, eller når plugin'ets er lavere
+- [x] `/agents:update` bringer projektets tre filer i `docs/design/` ajour når plugin'ets stempel er højere, med en filkopi, og rører dem ikke ellers
+- [x] `/agents:update` stopper og viser det, før den skriver, hvis der er ucommittede ændringer i `docs/design/`, eller hvis `design.md` mangler mens de andre filer findes
+- [x] `/agents:update` fortæller i almindeligt dansk hvad der er ændret i standarden, og om projektet skal gøre noget
+- [x] Kontrollen i dette repo advarer når standardens kopierede filer er ændret siden sidste udgivelse uden at `design-version` er bumpet, på samme måde som for workflowenes stempel
+- [x] Dokumenterne der forklarer stemplerne, nævner standardens
+- [x] Hooken består `node --check`, og repoets kontrol er grøn
 
 ## Sådan bygger vi det
 

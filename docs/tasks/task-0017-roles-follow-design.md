@@ -20,6 +20,7 @@ uden standarden ikke har.
 
 - [ ] Kontrakten siger at et nyt projekt med en webflade bruger designstandarden fra start, og at en løsning i drift kun får den gennem en opgave mennesket har sagt ja til
 - [ ] Kontrakten siger hvornår et projekt er nyt, så en rolle kan afgøre det uden at spørge
+- [ ] Kontraktens tabeller over roller og filer kender `docs/design/`: hvem der lægger den ind, at `update` også bringer den ajour, og hvad stemplet er
 - [ ] Reglen om bundlinjen står i kontrakten og gælder hver webløsning, med eller uden standarden. Standardens dokument viser kun komponenten og henviser til kontrakten
 - [ ] `architect` gør det til et emne på BOARD, når et projekt med en webflade mangler standarden og er nyt, eller mangler bundlinjen. For en løsning i drift foreslår den standarden som et emne og bygger intet om af sig selv
 - [ ] `reviewer` melder det som fund når en webflade går uden om standarden, når projektets kopi af standarden er rettet, og når bundlinjen mangler eller afviger
@@ -43,6 +44,10 @@ afsnit, `## Webflader og designstandarden`, lige efter `## Efterprøvning af en 
   I `design.md` står kun komponenten `### Bundlinje` tilbage, med én linje der henviser til
   kontraktens afsnit.
 - Hvem gør hvad, kort, som i `## En app bag Authentik`: `architect`, `developer`, `reviewer`, `mockup`.
+
+Ret også kontraktens to tabeller: rækken for `update` under `## Roller og hvor de kører`, der i dag
+kun nævner kontrakten og workflow-kopierne, og `## Filstruktur`, der skal have en række for
+`docs/design/` som rækken for `docs/workflows/`.
 
 **`architect`**, `plugins/agents/skills/architect/SKILL.md`, trin 1: har projektet en webflade, så
 holder den det op mod afsnittet. Nyt projekt uden `docs/design/`: emne om at lægge standarden

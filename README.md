@@ -66,7 +66,7 @@ Almindelig prosa i Claude Code udløser **ingenting**. Rollerne kaldes eksplicit
 | `/agents:scout` | skill → agent | eget vindue | kun `docs/map.md` |
 | `/agents:status` | skill → agent | eget vindue | **nej, intet** |
 | `/agents:workflow` | skill | din tråd | kun workflow-filer |
-| `/agents:update` | skill | din tråd | kun `AGENTS.md` |
+| `/agents:update` | skill | din tråd | kun projektets kopier fra plugin'et: `AGENTS.md`, workflows og designstandarden |
 | `/agents:mockup` | skill | din tråd | kun sin egen skitsemappe under `docs/mockups/` |
 | `/agents:design` | skill | din tråd | kun `docs/design/`, plus et afsnit i `CLAUDE.md` og to emner på BOARD |
 
