@@ -349,6 +349,16 @@ Tilbagerulning er `git revert` af den commit deploy-jobbet lavede. Det forrige i
 
 Stacken i Portainer sætter et menneske op én gang pr. app — som Git-stack på `main` med polling, registry og variabler. Hvordan står i workflow-dokumentet under *Opsætning af stacken i Portainer*, med en tabel over hvad man kigger efter når en udrulning udebliver — og klik for klik i `PORTAINER.md`. Skal appen bagefter bag login, så kun én gruppe kan åbne den, står klikkene i `AUTHENTIK.md` og derefter `NGINX-PROXY-MANAGER.md`, med det appen selv skal gøre og et tjek til sidst.
 
+**Kopien følger ikke med når plugin'et opdateres.** Workflowet ligger i projektet som to filer, kalderen i `.github/workflows/` og dokumentet i `docs/workflows/`. Versionsnummeret står som `skabelon-version` i dokumentets frontmatter, og Claude Code siger til når kopien er bagud:
+
+> ET WORKFLOW ER BAGUD. Projektet har en kopi der ikke er den nuværende:
+>
+> - docs/workflows/docker-publish.md er version 4; plugin'et har version 5.
+
+Så kører du `/agents:update`. Den skriver både kalderen og dokumentet igen og bevarer projektets egne indstillinger under `with` i hvert job. Er der rettet andre steder i kalderen — et trin tilføjet, en betingelse ændret — eller har projektet jobs skabelonen ikke har, stopper den og spørger. En workflow-fil der ikke kalder det fælles workflow-repo, rører den slet ikke, heller ikke når den hedder det samme; det gælder også en kopi af den gamle fritstående udgave.
+
+**Slet aldrig dokumentet i `docs/workflows/`.** Uden det kan udgaven ikke aflæses, og så siger Claude Code til om en workflow-fil der mangler sit dokument, og `/agents:update` lægger det på plads igen og bringer kalderen ajour.
+
 ## Designstandard
 
 ```
