@@ -359,9 +359,11 @@ Har projektet en webflade, kan du lægge den fælles designstandard ind. Den giv
 
 Alt i standarden hedder `hjk-` noget, og den rammer kun elementer med dens egne klasser. Den kan derfor stå ved siden af et framework uden at ændre dets knapper og tabeller.
 
+**Et nyt projekt med en webflade bruger standarden fra start.** Nyt betyder at projektet ikke er udgivet endnu: der er hverken et versionsnummer eller et versionstag. Mangler standarden, gør `/agents:architect` det til et emne på BOARD. **En løsning i drift får den kun hvis du siger ja** — `/agents:architect` foreslår den som et emne og bygger intet om af sig selv. `/agents:reviewer` melder det som et fund når en webflade går uden om standarden, eller når nogen har rettet i kopien i `docs/design/`.
+
 Kaldet viser hvad standarden er og spørger ja eller nej. Ved ja lægger det tre filer i `docs/design/`: standardens dokument, stylesheetet, og en eksempelside du kan åbne direkte fra disken for at se alle komponenter i lys og mørk. Det overskriver aldrig en fil der findes, nævner standarden i projektets `CLAUDE.md`, og skriver to emner på BOARD: at appen skal bruge den, og at den skal vise bundlinjen.
 
-**Bundlinjen er fast.** Hver side slutter med *Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL. Version X.Y.Z*. Team og adresse er påkrævede indstillinger på stakken, `TEAM_NAME` og `CONTACT_EMAIL`, og appen starter ikke uden dem. Versionen er den der er bygget ind i imaget.
+**Bundlinjen er fast, i hver webløsning** — også dem der ikke bruger standarden. Hver side slutter med *Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL. Version X.Y.Z*. Team og adresse er påkrævede indstillinger på stakken, `TEAM_NAME` og `CONTACT_EMAIL`, og appen starter ikke uden dem. Versionen er den der er bygget ind i imaget. Reglen står i kontrakten, `AGENTS.md`, så den gælder i ethvert projekt. Mangler bundlinjen, gør `/agents:architect` det til et emne, og `/agents:reviewer` melder det når den mangler eller afviger.
 
 **Kaldet kobler ikke selv standarden på appen.** Hvordan stylesheetet når appen — direkte eller kopieret ind ved build — afhænger af stakken, så det bliver en opgave hos `/agents:architect`.
 
@@ -387,6 +389,7 @@ Vis en oversigt over de sager en sagsbehandler har i dag, med filter på status.
 
 - **Du åbner selv skitsen.** Den giver dig stien; du dobbeltklikker, og bagefter genindlæser du. Den starter aldrig selv en browser.
 - **Skitsen virker uden installation og uden netværk**, og der står *SKITSE — fiktive data* øverst. Mødelaptoppen kan ikke fejle på en pakke.
+- **Skitsen ligner de rigtige løsninger.** Den bruger den fælles designstandard, skrevet ind i selve filen, og viser bundlinjen nederst med opdigtede værdier. Kan den ikke finde standarden, laver den sit eget udseende og skriver det ned som et gæt.
 - **Ingen rigtige data, heller ikke i et projekt der kører.** Den låner højst datamodellens form — hvilke felter der findes — og læser ingen hemmeligheder.
 - **Noterne er det vigtigste.** Undervejs skriver den hvad der blev vist, hvad slutbrugeren reagerede på, hvad der blev valgt fra, hvilke data skærmen forudsætter, hvilke gæt den tog, og hvad der stadig er åbent.
 
