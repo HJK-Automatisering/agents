@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// SessionStart-hook. Fem tjek:
-//   1. Er dette projekt nul? Udelukker de fire andre — beskeden beder
+// SessionStart-hook. Seks tjek:
+//   1. Er dette projekt nul? Udelukker de fem andre — beskeden beder
 //      allerede selv om .gitignore. Ligger der skitser under docs/mockups/,
 //      er det stadig projekt nul, men beskeden er en anden: et møde er i gang
 //      eller overstået, og der skal ikke stå at man ikke må skrive filer.
@@ -8,9 +8,10 @@
 //   3. Er en kopi af et workflow i docs/workflows/ bagud?
 //   4. Ligger der en workflow-fil fra plugin'et uden det dokument der bærer
 //      stemplet? Så kan udgaven ikke aflæses, og tjek 3 siger ingenting.
-//   5. Mangler der en .gitignore?
-// 2, 3, 4 og 5 kan optræde sammen. Tjek 5 er sikkerhed og må ikke tabe til de
-// tre øvrige beskeder.
+//   5. Er projektets kopi af designstandarden i docs/design/ bagud?
+//   6. Mangler der en .gitignore?
+// 2 til 6 kan optræde sammen. Tjek 6 er sikkerhed og må ikke tabe til de
+// fire øvrige beskeder.
 //
 // Skriver ren tekst til stdout, så Claude ser beskeden. SessionStart lægger
 // tekst der ikke starter med '{' direkte ind som kontekst, så JSON-indpakning
@@ -42,8 +43,9 @@ function harMarkdown(mappe) {
   }
 }
 
-// Læser et versionsstempel fra frontmatter. Bruges til både kontrakten
-// (kontrakt-version) og workflow-dokumenterne (skabelon-version).
+// Læser et versionsstempel fra frontmatter. Bruges til kontrakten
+// (kontrakt-version), workflow-dokumenterne (skabelon-version) og
+// designstandarden (design-version).
 function getVersion(sti, noegle) {
   let indhold;
   try {
@@ -222,6 +224,16 @@ function udgaveUkendt(fund) {
   ].join('\n');
 }
 
+function designBagud(vProjekt, vPlugin) {
+  return [
+    `DESIGNSTANDARDEN ER BAGUD. Projektets docs/design/design.md er version ${vProjekt}; plugin'et har version ${vPlugin}.`,
+    '',
+    'Kopien i docs/design/ er altså ikke den nuværende standard. Sig det til brugeren,',
+    'og foreslå `/agents:update` — den bringer de tre filer i docs/design/ ajour og',
+    'siger hvad der er ændret.',
+  ].join('\n');
+}
+
 const MANGLER_GITIGNORE = [
   'ADVARSEL: projektet har ingen .gitignore.',
   'Ifølge AGENTS.md skal den findes før der oprettes flere filer. Opret den nu,',
@@ -306,6 +318,19 @@ try {
       udenDokument.push({ fil: '.github/workflows/' + navn, dokument });
     }
     if (udenDokument.length > 0) beskeder.push(udgaveUkendt(udenDokument));
+
+    // Designstandarden er en kopi på samme måde, med sit eget stempel. Plugin'ets
+    // dokument ligger i design-skillen ved siden af denne hook. Mangler
+    // projektets design.md, er der intet stempel og intet at sige.
+    const projektDesign = path.join(cwd, 'docs', 'design', 'design.md');
+    if (findes(projektDesign)) {
+      const pluginDesign = path.join(__dirname, '..', 'skills', 'design', 'design.md');
+      const vProjekt = getVersion(projektDesign, 'design-version');
+      const vPlugin = getVersion(pluginDesign, 'design-version');
+      if (vPlugin && vProjekt && vPlugin > vProjekt) {
+        beskeder.push(designBagud(vProjekt, vPlugin));
+      }
+    }
 
     // Denne er sikkerhed og ikke hygiejne, så den må ikke tabe til en
     // versionsbesked. Alle kan stå på én gang.

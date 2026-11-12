@@ -365,7 +365,13 @@ Kaldet viser hvad standarden er og spørger ja eller nej. Ved ja lægger det tre
 
 **Kaldet kobler ikke selv standarden på appen.** Hvordan stylesheetet når appen — direkte eller kopieret ind ved build — afhænger af stakken, så det bliver en opgave hos `/agents:architect`.
 
-**Ret aldrig i filerne i `docs/design/`.** De er en kopi af det fælles. Projektets egne regler står i appens eget stylesheet, og mangler standarden noget, rettes det i `agents`-repoet. `/agents:update` henter endnu ikke en nyere udgave af kopien.
+**Ret aldrig i filerne i `docs/design/`.** De er en kopi af det fælles. Projektets egne regler står i appens eget stylesheet, og mangler standarden noget, rettes det i `agents`-repoet.
+
+**Kopien følger ikke med når plugin'et opdateres.** Den har sit eget versionsnummer i `docs/design/design.md`, og Claude Code siger til når den er bagud:
+
+> DESIGNSTANDARDEN ER BAGUD. Projektets docs/design/design.md er version 1; plugin'et har version 2.
+
+Så kører du `/agents:update`. Den kopierer alle tre filer ind igen og fortæller hvad der er nyt i standarden, og om appens eget stylesheet eller bundlinje skal rettes. Har du ucommittede ændringer i `docs/design/`, stopper den og viser dem, før den skriver. Committede rettelser i kopien bliver overskrevet; de står stadig i git-historikken.
 
 ## Til konsulenter: en skitse i mødet
 

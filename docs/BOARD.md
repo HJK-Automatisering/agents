@@ -21,6 +21,7 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
+| task-0017 | Kontrakten og rollerne kender ikke designstandarden | planlagt | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -33,7 +34,6 @@ eller nummeret på den rapport opgaven kom af.>
 | Runtime-version står ikke i CLAUDE.md |
 | Projektdokumentet tæller ni roller og nævner ikke projektkonsulenterne |
 | Træet i vedligeholdelsesdokumentet mangler Portainer-guiden |
-| Kontrakten, skitserne og gennemgangen følger designstandarden, og hooken, opdateringen og kontrollen kender dens stempel |
 
 <Den grove liste: hvad architect kan se der skal laves. **Ingen numre.**
 Et emne får først et nummer når interviewet har gjort det udførbart —
@@ -58,6 +58,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0013 | Kontrakten kender ikke de krav en app bag Authentik selv skal opfylde | bygget |
 | task-0014 | En fælles designstandard for webløsninger, og et kald der lægger den ind | bygget |
 | task-0015 | Designstandarden har ingen fast bundlinje med team, kontaktadresse og version | bygget |
+| task-0016 | Hooken, opdateringen og kontrollen kender ikke designstandardens stempel | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.
