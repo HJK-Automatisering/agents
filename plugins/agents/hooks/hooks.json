@@ -1,5 +1,5 @@
 {
-  "description": "Genkender projekt nul og manglende .gitignore ved sessionsstart",
+  "description": "Tjekker projektets tilstand ved sessionsstart: om projektet er nyt, om kopierne fra plugin'et er bagud, og om .gitignore mangler",
   "hooks": {
     "SessionStart": [
       {
@@ -8,7 +8,7 @@
           {
             "type": "command",
             "command": "node",
-            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/detect-project-zero.cjs"],
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/check-project-state.cjs"],
             "timeout": 10,
             "statusMessage": "Tjekker projektets tilstand"
           }

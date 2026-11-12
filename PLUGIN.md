@@ -34,7 +34,7 @@ agents/
       debugger.md   scout.md   status.md
     hooks/
       hooks.json              bruger ${CLAUDE_PLUGIN_ROOT}
-      detect-project-zero.cjs
+      check-project-state.cjs
   CLAUDE.md                 reglerne for at redigere dette repo
   CHANGELOG.md              hvad der ændrede sig ved hver udgivelse
   GUIDE.md  README.md  PLUGIN.md  OPSAETNING.md

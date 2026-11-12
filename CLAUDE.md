@@ -17,7 +17,7 @@ node tools/validate.mjs                     # alle kontroller, samme som CI
 claude plugin validate .                    # marketplace-manifestet
 claude plugin validate ./plugins/agents     # plugin-manifestet
 claude --plugin-dir "<sti>/agents-preview"  # prøv af uden at udgive, se nedenfor
-node --check plugins/agents/hooks/detect-project-zero.cjs
+node --check plugins/agents/hooks/check-project-state.cjs
 ```
 
 Afprøvning uden at udgive kræver en engangskopi af `plugins/agents` uden for
@@ -28,7 +28,7 @@ med den installerede udgaves tekst. Fremgangsmåden står i `PLUGIN.md`.
 Hooken kan afprøves direkte ved at fodre den en SessionStart-nyttelast:
 
 ```
-echo '{"cwd":"<sti til et testprojekt>"}' | node plugins/agents/hooks/detect-project-zero.cjs
+echo '{"cwd":"<sti til et testprojekt>"}' | node plugins/agents/hooks/check-project-state.cjs
 ```
 
 ## Regler der gælder her
