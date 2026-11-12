@@ -83,6 +83,9 @@
     outline-offset: var(--hjk-focus-offset);
     border-radius: var(--hjk-radius-sm);
   }
+  .hjk-footer__link.eksempel-fokus {
+    border-radius: var(--hjk-radius-sm);
+  }
   .eksempel-farver {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
@@ -119,12 +122,13 @@
     <a class="hjk-topbar__link" href="#formularfelt">Formularfelt</a>
     <a class="hjk-topbar__link" href="#tabel">Tabel</a>
     <a class="hjk-topbar__link" href="#besked">Besked</a>
+    <a class="hjk-topbar__link" href="#bundlinje">Bundlinje</a>
   </nav>
 </header>
 
 <main class="eksempel-main">
   <h1>Designstandard</h1>
-  <p>Alle fem komponenter i alle deres tilstande. Siden henter kun <code>design.css</code> fra samme mappe og virker uden netværk. Alle data er opdigtede.</p>
+  <p>Alle seks komponenter i alle deres tilstande. Siden henter kun <code>design.css</code> fra samme mappe og virker uden netværk. Alle data er opdigtede.</p>
 
   <div class="eksempel-tema" role="group" aria-label="Tilstand">
     <button type="button" class="hjk-button hjk-button--secondary" data-vaelg-tema="system" aria-pressed="true">Følg maskinen</button>
@@ -345,7 +349,30 @@
       </nav>
     </header>
   </div>
+
+  <h2 id="bundlinje">Bundlinje</h2>
+  <p class="eksempel-noter">Nederst på hver side, med fast tekst. Den rigtige står i bunden af denne side. Herunder med version, uden version som ved lokal kørsel, og med fokus på adressen. Teamnavn, adresse og version er opdigtede.</p>
+  <h3>Med version</h3>
+  <footer class="hjk-footer">
+    Udviklet af Team Eksempel. Ved udfordringer kontakt
+    <a class="hjk-footer__link" href="mailto:team@example.org?subject=Ang%C3%A5ende%20Eksempelappen" tabindex="-1">team@example.org</a>. Version 1.4.2
+  </footer>
+  <h3>Uden version</h3>
+  <footer class="hjk-footer">
+    Udviklet af Team Eksempel. Ved udfordringer kontakt
+    <a class="hjk-footer__link" href="mailto:team@example.org?subject=Ang%C3%A5ende%20Eksempelappen" tabindex="-1">team@example.org</a>
+  </footer>
+  <h3>Med fokus</h3>
+  <footer class="hjk-footer">
+    Udviklet af Team Eksempel. Ved udfordringer kontakt
+    <a class="hjk-footer__link eksempel-fokus" href="mailto:team@example.org?subject=Ang%C3%A5ende%20Eksempelappen" tabindex="-1">team@example.org</a>. Version 1.4.2
+  </footer>
 </main>
+
+<footer class="hjk-footer">
+  Udviklet af Team Eksempel. Ved udfordringer kontakt
+  <a class="hjk-footer__link" href="mailto:team@example.org?subject=Ang%C3%A5ende%20Eksempelappen">team@example.org</a>. Version 1.4.2
+</footer>
 
 <script>
   // Kun til eksempelsidens tilstandsskift. Komponenterne bruger ikke JavaScript.

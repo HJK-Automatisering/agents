@@ -355,11 +355,13 @@ Stacken i Portainer sætter et menneske op én gang pr. app — som Git-stack p�
 /agents:design
 ```
 
-Har projektet en webflade, kan du lægge den fælles designstandard ind. Den giver farver, skrift, afstande og fem komponenter — knap, formularfelt, tabel, besked og topbjælke — som ren CSS uden JavaScript. Den følger maskinens lyse eller mørke tilstand, en side kan overstyre, og kontrasten lever op til WCAG 2.1 AA. Det er ikke en påstand: kontrollen i `agents`-repoet regner hvert farvepar efter ved hver ændring.
+Har projektet en webflade, kan du lægge den fælles designstandard ind. Den giver farver, skrift, afstande og seks komponenter — knap, formularfelt, tabel, besked, topbjælke og bundlinje — som ren CSS uden JavaScript. Den følger maskinens lyse eller mørke tilstand, en side kan overstyre, og kontrasten lever op til WCAG 2.1 AA. Det er ikke en påstand: kontrollen i `agents`-repoet regner hvert farvepar efter ved hver ændring.
 
 Alt i standarden hedder `hjk-` noget, og den rammer kun elementer med dens egne klasser. Den kan derfor stå ved siden af et framework uden at ændre dets knapper og tabeller.
 
-Kaldet viser hvad standarden er og spørger ja eller nej. Ved ja lægger det tre filer i `docs/design/`: standardens dokument, stylesheetet, og en eksempelside du kan åbne direkte fra disken for at se alle komponenter i lys og mørk. Det overskriver aldrig en fil der findes, nævner standarden i projektets `CLAUDE.md`, og skriver et emne på BOARD om at appen skal bruge den.
+Kaldet viser hvad standarden er og spørger ja eller nej. Ved ja lægger det tre filer i `docs/design/`: standardens dokument, stylesheetet, og en eksempelside du kan åbne direkte fra disken for at se alle komponenter i lys og mørk. Det overskriver aldrig en fil der findes, nævner standarden i projektets `CLAUDE.md`, og skriver to emner på BOARD: at appen skal bruge den, og at den skal vise bundlinjen.
+
+**Bundlinjen er fast.** Hver side slutter med *Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL. Version X.Y.Z*. Team og adresse er påkrævede indstillinger på stakken, `TEAM_NAME` og `CONTACT_EMAIL`, og appen starter ikke uden dem. Versionen er den der er bygget ind i imaget.
 
 **Kaldet kobler ikke selv standarden på appen.** Hvordan stylesheetet når appen — direkte eller kopieret ind ved build — afhænger af stakken, så det bliver en opgave hos `/agents:architect`.
 

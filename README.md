@@ -68,7 +68,7 @@ Almindelig prosa i Claude Code udløser **ingenting**. Rollerne kaldes eksplicit
 | `/agents:workflow` | skill | din tråd | kun workflow-filer |
 | `/agents:update` | skill | din tråd | kun `AGENTS.md` |
 | `/agents:mockup` | skill | din tråd | kun sin egen skitsemappe under `docs/mockups/` |
-| `/agents:design` | skill | din tråd | kun `docs/design/`, plus én linje i `CLAUDE.md` og på BOARD |
+| `/agents:design` | skill | din tråd | kun `docs/design/`, plus et afsnit i `CLAUDE.md` og to emner på BOARD |
 
 **Samtaleroller** — `architect`, `kickoff` og `mockup` — kører i din tråd, så du kan tale med dem. De to første spørger ét spørgsmål ad gangen og venter på svaret; `mockup` viser en skitse og gætter frem for at spørge. **Rapportroller** sendes af sted, kører isoleret, og kommer tilbage med en henvisning og én linje pr. fund.
 

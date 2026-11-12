@@ -33,7 +33,6 @@ eller nummeret på den rapport opgaven kom af.>
 | Runtime-version står ikke i CLAUDE.md |
 | Projektdokumentet tæller ni roller og nævner ikke projektkonsulenterne |
 | Træet i vedligeholdelsesdokumentet mangler Portainer-guiden |
-| Bundlinje med team, kontaktadresse og version i hver webløsning |
 | Kontrakten, skitserne og gennemgangen følger designstandarden, og hooken, opdateringen og kontrollen kender dens stempel |
 
 <Den grove liste: hvad architect kan se der skal laves. **Ingen numre.**
@@ -58,6 +57,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0012 | En app bag Nginx Proxy Manager og Authentik, klik for klik | bygget |
 | task-0013 | Kontrakten kender ikke de krav en app bag Authentik selv skal opfylde | bygget |
 | task-0014 | En fælles designstandard for webløsninger, og et kald der lægger den ind | bygget |
+| task-0015 | Designstandarden har ingen fast bundlinje med team, kontaktadresse og version | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.
