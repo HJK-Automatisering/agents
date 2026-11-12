@@ -70,7 +70,7 @@ Tre grunde, i rækkefølge efter hvad de koster:
 
 ## Forudsætning: Node
 
-Plugin'ets SessionStart-hook kører på Node. Den er det der siger til når du står i et tomt projekt, eller når projektets kontrakt er bagud i forhold til plugin'ets.
+Plugin'ets SessionStart-hook kører på Node. Den er det der siger til ved sessionsstart: om projektet er nyt, om kopierne fra plugin'et er bagud, og om `.gitignore` mangler.
 
 **Node skal være installeret på maskinen.** Claude Code har sin egen Node-runtime bagt ind i sin binære fil, men den er ikke tilgængelig for hooks — de skal bruge systemets.
 
@@ -90,7 +90,7 @@ node --version
 
 Så gør hooken ingenting, og **den siger det ikke.** Alt andet virker: alle tretten kald, alle roller, kontrakten. Du mister kun de automatiske tjek ved sessionsstart: om projektet er nyt, om kopierne fra plugin'et er bagud, og om `.gitignore` mangler.
 
-Det betyder i praksis at du selv skal huske at køre `/agents:update` når plugin'et er blevet opdateret. Uden hooken er der ingen der gør opmærksom på at projektets kontrakt er blevet forældet.
+Det betyder i praksis at du selv skal huske at køre `/agents:update` når plugin'et er blevet opdateret. Uden hooken er der ingen der gør opmærksom på at projektets kopier fra plugin'et er blevet forældede: kontrakten, workflows og designstandarden.
 
 Kør derfor `node --version` som en del af opsætningen, og ikke først når noget opfører sig underligt.
 
@@ -147,7 +147,7 @@ Den finder selv ud af hvad der mangler: er projektet tomt, kører den hele inter
 | `/agents:status` | eget vindue | Læser projektet som helhed og vurderer næste skridt | dig |
 | `/agents:mockup` | din tråd | En klikbar skitse med fiktive data, og noter om hvad slutbrugeren sagde | dig — noterne bagefter til `architect` |
 
-Plus tre hjælpekald: `/agents:workflow` tilføjer et fælles workflow, `/agents:update` bringer projektets kontrakt ajour, og `/agents:design` lægger den fælles designstandard ind i et projekt med en webflade.
+Plus tre hjælpekald: `/agents:workflow` tilføjer et fælles workflow, `/agents:update` bringer projektets kopier fra plugin'et ajour — kontrakten, workflows og designstandarden — og `/agents:design` lægger den fælles designstandard ind i et projekt med en webflade.
 
 **Du behøver ikke kalde dem selv.** `architect` sender dem af sted. Du kan gøre det direkte — `/agents:security` før en udrulning, `/agents:status` når du vil vide hvor du står — men det normale er at arbejdet går gennem navet.
 
@@ -451,7 +451,7 @@ Nyt eller uopsat projekt   /agents:kickoff
 Alt arbejde                /agents:architect     ← her sidder du
 Hvor er vi                 /agents:status        (eget vindue)
 Tilføj docker-publish      /agents:workflow
-Kontrakten er bagud        /agents:update
+Kopierne er bagud          /agents:update
 Designstandard, webflade   /agents:design
 Skitse til et møde         /agents:mockup        (gætter, spørger ikke)
 
