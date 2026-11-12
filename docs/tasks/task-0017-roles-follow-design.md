@@ -1,7 +1,7 @@
 ---
 nummer: task-0017
 titel: Kontrakten og rollerne kender ikke designstandarden
-status: planlagt
+status: i-gang
 kilde: interview
 oprettet: 2026-11-12
 ---
