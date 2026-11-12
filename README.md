@@ -20,7 +20,7 @@ winget install --id OpenJS.NodeJS.LTS
 
 Administratorrettigheder skal være aktiveret på pc'en inden du kører den. Tjek bagefter i en ny terminal med `node --version`.
 
-Mangler Node, virker alt andet — alle kald, alle roller, kontrakten — men de tre automatiske tjek ved sessionsstart udføres ikke, og det meldes ikke. Se `GUIDE.md`.
+Mangler Node, virker alt andet — alle kald, alle roller, kontrakten — men de automatiske tjek ved sessionsstart udføres ikke, og det meldes ikke. Det er dem der siger til når projektet er nyt, når kopierne fra plugin'et er bagud, og når `.gitignore` mangler. Se `GUIDE.md`.
 
 Derefter:
 
@@ -85,7 +85,7 @@ Begrænsningerne i tabellen er mandater, ikke låse. Se `GUIDE.md`.
 | `plugins/agents/skills/kickoff/AGENTS.md` | Kontrakten med `kontrakt-version`. Kopieres ind af `kickoff`, opdateres af `/agents:update` |
 | `plugins/agents/skills/workflow/` | Valgfrie arbejdsgange. Kaldes eksplicit — ingen rolle foreslår dem |
 | `plugins/agents/skills/design/` | Den fælles designstandard til webløsninger, i lys og mørk tilstand, med en eksempelside. Lægges ind af `/agents:design`. Nye projekter med en webflade bruger den fra start; bundlinjens regel står i kontrakten og gælder alle webløsninger |
-| `plugins/agents/hooks/` | SessionStart-hook der genkender projekt nul |
+| `plugins/agents/hooks/` | SessionStart-hook der tjekker projektets tilstand: om det er nyt, om kopierne fra plugin'et er bagud, og om `.gitignore` mangler |
 | `.claude-plugin/marketplace.json` | Kataloget |
 | `CLAUDE.md` | Reglerne der gælder når nogen redigerer *dette* repo med Claude |
 | `CHANGELOG.md` | Hvad der ændrede sig ved hver udgivelse. Teksten til mailen |

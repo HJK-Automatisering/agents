@@ -434,9 +434,9 @@ for (const sti of mdListe) {
 }
 
 // ---------------------------------------------------------- 9. Hooken koerer
-const hook = join(PLUGIN, 'hooks', 'detect-project-zero.cjs');
+const hook = join(PLUGIN, 'hooks', 'check-project-state.cjs');
 if (!existsSync(hook)) {
-  sig(fejl, 'plugins/agents/hooks/detect-project-zero.cjs', 'findes ikke');
+  sig(fejl, 'plugins/agents/hooks/check-project-state.cjs', 'findes ikke');
 } else {
   try {
     execFileSync(process.execPath, ['--check', hook], { stdio: ['ignore', 'ignore', 'pipe'] });

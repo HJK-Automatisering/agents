@@ -70,8 +70,9 @@ node --version
 ```
 
 Mangler Node, virker alt andet: alle tretten kald, alle roller, kontrakten. Du
-mister kun de tre tjek ved sessionsstart, **og det meldes ikke.** Så skal du selv
-huske `/agents:update` når plugin'et er opdateret.
+mister kun tjekkene ved sessionsstart — om projektet er nyt, om kopierne fra
+plugin'et er bagud, og om `.gitignore` mangler — **og det meldes ikke.** Så skal
+du selv huske `/agents:update` når plugin'et er opdateret.
 
 ## 3. Claude Code i terminalen
 

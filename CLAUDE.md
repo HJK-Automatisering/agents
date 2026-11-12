@@ -17,8 +17,14 @@ node tools/validate.mjs                     # alle kontroller, samme som CI
 claude plugin validate .                    # marketplace-manifestet
 claude plugin validate ./plugins/agents     # plugin-manifestet
 claude --plugin-dir "<sti>/agents-preview"  # prøv af uden at udgive, se nedenfor
-node --check plugins/agents/hooks/detect-project-zero.cjs
+node --check plugins/agents/hooks/check-project-state.cjs
 ```
+
+Kontrollen kører på Node 22 i CI (`.github/workflows/validate.yaml`), og
+`tools/validate.mjs` bruger intet der kræver en nyere. Brugerne får den
+LTS-udgave af Node som `winget` installerer, og hooken skal virke på den.
+Hooken bruger kun Nodes egne moduler og ingen pakker, så den kører uden
+`npm install`. Sådan skal det blive ved.
 
 Afprøvning uden at udgive kræver en engangskopi af `plugins/agents` uden for
 repoet med et andet `name` i manifestet. `--plugin-dir` mod arbejdstræet selv
@@ -28,7 +34,7 @@ med den installerede udgaves tekst. Fremgangsmåden står i `PLUGIN.md`.
 Hooken kan afprøves direkte ved at fodre den en SessionStart-nyttelast:
 
 ```
-echo '{"cwd":"<sti til et testprojekt>"}' | node plugins/agents/hooks/detect-project-zero.cjs
+echo '{"cwd":"<sti til et testprojekt>"}' | node plugins/agents/hooks/check-project-state.cjs
 ```
 
 ## Regler der gælder her

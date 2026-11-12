@@ -88,7 +88,7 @@ node --version
 
 ### Hvis Node mangler
 
-Så gør hooken ingenting, og **den siger det ikke.** Alt andet virker: alle tretten kald, alle roller, kontrakten. Du mister kun de tre automatiske tjek.
+Så gør hooken ingenting, og **den siger det ikke.** Alt andet virker: alle tretten kald, alle roller, kontrakten. Du mister kun de automatiske tjek ved sessionsstart: om projektet er nyt, om kopierne fra plugin'et er bagud, og om `.gitignore` mangler.
 
 Det betyder i praksis at du selv skal huske at køre `/agents:update` når plugin'et er blevet opdateret. Uden hooken er der ingen der gør opmærksom på at projektets kontrakt er blevet forældet.
 
