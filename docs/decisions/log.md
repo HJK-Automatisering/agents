@@ -10,6 +10,7 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-11-12 | — | Udgivelsen hedder 1.4.0: kontrakt-version 23 → 24 og design-version 1 → 2, med rollerne der følger designstandarden og standardens stempel | Minor efter reglen i PLUGIN.md, fordi kontrakt-version er bumpet. Intet holder op med at virke. Posten i `CHANGELOG.md` skrevet først, begge manifester bumpet, kontrollen ren. Mennesket bad om det | architect |
 | 2026-11-12 | task-0018 | `kontrakt-version` bumpet 23 → 24 og `design-version` 1 → 2 på opgavens gren | Kontrakten har fået afsnittet om webflader og bundlinjens regel; standardens dokument har mistet reglen. Uden bumpene opdager projekterne ingen af delene. Imod: alle projekter skal køre `/agents:update`. Mennesket valgte | — |
 | 2026-11-12 | task-0018 | Opgaven er bygget og sat afsluttet | Alle fem kriterier holder. De fire henvisninger peger på kontraktens `### Bundlinjen er fast`; kontrollen er grøn med de to ventede advarsler om stemplerne | architect |
 | 2026-11-12 | task-0018 | Skitse-skillens henvisning til "markup og tekst" under `### Bundlinje` i standardens dokument bliver stående | Markup-eksemplet dér indeholder tekstskabelonen, og en skitse i en tom mappe har ingen kontrakt at læse den i. Reglen om tekst og nøgler står stadig kun i kontrakten | architect |

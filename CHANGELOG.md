@@ -26,6 +26,45 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.4.0
+
+Kontrakten er bumpet fra version 23 til 24, og designstandarden fra version 1
+til 2. Hooken siger at kontrakten er bagud i alle projekter, og at
+`docs/design/` er bagud i de projekter der har lagt standarden ind. **Kør
+`/agents:update` i hvert projekt.** Den bringer begge dele ajour.
+
+### Rollerne følger designstandarden
+
+Kontrakten har et nyt afsnit, *Webflader og designstandarden*:
+
+- **Et nyt projekt med en webflade bruger standarden fra start.** Et projekt er
+  nyt indtil sin første udgivelse — så længe der hverken findes et
+  versionsnummer eller et versionstag.
+- **En løsning i drift får standarden kun gennem en opgave I har sagt ja til.**
+  Ingen rolle bygger udseendet om i forbifarten.
+
+`architect` gør det til et emne på BOARD, når et projekt mangler standarden
+eller bundlinjen. `reviewer` melder fund, når en webflade går uden om
+standarden, eller når kopien i `docs/design/` er rettet. Skitser fra
+`/agents:mockup` bruger standardens udseende og viser bundlinjen med opdigtede
+værdier.
+
+### Bundlinjen gælder alle webløsninger
+
+Reglen om bundlinjen er flyttet fra standardens dokument til kontrakten, så den
+også gælder løsninger der ikke bruger standarden. Teksten og nøglerne er de
+samme som i 1.3.0. **Har en løsning i drift ingen bundlinje, så bed `architect`
+om en opgave på den.**
+
+### Standardens stempel
+
+Hooken siger til, når et projekts kopi af designstandarden er bagud, og
+`/agents:update` bringer de tre filer i `docs/design/` ajour. Opdateringen
+stopper, hvis der ligger ucommittede ændringer i mappen. Committede rettelser i
+kopien overskrives — kopien må ikke rettes, og den gamle udgave står i git.
+
+---
+
 ## 1.3.0
 
 Intet skal opdateres i projekterne. Kontrakten står uændret på version 23, og
