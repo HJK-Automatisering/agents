@@ -1,7 +1,7 @@
 ---
 nummer: task-0018
 titel: Henvisningerne til bundlinjens regel peger stadig på standardens dokument
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-11-12
 ---
@@ -18,11 +18,11 @@ standarden og kontrakten udgives med den nye placering.
 
 ## Færdig når
 
-- [ ] Intet sted i plugin'et siger at bundlinjens tekst, nøgler eller regler står i standardens dokument. De peger på kontraktens afsnit om bundlinjen
-- [ ] Kontraktens afsnit om bundlinjen siger hvor komponentens markup står, så det også giver mening i et projekt uden standarden
-- [ ] Det `/agents:design` skriver i projektets `CLAUDE.md`, peger på kontrakten for bundlinjen
-- [ ] `/agents:update` siger at nye regler for bundlinjen kommer med kontrakten, ikke med standarden
-- [ ] Repoets kontrol er grøn. Advarslerne om de to stempler er ventede
+- [x] Intet sted i plugin'et siger at bundlinjens tekst, nøgler eller regler står i standardens dokument. De peger på kontraktens afsnit om bundlinjen
+- [x] Kontraktens afsnit om bundlinjen siger hvor komponentens markup står, så det også giver mening i et projekt uden standarden
+- [x] Det `/agents:design` skriver i projektets `CLAUDE.md`, peger på kontrakten for bundlinjen
+- [x] `/agents:update` siger at nye regler for bundlinjen kommer med kontrakten, ikke med standarden
+- [x] Repoets kontrol er grøn. Advarslerne om de to stempler er ventede
 
 ## Sådan bygger vi det
 
