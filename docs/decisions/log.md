@@ -10,6 +10,7 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-11-13 | — | Repoets egen kontrakt er opdateret fra version 26 til 27 | Kopien var ordret version 26 uden afvigelser, efterprøvet med diff, og er nu identisk med skabelonen. Nyt er punkt 8 om proxyens adgangslog for apps bag Authentik. Repoet har ingen app, så intet igangværende arbejde berøres. Committes på sin egen gren og merges, som ved version 26. Mennesket bad om det | architect |
 | 2026-11-13 | — | Udgivelsen hedder 1.7.0: kontrakt-version 26 → 27, med proxyens adgangslog for apps bag Authentik | Minor efter reglen i PLUGIN.md, fordi kontrakten har fået en ny regel. Intet holder op med at virke. Posten i `CHANGELOG.md` skrevet først, begge manifester bumpet, kontrollen ren. Mennesket sagde ja | architect |
 | 2026-11-13 | task-0027 | `kontrakt-version` bumpet 26 → 27 på opgavens gren | Dækker task-0026 og task-0027: punkt 8 om proxyens adgangslog og hvordan det afgøres i en opgave. Mennesket bad om bumpet i sin beskrivelse af opgaven | architect |
 | 2026-11-13 | task-0027 | Developers uklare punkt 2 — kontrakten siger ikke hvad der sker med punkt 8, når adressen ikke kan bære persondata — afgøres uden ændring | Punktet bærer selv sin betingelse, og er det uklart, spørger architect. Svaret står i opgavens beslutninger og i loggen, som alle beslutninger | architect |
