@@ -1,7 +1,7 @@
 ---
 nummer: task-0027
 titel: Tjekket af adgangsloggen kan bestå uden at tjekke, og punkt 8 har ingen vej til afsluttet
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-11-13
 ---
