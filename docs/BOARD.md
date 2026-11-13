@@ -21,7 +21,7 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
-| task-0024 | En ny udgave af et stylesheet kræver Ctrl+F5, før browseren bruger den | planlagt | interview |
+| task-0025 | reviewer og architect kender ikke reglen om en ny udgave uden Ctrl+F5 | planlagt | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -62,6 +62,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0021 | GUIDE siger ikke at projektets workflow-kopi bliver bagud | bygget |
 | task-0022 | Bundlinjen står i venstre side, men skal stå centreret | bygget |
 | task-0023 | Mørk tilstand er kølig blågrå, men skal være varm grå over i grøn | bygget |
+| task-0024 | En ny udgave af et stylesheet kræver Ctrl+F5, før browseren bruger den | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.

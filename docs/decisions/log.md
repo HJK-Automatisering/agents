@@ -10,6 +10,10 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-11-13 | task-0024 | Bumpene af `kontrakt-version` og `design-version` tilbydes når task-0025 lukkes | task-0025 retter rollefilerne til samme regel, og udgivelsen skal have begge. Ét bump pr. stempel, når ændringen er hel | architect |
+| 2026-11-13 | task-0024 | Developers fund — `reviewer` og `architect` har en linje om bundlinjen, men ingen om den nye regel — bliver task-0025 | En rolle der arbejder efter sin egen fil, overser reglen. Det skal med i samme udgivelse. En opgave genåbnes ikke | architect |
+| 2026-11-13 | task-0024 | Developers ekstra sætning om at et versionsnummer i adressen ikke er et fingeraftryk, accepteres | Den følger af det afviste alternativ i opgavens beslutninger og forhindrer at `?v=<version>` læses som den første måde | architect |
+| 2026-11-13 | task-0024 | Opgaven er bygget og sat afsluttet | Alle otte kriterier holder. Diffen er gennemlæst: reglen har to måder, et forbud, siderne og proxyen med, efterprøvning med HTTP-kald, og pligterne er flettet ind i *Hvem gør hvad*. Kontrollen er grøn med de to ventede advarsler | architect |
 | 2026-11-13 | task-0023 | `design-version` bumpes først når task-0024 lukkes | task-0024 ændrer standardens dokument igen. Ét bump pr. stempel, når ændringen er hel, som ved task-0017 og task-0018 | architect |
 | 2026-11-13 | task-0023 | Opgaven er bygget og sat afsluttet | Alle seks kriterier holder. De 29 mørke farver er efterprøvet mod opgavens tabel, kun de to mørke blokke er ændret, og kontrollen har regnet alle farvepar efter. Det visuelle er ikke set; mennesket åbner eksempelsiden i mørk tilstand før udgivelsen | architect |
 | 2026-11-13 | task-0024 | Siderne selv er `no-cache`, og proxyen er dækket af den guide der findes | En gemt side kan pege på en gammel adresse. `NGINX-PROXY-MANAGER.md` slår allerede *Cache Assets* fra | architect |
