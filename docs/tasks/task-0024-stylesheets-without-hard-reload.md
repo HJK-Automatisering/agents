@@ -1,7 +1,7 @@
 ---
 nummer: task-0024
 titel: En ny udgave af et stylesheet kræver Ctrl+F5, før browseren bruger den
-status: planlagt
+status: i-gang
 kilde: interview
 oprettet: 2026-11-13
 ---
