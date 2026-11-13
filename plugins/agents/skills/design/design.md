@@ -33,6 +33,8 @@ Appen bruger `docs/design/design.css` som den er: direkte, eller kopieret ind ve
 <link rel="stylesheet" href="app.css">
 ```
 
+Appen leverer `design.css` og sine egne stylesheets efter kontraktens regel, så en ny udgave bruges uden Ctrl+F5. Reglen står i projektets `AGENTS.md`, under `### En ny udgave uden Ctrl+F5` i `## Webflader og designstandarden`.
+
 Sæt `class="hjk-page"` på `<body>` for at give siden standardens baggrund, tekstfarve og skrift. Det er valgfrit; komponenterne virker også uden.
 
 ## Præfikset `hjk-`
