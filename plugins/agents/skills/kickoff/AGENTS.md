@@ -1,5 +1,5 @@
 ---
-kontrakt-version: 26
+kontrakt-version: 27
 ---
 
 # AGENTS.md — fælles kontrakt
@@ -562,12 +562,16 @@ på stakken og i proxy-værten. Se `## Værdier hører i .env`.
 
 - `architect` skriver de otte punkter ind i `Færdig når` i den opgave der sætter
   appen bag Authentik. Er det uklart om appen står bag Authentik, spørger den.
-  Er det uklart om adressen kan bære persondata, spørger den også.
+  Er det uklart om adressen kan bære persondata, spørger den også. Punkt 8 står
+  i `Færdig når` som menneskets trin. `architect` sætter det som holdt, når
+  mennesket har kørt tjekket af adgangsloggen i `NGINX-PROXY-MANAGER.md`, og
+  tallet stod stille. Indtil da er opgaven ikke `afsluttet`.
 - `developer` bygger punkt 1–7 og efterprøver dem med HTTP-kald efter
   `## Efterprøvning af en webflade`: uden nøgle, med forkert nøgle, med rigtig
   nøgle, og med et forfalsket brugernavn uden nøgle. Punkt 8 er ikke kode og
   ikke `developer`s at bygge. Mennesket sætter det i proxy-værten efter
-  `NGINX-PROXY-MANAGER.md`.
+  `NGINX-PROXY-MANAGER.md`. `developer` skriver punkt 8 under *Hvad er ikke
+  lavet, og hvorfor* som menneskets trin, ikke som noget der mangler.
 - `security` holder appen op mod punkt 1–7 og proxy-værten op mod punkt 8 før
   en udrulning. Hvert punkt der ikke holder, er et fund. Stoler appen på
   `X-authentik-*` uden at tjekke nøglen, er fundet `kritisk`. Proxy-værtens
