@@ -96,80 +96,80 @@
   :root:not([data-theme="light"]) {
     --hjk-color-scheme: dark;
 
-    --hjk-color-bg: #121417;
-    --hjk-color-surface: #1b1e23;
-    --hjk-color-surface-alt: #252a31;
-    --hjk-color-text: #e6e8eb;
-    --hjk-color-text-muted: #a8afb9;
-    --hjk-color-border: #7d8796;
-    --hjk-color-divider: #353b44;
+    --hjk-color-bg: #141a17;
+    --hjk-color-surface: #1b231f;
+    --hjk-color-surface-alt: #24302a;
+    --hjk-color-text: #ecebe4;
+    --hjk-color-text-muted: #a9b1a8;
+    --hjk-color-border: #7e8a80;
+    --hjk-color-divider: #2f3a34;
 
-    --hjk-color-primary: #7fb8e6;
-    --hjk-color-primary-hover: #a6cef0;
-    --hjk-color-on-primary: #0c1a26;
-    --hjk-color-danger: #f09a92;
-    --hjk-color-danger-hover: #f5bab4;
-    --hjk-color-on-danger: #2a0b08;
+    --hjk-color-primary: #d9b25f;
+    --hjk-color-primary-hover: #e8cb8c;
+    --hjk-color-on-primary: #1e1606;
+    --hjk-color-danger: #ee9a88;
+    --hjk-color-danger-hover: #f4bcae;
+    --hjk-color-on-danger: #2a0e08;
 
-    --hjk-color-focus: #8fc6ff;
+    --hjk-color-focus: #e8cb8c;
 
-    --hjk-color-disabled-bg: #2a2e35;
-    --hjk-color-disabled-text: #8a929d;
-    --hjk-color-disabled-border: #3d434c;
+    --hjk-color-disabled-bg: #232b27;
+    --hjk-color-disabled-text: #87908a;
+    --hjk-color-disabled-border: #38423c;
 
-    --hjk-color-error-text: #ffb3ab;
-    --hjk-color-error-bg: #3a1613;
-    --hjk-color-error-border: #e8695f;
-    --hjk-color-warning-text: #ffd98a;
-    --hjk-color-warning-bg: #372a0a;
-    --hjk-color-success-text: #9fd8ad;
-    --hjk-color-success-bg: #132e1b;
-    --hjk-color-info-text: #a9cdf0;
-    --hjk-color-info-bg: #11273b;
+    --hjk-color-error-text: #f2b0a2;
+    --hjk-color-error-bg: #3a1a14;
+    --hjk-color-error-border: #e2705c;
+    --hjk-color-warning-text: #f0cf86;
+    --hjk-color-warning-bg: #33290f;
+    --hjk-color-success-text: #a8d5a2;
+    --hjk-color-success-bg: #18291a;
+    --hjk-color-info-text: #c3d4c6;
+    --hjk-color-info-bg: #1f2b25;
 
-    --hjk-color-topbar-bg: #0b0d10;
-    --hjk-color-topbar-text: #e6e8eb;
-    --hjk-color-topbar-focus: #8fc6ff;
+    --hjk-color-topbar-bg: #0e1311;
+    --hjk-color-topbar-text: #ecebe4;
+    --hjk-color-topbar-focus: #e8cb8c;
   }
 }
 
 :root[data-theme="dark"] {
   --hjk-color-scheme: dark;
 
-  --hjk-color-bg: #121417;
-  --hjk-color-surface: #1b1e23;
-  --hjk-color-surface-alt: #252a31;
-  --hjk-color-text: #e6e8eb;
-  --hjk-color-text-muted: #a8afb9;
-  --hjk-color-border: #7d8796;
-  --hjk-color-divider: #353b44;
+  --hjk-color-bg: #141a17;
+  --hjk-color-surface: #1b231f;
+  --hjk-color-surface-alt: #24302a;
+  --hjk-color-text: #ecebe4;
+  --hjk-color-text-muted: #a9b1a8;
+  --hjk-color-border: #7e8a80;
+  --hjk-color-divider: #2f3a34;
 
-  --hjk-color-primary: #7fb8e6;
-  --hjk-color-primary-hover: #a6cef0;
-  --hjk-color-on-primary: #0c1a26;
-  --hjk-color-danger: #f09a92;
-  --hjk-color-danger-hover: #f5bab4;
-  --hjk-color-on-danger: #2a0b08;
+  --hjk-color-primary: #d9b25f;
+  --hjk-color-primary-hover: #e8cb8c;
+  --hjk-color-on-primary: #1e1606;
+  --hjk-color-danger: #ee9a88;
+  --hjk-color-danger-hover: #f4bcae;
+  --hjk-color-on-danger: #2a0e08;
 
-  --hjk-color-focus: #8fc6ff;
+  --hjk-color-focus: #e8cb8c;
 
-  --hjk-color-disabled-bg: #2a2e35;
-  --hjk-color-disabled-text: #8a929d;
-  --hjk-color-disabled-border: #3d434c;
+  --hjk-color-disabled-bg: #232b27;
+  --hjk-color-disabled-text: #87908a;
+  --hjk-color-disabled-border: #38423c;
 
-  --hjk-color-error-text: #ffb3ab;
-  --hjk-color-error-bg: #3a1613;
-  --hjk-color-error-border: #e8695f;
-  --hjk-color-warning-text: #ffd98a;
-  --hjk-color-warning-bg: #372a0a;
-  --hjk-color-success-text: #9fd8ad;
-  --hjk-color-success-bg: #132e1b;
-  --hjk-color-info-text: #a9cdf0;
-  --hjk-color-info-bg: #11273b;
+  --hjk-color-error-text: #f2b0a2;
+  --hjk-color-error-bg: #3a1a14;
+  --hjk-color-error-border: #e2705c;
+  --hjk-color-warning-text: #f0cf86;
+  --hjk-color-warning-bg: #33290f;
+  --hjk-color-success-text: #a8d5a2;
+  --hjk-color-success-bg: #18291a;
+  --hjk-color-info-text: #c3d4c6;
+  --hjk-color-info-bg: #1f2b25;
 
-  --hjk-color-topbar-bg: #0b0d10;
-  --hjk-color-topbar-text: #e6e8eb;
-  --hjk-color-topbar-focus: #8fc6ff;
+  --hjk-color-topbar-bg: #0e1311;
+  --hjk-color-topbar-text: #ecebe4;
+  --hjk-color-topbar-focus: #e8cb8c;
 }
 
 /* ------------------------------------------------------------------- Side

@@ -185,32 +185,32 @@ I plugin'et er tabellen det kontrollen læser: den regner forholdene ud igen og 
 
 | Forgrund | Baggrund | Krav | Lys | Mørk | Bruges til |
 |---|---|---|---|---|---|
-| `--hjk-color-text` | `--hjk-color-bg` | 4,5 | 14,99 | 15,03 | Brødtekst på siden |
-| `--hjk-color-text` | `--hjk-color-surface` | 4,5 | 16,35 | 13,61 | Tekst i felter og tabelceller |
-| `--hjk-color-text` | `--hjk-color-surface-alt` | 4,5 | 13,80 | 11,76 | Tabelhoved |
-| `--hjk-color-text-muted` | `--hjk-color-bg` | 4,5 | 6,80 | 8,34 | Hjælpetekst på siden |
-| `--hjk-color-text-muted` | `--hjk-color-surface` | 4,5 | 7,42 | 7,55 | Hjælpetekst på en flade |
-| `--hjk-color-primary` | `--hjk-color-surface` | 4,5 | 7,24 | 7,87 | Sekundær knap |
-| `--hjk-color-primary` | `--hjk-color-surface-alt` | 4,5 | 6,11 | 6,80 | Sekundær knap, mus over |
-| `--hjk-color-on-primary` | `--hjk-color-primary` | 4,5 | 7,24 | 8,31 | Primær knap |
-| `--hjk-color-on-primary` | `--hjk-color-primary-hover` | 4,5 | 9,81 | 10,66 | Primær knap, mus over |
-| `--hjk-color-on-danger` | `--hjk-color-danger` | 4,5 | 6,57 | 8,47 | Fareknap |
-| `--hjk-color-on-danger` | `--hjk-color-danger-hover` | 4,5 | 9,06 | 10,92 | Fareknap, mus over |
-| `--hjk-color-error-text` | `--hjk-color-bg` | 4,5 | 8,52 | 10,79 | Fejltekst under et felt |
-| `--hjk-color-error-text` | `--hjk-color-surface` | 4,5 | 9,30 | 9,77 | Fejltekst under et felt på en flade |
-| `--hjk-color-error-text` | `--hjk-color-error-bg` | 4,5 | 8,13 | 9,42 | Besked: fejl |
-| `--hjk-color-warning-text` | `--hjk-color-warning-bg` | 4,5 | 7,55 | 10,37 | Besked: advarsel |
-| `--hjk-color-success-text` | `--hjk-color-success-bg` | 4,5 | 7,18 | 8,99 | Besked: succes |
-| `--hjk-color-info-text` | `--hjk-color-info-bg` | 4,5 | 7,58 | 9,20 | Besked: info |
-| `--hjk-color-topbar-text` | `--hjk-color-topbar-bg` | 4,5 | 13,99 | 15,85 | Appnavn og navigation i topbjælken |
-| `--hjk-color-text-muted` | `--hjk-color-bg` | 4,5 | 6,80 | 8,34 | Bundlinjens tekst |
-| `--hjk-color-primary` | `--hjk-color-bg` | 4,5 | 6,64 | 8,69 | Adressen i bundlinjen |
-| `--hjk-color-primary` | `--hjk-color-bg` | 3 | 6,64 | 8,69 | Primær og sekundær knaps kant mod siden |
-| `--hjk-color-danger` | `--hjk-color-bg` | 3 | 6,02 | 8,55 | Fareknappens kant mod siden |
-| `--hjk-color-border` | `--hjk-color-bg` | 3 | 3,56 | 5,07 | Formularfeltets kant mod siden |
-| `--hjk-color-border` | `--hjk-color-surface` | 3 | 3,88 | 4,59 | Formularfeltets kant på en flade |
-| `--hjk-color-error-border` | `--hjk-color-bg` | 3 | 5,05 | 5,81 | Formularfelt med fejl, mod siden |
-| `--hjk-color-error-border` | `--hjk-color-surface` | 3 | 5,51 | 5,26 | Formularfelt med fejl, på en flade |
-| `--hjk-color-focus` | `--hjk-color-bg` | 3 | 6,64 | 10,27 | Fokusmarkering på siden |
-| `--hjk-color-focus` | `--hjk-color-surface` | 3 | 7,24 | 9,30 | Fokusmarkering på en flade |
-| `--hjk-color-topbar-focus` | `--hjk-color-topbar-bg` | 3 | 8,28 | 10,83 | Fokusmarkering i topbjælken |
+| `--hjk-color-text` | `--hjk-color-bg` | 4,5 | 14,99 | 14,76 | Brødtekst på siden |
+| `--hjk-color-text` | `--hjk-color-surface` | 4,5 | 16,35 | 13,44 | Tekst i felter og tabelceller |
+| `--hjk-color-text` | `--hjk-color-surface-alt` | 4,5 | 13,80 | 11,47 | Tabelhoved |
+| `--hjk-color-text-muted` | `--hjk-color-bg` | 4,5 | 6,80 | 8,01 | Hjælpetekst på siden |
+| `--hjk-color-text-muted` | `--hjk-color-surface` | 4,5 | 7,42 | 7,30 | Hjælpetekst på en flade |
+| `--hjk-color-primary` | `--hjk-color-surface` | 4,5 | 7,24 | 8,02 | Sekundær knap |
+| `--hjk-color-primary` | `--hjk-color-surface-alt` | 4,5 | 6,11 | 6,84 | Sekundær knap, mus over |
+| `--hjk-color-on-primary` | `--hjk-color-primary` | 4,5 | 7,24 | 8,94 | Primær knap |
+| `--hjk-color-on-primary` | `--hjk-color-primary-hover` | 4,5 | 9,81 | 11,38 | Primær knap, mus over |
+| `--hjk-color-on-danger` | `--hjk-color-danger` | 4,5 | 6,57 | 8,25 | Fareknap |
+| `--hjk-color-on-danger` | `--hjk-color-danger-hover` | 4,5 | 9,06 | 10,86 | Fareknap, mus over |
+| `--hjk-color-error-text` | `--hjk-color-bg` | 4,5 | 8,52 | 9,67 | Fejltekst under et felt |
+| `--hjk-color-error-text` | `--hjk-color-surface` | 4,5 | 9,30 | 8,80 | Fejltekst under et felt på en flade |
+| `--hjk-color-error-text` | `--hjk-color-error-bg` | 4,5 | 8,13 | 8,60 | Besked: fejl |
+| `--hjk-color-warning-text` | `--hjk-color-warning-bg` | 4,5 | 7,55 | 9,53 | Besked: advarsel |
+| `--hjk-color-success-text` | `--hjk-color-success-bg` | 4,5 | 7,18 | 9,26 | Besked: succes |
+| `--hjk-color-info-text` | `--hjk-color-info-bg` | 4,5 | 7,58 | 9,47 | Besked: info |
+| `--hjk-color-topbar-text` | `--hjk-color-topbar-bg` | 4,5 | 13,99 | 15,68 | Appnavn og navigation i topbjælken |
+| `--hjk-color-text-muted` | `--hjk-color-bg` | 4,5 | 6,80 | 8,01 | Bundlinjens tekst |
+| `--hjk-color-primary` | `--hjk-color-bg` | 4,5 | 6,64 | 8,81 | Adressen i bundlinjen |
+| `--hjk-color-primary` | `--hjk-color-bg` | 3 | 6,64 | 8,81 | Primær og sekundær knaps kant mod siden |
+| `--hjk-color-danger` | `--hjk-color-bg` | 3 | 6,02 | 8,07 | Fareknappens kant mod siden |
+| `--hjk-color-border` | `--hjk-color-bg` | 3 | 3,56 | 4,90 | Formularfeltets kant mod siden |
+| `--hjk-color-border` | `--hjk-color-surface` | 3 | 3,88 | 4,46 | Formularfeltets kant på en flade |
+| `--hjk-color-error-border` | `--hjk-color-bg` | 3 | 5,05 | 5,63 | Formularfelt med fejl, mod siden |
+| `--hjk-color-error-border` | `--hjk-color-surface` | 3 | 5,51 | 5,13 | Formularfelt med fejl, på en flade |
+| `--hjk-color-focus` | `--hjk-color-bg` | 3 | 6,64 | 11,22 | Fokusmarkering på siden |
+| `--hjk-color-focus` | `--hjk-color-surface` | 3 | 7,24 | 10,21 | Fokusmarkering på en flade |
+| `--hjk-color-topbar-focus` | `--hjk-color-topbar-bg` | 3 | 8,28 | 11,92 | Fokusmarkering i topbjælken |
