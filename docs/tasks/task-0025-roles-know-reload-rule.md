@@ -1,7 +1,7 @@
 ---
 nummer: task-0025
 titel: reviewer og architect kender ikke reglen om en ny udgave uden Ctrl+F5
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-11-13
 ---

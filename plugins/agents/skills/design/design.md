@@ -1,5 +1,5 @@
 ---
-design-version: 3
+design-version: 4
 ---
 
 # Designstandard for webløsninger
