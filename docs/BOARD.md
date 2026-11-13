@@ -21,6 +21,7 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
+| task-0024 | En ny udgave af et stylesheet kræver Ctrl+F5, før browseren bruger den | planlagt | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -60,6 +61,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0020 | GUIDE kender kun hookens kontrakttjek, og træet i PLUGIN.md mangler repoets egne filer | bygget |
 | task-0021 | GUIDE siger ikke at projektets workflow-kopi bliver bagud | bygget |
 | task-0022 | Bundlinjen står i venstre side, men skal stå centreret | bygget |
+| task-0023 | Mørk tilstand er kølig blågrå, men skal være varm grå over i grøn | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.
