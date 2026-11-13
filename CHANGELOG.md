@@ -26,6 +26,26 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.7.0
+
+Kontrakten er bumpet fra version 26 til 27. **Kør `/agents:update` i hvert
+projekt.**
+
+### Proxyens adgangslog for apps bag Authentik
+
+Kontraktens afsnit om en app bag Authentik har et ottende punkt: kan adressen
+bære persondata, fx et navn i en søgning, er proxy-værtens adgangslog slået fra
+i alle tre `location`-blokke. Punktet er proxy-værtens og ikke appens. Du sætter
+det selv efter `NGINX-PROXY-MANAGER.md`, og `architect` lukker opgaven når
+tjekket er kørt. `security` tjekker punktet før en udrulning, når den kan se
+proxy-værten.
+
+Guidens tjek af loggen bruger nu `N` som pladsholder for proxy-værtens nummer.
+Kan tjekket ikke finde loggen, skal det først vise at nummeret er det rigtige.
+Guiden viser også hvordan linjer fra før ændringen tømmes.
+
+---
+
 ## 1.6.0
 
 Kontrakten er bumpet fra version 25 til 26, og designstandarden fra version 3
