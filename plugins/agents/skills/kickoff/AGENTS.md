@@ -388,20 +388,28 @@ til.** Ingen rolle bygger udseendet om i forbifarten.
 herunder, i `### Bundlinjen er fast`, så den kan læses i et projekt der ikke
 har `docs/design/`.
 
+**En ny udgave af appens filer virker uden Ctrl+F5, i hver webløsning**, med
+eller uden standarden. Reglen står herunder, i `### En ny udgave uden Ctrl+F5`.
+
 **Hvem gør hvad:**
 
 - `architect` holder et projekt med en webflade op mod dette afsnit i sit første
   trin. Er projektet nyt og mangler `docs/design/`, bliver det et emne at lægge
   standarden ind. Er det i drift uden standarden, bliver det et emne der
-  foreslår den, og mennesket afgør. Mangler bundlinjen, bliver det et emne. En
-  opgave om bundlinjen har reglen i `Færdig når`.
+  foreslår den, og mennesket afgør. Mangler bundlinjen, bliver det et emne. Det
+  gør det også, når en app i drift leverer sine filer uden om reglen om en ny
+  udgave. En opgave om bundlinjen har reglen i `Færdig når`. En opgave der
+  sætter en webflade op eller ændrer hvordan den leverer sine filer, har reglen
+  om en ny udgave i `Færdig når`.
 - `developer` bygger webfladen med standardens variabler og klasser, når
   projektet har den, og skriver projektets egne regler i appens eget
-  stylesheet — aldrig i `docs/design/`. Bundlinjen efterprøves efter
-  `## Efterprøvning af en webflade`.
+  stylesheet — aldrig i `docs/design/`. Den leverer filerne efter reglen om en
+  ny udgave. Bundlinjen og leveringen af filerne efterprøves med HTTP-kald
+  efter `## Efterprøvning af en webflade`.
 - `reviewer` melder det som fund når en webflade går uden om standarden, når
-  kopien i `docs/design/` er rettet, og når bundlinjen mangler eller afviger fra
-  reglen.
+  kopien i `docs/design/` er rettet, når bundlinjen mangler eller afviger fra
+  reglen, og når en fil har lang levetid på en adresse der ikke skifter med
+  indholdet.
 - `mockup` giver skitsen standardens udseende og viser bundlinjen med opdigtede
   værdier. Skitsen er stadig én fil der virker uden netværk.
 
@@ -425,6 +433,25 @@ Skriv den ikke om, og tilføj intet. Markup står under `### Bundlinje` i `docs/
 - **Værdierne læses på serveren.** Hvordan de når siden, afhænger af stakken. De bages aldrig ind i en statisk fil ved build.
 - **Værdierne sættes ind som tekst, aldrig som HTML.** Brug stakkens almindelige escaping — både i teksten og i linkets `href`. Ingen af de tre værdier må kunne blive til markup.
 - **Adressen er et `mailto:`-link**, der åbner en ny mail med emnet *Angående <appens navn>*. Emnet procentkodes, fx `?subject=Ang%C3%A5ende%20Eksempelappen`. Appens navn er tekst i koden, ikke en indstilling.
+
+### En ny udgave uden Ctrl+F5
+
+**Hver webløsning leverer sine filer, så en ny udgave bruges ved næste almindelige sidevisning.** Ingen skal trykke Ctrl+F5. Det gælder hver fil appen selv leverer — stylesheets og scripts, også kopien af `design.css` — med eller uden standarden.
+
+Der er to måder, og ikke andre:
+
+1. **Adressen skifter med indholdet.** Filens navn eller adresse bærer et fingeraftryk af indholdet, typisk en hash som stakken sætter ved build. Så må filen gemmes længe, fordi en ny udgave får en ny adresse. Et versionsnummer på adressen er ikke et fingeraftryk: det skifter ikke når en fil ændres uden en ny udgivelse.
+2. **Browseren spørger hver gang.** Svaret har `Cache-Control: no-cache` og enten `ETag` eller `Last-Modified`. Så spørger browseren serveren før hver brug, og får `304` uden indhold når filen er den samme.
+
+- **Det må aldrig ske:** en lang levetid — `max-age` over nul eller `immutable` — på en adresse der ikke skifter med indholdet. Så bruger browseren den gamle fil uden at spørge.
+- **Selve siderne svarer med `Cache-Control: no-cache`.** Ellers kan en gemt side pege på en gammel adresse, og så hjælper fingeraftrykket ikke.
+- **Proxyen gemmer ikke filerne.** I Nginx Proxy Manager står *Cache Assets* på *Fra*, som `NGINX-PROXY-MANAGER.md` i plugin-repoet siger.
+
+**Efterprøvning** sker med HTTP-kald mod appens egen server, efter `## Efterprøvning af en webflade`:
+
+- Svaret på en side viser `Cache-Control: no-cache`.
+- Svaret på et stylesheet viser sin `Cache-Control`. Ved den første måde peger siden på stylesheetet med fingeraftrykket i adressen. Ved den anden måde har svaret `no-cache` og en `ETag` eller `Last-Modified`.
+- Ved den anden måde giver et nyt kald med `If-None-Match` eller `If-Modified-Since`, sat til den værdi det første svar gav, `304` uden indhold.
 
 ## Stak og biblioteker
 

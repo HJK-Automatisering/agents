@@ -377,6 +377,8 @@ Kaldet viser hvad standarden er og spørger ja eller nej. Ved ja lægger det tre
 
 **Kaldet kobler ikke selv standarden på appen.** Hvordan stylesheetet når appen — direkte eller kopieret ind ved build — afhænger af stakken, så det bliver en opgave hos `/agents:architect`.
 
+**En ny udgave af appens stylesheets og scripts skal virke uden Ctrl+F5**, i hver webløsning, med eller uden standarden. Browseren skal selv hente den nye udgave ved næste almindelige sidevisning. Reglen står i kontrakten, `AGENTS.md`, og `/agents:reviewer` melder det når en fil kan blive hængende i browserens lager.
+
 **Ret aldrig i filerne i `docs/design/`.** De er en kopi af det fælles. Projektets egne regler står i appens eget stylesheet, og mangler standarden noget, rettes det i `agents`-repoet.
 
 **Kopien følger ikke med når plugin'et opdateres.** Den har sit eget versionsnummer i `docs/design/design.md`, og Claude Code siger til når den er bagud:

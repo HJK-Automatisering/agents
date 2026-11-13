@@ -1,7 +1,7 @@
 ---
 nummer: task-0024
 titel: En ny udgave af et stylesheet kræver Ctrl+F5, før browseren bruger den
-status: planlagt
+status: afsluttet
 kilde: interview
 oprettet: 2026-11-13
 ---
@@ -112,5 +112,46 @@ task-0023. Begge ændrer `design.md`, og der bygges kun på én opgave ad gangen
 developer, som aldrig retter i definitionen ovenfor.>
 
 ### Hvad er lavet
+
+Gren: `task-0024-stylesheets-without-hard-reload`, tre commits (`e00d4de`, `1cf876f`, `b25ac1e`).
+
+- **Regel i kontraktskabelonen** — `plugins/agents/skills/kickoff/AGENTS.md`, nyt underafsnit
+  `### En ny udgave uden Ctrl+F5` efter `### Bundlinjen er fast`. Gælder hver webløsning og hver fil
+  appen selv leverer: stylesheets, scripts og kopien af `design.css`.
+- **De to tilladte måder og forbuddet** — samme sted: fingeraftryk i adressen, eller
+  `Cache-Control: no-cache` med `ETag` eller `Last-Modified`. Aldrig `max-age` over nul eller
+  `immutable` på en adresse der ikke skifter med indholdet. Under den første måde står én sætning om
+  at et versionsnummer på adressen ikke er et fingeraftryk. Den er taget fra det afviste alternativ
+  under `## Beslutninger`, så `?v=<version>` ikke læses som den første måde.
+- **Siderne selv** — samme sted: siderne svarer med `Cache-Control: no-cache`.
+- **Proxyen** — samme sted: *Cache Assets* på *Fra*, med henvisning til `NGINX-PROXY-MANAGER.md`.
+  Guiden er ikke rørt.
+- **Efterprøvning med HTTP-kald** — samme sted, med henvisning til `## Efterprøvning af en webflade`:
+  `Cache-Control` på en side og på et stylesheet. Ved den første måde peger siden på adressen med
+  fingeraftrykket. Ved den anden giver et nyt kald med `If-None-Match` eller `If-Modified-Since`
+  `304` uden indhold.
+- **Fed linje øverst i afsnittet** — i `## Webflader og designstandarden`, efter linjen om bundlinjen,
+  med henvisning til underafsnittet.
+- ***Hvem gør hvad*** — flettet ind i de eksisterende punkter for `architect`, `developer` og
+  `reviewer`. Der er ingen nye punkter. `mockup`s punkt er ikke rørt.
+- **Standardens dokument** — `plugins/agents/skills/design/design.md`, under `## Sådan kobles den på`:
+  én sætning efter kodeblokken, med henvisning til underafsnittet. Reglen er ikke gentaget.
+- **`GUIDE.md`** — under `## Designstandard`: et kort stykke efter afsnittet om at kaldet ikke selv
+  kobler standarden på.
+- **Kontrol** — `node tools/validate.mjs` slutter med `OK` og exit 0. Den giver de to ventede
+  advarsler om `kontrakt-version` (25) og `design-version` (3). Ingen af dem er bumpet.
+
+Til README: ingen ny kommando eller indstilling.
+
 ### Hvad er ikke lavet, og hvorfor
+
+intet
+
 ### Uklart
+
+- **Fund, uden for opgaven:** `plugins/agents/agents/reviewer.md` (linje 39) og
+  `plugins/agents/skills/architect/SKILL.md` (linje 101) henviser begge til
+  `### Bundlinjen er fast` med en konkret instruktion. De nævner ikke den nye regel. Kontraktens
+  *Hvem gør hvad* dækker pligten, men rollefilerne er uens nu: bundlinjen har en linje i begge, og
+  den nye regel har ingen. Jeg har ikke rettet dem, for de står ikke i opgaven. Architect afgør om
+  det skal være en opgave.
