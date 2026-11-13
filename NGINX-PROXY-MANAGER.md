@@ -66,6 +66,9 @@ De samme krav står i kontrakten, `AGENTS.md`, i afsnittet *En app bag
 Authentik*. Det er dem rollerne bygger og tjekker appen efter. Er listen her og
 kontrakten uenige, er det kontrakten der gælder.
 
+Kontraktens ottende punkt er proxy-værtens adgangslog og ikke appens, så det
+står ikke i listen her, men i del 4.
+
 1. **Afvise ethvert kald uden den rigtige nøgle**, på alle stier — også
    stylesheets, billeder og andet der ser harmløst ud. Afvisningen er `401`
    eller `403` uden indhold, så den viser intet af appen.
@@ -349,11 +352,26 @@ vej en fremmed container på netværket ville tage.
     wc -l /data/logs/proxy-host-N_access.log
     ```
 
+    Siger `wc` at filen ikke findes, så se efter hvilke adgangslogge der
+    findes, før du går videre. Det kan betyde at loggen aldrig er skrevet, men
+    også at `N` ikke blev skiftet ud.
+
+    ```sh
+    ls /data/logs/proxy-host-*_access.log
+    ```
+
+    Står nummeret fra trin 18 i listen, var nummeret i kommandoen forkert. Kør
+    `wc -l` igen med det rigtige. Står det ikke i listen, eller siger `ls` at
+    der ingen er, så se at nummeret fra trin 18 er det der står i kommandoen,
+    og ikke `N`. Først da betyder den manglende fil at loggen er tom.
+
 20. I browseren: åbn et nyt privat vindue, og gå direkte til en adresse dybt i
     appen, før du logger ind, fx `https://<adresse>/<en anden sti i appen>?test=1`.
     Log ind som en bruger i gruppen, og brug appen et øjeblik.
-21. Kør `wc -l` igen. Tallet skal være det samme som i trin 19. Siger `wc` at
-    filen ikke findes, er der heller ikke skrevet noget.
+21. Kør `wc -l` igen, med samme nummer. Tallet skal være det samme som i
+    trin 19. Siger `wc` at filen ikke findes, er der heller ikke skrevet
+    noget — men kun hvis trin 19 viste at nummeret er det rigtige. Fandtes
+    filen ikke i trin 19, men findes nu, er der skrevet i den.
 22. Kun hvis adgangsloggen har stået åben før ændringen, fx på en proxy-vært
     der fandtes i forvejen: tøm linjerne fra før, og slet de roterede filer.
     `N` er nummeret fra trin 18.
@@ -388,7 +406,7 @@ skal ind eller ud* i `AUTHENTIK.md`.
 | `502 Bad Gateway` efter login | Containeren kører ikke, eller *Forward Hostname / IP* og *Forward Port* er ikke `<alias>` og `<port>`. Del 2 |
 | Tjekket uden nøgle svarer `200` | Appen tjekker ikke nøglen, og enhver container på netværket kan nå den. Det kan ikke rettes i proxyen. Appen skal opfylde *Det appen selv skal gøre*; stop stacken i Portainer indtil den gør |
 | Tjekket uden nøgle svarer `000` | Proxyens container kan ikke nå `<alias>` på `<port>`. Forkert alias eller port, eller appen er ikke på `nginx-proxy-manager_default` |
-| Tallet fra `wc -l` er steget | `access_log off;` mangler i en af de tre `location`-blokke. Del 4, og klik **Save** igen |
+| Tallet fra `wc -l` er steget, eller loggen fandtes ikke i trin 19 og findes i trin 21 | `access_log off;` mangler i en af de tre `location`-blokke. Del 4, og klik **Save** igen |
 | Proxy-værten står som *Offline* | Nginx Proxy Manager har afvist konfigurationen i *Advanced*. Se efter stavefejl og manglende `;` |
 
 ## Nøglen: hvor den står, og hvordan den skiftes
