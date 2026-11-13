@@ -10,6 +10,7 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-11-13 | — | Repoets egen kontrakt er opdateret fra version 25 til 26 | Kopien var ordret version 25 uden afvigelser, efterprøvet med diff, og er nu identisk med skabelonen. Nyt er reglen om en ny udgave uden Ctrl+F5. Repoet har ingen webflade, så intet igangværende arbejde berøres. Committes på sin egen gren og merges, som ved version 25. Mennesket bad om det | architect |
 | 2026-11-13 | — | Udgivelsen hedder 1.6.0: kontrakt-version 25 → 26 og design-version 3 → 4, med varm mørk tilstand og reglen om en ny udgave uden Ctrl+F5 | Minor efter reglen i PLUGIN.md, fordi kontrakten har fået en ny regel. Intet holder op med at virke. Posten i `CHANGELOG.md` skrevet først, begge manifester bumpet, kontrollen ren. Mennesket sagde ja | architect |
 | 2026-11-13 | task-0025 | `kontrakt-version` bumpet 25 → 26 og `design-version` 3 → 4 på opgavens gren | Dækker task-0023, task-0024 og task-0025. Uden bumpene opdager projekterne hverken paletten eller reglen. Imod: alle projekter skal køre `/agents:update`. Mennesket valgte | — |
 | 2026-11-13 | — | Kontrollens advarsel om stemplerne forsvinder når en ændring merges uden bump | Den sammenligner med `origin/main`. Efter task-0023 og task-0024 var merget, så den ingen forskel. Bumpet skal huskes af architect ved lukningen, ikke af kontrollen. Ikke et eget nummer: at udsætte bumpet til ændringen er hel, er et bevidst valg | architect |
