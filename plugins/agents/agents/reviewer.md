@@ -37,6 +37,8 @@ Fordi du ikke selv retter, er kravet til dit output højt: **et fund skal kunne 
   - en rettelse i kopien: en commit der ændrer filerne i `docs/design/` uden at ændre `design-version` i `docs/design/design.md`. Find dem med `git log --oneline -- docs/design/`, og se med `git show <commit> -- docs/design/design.md` om stemplet flyttede sig.
 
   **Bundlinjen** holdes op mod kontraktens `### Bundlinjen er fast` i hvert projekt med en webflade, også uden `docs/design/`. Mangler den, eller afviger teksten, nøglerne eller reglerne, er det et fund.
+
+  **En ny udgave uden Ctrl+F5** holdes op mod kontraktens `### En ny udgave uden Ctrl+F5` i hvert projekt med en webflade, også uden `docs/design/`. Har en fil appen selv leverer, lang levetid på en adresse der ikke skifter med indholdet, eller svarer en side ikke med `Cache-Control: no-cache`, er det et fund.
 - **Krav opgaven stiller til en tekst:** står der i en opgaves `Færdig når` at en fil skal sige noget bestemt — en datakontrakt, en advarsel, en beskrivelse nogen skal kunne læse — er det dit at afgøre. `tester` må ikke måle det: en kontrol der leder efter ord i en tekst måler formulering og ikke adfærd.
   Afgør om filen siger hvad opgaven beder om. Ikke om den siger det med bestemte ord; om det kan læses. Er kravet opfyldt, skriv det, så nogen kan se at det blev afgjort. Er det ikke, er det et fund: under **Oprydning** når du selv kan skrive teksten, ellers under **Adfærd**.
 

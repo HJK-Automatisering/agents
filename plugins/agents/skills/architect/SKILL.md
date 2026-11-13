@@ -97,8 +97,11 @@ Læs de afsluttede opgaver. Du skal ikke foreslå noget der allerede findes, og 
 - **Nyt, og `docs/design/` findes ikke:** et emne om at lægge standarden ind med `/agents:design`.
 - **I drift, uden standarden:** et emne der foreslår standarden. Mennesket afgør. Du bygger intet om af dig selv, og du gør det ikke til en opgave uden et ja.
 - **Ingen bundlinje**, med eller uden standarden: et emne.
+- **I drift, og appen leverer sine filer uden om reglen** i kontraktens `### En ny udgave uden Ctrl+F5`, med eller uden standarden: et emne.
 
 Skriver du en opgave om bundlinjen, står reglerne fra kontraktens `### Bundlinjen er fast` i `Færdig når`, ét punkt pr. regel.
+
+Skriver du en opgave der sætter en webflade op eller ændrer hvordan den leverer sine filer, står reglen fra kontraktens `### En ny udgave uden Ctrl+F5` i `Færdig når`.
 
 ### 2. Hold den grove liste
 

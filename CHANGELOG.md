@@ -26,6 +26,29 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.6.0
+
+Kontrakten er bumpet fra version 25 til 26, og designstandarden fra version 3
+til 4. **Kør `/agents:update` i hvert projekt.**
+
+### Mørk tilstand er varm grå over i grøn
+
+Standardens mørke tilstand har fået en ny palet: grå med et grønt skær, varm
+hvid tekst og messing som accent i stedet for blå. Beskederne og fareknappen
+følger paletten. Lys tilstand er uændret. **Har appen sine egne farver til
+mørk tilstand ved siden af standarden, så se dem efter.** De følger ikke med af
+sig selv.
+
+### En ny udgave uden Ctrl+F5
+
+Kontrakten har en ny regel: hver webløsning leverer sine stylesheets og
+scripts, så en ny udgave bruges ved næste almindelige sidevisning. `reviewer`
+melder det, når en fil kan blive hængende i browserens lager. **Har en løsning
+i drift brug for Ctrl+F5 efter en udgivelse, så bed `architect` om en opgave på
+den.**
+
+---
+
 ## 1.5.0
 
 Kontrakten er bumpet fra version 24 til 25, og designstandarden fra version 2
