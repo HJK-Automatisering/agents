@@ -37,7 +37,7 @@ indtaster det. Skriv det aldrig i et repo.
 | `<authentik-adresse>` | Adressen på jeres Authentik, uden `https://`. Bruges kun hvis Authentik ikke er på proxyens netværk |
 | `<en anden sti i appen>` | En side eller fil i appen ud over forsiden, fx et stylesheet. Bruges i tjekket |
 | `<en bruger i gruppen>` | Brugernavnet på en der må komme ind. Bruges i tjekket, for at se at et forfalsket navn ikke hjælper |
-| `<nummer>` | Proxy-værtens nummer i Nginx Proxy Manager. Findes i tjekket |
+| `N` | Proxy-værtens nummer i Nginx Proxy Manager. Findes i tjekket, trin 18. Står uden vinkelparenteser; trin 19 siger hvorfor |
 
 ## Hvorfor appen skal have en nøgle fra proxyen
 
@@ -266,10 +266,16 @@ adresse brugeren bad om i `rd=`, så brugeren lander samme sted bagefter.
 **Adgangsloggen er slået fra i alle tre `location`-blokke.** Ellers skriver
 Nginx Proxy Manager en linje pr. forespørgsel med hele adressen. En adresse
 kan bære persondata — et navn i en søgning, et nummer på en sag i stien — og
-loggen ligger på proxyen, hvor alle der administrerer den, kan læse den.
+loggen ligger på proxyen, hvor alle der administrerer den, kan læse den. Med
+Nginx Proxy Managers standardopsætning gemmes den i omkring en måned.
 Adressen når loggen tre steder: i `location /` for en bruger med login, i
 `@goauthentik_proxy_signin` når en bruger uden login åbner den, og derefter i
 `rd=` under `location /outpost.goauthentik.io`. Derfor alle tre.
+
+Det har en pris. Uden adgangsloggen er det sværere at fejlsøge, og sværere at
+undersøge en hændelse bagefter, fordi der ikke står hvilke adresser der blev
+kaldt, og hvornår. Derfor gælder standarden apps bag Authentik, der sættes op
+efter denne guide, og ikke alle proxy-værter i Nginx Proxy Manager.
 
 Hvem der logger ind, logger Authentik selv. Den der sætter en ny app op, kan
 sjældent se på adresserne om de bærer persondata, så loggen er slået fra som
@@ -333,12 +339,14 @@ vej en fremmed container på netværket ville tage.
     grep -l '<adresse>' /data/nginx/proxy_host/*.conf
     ```
 
-    Svaret er `/data/nginx/proxy_host/<nummer>.conf`.
+    Svaret er `/data/nginx/proxy_host/N.conf`, hvor `N` er proxy-værtens
+    nummer.
 19. Tæl linjerne i proxy-værtens adgangslog, med nummeret fra svaret i stedet
-    for `<nummer>`:
+    for `N`. Pladsholderen er et bart `N` og ikke i vinkelparenteser, fordi
+    `sh` læser `<` som en omdirigering, så linjen fejler uden at gøre noget.
 
     ```sh
-    wc -l /data/logs/proxy-host-<nummer>_access.log
+    wc -l /data/logs/proxy-host-N_access.log
     ```
 
 20. I browseren: åbn et nyt privat vindue, og gå direkte til en adresse dybt i
@@ -346,10 +354,21 @@ vej en fremmed container på netværket ville tage.
     Log ind som en bruger i gruppen, og brug appen et øjeblik.
 21. Kør `wc -l` igen. Tallet skal være det samme som i trin 19. Siger `wc` at
     filen ikke findes, er der heller ikke skrevet noget.
+22. Kun hvis adgangsloggen har stået åben før ændringen, fx på en proxy-vært
+    der fandtes i forvejen: tøm linjerne fra før, og slet de roterede filer.
+    `N` er nummeret fra trin 18.
+
+    ```sh
+    : > /data/logs/proxy-host-N_access.log
+    rm /data/logs/proxy-host-N_access.log.*
+    ```
+
+    Findes der ingen roterede filer, siger `rm` det, og så er der intet at
+    slette.
 
 **Containeren.**
 
-22. I Portainer står appens container som *running*, og under *Published
+23. I Portainer står appens container som *running*, og under *Published
     Ports* står intet. Loggen viser ingen nøgle og ingen advarsel om den.
 
 Så står appen bag login. Adgangen gives og tages i gruppen; se *Når nogen
