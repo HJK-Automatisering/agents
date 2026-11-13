@@ -75,5 +75,61 @@ task-0024
 developer, som aldrig retter i definitionen ovenfor.>
 
 ### Hvad er lavet
+
+- `plugins/agents/agents/reviewer.md`: nyt stykke **En ny udgave uden Ctrl+F5** lige efter stykket om
+  **Bundlinjen**, under punktet om designstandarden og med samme form. Det henviser til kontraktens
+  `### En ny udgave uden Ctrl+F5`. Det gælder hvert projekt med en webflade, også uden `docs/design/`.
+  Det er et fund når en fil appen selv leverer, har lang levetid på en adresse der ikke skifter med
+  indholdet, eller når en side ikke svarer med `Cache-Control: no-cache`. Ordene er kontraktens egne.
+  Det dækker punkt 1 og den ene halvdel af punkt 4 i `Færdig når`.
+- `plugins/agents/skills/architect/SKILL.md`, listen i trin 1: nyt punkt **I drift, og appen leverer
+  sine filer uden om reglen**, med henvisning til kontraktens underafsnit, med eller uden standarden:
+  et emne. Det dækker punkt 2.
+- `plugins/agents/skills/architect/SKILL.md`, efter stykket om bundlinjeopgaven: et tilsvarende
+  stykke om opgaver der sætter en webflade op eller ændrer hvordan den leverer sine filer. Reglen
+  fra kontraktens `### En ny udgave uden Ctrl+F5` skal stå i `Færdig når`. Det dækker punkt 3 og den
+  anden halvdel af punkt 4. Ingen af de to filer gentager selve reglen. De henviser til
+  underafsnittet og nævner kun det, rollen skal se efter.
+- `node tools/validate.mjs` er grøn: `OK. 13 skills, 7 agenter, 63 markdown-filer, 29 farvepar, begge
+  manifester paa version 1.5.0.` Det dækker punkt 5. Den gav **ingen** advarsler om `kontrakt-version`
+  eller `design-version` i denne kørsel, selv om de var ventet. Intet stempel og intet versionsnummer
+  er rørt.
+- Der er intet nyt for brugeren i README. Der er ingen ny kommando og ingen ny indstilling.
+
+Søgningen efter bundlinjen i de øvrige rollefiler under `plugins/agents/`. Jeg har ikke rettet nogen
+af dem:
+
+- `plugins/agents/skills/design/SKILL.md`, trin 2, linje 60–61. Blokken der skrives ind i projektets
+  `CLAUDE.md`, nævner at bundlinjen er fast og henviser til `### Bundlinjen er fast`. Reglen om en
+  ny udgave står ikke ved siden af, selv om den også gælder kopien af `design.css`. Det er det sted
+  der ligner de to rettede mest.
+- `plugins/agents/skills/design/SKILL.md`, trin 3, linje 65. Emnet om at appen skal bruge
+  standardens stylesheet, "direkte eller kopieret ind ved build", nævner ikke at filen skal leveres
+  efter reglen om en ny udgave. Det er netop det emne der fører til en opgave, som "sætter en
+  webflade op". Architect fanger det nu via sin egen fil, når opgaven skrives. Emnet på BOARD siger
+  det dog ikke.
+- `plugins/agents/skills/update/SKILL.md`, linje 186. Teksten siger at nye regler for bundlinjen
+  kommer med kontrakten og ikke med standarden. Det samme gælder reglen om en ny udgave, men den
+  nævnes ikke. Det er en fortællende sætning og ikke en pligt til at tjekke noget. Jeg vurderer at den
+  hører mindre hjemme end de to ovenfor.
+- `plugins/agents/skills/mockup/SKILL.md`, linje 79. Skitsen viser bundlinjen. Reglen om en ny udgave
+  hører ikke hjemme her: skitsen er én fil uden server, så den leverer ingen filer.
+- `developer.md`, `tester.md`, `security.md` og de øvrige agenter nævner ikke bundlinjen. Der er
+  intet at holde reglen op imod.
+- `design.md` (linje 172) nævner bundlinjereglen, men den er designstandarden og ikke en rollefil.
+  Opgaven siger at den ikke må røres.
+
 ### Hvad er ikke lavet, og hvorfor
+
+intet
+
 ### Uklart
+
+- Architect-filen siger at en opgave om bundlinjen har reglerne "ét punkt pr. regel" i `Færdig når`. Jeg har ikke
+  skrevet det samme om reglen om en ny udgave. Den består af to måder at gøre det på, som man vælger
+  imellem, og tre faste punkter. At splitte den op ét punkt pr. regel ville være min fortolkning.
+  Kontrakten siger kun "har reglen om en ny udgave i `Færdig når`", og det har jeg fulgt. Skal
+  architect-filen bede om ét punkt pr. regel, eller om efterprøvningen fra underafsnittet, er det en
+  rettelse af én sætning.
+- Proxyens *Cache Assets* er ikke med i reviewers fund. Opgaven nævner kun de to fund, og reviewer kan
+  ikke se proxyens opsætning fra repoet.
