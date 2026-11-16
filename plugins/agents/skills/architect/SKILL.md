@@ -92,16 +92,20 @@ Læs de afsluttede opgaver. Du skal ikke foreslå noget der allerede findes, og 
 
 **Har `docs/projekt.md` et afsnit `## Åbne punkter`, er dokumentet skrevet efter en ældre skabelon.** Kvittér punkterne som kortets — emne på BOARD, eget nummer, eller beslutning i loggen. Selve afsnittet må du ikke røre; sig at `/agents:kickoff` lukker det.
 
-**Har projektet en webflade, holder du det op mod kontraktens `## Webflader og designstandarden`.** Om projektet er nyt, aflæser du uden at spørge: det er nyt så længe der hverken findes et versionsnummer eller et versionstag. Hvert hul bliver et emne på BOARD — står det der allerede, skriver du det ikke igen:
+**Har projektet en webflade, afgør `docs/design/` hvad du gør.** Designstandarden er et tilbud, ikke et krav; se kontraktens `## Webflader og designstandarden`.
 
-- **Nyt, og `docs/design/` findes ikke:** et emne om at lægge standarden ind med `/agents:design`.
-- **I drift, uden standarden:** et emne der foreslår standarden. Mennesket afgør. Du bygger intet om af dig selv, og du gør det ikke til en opgave uden et ja.
-- **Ingen bundlinje**, med eller uden standarden: et emne.
-- **I drift, og appen leverer sine filer uden om reglen** i kontraktens `### En ny udgave uden Ctrl+F5`, med eller uden standarden: et emne.
+- **`docs/design/` findes:** du holder projektet op mod standarden og bundlinjen. Hvert hul bliver et emne på BOARD — står det der allerede, skriver du det ikke igen:
+  - **Webfladen bruger ikke standarden:** et emne. Er løsningen i drift, bygger du intet om af dig selv, og du gør det ikke til en opgave uden et ja.
+  - **Ingen bundlinje:** et emne.
+- **`docs/design/` findes ikke:** du laver ingen emner om standarden eller bundlinjen. Du nævner én gang i chatten at `/agents:design` findes, som en mulighed. Siges der nej, skriver du det i beslutningsloggen, og står der et nej dér, nævner du det ikke igen i projektet.
+
+**Leverer en app i drift sine filer uden om reglen** i kontraktens `### En ny udgave uden Ctrl+F5`, under `## En webflades filer`, er det et emne — med eller uden standarden.
 
 Skriver du en opgave om bundlinjen, står reglerne fra kontraktens `### Bundlinjen er fast` i `Færdig når`, ét punkt pr. regel.
 
-Skriver du en opgave der sætter en webflade op eller ændrer hvordan den leverer sine filer, står reglen fra kontraktens `### En ny udgave uden Ctrl+F5` i `Færdig når`.
+Skriver du en opgave der sætter en webflade op eller ændrer hvordan den leverer sine filer, står reglen fra kontraktens `### En ny udgave uden Ctrl+F5`, under `## En webflades filer`, i `Færdig når`.
+
+**Skal projektet udrulles via Portainer, foreslår du `/agents:workflow`.** Det aflæser du af `docs/projekt.md`, `CLAUDE.md` eller interviewet — her i trin 1, eller når det viser sig senere. Forslaget giver kun mening når projektet har en container eller skal have en, og kun når `docs/workflows/docker-publish.md` ikke findes. Stil det i chatten som et spørgsmål efter kontraktens form, med din anbefaling. Du kører ikke kaldet selv; det gør mennesket. Svaret skriver du i beslutningsloggen, og står der et nej, nævner du det ikke igen i projektet.
 
 ### 2. Hold den grove liste
 

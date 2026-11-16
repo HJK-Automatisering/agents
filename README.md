@@ -83,8 +83,8 @@ Begrænsningerne i tabellen er mandater, ikke låse. Se `GUIDE.md`.
 | `plugins/agents/skills/` | De tretten kald. Seks kører i din tråd, syv er dispatch-skills |
 | `plugins/agents/agents/` | De syv rapportroller. Værktøjslisten står her |
 | `plugins/agents/skills/kickoff/AGENTS.md` | Kontrakten med `kontrakt-version`. Kopieres ind af `kickoff`, opdateres af `/agents:update` |
-| `plugins/agents/skills/workflow/` | Valgfrie arbejdsgange. Kaldes eksplicit — ingen rolle foreslår dem |
-| `plugins/agents/skills/design/` | Den fælles designstandard til webløsninger, i lys og mørk tilstand, med en eksempelside. Lægges ind af `/agents:design`. Nye projekter med en webflade bruger den fra start; bundlinjens regel står i kontrakten og gælder alle webløsninger |
+| `plugins/agents/skills/workflow/` | Valgfrie arbejdsgange. Kaldes eksplicit. `architect` foreslår `docker-publish`, når et projekt skal udrulles via Portainer |
+| `plugins/agents/skills/design/` | Den fælles designstandard til webløsninger, i lys og mørk tilstand, med en eksempelside. Et tilbud, ikke et krav: lægges ind af `/agents:design`, når du vælger den. Bundlinjen følger med standarden |
 | `plugins/agents/hooks/` | SessionStart-hook der tjekker projektets tilstand: om det er nyt, om kopierne fra plugin'et er bagud, og om `.gitignore` mangler |
 | `.claude-plugin/marketplace.json` | Kataloget |
 | `CLAUDE.md` | Reglerne der gælder når nogen redigerer *dette* repo med Claude |

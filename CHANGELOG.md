@@ -26,6 +26,28 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.8.0
+
+Kontrakten er bumpet fra version 27 til 28. **Kør `/agents:update` i hvert
+projekt.**
+
+### Design kun når du vælger det
+
+Designstandarden er et tilbud, ikke et krav, heller ikke for nye projekter.
+Uden standarden laver `architect` ingen emner om standard eller bundlinje. Den
+nævner standarden én gang som en mulighed, og `reviewer` melder intet om dem.
+Bundlinjen følger standarden og gælder kun projekter der har lagt den ind med
+`/agents:design`. Reglen om nye stylesheets uden Ctrl+F5 gælder stadig alle
+webløsninger og står nu i sit eget afsnit.
+
+### Workflowet foreslås ved udrulning via Portainer
+
+Skal et projekt udrulles via Portainer og har det ikke `docker-publish`,
+foreslår `architect` `/agents:workflow`. Siger du nej, nævner den det ikke
+igen.
+
+---
+
 ## 1.7.0
 
 Kontrakten er bumpet fra version 26 til 27. **Kør `/agents:update` i hvert

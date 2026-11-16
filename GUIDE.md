@@ -339,7 +339,7 @@ For koden:
 /agents:workflow
 ```
 
-Ingen roller nævner workflows af sig selv. Vil du have et, kalder du det — og det kan du gøre når som helst, også på et projekt der har kørt i et halvt år.
+Skal projektet udrulles via Portainer og har det ikke `docker-publish` endnu, foreslår `/agents:architect` det, med sin anbefaling. Siger du nej, nævner den det ikke igen. Ellers kalder du det selv — og det kan du gøre når som helst, også på et projekt der har kørt i et halvt år.
 
 I dag findes **`docker-publish`**, en kalder med tre jobs. *Lint* holder `deploy/docker-compose.yml` op mod et sæt faste regler i hver pull request — ingen `build:`, ingen `:latest`, ingen værdier under `environment:`, ingen åbne porte, og så videre; reglerne står i workflow-dokumentet, der lægges i `docs/workflows/`. *Build* bygger og publicerer et container-image til GitHub Packages når du pusher et versionstag som `v1.2.3`, signerer det, og nægter at bygge et versionstag der allerede findes. *Deploy* skriver den nye version ind i compose-filen på `main`, og Portainer udruller den ved næste poll. Almindelige commits bygger ikke — tagger du aldrig, sker der aldrig noget, og der kommer ingen fejl der siger det.
 
@@ -369,11 +369,11 @@ Har projektet en webflade, kan du lægge den fælles designstandard ind. Den giv
 
 Alt i standarden hedder `hjk-` noget, og den rammer kun elementer med dens egne klasser. Den kan derfor stå ved siden af et framework uden at ændre dets knapper og tabeller.
 
-**Et nyt projekt med en webflade bruger standarden fra start.** Nyt betyder at projektet ikke er udgivet endnu: der er hverken et versionsnummer eller et versionstag. Mangler standarden, gør `/agents:architect` det til et emne på BOARD. **En løsning i drift får den kun hvis du siger ja** — `/agents:architect` foreslår den som et emne og bygger intet om af sig selv. `/agents:reviewer` melder det som et fund når en webflade går uden om standarden, eller når nogen har rettet i kopien i `docs/design/`.
+**Standarden er et tilbud, ikke et krav** — heller ikke for nye projekter. Har projektet en webflade uden standarden, nævner `/agents:architect` den én gang som en mulighed, og siger du nej, nævner den det ikke igen. Den laver ingen emner om standarden eller bundlinjen, før du har lagt standarden ind. Har du lagt den ind, holder `/agents:architect` projektet op mod den, og `/agents:reviewer` melder det som et fund når en webflade går uden om standarden, eller når nogen har rettet i kopien i `docs/design/`. **En løsning i drift bygges kun om til standarden hvis du siger ja** — også når standarden er lagt ind, bygges intet om af sig selv.
 
 Kaldet viser hvad standarden er og spørger ja eller nej. Ved ja lægger det tre filer i `docs/design/`: standardens dokument, stylesheetet, og en eksempelside du kan åbne direkte fra disken for at se alle komponenter i lys og mørk. Det overskriver aldrig en fil der findes, nævner standarden i projektets `CLAUDE.md`, og skriver to emner på BOARD: at appen skal bruge den, og at den skal vise bundlinjen.
 
-**Bundlinjen er fast, i hver webløsning** — også dem der ikke bruger standarden. Hver side slutter med *Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL. Version X.Y.Z*, centreret nederst. Team og adresse er påkrævede indstillinger på stakken, `TEAM_NAME` og `CONTACT_EMAIL`, og appen starter ikke uden dem. Versionen er den der er bygget ind i imaget. Reglen står i kontrakten, `AGENTS.md`, så den gælder i ethvert projekt. Mangler bundlinjen, gør `/agents:architect` det til et emne, og `/agents:reviewer` melder det når den mangler eller afviger.
+**Bundlinjen følger standarden.** Den gælder hver webløsning der har lagt standarden ind, og ikke løsninger uden den. Hver side slutter med *Udviklet af TEAMNAVN. Ved udfordringer kontakt EMAIL. Version X.Y.Z*, centreret nederst. Team og adresse er påkrævede indstillinger på stakken, `TEAM_NAME` og `CONTACT_EMAIL`, og appen starter ikke uden dem. Versionen er den der er bygget ind i imaget. Reglen står i kontrakten, `AGENTS.md`. Mangler bundlinjen i et projekt med standarden, gør `/agents:architect` det til et emne, og `/agents:reviewer` melder det når den mangler eller afviger.
 
 **Kaldet kobler ikke selv standarden på appen.** Hvordan stylesheetet når appen — direkte eller kopieret ind ved build — afhænger af stakken, så det bliver en opgave hos `/agents:architect`.
 
