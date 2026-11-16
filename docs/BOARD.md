@@ -65,6 +65,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0025 | reviewer og architect kender ikke reglen om en ny udgave uden Ctrl+F5 | bygget |
 | task-0026 | Kontrakten kender ikke proxyens adgangslog, og guidens tjek fejler i sh | bygget |
 | task-0027 | Tjekket af adgangsloggen kan bestå uden at tjekke, og punkt 8 har ingen vej til afsluttet | bygget |
+| task-0028 | Rollerne kræver design og bundlinje i projekter der ikke har valgt standarden | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.
