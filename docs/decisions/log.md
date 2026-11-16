@@ -10,6 +10,7 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-11-16 | — | Repoets egen kontrakt er opdateret fra version 27 til 28 | Kopien var ordret version 27 uden afvigelser, efterprøvet med diff, og er nu identisk med skabelonen. Nyt er at design kun gælder med `docs/design/`, og at reglen om Ctrl+F5 står i sit eget afsnit. Repoet har ingen webflade, så intet igangværende arbejde berøres. Committes på sin egen gren og merges, som ved version 27. Mennesket bad om det | architect |
 | 2026-11-16 | — | Udgivelsen hedder 1.8.0: kontrakt-version 27 → 28, med design kun når det er valgt og workflowet foreslået ved Portainer | Minor efter reglen i PLUGIN.md, fordi kontrakten har ændret regler. Intet holder op med at virke; projekterne får færre krav. Posten i `CHANGELOG.md` skrevet først, begge manifester bumpet, kontrollen ren. Mennesket sagde ja | architect |
 | 2026-11-16 | task-0028 | `kontrakt-version` bumpet 27 → 28 på opgavens gren | Kontraktens regler om design og bundlinje er ændret. Uden bumpet opdager projekterne det ikke. Mennesket valgte | — |
 | 2026-11-16 | task-0028 | `design-version` bumpes ikke | I `design.md` er kun en henvisning rettet til det nye afsnit. Standarden lover det samme som før | architect |
