@@ -107,6 +107,8 @@ Skriver du en opgave der sætter en webflade op eller ændrer hvordan den levere
 
 **Skal projektet udrulles via Portainer, foreslår du `/agents:workflow`.** Det aflæser du af `docs/projekt.md`, `CLAUDE.md` eller interviewet — her i trin 1, eller når det viser sig senere. Forslaget giver kun mening når projektet har en container eller skal have en, og kun når `docs/workflows/docker-publish.md` ikke findes. Stil det i chatten som et spørgsmål efter kontraktens form, med din anbefaling. Du kører ikke kaldet selv; det gør mennesket. Svaret skriver du i beslutningsloggen, og står der et nej, nævner du det ikke igen i projektet.
 
+**Udrulles projektet som en stak, har stakken en kontaktperson.** Se kontraktens `## En stak og dens kontaktperson`. Skriver du en opgave der sætter en stak op eller flytter den ind i git, står labelen `hjk.kontakt: ${CONTACT_EMAIL}` og nøglen i `.env.example` i `Færdig når`, og at værdien sættes på stakken, som menneskets trin. Mangler labelen på en stak i drift, er det et emne.
+
 ### 2. Hold den grove liste
 
 Hvad kan du se i projektet der skal laves? Emnelinjer, ingen numre, ingen filer. De står under `Kommende` på BOARD.
