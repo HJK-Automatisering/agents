@@ -10,6 +10,7 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-11-18 | — | Repoets egen kontrakt er opdateret fra version 28 til 29 | Kopien var ordret version 28 uden afvigelser, efterprøvet med diff, og er nu identisk med skabelonen. Nyt er afsnittet om stakkens kontaktperson, `hjk.kontakt` og `CONTACT_EMAIL`. Repoet udrulles ikke som en stak, så intet igangværende arbejde berøres. Committes på sin egen gren og merges lokalt, som ved version 28. Mennesket bad om det | architect |
 | 2026-11-18 | task-0029 | `kontrakt-version` bumpet 28 → 29 og `skabelon-version` 5 → 6 | Svar fra mennesket. Kontrakten har en ny regel, og workflow-dokumentet der kopieres ind i projekterne, siger noget nyt. Uden bump får projekterne ingen af dem | architect |
 | 2026-11-18 | task-0029 | Opgaven er bygget og sat afsluttet | Mennesket har merget pull request 4. Alle punkter i `Færdig når` holder, og kontrollen var grøn bortset fra de ventede advarsler om stemplerne | architect |
 | 2026-11-18 | task-0029 | Stemplerne bumpes ikke på grenen. `kontrakt-version` 28 → 29 og `skabelon-version` 5 → 6 tilbydes mennesket ved lukningen, og `AGENTS.md` i roden følger efter med `/agents:update` | Et bump er menneskets beslutning, som ved task-0028 | architect |
