@@ -18,7 +18,8 @@ os er det `HJK-automatisering`, hos andre noget andet.
 - `deploy/docker-compose.yml` ligger på `main` i app-repoet og består lint.
 - Imaget findes i GHCR i den version compose-filen peger på.
 - Du har værdierne til alle variabler compose-filen bruger som `${NØGLE}`.
-  Navnene står i `.env.example` i repoet.
+  Navnene står i `.env.example` i repoet. `CONTACT_EMAIL` er altid med:
+  adressen på den der er kontaktperson for stacken.
 - Du har to vinduer: Portainer og GitHub. Du skifter mellem dem undervejs.
 
 ## Del 1 — Git-kilden i Portainer
@@ -100,6 +101,13 @@ Det er den mindste adgang der virker, og det er med vilje.
     med en tom forbindelsesstreng. Tjek listen mod `.env.example`, før du
     går videre. **Filen med værdierne må aldrig ind i repoet.** Slet den fra
     maskinen, når stacken kører; værdierne ligger nu på stacken.
+
+    Glem ikke **`CONTACT_EMAIL`**, med mailadressen på stackens
+    kontaktperson. Compose-filen sætter den i labelen `hjk.kontakt`, og
+    overvågningen af Docker-værten, `HJK-Automatisering/docker-monitor`,
+    sender adressen en ugentlig rapport om sårbarheder og en morgenmail om
+    containere der er gået ned. Uden den får stacken ingen mail, og intet
+    siger det. Har appen bundlinjen, viser den samme adresse.
 31. Vælg organisationens registry under **Select registries**. Det er det
     der lader Portainer logge ind på `ghcr.io` og pulle imaget. Står der
     intet at vælge, er registryet ikke givet adgang til miljøet; det gør
