@@ -26,6 +26,37 @@ om en genstart af klienten før den nye udgave er i brug.
 
 ---
 
+## 1.9.0
+
+Kontrakten er bumpet fra version 28 til 29, og `docker-publish` fra
+skabelon-version 5 til 6. **Kør `/agents:update` i hvert projekt.** I
+projekter med workflowet bringer den også dokumentet i `docs/workflows/`
+ajour; kalderen er den samme.
+
+### Hver stak har en kontaktperson
+
+Overvågningen af Docker-værten, `HJK-Automatisering/docker-monitor`, sender
+stakkens kontaktperson en ugentlig rapport om sårbarheder og en morgenmail om
+containere der er gået ned. Den finder adressen i labelen `hjk.kontakt`. En
+stak uden labelen får ingen mail, og intet siger det.
+
+Kontrakten har et nyt afsnit, `## En stak og dens kontaktperson`. Hver stak
+har labelen `hjk.kontakt: ${CONTACT_EMAIL}` på mindst én tjeneste i
+compose-filen, og `CONTACT_EMAIL` står i `.env.example` uden værdi. Værdien
+sættes kun på stakken i Portainer. Det er den samme variabel som bundlinjens
+adresse, så har appen bundlinjen, er det én person og én værdi.
+
+`architect` skriver labelen i opgaven, når en stak sættes op eller flyttes ind
+i git. `developer` sætter den i compose-filen, og `reviewer` og `security`
+melder det, når den mangler. Står der en stak i drift uden labelen, bliver det
+et emne.
+
+`docs/workflows/docker-publish.md` har labelen i referencefilen og
+`CONTACT_EMAIL` i opsætningen af stacken. `PORTAINER.md` nævner variablen, hvor
+variablerne sættes.
+
+---
+
 ## 1.8.0
 
 Kontrakten er bumpet fra version 27 til 28. **Kør `/agents:update` i hvert
