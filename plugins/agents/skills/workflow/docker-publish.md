@@ -197,7 +197,7 @@ Rækkefølgen er: compose-filen på `main` først, så registry og Git-adgang, s
 ### 0. Før du går i Portainer
 
 - `deploy/docker-compose.yml` ligger på `main` og består lint. Imaget står med den version der skal køre først — ved en migrering den version der kører i dag, så første udrulning fra Git ikke ændrer noget.
-- Hver variabel compose-filen bruger som `${NØGLE}` er kendt med navn og værdi. `.env.example` i repoet har navnene; værdierne har den der driver appen i dag.
+- Hver variabel compose-filen bruger som `${NØGLE}` er kendt med navn og værdi. `.env.example` i repoet har navnene; værdierne har den der driver appen i dag. Det gælder også `CONTACT_EMAIL`, adressen på stackens kontaktperson.
 - Imaget findes i GHCR i den version compose-filen peger på. Det gør det efter det første versionstag; se forudsætning 8 om at pakken skal kobles til repoet.
 - Du kender navnet på den stack der eventuelt kører i dag. Det skal genbruges; se trin 3.
 
@@ -248,6 +248,8 @@ Tokenet udløber, og når det gør, stopper polling stille. Stacken kører vider
 
 **Variablerne.** Compose-filen indeholder nøgler, aldrig værdier; værdierne lever kun her. Tilføj hver variabel compose-filen bruger, med samme navn som i `${NØGLE}` og den rigtige værdi. Du kan taste dem én ad gangen eller indlæse en `.env`-fil fra din egen maskine med *Load variables from .env file* — den fil må aldrig ind i repoet. En variabel der mangler, giver ingen fejl ved udrulningen: Docker Compose sætter den til tom og advarer i en log ingen læser, og appen starter med en tom forbindelsesstreng. Tjek listen mod `.env.example`, før du udruller.
 
+**`CONTACT_EMAIL` er altid med.** Det er adressen på stackens kontaktperson, og compose-filen bruger den i labelen `hjk.kontakt`. Overvågningen af Docker-værten sender den ugentlige rapport om sårbarheder og morgenmailen om containere der er gået ned til den adresse. Mangler variablen, eller ligner værdien ikke en mailadresse, får stacken ingen mail, og ingen fejl siger det. Har appen bundlinjen fra designstandarden, er det den samme variabel og den samme adresse.
+
 Portainer læser variablerne ind i compose-filen ved hver udrulning. Filen i repoet røres ikke, så den forbliver i takt med Git. Der oprettes ingen `stack.env`, og compose-filen må ikke bede om en; se reglen `env-fil`.
 
 Kører den gamle stack endnu: **stop den, før den nye udrulles.** To stacks med samme containere og samme alias på proxyens netværk kører ellers side om side, og proxyen rammer tilfældigt.
@@ -275,6 +277,7 @@ Portainer melder ikke tilbage til GitHub. Udebliver en udrulning, er det altid s
 | Stacken kan ikke starte, og loggen nævner et netværk | `nginx-proxy-manager_default` findes ikke på den vært, eller aliaset mangler. Lint fanger det sidste; det første er værtens opsætning |
 | Stacken kan ikke starte: *could not find an available, non-overlapping IPv4 address pool* | Værten har ikke flere adresseområder til netværk; Dockers standardpuljer giver omkring 31. Lint-reglen `unoedigt-netvaerk` stopper spildet, men pladsen kommer først tilbage når de stacks der har et overflødigt netværk, er udrullet igen. Varig løsning er `default-address-pools` i værtens `daemon.json`, med et adresseområde der ikke overlapper organisationens egne net |
 | Containeren genstartes hvert femte minut uden ændringer | *Force redeployment* er slået til. Slå det fra |
+| Ingen mail fra overvågningen, og rapportsiden viser stacken som `missing` | Labelen `hjk.kontakt` mangler i compose-filen, `CONTACT_EMAIL` mangler på stacken, eller værdien ligner ikke en mailadresse. Labelen læses fra den kørende container, så den tæller først efter næste udrulning |
 
 ## Hvem gør hvad
 
@@ -311,6 +314,8 @@ Har et projekt et behov kalderen ikke dækker, tilføjes et input i workflow-rep
 
 Filen nedenfor passerer alle regler. `<app>` er imagenavnet, `<alias>` det navn proxyen finder servicen på.
 
+Labelen `hjk.kontakt` på `web` er stakkens kontaktperson, efter kontraktens `## En stak og dens kontaktperson`. Overvågningen af Docker-værten, `HJK-Automatisering/docker-monitor`, læser den og sender adressen en ugentlig rapport om sårbarheder og en morgenmail om containere der er gået ned. Uden labelen får stacken ingen mail. Den skal stå på mindst én tjeneste, og står den på flere, er værdien `${CONTACT_EMAIL}` alle steder.
+
 ```yaml
 services:
   web:
@@ -322,6 +327,10 @@ services:
     environment:
       - DB_SERVER=${DB_SERVER}
       - DB_PASSWORD=${DB_PASSWORD}
+    # Stakkens kontaktperson. docker-monitor sender adressen sårbarheder og
+    # containere der er gået ned. Én tjeneste er nok; værdien sættes på stacken.
+    labels:
+      hjk.kontakt: ${CONTACT_EMAIL}
     networks:
       # `default` er her kun fordi `db` også står på det. Har stacken én
       # service, fjernes linjen - ellers fejler `unoedigt-netvaerk`.

@@ -345,6 +345,8 @@ I dag findes **`docker-publish`**, en kalder med tre jobs. *Lint* holder `deploy
 
 Vælger du det: **din `Dockerfile` skal tage imod `APP_VERSION` og `GIT_SHA`** som `ARG` og logge dem ved opstart. Ellers virker workflowet, men logvisningen kan ikke fortælle hvilken build der kører. Og **compose-filen lintes lokalt før en pull request** — scriptet ligger i det fælles workflow-repo, og dokumentet siger hvordan. En compose-fil der bryder en regel, giver en rød release, og det er lettere at se på sin egen maskine først.
 
+**Hver stak har en kontaktperson.** Compose-filen har labelen `hjk.kontakt: ${CONTACT_EMAIL}` på mindst én tjeneste, og du sætter `CONTACT_EMAIL` på stacken i Portainer med den adresse der skal have besked. Overvågningen af Docker-værten sender den adresse en ugentlig rapport om sårbarheder og en morgenmail om containere der er gået ned. Uden labelen får stacken ingen mail. Reglen står i kontrakten, `AGENTS.md`, og den gælder hver stak, også uden workflowet.
+
 Tilbagerulning er `git revert` af den commit deploy-jobbet lavede. Det forrige image ligger stadig i registryet og er præcis det der kørte.
 
 Stacken i Portainer sætter et menneske op én gang pr. app — som Git-stack på `main` med polling, registry og variabler. Hvordan står i workflow-dokumentet under *Opsætning af stacken i Portainer*, med en tabel over hvad man kigger efter når en udrulning udebliver — og klik for klik i `PORTAINER.md`. Skal appen bagefter bag login, så kun én gruppe kan åbne den, står klikkene i `AUTHENTIK.md` og derefter `NGINX-PROXY-MANAGER.md`, med det appen selv skal gøre og et tjek til sidst.
