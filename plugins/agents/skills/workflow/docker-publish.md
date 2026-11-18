@@ -1,6 +1,6 @@
 ---
 navn: docker-publish
-skabelon-version: 5
+skabelon-version: 6
 formål: Linter compose-filen, bygger og signerer et container-image til GitHub Packages når der pushes et versionstag, og skriver den nye version ind i compose-filen på main så Portainer udruller den
 foreslå-ja-når: projektets dokument siger at projektet leveres som container-image eller kører på en Docker- eller Portainer-vært
 filer:

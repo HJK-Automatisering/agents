@@ -21,7 +21,6 @@ en rapport der har stået her i dagevis, er et fund på vej til at blive glemt.>
 
 | Nr. | Titel | Status | Kilde |
 |---|---|---|---|
-| task-0029 | En stak uden kontaktlabel får ingen mail fra overvågningen af Docker-værten | i-gang | interview |
 
 <`Status` er `planlagt`, `i-gang` eller `afsluttet`. `Kilde` er `interview`
 eller nummeret på den rapport opgaven kom af.>
@@ -67,6 +66,7 @@ ellers fyldes `docs/tasks/` med halve idéer.>
 | task-0026 | Kontrakten kender ikke proxyens adgangslog, og guidens tjek fejler i sh | bygget |
 | task-0027 | Tjekket af adgangsloggen kan bestå uden at tjekke, og punkt 8 har ingen vej til afsluttet | bygget |
 | task-0028 | Rollerne kræver design og bundlinje i projekter der ikke har valgt standarden | bygget |
+| task-0029 | En stak uden kontaktlabel får ingen mail fra overvågningen af Docker-værten | bygget |
 
 <`Udfald` er `bygget` eller `afvist`. Flyt hertil når architect har vurderet
 opgaven — ikke når udrulningen er sket; udrulning er ikke en status.

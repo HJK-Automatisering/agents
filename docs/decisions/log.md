@@ -10,6 +10,8 @@ Her hører også **afvisninger**: et fund der ikke bliver en opgave, skal have s
 
 | Dato | Nr. | Beslutning | Begrundelse | Rolle |
 |---|---|---|---|---|
+| 2026-11-18 | task-0029 | `kontrakt-version` bumpet 28 → 29 og `skabelon-version` 5 → 6 | Svar fra mennesket. Kontrakten har en ny regel, og workflow-dokumentet der kopieres ind i projekterne, siger noget nyt. Uden bump får projekterne ingen af dem | architect |
+| 2026-11-18 | task-0029 | Opgaven er bygget og sat afsluttet | Mennesket har merget pull request 4. Alle punkter i `Færdig når` holder, og kontrollen var grøn bortset fra de ventede advarsler om stemplerne | architect |
 | 2026-11-18 | task-0029 | Stemplerne bumpes ikke på grenen. `kontrakt-version` 28 → 29 og `skabelon-version` 5 → 6 tilbydes mennesket ved lukningen, og `AGENTS.md` i roden følger efter med `/agents:update` | Et bump er menneskets beslutning, som ved task-0028 | architect |
 | 2026-11-18 | task-0029 | `architect`, `reviewer` og `security` får én henvisning hver i rollefilen | En regel der kun står i kontrakten, bliver ikke holdt. Det viste task-0025 | architect |
 | 2026-11-18 | task-0029 | `CONTACT_EMAIL` defineres i stakkens afsnit, og bundlinjen henviser dertil. Én nøgle, én person | Bundlinjens adresse og stakkens kontaktperson er den samme. To regler om samme variabel ville drive fra hinanden | architect |
