@@ -1,7 +1,7 @@
 ---
 nummer: task-0029
 titel: En stak uden kontaktlabel får ingen mail fra overvågningen af Docker-værten
-status: i-gang
+status: afsluttet
 kilde: interview
 oprettet: 2026-11-18
 ---
